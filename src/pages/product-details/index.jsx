@@ -266,7 +266,7 @@ export default function ProductDetails() {
           </p> */}
           <p className="text-gray-700 mb-2">Product description: {productDetails.description}</p>
 
-          <div className="flex gap-8 items-center">
+          <div className="flex md:gap-8 gap-2  flex-wrap items-center">
 
             <div>
 

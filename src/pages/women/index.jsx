@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
 import { FaArrowRight } from "react-icons/fa";
+import { PiCurrencyInr } from "react-icons/pi";
 
 export default function WomenCollection() {
   const [allCategories, setAllCategories] = useState([]);
@@ -119,7 +120,7 @@ export default function WomenCollection() {
                   <Link to={`/collections?category=${category?._id}&group=women`}>
                     <div className="relative mb-2">
                       <img
-                        className="h-[300px] object-cover w-full rounded-lg"
+                        className="md:h-[250px] h-[100px] object-cover w-full rounded-lg"
                         src={groupDetails?.image}
                         alt={groupDetails?.name}
                       />
@@ -145,6 +146,71 @@ export default function WomenCollection() {
       </section>
 
       <hr className="my-2" />
+
+      <div  className="flex-wrap px-10 items-center gap-2 hidden md:flex">
+                 {womenProducts.map((eachProduct) => {
+                     return (
+                         <div className="bg-white flex flex-col  items-center rounded-2xl p-3 shadow-lg border border-gray-200 w-[1/5]">
+                             <h1 className="text-black font-quicksand font-bold text-xl mb-1 text-center">
+                                 {eachProduct?.productName
+                                     || "Product Name"}
+                             </h1>
+      
+                             <img
+                                 src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
+                                 alt={eachProduct?.name || "Product Image"}
+                                 className="h-40  w-40  object-cover rounded-full mb-1"
+                             />
+      
+                             {/* Product Name */}
+                             <p className="text-lg font-semibold mb-1 text-gray-700">
+                                 {eachProduct?.brandName || "Brands Name"}
+                             </p>
+                             <div className="flex items-center gap-4 text-gray-700 mt-1">
+                                 <p className="flex items-center text-sm font-semibold">
+                                     <span className="text-yellow-500 mr-1">
+                                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                                         </svg>
+                                     </span>
+                                      4.5 / 5
+                                 </p>
+                                 <p className="text-sm text-gray-500">Ordered last week</p>
+                             </div>
+      
+                                    <div className="flex justify-between items-center mt-1">
+                               {/* Original Price */}
+                               <div className="flex items-center ">
+                                 <PiCurrencyInr className="text-red-500" />
+                                 <p className="text-red-500 line-through text-sm font-medium">
+                                   {eachProduct?.price || "0"}
+                                 </p>
+                               </div>
+                             
+                               {/* Selling Price */}
+                               <div className="flex items-center ">
+                                 <PiCurrencyInr className="text-green-500" />
+                                 <p className="text-green-500 text-sm font-semibold">
+                                   {eachProduct?.discount || "0"}
+                                 </p>
+                               </div>
+                             </div>
+                             
+      
+      
+                             {/* Explore Button */}
+                             <Link to={`/product-details/${eachProduct?.productId}`} className="block mt-2 ">
+                                 <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-md  hover:bg-[#02386e] transition-colors duration-200">
+                                     Product Details
+                                     <FaArrowRight className="ml-2" />
+                                 </button>
+                             </Link>  {/* Product Name */}
+                      
+                             
+                         </div>
+                     )
+                 })}
+             </div>
 
 
       <div className="flex-wrap px-6 justify-between gap-2 hidden md:flex">
@@ -205,7 +271,7 @@ export default function WomenCollection() {
             <img
               src={each?.bannerImage || "https://via.placeholder.com/300"}
               alt={each?.name || "Product Image"}
-              className="h-20 w-20 object-cover rounded-md"
+              className="h-[90px] w-20 object-cover rounded-md"
             />
             {/* Product Name */}
             <h3 className="text-center font-semibold text-gray-800 text-sm mb-2">

@@ -177,7 +177,7 @@ function App() {
 
         <Routes>
           <Route
-            path="products_by_brand"
+            path="products_by_brand/:id"
             element={
               <Layout changeHeaderColor="true">
                 <ProductsByBrands />

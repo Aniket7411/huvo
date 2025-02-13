@@ -63,19 +63,9 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-between gap-6">
-        <div className="flex-shrink-0">
+      <div className="flex flex-wrap justify-between gap-2 md:gap-6">
           <Link to="/">
-            <img src="/assets/newlogo.png" alt="logo" className="h-16" />
-          </Link>
-        </div>
-
-        <div className="flex-1 ">
-
-          <Link to="/">
-
-
-            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-4">
+            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
               <p className="mr-2">Online shopping</p>
               <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
             </div>
@@ -84,13 +74,14 @@ export default function Footer() {
             </p>
           </Link>
 
-        </div>
 
 
+    
+    
         <div className="flex flex-col items-center ">
           <Link to="/privacy">
 
-            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-4">
+            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
               <p className="mr-2">Privacy Policy</p>
               <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
             </div>
@@ -104,7 +95,7 @@ export default function Footer() {
 
         <div className="flex flex-col items-center ">
           <Link to="/returnpolicy">
-            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-4">
+            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
               <p className="mr-2">Return Policy</p>
               <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
             </div>

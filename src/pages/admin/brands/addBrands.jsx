@@ -79,7 +79,7 @@ function BrandAddPage() {
           </label>
           <input
             id="onGoingOffer"
-            type="text"
+            type="number"
             name="onGoingOffer"
             className="mt-1 p-2 w-full border border-gray-300 rounded-md"
             {...register("onGoingOffer")}

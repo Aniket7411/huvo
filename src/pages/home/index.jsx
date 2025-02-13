@@ -172,7 +172,7 @@ export default function Home() {
           }}
         >
           <SwiperSlide>
-            <div className="man-women h-[80vh] text-[#fff] sm:h-screen py-[33%] md:py-[20%] xl:py-[16%] px-[10%]">
+            <div className="man-women  text-[#fff] sm:h-screen py-[33%] md:py-[20%] xl:py-[16%] px-[10%]">
               <div>
                 <p className="font-[Quicksand]  md:font-normal  font-bold   text-xl md:text-7xl ">
                   Style for {" "}
@@ -193,7 +193,7 @@ export default function Home() {
           </SwiperSlide>
 
           <SwiperSlide>
-            <div className="home-banner text-[#fff]  h-[80vh] sm:h-screen py-[33%] md:py-[20%] xl:py-[16%] px-[10%]">
+            <div className="home-banner text-[#fff]   sm:h-screen py-[33%] md:py-[20%] xl:py-[16%] px-[10%]">
               <div>
                 <p className="font-[Quicksand]  md:font-normal  font-bold   text-xl md:text-7xl ">
                   PERFECT TIME{" "}
@@ -217,7 +217,7 @@ export default function Home() {
         </Swiper>
       </section>
 
-      <section className="px-10 py-6 ">
+      <section className="px-2 md:px-10 py-3 ">
         <h2 className="font-[Quicksand]  font-bold text-center text-sm md:text-4xl text-[#011F4B]">
           CATEGORIES TO EXPLORE
         </h2>
@@ -283,18 +283,18 @@ export default function Home() {
               </SwiperSlide>
             ))}
             {/* Navigation Buttons */}
-            <button
+            {/* <button
               className="swiper-button-prev absolute top-1/2 left-2 transform -translate-y-1/2  text-white p-2 rounded-full "
               style={{ zIndex: 10 }}
             >
 
-            </button>
-            <button
+            </button> */}
+            {/* <button
               className="swiper-button-next absolute top-1/2 right-2 transform -translate-y-1/2  text-white p-2 rounded-full"
               style={{ zIndex: 10 }}
             >
 
-            </button>
+            </button> */}
           </Swiper>
         ) : (
           <h2 className="font-[Quicksand] font-medium text-center text-2xl text-[#011F4B]">
@@ -464,6 +464,7 @@ export default function Home() {
             key={index}
             className="w-[31%] flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
           >
+            <Link to={`/product-details/${each?.productId}`} >
 
 
             {/* Product Image */}
@@ -476,6 +477,7 @@ export default function Home() {
             <h3 className="text-center font-semibold text-gray-800 text-sm mb-2">
               {each?.productName || "Product Name"}
             </h3>
+            </Link>
           </div>
         ))}
       </div>
@@ -590,8 +592,8 @@ export default function Home() {
 
 
                       {/* Explore Button */}
-                      <Link to="/products_by_brand" className="block ">
-                        <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-lg  hover:bg-[#02386e] transition-colors duration-200">
+                      <Link to={`/products_by_brand/${product?.brandName}`}>
+                      <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-lg  hover:bg-[#02386e] transition-colors duration-200">
                           Explore Brand
                           <FaArrowRight className="ml-2" />
                         </button>
@@ -621,12 +623,17 @@ export default function Home() {
         {topBrands.map((product, i) => (
           <div
             key={i}
-            className=" w-[31%] flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
+            className=" w-[31%] flex flex-col   items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
           >
             {/* Heading */}
+            
+
+            {/* Explore Button */}
+            <Link to={`/products_by_brand/${product?.brandName}`}>
             <h1 className="text-center font-semibold text-gray-800 text-sm mb-2">
               {product?.onGoingOffer || "On Going Offer"}
             </h1>
+            
 
             {/* Product Image */}
             <img
@@ -636,15 +643,9 @@ export default function Home() {
             />
 
             {/* Product Name */}
-            <p className="text-base font-semibold mb-2 text-gray-700 text-center">
+            <p className="text-base flex-end font-semibold  text-gray-700 text-center">
               {product?.brandName || "Brand Name"}
             </p>
-
-            {/* Explore Button */}
-            <Link to="/products_by_brand" className="block">
-              <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-sm hover:bg-[#02386e] transition-colors duration-200">
-                Explore
-              </button>
             </Link>
           </div>
         ))}

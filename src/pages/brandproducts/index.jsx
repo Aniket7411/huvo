@@ -4,12 +4,34 @@ import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
 import { FaArrowRight } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
+import { TbJewishStarFilled } from "react-icons/tb";
+
+import { useParams } from "react-router-dom";
 
 export default function ProductsByBrands() {
   const [allProducts, setAllProducts] = useState([]);
   const [brands, setBrands] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState("")
   const [sortOrder, setSortOrder] = useState("");
+  const [selectedSize, setSelectedSize] = useState(""); // State for size selection
+  const {brandName} = useParams();
+
+  console.log("brandName", brandName)
+
+
+
+
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => setIsOpen(!isOpen);
+  const closeDropdown = () => setIsOpen(false);
+
+  const handleSelectBrand = (brandName) => {
+    setSelectedBrand(brandName);
+    closeDropdown(); // Close dropdown after selection
+  };
+
 
 
 
@@ -85,17 +107,21 @@ export default function ProductsByBrands() {
   return (
     <>
 
-      <div class="text-center mt-4">
-        <h1 class="text-4xl font-extrabold text-gray-900">
-          Iconic Brands for Every Style
-        </h1>
-        <p
-          className="text-lg mt-2 text-center bg-clip-text text-transparent"
+      <div class="text-center px-5">
+        <h1 className="text-3xl  text-center bg-clip-text text-transparent"
           style={{
             background: "linear-gradient(to right, #2563eb, #eb25de)",
             WebkitBackgroundClip: "text", // Ensures compatibility with WebKit browsers
             backgroundClip: "text",
             color: "transparent", // Required for text gradient to show
+          }}>
+          Iconic Brands for Every Style
+        </h1>
+        <p className="hidden md:block"
+          style={{
+            background: "linear-gradient(to right, #2563eb, #eb25de)",
+            WebkitBackgroundClip: "text", // Ensures compatibility with WebKit browsers
+            backgroundClip: "text",
           }}
         >
           Celebrate individuality with top brands offering the latest trends and timeless classics. Discover fashion that suits every identity and occasion.
@@ -115,7 +141,7 @@ export default function ProductsByBrands() {
 
       <hr className="my-2" />
 
-      <div className="flex flex-wrap gap-4 items-center p-3 bg-gray-50 rounded-lg shadow">
+      <div className="flex flex-wrap gap-2 items-center p-3 bg-gray-50 rounded-lg shadow">
         {/* Search Box */}
         <div className="flex items-center border border-gray-300 bg-[#fff] rounded-lg px-2 py-1 w-full md:w-auto">
           <CiSearch className="text-gray-500 mr-2" />
@@ -127,18 +153,46 @@ export default function ProductsByBrands() {
         </div>
 
         {/* Brand Dropdown */}
-        <select
-          className="border border-gray-300 rounded-lg px-2 py-1 bg-white focus:outline-none"
-          value={selectedBrand}
-          onChange={(e) => setSelectedBrand(e.target.value)}
-        >
-          <option value="">All Brands</option>
-          {brands.map((each) => (
-            <option value={each.brandName} key={each.brandId}>
-              {each.brandName}
-            </option>
-          ))}
-        </select>
+
+        <div className="relative w-64">
+          {/* Dropdown Trigger */}
+          <div
+            className="border border-gray-300 rounded-lg px-2 py-1 bg-white focus:outline-none cursor-pointer"
+            onClick={toggleDropdown}
+          >
+            <span>{selectedBrand || "All Brands"}</span>
+          </div>
+
+          {/* Dropdown Menu */}
+          {isOpen && (
+            <ul
+              className="absolute z-10 bg-white border border-gray-300 mt-1 rounded-lg shadow-lg max-h-64 overflow-y-auto w-full"
+              onBlur={closeDropdown}
+              tabIndex={-1} // Allow the menu to lose focus when clicked outside
+            >
+              <li
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                onClick={() => handleSelectBrand("")}
+              >
+                All Brands
+              </li>
+              {brands.map((each) => (
+                <li
+                  key={each.brandId}
+                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => handleSelectBrand(each.brandName)}
+                >
+                  <img
+                    src={each.image}
+                    alt={each.brandName}
+                    className="w-6 h-6 mr-2"
+                  />
+                  {each.brandName}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
 
 
@@ -164,7 +218,7 @@ export default function ProductsByBrands() {
           <option>Kids</option>
         </select>
 
-
+        {/* 
         <select className="border border-gray-300 rounded-lg px-2 py-1 bg-white focus:outline-none">
           <option>Wear Category</option>
           <option>Top Wear</option>
@@ -176,6 +230,22 @@ export default function ProductsByBrands() {
           <option>Activewear</option>
           <option>Accessories</option>
           <option>Seasonal Wear</option>
+        </select> */}
+
+
+        {/* Size Dropdown */}
+        <select
+          className="border border-gray-300 rounded-lg px-2 py-1 bg-white focus:outline-none"
+          value={selectedSize}
+          onChange={(e) => setSelectedSize(e.target.value)}
+        >
+          <option value="">Select Size</option>
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
         </select>
 
       </div>
@@ -233,26 +303,37 @@ export default function ProductsByBrands() {
       </div>
       <hr className="my-5" />
 
-      <div className="flex p-2 md:hidden flex-wrap items-center gap-2 ">
+      <div className="flex p-1 md:hidden flex-wrap items-center gap-2 ">
         {allProducts.map((each, index) => (
           <div
             key={index}
-            className="w-[31%] flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
+            className="w-[31%] flex flex-col justify-between min-h-[180px] p-1 items-center bg-white rounded-lg shadow-md border border-gray-200"
           >
-
-
             {/* Product Image */}
-            <img
-              src={each?.bannerImage || "https://via.placeholder.com/300"}
-              alt={each?.name || "Product Image"}
-              className="h-20 w-20 object-cover rounded-md"
-            />
+            <div className="w-full h-32 mb-2">
+              <img
+                src={each?.bannerImage || "https://via.placeholder.com/300"}
+                alt={each?.name || "Product Image"}
+                className="w-full h-full object-cover rounded-t-lg"
+              />
+            </div>
+
             {/* Product Name */}
-            <h3 className="text-center font-semibold text-gray-800 text-sm mb-2">
+            <p className="text-center mt-auto font-semibold text-gray-800 text-sm">
               {each?.productName || "Product Name"}
-            </h3>
+            </p>
+
+            {/* Star Rating */}
+            <div className="flex mt-auto justify-center text-yellow-500">
+              <TbJewishStarFilled />
+              <TbJewishStarFilled />
+              <TbJewishStarFilled />
+              <TbJewishStarFilled />
+            </div>
           </div>
         ))}
+
+
       </div>
 
       <hr className="my-2" />
