@@ -1,0 +1,28 @@
+.salesStatsDiv{
+    width: 33% !important;
+}
+
+@media screen and (max-width:767px) { 
+    .bCards{
+        width:100% !important
+    }
+    .visiorsActivity{
+        width: 100% !important;
+    }
+}
+@media screen and (max-width:1024px) { 
+  
+    .visiorsActivity{
+        width: 100% !important;
+    }
+    .salesStatsDiv{
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width:1128px) {
+    .prodVendors{
+        width:100% !important
+    }
+}
+

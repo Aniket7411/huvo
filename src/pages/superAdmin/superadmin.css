@@ -1,0 +1,88 @@
+.rupeeIcon {
+    stroke: currentcolor;
+    fill: #B8B8B8;
+    stroke-width: 0;
+    height: 1em;
+    width: 1em;
+}
+.apexcharts-tooltip {
+display: none !important
+}
+
+
+
+.apexcharts-bar-area {
+    fill: #71DD37 !important; 
+}
+
+
+
+.apexcharts-xaxis-texts-g {
+    transform: translateY(-10px); 
+}
+.apexcharts-menu-icon {
+    display: none !important;
+}
+.apexcharts-title-text{
+    display: none !important;
+}
+.apexcharts-grid{
+    display: none !important;
+}
+.apexcharts-yaxis-texts-g{
+    display: none !important;
+
+}
+.apexcharts-toolbar{
+    display: none !important;
+
+}
+.apexcharts-xcrosshairs{
+    display: none !important;
+}
+.apexcharts-xaxis-tick{
+    display: none !important;
+}
+.apexcharts-yaxis{
+    display: none !important;
+}
+.apexcharts-grid-borders{
+    display: none !important;
+}
+/* .apexcharts-tooltip-marker{background-color: #71DD37;
+} */
+ .apexcharts-xaxistooltip-text{
+    display: none !important;
+ }
+ .apexcharts-xaxistooltip .apexcharts-xaxistooltip-bottom .apexcharts-theme-light{
+    display: none !important;
+ }
+ .apexcharts-tooltip .apexcharts-theme-light{
+    display: none;
+ }
+ .CircularProgressbar-path{
+    stroke: #71DD37 !important;
+    stroke-width: 6 !important;
+ }
+.CircularProgressbar-trail{
+    stroke-width: 4 !important;
+}
+.CircularProgressbar-text{
+   fill: #71DD37 !important;
+}
+.apexcharts-xaxis-label {
+   fill:#9C9C9C !important;
+   font-family: 'Poppins' !important;
+   font-weight: 700 !important;
+   font-size: 10px !important;
+   line-height: 21px !important;
+}
+.apexcharts-canvas .apexchartscs9snpdx .apexcharts-theme-{
+    display: none !important;
+}
+.vertical-line {
+    height: '100%';
+    width: 1px;
+
+  fill:#B8B8B8;
+  }

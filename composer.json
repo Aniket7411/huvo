@@ -1,0 +1,5 @@
+{
+    "name": "dummy/project",
+    "description": "Dummy file to bypass Composer checks",
+    "require": {}
+}

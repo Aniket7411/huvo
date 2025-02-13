@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap');
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide Arrows From Input Number */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+
+.colorpick-eyedropper-input-trigger{
+  display: none;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.home-banner{
+  background-image: url('../public/assets/ladybanner.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+.man-women{
+  background-image: url('../public/assets/mangirlbannertop.jpg');
+  background-position: center;
+  background-size: cover;
+}
+.shopping{
+  background-image: url('../public/assets/girl.png');
+  background-position: center;
+  /* padding: 14% 0px; */
+  position: relative;
+}
+.shopping::before{
+  content: '';
+  background-image: url('../public/assets/mask.png');
+  z-index: 1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+}
+
+.men-banner{
+  background-image: url('../public/assets/men\ collection.png');
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+}
+
+.kids-banner{
+  background-image: url('../public/assets/childrenbanner.jpg');
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+}
+
+
+.women-banner{
+  background-image: url('../public/assets/women\ collection.png');
+  background-position: center;
+  background-size: cover;
+}
+.login-bg{
+  background-image: url('../public/assets/login-banner.png');
+  background-position: center;
+  background-size: cover;
+  position: relative;
+
+}
+.login-bg::before{
+  content: '';
+
+  background-color: #fff;
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 50%;
+  right: 0;
+  top: 0;
+}
+.register-bg{
+  background-image: url('../public/assets/bg-signIn.png');
+  background-position: center;
+  height:140vh;
+  background-size: cover;
+  position: relative;
+}
+.register-bg::before{
+  content: '';
+  background-image: url('../public/assets/login\ mask.png');
+  position: absolute;
+  height:140vh;
+  z-index: 1;
+  height: 100%;
+  width: 50%;
+  right: 0;
+  top: 0;
+}
+.swiper-button-prev, .swiper-button-next{
+  color: #949494 !important;
+}
+.swiper-pagination-bullet-active{
+  background-color: #EF939D !important;
+}
+.custom-progress-bar {
+  background-color: #D9D9D9; 
+  height: 5px; 
+  border-radius: 5px; 
+}
+
+.custom-progress-bar::-webkit-progress-bar {
+  background-color: #D9D9D9;
+}
+
+.custom-progress-bar::-webkit-progress-value {
+  background-color: #011F4B; 
+}
+.go-home:hover>div{
+  width: 100%;
+}
+@media screen and (max-width:767px) {
+.login-bg::before{
+  content: '';
+  width: 100%;
+}
+.register-bg::before{
+  content: '';
+  width: 100%;
+}
+}
+@media screen and (max-width:640px) {
+  .swiper-button-prev, .swiper-button-next{
+    
+  }
+}

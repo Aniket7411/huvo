@@ -1,0 +1,18 @@
+.hoverOnDiv:hover{
+    .iconDiv{
+        /* border: 1px solid #F5F4FE; */
+        border-radius: 50%;
+        background-color: #F5F4FE;
+    }
+    .icon{
+        color: #011F4B;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .sidebar {
+      display: none;
+    }
+   
+  }

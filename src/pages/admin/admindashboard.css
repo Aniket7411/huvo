@@ -1,0 +1,79 @@
+.cardsMain .numbersSpan{
+    font-size: 24px !important;
+    font-weight: 500;
+}
+
+.cardSub{
+    min-height: 200px !important;
+}
+
+.cardHeading{
+    font-size: 19.2px;  
+    font-weight: 500;  
+    color: #000;  
+    font-family: Poppins;
+}
+.viewLink{
+    color: #FF470D;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.reviewName{
+    font-size: 17.5px !important;
+    font-weight: 500;
+}
+
+
+.raiseFallSpan{
+    font-size: 12px;
+    color: #05B171;
+}
+
+.reviewSpan{
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.activityOverview h5{
+    font-size: 17.5px;
+    font-weight: 500;
+}
+
+.activityOverview p{
+    font-size: 12px;
+    font-weight: 400;
+    color:#6C757D;
+    ;
+}
+.rupeeIcon {
+    stroke: currentcolor;
+    fill: #B8B8B8;
+    stroke-width: 0;
+    height: 1em;
+    width: 1em;
+}
+
+/* for the review modal*/
+.custom-modal-content-review {
+    position: absolute;
+    top: 280px; 
+    right: 40px;
+    width: 300px; 
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .custom-modal-overlay-review {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000; 
+  }
+  

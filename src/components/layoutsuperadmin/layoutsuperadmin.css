@@ -1,0 +1,41 @@
+.sidenav{
+    overflow-y: auto !important;
+}
+.mainDashboard{
+    height: calc(100vh - 84px);
+    margin-top: 84px; 
+}
+
+/* .mainDashboard::-webkit-scrollbar {
+  display: none;
+} */
+ 
+.headerMain{
+    position: fixed;
+    top: 0;
+    width: 83%;
+    left: 17%;
+} 
+
+  .sidenav::-webkit-scrollbar {
+    display: none;
+  }
+
+@media (max-width: 1024px) {
+    .headerMain{
+      position: fixed;
+      top: 0;
+      width: 100%;
+      left: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mainDashboard {
+    height: calc(100vh - 84px);
+    position: fixed;
+    margin-top: 84px;
+    left: 17%;
+    width: 83%;
+  }
+}
