@@ -13,9 +13,6 @@ export default function ProductsByBrands() {
 
 
 
-
-
-
   const fetchAllProducts = async () => {
     try {
       const response = await HttpClient.get("/product");
@@ -66,7 +63,7 @@ export default function ProductsByBrands() {
         onGoingOffer: eachBrand.onGoingOffer
 
       }))
-      console.log("formattedBrandss", formattedBrands)
+      console.log("formattedBrands", formattedBrands)
       setBrands(formattedBrands)
 
     } catch (error) {
@@ -149,14 +146,14 @@ export default function ProductsByBrands() {
 
         {/* Sorting Dropdown */}
         <select
-  className="border border-gray-300 rounded-lg px-2 py-1 bg-white focus:outline-none"
-  value={sortOrder}
-  onChange={(e) => setSortOrder(e.target.value)}
->
-  <option value="">Sort by Price</option>
-  <option value="Low to High">Low to High</option>
-  <option value="High to Low">High to Low</option>
-</select>
+          className="border border-gray-300 rounded-lg px-2 py-1 bg-white focus:outline-none"
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+        >
+          <option value="">Sort by Price</option>
+          <option value="Low to High">Low to High</option>
+          <option value="High to Low">High to Low</option>
+        </select>
 
 
         {/* Sorting Dropdown */}
