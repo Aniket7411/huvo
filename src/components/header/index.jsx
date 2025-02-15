@@ -198,30 +198,36 @@ export default function Header(props) {
   return (
     <>
       <header className={className}>
-        <div className="hidden md:flex items-center text-[#2563AB] bg-[#fff] px-8 py-2 justify-between">
+        <div  className="hidden md:flex items-center text-[#2563AB] px-8 py-2 justify-between">
           <Link to="/" >
-            <img src="/cart.png /assets/cart.png" alt="Logo" className="h-[30px]  hidden md:block rounded-xl" />
+            <img src="/assets/newlogo.jpeg" alt="Logo" className="h-[30px]  hidden md:block rounded-xl" />
           </Link>
 
 
-          <ul className="flex gap-5 ">
+          <ul className="flex gap-5 text-[#fff]">
             <Link to="/">
-              <li className="font-[Poppins] cursor-pointer">Home</li>
-            </Link>
-            {/* <Link to="/collections">
-                <li className="font-[Poppins] cursor-pointer">Collections</li>
-              </Link> */}
-            <Link to="/men-collection">
-              <li className="font-[Poppins] cursor-pointer">Men</li>
-            </Link>
-            <Link to="/women-collection">
-              <li className="font-[Poppins] cursor-pointer">Women</li>
-            </Link>
-            <Link to="/kids-collection">
-              <li className="font-[Poppins] cursor-pointer">Kids</li>
+              <li className="font-[Poppins] cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
+                Home
+              </li>
             </Link>
 
+            <Link to="/men-collection">
+              <li className="font-[Poppins] cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
+                Men
+              </li>
+            </Link>
+            <Link to="/women-collection">
+              <li className="font-[Poppins] cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
+                Women
+              </li>
+            </Link>
+            <Link to="/kids-collection">
+              <li className="font-[Poppins] cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
+                Kids
+              </li>
+            </Link>
           </ul>
+
           <div className="flex items-center gap-3">
             <div className=" flex items-center justify-between rounded-full  bg-[#E7EFFA]  px-2 py-3  searchBtn">
               <button
@@ -259,7 +265,7 @@ export default function Header(props) {
                   ? navigate("/wishlist")
                   : toast.error("Please Login First")
               }
-              className="relative flex items-center justify-center p-2 bg-gray-600 rounded-full hover:bg-gray-700 transition"
+              className="relative flex items-center justify-center p-2 bg-pink-300 rounded-full hover:bg-pink-300 transition"
             >
               {/* Heart Icon */}
               <FiHeart className="text-2xl text-white cursor-pointer" />
@@ -291,19 +297,7 @@ export default function Header(props) {
               )}
             </button>
 
-            {/* <FaRegUser
-                onClick={() => SetdropdownContent(!dropdownContent)}
-                className="text-lg cursor-pointer"
-              /> */}
-            {/* <button
-                onClick={() =>
-                 
-                     navigate("/")
-                   
-                }
-              >
-                <CiSearch className="text-lg cursor-pointer" />
-              </button> */}
+
 
             {
               loginStatus === null ?
@@ -351,7 +345,7 @@ export default function Header(props) {
         <div className="relative " onClick={toggleNav}>
           {/* Hamburger Icon */}
           <GiHamburgerMenu
-          onClick={() => openSubmenu()}
+            onClick={() => openSubmenu()}
             style={{
               position: "fixed",
               top: "16px",
@@ -362,13 +356,13 @@ export default function Header(props) {
               color: "#fff",
               fontSize: "24px",
             }}
-            
+
           />
 
 
 
 
-      
+
         </div>
         {dropdownContent && (
           <ul className="bg-white w-[180px] p-5 absolute top-15 right-9 rounded-md">
@@ -428,8 +422,10 @@ export default function Header(props) {
 
 
 
-        
-        <div className="flex md:hidden  py-2 px-4 mb-auto text-[#fff] bg-[#2563AB] justify-between items-center">
+
+        <div className="flex md:hidden  py-2 px-4 mb-auto text-[#000] justify-between items-center"  style={{
+          backgroundImage: "linear-gradient(to right, #007bff, #fff)",
+        }} >
           <IoReorderThree onClick={() => openSubmenu()} className="text-3xl cursor-pointer" />
 
           <div className="flex gap-3 justify-between items-center cursor-pointer">
@@ -476,8 +472,8 @@ export default function Header(props) {
           <div className="block md:hidden z-10 text-[blue] bg-[#fff] fixed sm:w-[50%] w-[100%] p-5 top-0 h-full right-0">
             <div className="flex justify-between items-center">
               <div className="mb-5">
-                {/* <img src="assets/cart.png" alt="logo" /> */}
-                <img src="/assets/cart.png" className="w-[30px]" alt="logo" />
+                {/* <img src="assets/newlogo.jpeg" alt="logo" /> */}
+                <img src="/assets/newlogo.jpeg" className="w-[30px]" alt="logo" />
 
               </div>
               <button className="text-black " onClick={() => closeSubmenu()}>
@@ -491,12 +487,7 @@ export default function Header(props) {
               >
                 <Link to="/">Homee</Link>
               </li>
-              {/* <li
-                onClick={() => closeSubmenu()}
-                className=" cursor-pointer mb-5"
-              >
-                <Link to="/collections">Collections</Link>
-              </li> */}
+    
               <li
                 onClick={() => closeSubmenu()}
                 className=" cursor-pointer mb-5"
