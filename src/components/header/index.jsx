@@ -35,7 +35,7 @@ export default function Header(props) {
 
   const { pathname } = location;
   const pathInclude = pathname === '/men-collection' || pathname === '/women-collection' || pathname === '/kids-collection' || pathname === '/'
-  const [isSubmenu, SetisSubmenu] = useState(false);
+  const [isSubmenu, setisSubmenu] = useState(false);
   const [dropdownContent, SetdropdownContent] = useState(false);
   //search barch functionlatiy
   const [searchQuery, setSearchQuery] = useState("")
@@ -92,11 +92,11 @@ export default function Header(props) {
 
 
   const closeSubmenu = () => {
-    SetisSubmenu(false);
+    setisSubmenu(false);
     document.body.style.overflow = "scroll";
   };
   const openSubmenu = () => {
-    SetisSubmenu(true);
+    setisSubmenu(true);
     document.body.style.overflow = "hidden";
   };
   const logout = async () => {
@@ -200,7 +200,7 @@ export default function Header(props) {
       <header className={className}>
         <div className="hidden md:flex items-center text-[#2563AB] bg-[#fff] px-8 py-2 justify-between">
           <Link to="/" >
-            <img src="//newlogo.jpeg" alt="Logo" className="h-[30px]  hidden md:block rounded-xl" />
+            <img src="/cart.png /assets/cart.png" alt="Logo" className="h-[30px]  hidden md:block rounded-xl" />
           </Link>
 
 
@@ -348,9 +348,10 @@ export default function Header(props) {
 
 
 
-        <div className="relative">
+        <div className="relative " onClick={toggleNav}>
           {/* Hamburger Icon */}
           <GiHamburgerMenu
+          onClick={() => openSubmenu()}
             style={{
               position: "fixed",
               top: "16px",
@@ -361,66 +362,13 @@ export default function Header(props) {
               color: "#fff",
               fontSize: "24px",
             }}
-            onClick={toggleNav}
+            
           />
 
 
 
 
-          {/* Slider Nav */}
-          < div
-            className={`fixed top-0 left-0 h-full w-64 shadow-lg transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"
-              }`
-            }
-            style={{
-              backgroundColor: "#2563eb",
-              color: "#ffffff",
-            }}
-          >
-            <ul
-              className="flex flex-col items-start mt-16 px-4"
-              style={{
-                listStyleType: "none",
-              }}
-            >
-              <li
-                className="py-2 px-4 rounded-md cursor-pointer"
-                style={{
-                  backgroundColor: isOpen ? "transparent" : "",
-                  transition: "background-color 0.3s",
-                }}
-              >
-                Home
-              </li>
-              <li
-                className="py-2 px-4 rounded-md cursor-pointer"
-                style={{
-                  backgroundColor: isOpen ? "transparent" : "",
-                  transition: "background-color 0.3s",
-                }}
-              >
-                About
-              </li>
-              <li
-                className="py-2 px-4 rounded-md cursor-pointer"
-                style={{
-                  backgroundColor: isOpen ? "transparent" : "",
-                  transition: "background-color 0.3s",
-                }}
-              >
-                Services
-              </li>
-              <li
-                className="py-2 px-4 rounded-md cursor-pointer"
-                style={{
-                  backgroundColor: isOpen ? "transparent" : "",
-                  transition: "background-color 0.3s",
-                }}
-              >
-                Contact
-              </li>
-            </ul>
-          </div>
+      
         </div>
         {dropdownContent && (
           <ul className="bg-white w-[180px] p-5 absolute top-15 right-9 rounded-md">
@@ -477,6 +425,10 @@ export default function Header(props) {
             )}
           </ul>
         )}
+
+
+
+        
         <div className="flex md:hidden  py-2 px-4 mb-auto text-[#fff] bg-[#2563AB] justify-between items-center">
           <IoReorderThree onClick={() => openSubmenu()} className="text-3xl cursor-pointer" />
 
@@ -525,7 +477,7 @@ export default function Header(props) {
             <div className="flex justify-between items-center">
               <div className="mb-5">
                 {/* <img src="assets/cart.png" alt="logo" /> */}
-                <img src="/assets/newlogo.jpeg" className="w-[80px]" alt="logo" />
+                <img src="/assets/cart.png" className="w-[30px]" alt="logo" />
 
               </div>
               <button className="text-black " onClick={() => closeSubmenu()}>
@@ -537,7 +489,7 @@ export default function Header(props) {
                 onClick={() => closeSubmenu()}
                 className=" cursor-pointer mb-5"
               >
-                <Link to="/">Home</Link>
+                <Link to="/">Homee</Link>
               </li>
               {/* <li
                 onClick={() => closeSubmenu()}

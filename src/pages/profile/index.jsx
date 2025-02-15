@@ -76,7 +76,6 @@ export default function Profile() {
 
 
   const userType = localStorage.getItem("role")
-  console.log("userType",userType)
 
   
   const logout = async () => {
@@ -125,7 +124,7 @@ export default function Profile() {
         setPanInfo(response?.panInfo?.data);
 
         setVerStatPan(true);
-        console.log("Verified PAN info:", response?.panInfo?.data);
+        // console.log("Verified PAN info:", response?.panInfo?.data);
         toast.success(response?.panInfo?.responseMessage || "PAN verification successful.");
       }
 
@@ -159,13 +158,11 @@ export default function Profile() {
 
       if (success) {
         setVerStatGst(true);
-        console.log("GSTN verified:", msg);
       } else {
         setVerStatGst(false);
       }
 
       setGstInfo(msg)
-      console.log("gstn info:", gstInfo)
 
     } catch (error) {
       console.error(error);
@@ -177,7 +174,6 @@ export default function Profile() {
       const response = await HttpClient.put(`/users/update`, data);
       setUserData(response?.userData);
       setUserDetails(response?.userData);
-      console.log("updateduserdata", response?.userData)
       toast.success(response?.message || "Profile updated successfully");
     } catch (error) {
       console.error(error);
@@ -189,6 +185,7 @@ export default function Profile() {
     try {
       const { userData } = await HttpClient.get("/users/me");
       setUserDetails(userData);
+      console.log("userData",userData)
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
@@ -199,7 +196,6 @@ export default function Profile() {
     try {
       const { data } = await HttpClient.get("/order");
       setAllOrders(data);
-      console.log(data)
     } catch (error) {
       console.error("Error fetching data:", error);
       toast.error(error?.response?.data?.message);
@@ -283,10 +279,9 @@ export default function Profile() {
  
     try {
       const response = await HttpClient.get("/invoice/");
-      console.log("API Response:", response)
       
       setAllInvoice(response.allInvoices);
-      console.log(response.allInvoices)
+      console.log("allInvoices",response.allInvoices)
      // console.log(allInvoice)
       
     } catch (error) {
@@ -324,7 +319,7 @@ export default function Profile() {
 
 
   const returnOrder = () => {
-    console.log("return order")
+    // console.log("return order")
   }
 
   const setSelectedReason = (e) => {
@@ -332,10 +327,10 @@ export default function Profile() {
   }
 
   const cancelTheOrder = async () => {
-    console.log(`orderId: ${cancelOrderId}`);
+    // console.log(`orderId: ${cancelOrderId}`);
     let orderId = cancelOrderId
-    console.log(`cancelReason: ${cancelReason}`);
-    console.log(`cancelProductId: ${cancelProductId}`);
+    // console.log(`cancelReason: ${cancelReason}`);
+    // console.log(`cancelProductId: ${cancelProductId}`);
 
     if (cancelReason !== "") {
       try {
@@ -478,7 +473,9 @@ useEffect(() => {
 
       <section className="px-2 font-[Quicksand]">
         <TabGroup className="mt-10">
-          <div className="sm:flex gap-6">
+          <div className="sm:flex gap-6" style={{
+            marginTop:"75px"
+          }}>
             <div className="w-full sm:w-1/5">
               {/* <div className="bg-[#EFEFEF] border border-solid border-[#D6D6D6] p-5 mb-8">
                 <p className="text-[#2F2F2F] font-bold text-lg">

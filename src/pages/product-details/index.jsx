@@ -214,13 +214,13 @@ export default function ProductDetails() {
   }
 
   return (
-    <div className="px-3 md:p-10">
+    <div className="px-3 mt-10 md:p-10">
       <div className="flex flex-wrap gap-2 md:gap-16">
         {/* Product Image */}
         <div className="flex-1 min-w-[300px] max-w-[350px]">
-          <div className="p-2 rounded-md border border-gray-300">
+          <div className="p-2 rounded-md border border-gray-300 mt-5">
             <img
-              className="h-[280px] md:h-[400px] w-full object-cover rounded-md"
+              className="h-[240px] md:h-[400px] w-full object-cover rounded-md"
               src={productDetails.bannerImage}
               alt="Product"
             />

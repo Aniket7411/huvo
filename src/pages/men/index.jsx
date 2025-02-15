@@ -4,7 +4,7 @@ import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
 import { FaArrowRight } from "react-icons/fa";
 import { PiCurrencyInr } from "react-icons/pi";
-import { CiDeliveryTruck } from "react-icons/ci";
+import { CiDeliveryTruck, CiDiscount1 } from "react-icons/ci";
 
 export default function MenCollection() {
   const [allCategories, setAllCategories] = useState([]);
@@ -190,23 +190,20 @@ export default function MenCollection() {
                     <p className="text-sm text-gray-500">200 Ordered last week</p>
                   </div>
 
-                  <div className="flex justify-between">
-
-                    <div className="flex items-center gap-1">
-                      <PiCurrencyInr />
-
-                      <p className="line-through text-red-600 font-semibold"> {eachProduct?.price}</p>
-                    </div>
-
-
-                    <div className="flex items-center  gap-1/2">
-
-                      <PiCurrencyInr />
-
-                      <p>{eachProduct?.discount}</p>
-
-                    </div>
-                  </div>
+                  <div className="flex justify-between w-[100%] items-center">
+               {/* Original Price */}
+               <div className="flex items-center gap-1">
+                 <PiCurrencyInr className="text-red-600" />
+                 <p className="line-through text-red-600 font-semibold">{eachProduct?.price}</p>
+               </div>
+             
+               {/* Discount Price */}
+               <div className="flex items-center gap-1">
+                 <CiDiscount1 className="text-green-600" />{"-"}
+                 <PiCurrencyInr className="text-green-600" /> 
+                 <p className="font-semibold text-green-600">{eachProduct?.discount}</p>
+               </div>
+             </div>
    <div className="flex justify-between items-center w-[100%]">
      
                        <div className="flex items-center text-green-600 gap-1/2">
