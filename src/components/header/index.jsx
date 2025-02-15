@@ -50,7 +50,7 @@ export default function Header(props) {
     try {
       const response = await HttpClient.get("/wishlist/")
 
-     const wishListLength = Object.keys(response.data).length;
+      const wishListLength = Object.keys(response.data).length;
 
       setWishListItems(wishListLength)
 
@@ -198,9 +198,9 @@ export default function Header(props) {
   return (
     <>
       <header className={className}>
-      <div className="hidden md:flex items-center text-[#2563AB] bg-[#fff] px-8 py-2 justify-between">
-      <Link to="/" >
-            <img src="/assets/newlogo.jpeg" alt="Logo" className="h-[30px]  hidden md:block rounded-xl" />
+        <div className="hidden md:flex items-center text-[#2563AB] bg-[#fff] px-8 py-2 justify-between">
+          <Link to="/" >
+            <img src="//newlogo.jpeg" alt="Logo" className="h-[30px]  hidden md:block rounded-xl" />
           </Link>
 
 

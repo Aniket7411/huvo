@@ -4,6 +4,8 @@ import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
 import { FaArrowRight } from "react-icons/fa";
 import { PiCurrencyInr } from "react-icons/pi";
+import { CiDeliveryTruck } from "react-icons/ci";
+
 
 export default function WomenCollection() {
   const [allCategories, setAllCategories] = useState([]);
@@ -21,39 +23,39 @@ export default function WomenCollection() {
   };
 
 
-   const fetchAllProducts = async () => {
-        try {
-          const response = await HttpClient.get("/product");
-          setAllProducts(response.products);
-    
-          console.log("trending products", response.products)
-    
-          const formattedData = response.products.map((eachProduct) => ({
-            objectId: eachProduct._id,
-            bannerImage: eachProduct.bannerImage,
-            productName: eachProduct.name,
-            brandName: eachProduct.brand.name,
-            brandImage: eachProduct.brand.image,
-            onGoingOffer: eachProduct.brand.onGoingOffer,
-            brandId: eachProduct.brand.brandId,
-            categoryId: eachProduct.category.categoryId,
-            categoryDescription: eachProduct.category.description,
-            productDescription: eachProduct.description,
-            productDetails: eachProduct.productDetails[0],
-            group: eachProduct.group,
-            isReturnable: eachProduct.isReturnable,
-            discount: eachProduct.discount,
-            price: eachProduct.price,
-            productId: eachProduct.productId,
-          }))
-          setAllProducts(formattedData)
-    
-        } catch (error) {
-          console.error(error);
-          toast.error(error?.response?.data?.message);
-        }
-      };
-    
+  const fetchAllProducts = async () => {
+    try {
+      const response = await HttpClient.get("/product");
+      setAllProducts(response.products);
+
+      console.log("trending products", response.products)
+
+      const formattedData = response.products.map((eachProduct) => ({
+        objectId: eachProduct._id,
+        bannerImage: eachProduct.bannerImage,
+        productName: eachProduct.name,
+        brandName: eachProduct.brand.name,
+        brandImage: eachProduct.brand.image,
+        onGoingOffer: eachProduct.brand.onGoingOffer,
+        brandId: eachProduct.brand.brandId,
+        categoryId: eachProduct.category.categoryId,
+        categoryDescription: eachProduct.category.description,
+        productDescription: eachProduct.description,
+        productDetails: eachProduct.productDetails[0],
+        group: eachProduct.group,
+        isReturnable: eachProduct.isReturnable,
+        discount: eachProduct.discount,
+        price: eachProduct.price,
+        productId: eachProduct.productId,
+      }))
+      setAllProducts(formattedData)
+
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.response?.data?.message);
+    }
+  };
+
 
   useEffect(() => {
     fetchAllProducts();
@@ -61,6 +63,7 @@ export default function WomenCollection() {
   }, []);
 
   const womenProducts = allProducts.filter((item) => item.group === "women").splice(0, 8);
+  console.log("womenProducts", womenProducts)
 
 
   return (
@@ -69,7 +72,7 @@ export default function WomenCollection() {
       <div class="text-center mt-4">
         <h1 class="text-3xl font-bold text-gray-800">Women's Clothing</h1>
         <p class="text-lg text-[#eb25de] mt-2">
-        Discover the latest trends and styles in women's fashion. From elegant dresses to casual outfits, find the perfect look for every occasion.
+          Discover the latest trends and styles in women's fashion. From elegant dresses to casual outfits, find the perfect look for every occasion.
         </p>
       </div>
 
@@ -105,7 +108,7 @@ export default function WomenCollection() {
             CATEGORIES
           </h2>
           <p className="font-[Poppins] font-normal text-[#949494] m-auto text-center w-full  mb-2">
-          Explore the Latest Trends and Timeless Pieces Designed for Every Occasion.
+            Explore the Latest Trends and Timeless Pieces Designed for Every Occasion.
 
           </p>
         </div>
@@ -147,141 +150,165 @@ export default function WomenCollection() {
 
       <hr className="my-2" />
 
-      <div  className="flex-wrap px-10 items-center gap-2 hidden md:flex">
+         <div    style={{
+        backgroundImage: "linear-gradient(to top, #e303fc, #ffffff)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }} className="md:flex  flex-wrap hidden p-5  justify-center gap-2">
                  {womenProducts.map((eachProduct) => {
-                     return (
-                         <div className="bg-white flex flex-col  items-center rounded-2xl p-3 shadow-lg border border-gray-200 w-[1/5]">
-                             <h1 className="text-black font-quicksand font-bold text-xl mb-1 text-center">
-                                 {eachProduct?.productName
-                                     || "Product Name"}
-                             </h1>
-      
-                             <img
-                                 src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
-                                 alt={eachProduct?.name || "Product Image"}
-                                 className="h-40  w-40  object-cover rounded-full mb-1"
-                             />
-      
-                             {/* Product Name */}
-                             <p className="text-lg font-semibold mb-1 text-gray-700">
-                                 {eachProduct?.brandName || "Brands Name"}
-                             </p>
-                             <div className="flex items-center gap-4 text-gray-700 mt-1">
-                                 <p className="flex items-center text-sm font-semibold">
-                                     <span className="text-yellow-500 mr-1">
-                                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
-                                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                                         </svg>
-                                     </span>
-                                      4.5 / 5
-                                 </p>
-                                 <p className="text-sm text-gray-500">Ordered last week</p>
-                             </div>
-      
-                                    <div className="flex justify-between items-center mt-1">
-                               {/* Original Price */}
-                               <div className="flex items-center ">
-                                 <PiCurrencyInr className="text-red-500" />
-                                 <p className="text-red-500 line-through text-sm font-medium">
-                                   {eachProduct?.price || "0"}
-                                 </p>
-                               </div>
-                             
-                               {/* Selling Price */}
-                               <div className="flex items-center ">
-                                 <PiCurrencyInr className="text-green-500" />
-                                 <p className="text-green-500 text-sm font-semibold">
-                                   {eachProduct?.discount || "0"}
-                                 </p>
-                               </div>
-                             </div>
-                             
-      
-      
-                             {/* Explore Button */}
-                             <Link to={`/product-details/${eachProduct?.productId}`} className="block mt-2 ">
-                                 <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-md  hover:bg-[#02386e] transition-colors duration-200">
-                                     Product Details
-                                     <FaArrowRight className="ml-2" />
-                                 </button>
-                             </Link>  {/* Product Name */}
-                      
-                             
+                   const finalPrice = eachProduct.price - eachProduct.discount
+     
+                   return (
+                     <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200 w-[1/5]">
+                     
+     
+                       <img
+                         src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
+                         alt={eachProduct?.name || "Product Image"}
+                         className="h-40 w-40  object-cover rounded-md mb-1"
+                       />
+<h1 className="text-black font-quicksand font-bold text-xl ">
+                         {eachProduct?.productName
+                           || "Product Name"}
+                       </h1>
+     
+                       <div className="flex items-center gap-4 text-gray-700 mt-1">
+                         <p className="flex items-center text-sm font-semibold">
+                           <span className="text-yellow-500 mr-1">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                               <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                             </svg>
+                           </span>
+                           Rating: 4.5 / 5
+                         </p>
+                         <p className="text-sm text-gray-500">200 Ordered last week</p>
+                       </div>
+     
+                       <div className="flex justify-between">
+     
+                         <div className="flex items-center gap-1">
+                           <PiCurrencyInr />
+     
+                           <p className="line-through text-red-600 font-semibold"> {eachProduct?.price}</p>
                          </div>
-                     )
-                 })}
-             </div>
-
-
-      <div className="flex-wrap px-6 justify-between gap-2 hidden md:flex">
-                 {womenProducts.map((eachProduct) => {
-                     return (
-                         <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200 w-[30%]">
-                             <h1 className="text-black font-quicksand font-bold text-xl mb-1 text-center">
-                                 {eachProduct?.productName
-                                     || "Product Name"}
-                             </h1>
-      
-                             <img
-                                 src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
-                                 alt={eachProduct?.name || "Product Image"}
-                                 className="h-40 w-40  object-cover rounded-full mb-1"
-                             />
-      
-                             {/* Product Name */}
-                             <p className="text-lg font-semibold mb-1 text-gray-700">
-                                 {eachProduct?.brandName || "Brands Name"}
-                             </p>
-                             <div className="flex items-center gap-4 text-gray-700 mt-1">
-                                 <p className="flex items-center text-sm font-semibold">
-                                     <span className="text-yellow-500 mr-1">
-                                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
-                                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                                         </svg>
-                                     </span>
-                                     Rating: 4.5 / 5
-                                 </p>
-                                 <p className="text-sm text-gray-500">Ordered last week</p>
-                             </div>
-      
-      
-                             {/* Explore Button */}
-                             <Link to={`/product-details/${eachProduct?.productId}`} className="block mt-2 ">
-                                 <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-md  hover:bg-[#02386e] transition-colors duration-200">
-                                     Product Details
-                                     <FaArrowRight className="ml-2" />
-                                 </button>
-                             </Link>  {/* Product Name */}
-                      
-                             
+     
+     
+                         <div className="flex items-center  gap-1/2">
+     
+                           <PiCurrencyInr />
+     
+                           <p>{eachProduct?.discount}</p>
+     
                          </div>
-                     )
+                       </div>
+
+                       <div className="flex justify-between items-center w-[100%]">
+     
+                       <div className="flex items-center text-green-600 gap-1/2">
+                         <PiCurrencyInr />
+     
+                         <p className=" font-semibold">{finalPrice} /-</p>
+                       </div>
+
+                       <div className="flex items-center gap-2">
+                    <CiDeliveryTruck />
+                    <p className="font-semibold items-end">Free delivery</p>
+
+                  </div>
+                  </div>
+     
+     
+     
+     
+                       {/* Explore Button */}
+                       <Link to={`/product-details/${eachProduct?.productId}`} className="block mt-2 ">
+                         <button className="flex items-center justify-center bg-[#011F4B] text-white px-3 py-1 rounded-lg text-md  hover:bg-[#02386e] transition-colors duration-200">
+                           Product Details
+                           <FaArrowRight className="ml-2" />
+                         </button>
+                       </Link>  {/* Product Name */}
+     
+     
+                     </div>
+                   )
                  })}
-             </div>
-
-             <div className="flex p-2 md:hidden flex-wrap items-center gap-2 ">
-        {womenProducts.map((each, index) => (
-          <div
-            key={index}
-            className="w-[31%] flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
-          >
+               </div>
 
 
-            {/* Product Image */}
-            <img
-              src={each?.bannerImage || "https://via.placeholder.com/300"}
-              alt={each?.name || "Product Image"}
-              className="h-[90px] w-20 object-cover rounded-md"
-            />
-            {/* Product Name */}
-            <h3 className="text-center font-semibold text-gray-800 text-sm mb-2">
-              {each?.productName || "Product Name"}
-            </h3>
-          </div>
-        ))}
+    
+
+      <div className="flex p-auto md:hidden flex-wrap gap-2 justify-center ">
+        {womenProducts.map((each, index) => {
+
+          const finalPrice = each.price - each.discount
+
+          return (
+            (
+              <div
+                key={index}
+                className="w-auto  h-auto  flex flex-col   bg-white rounded-lg shadow-md p-2 border border-gray-200"
+              >
+
+
+                <Link to= {`/product-details/${each?.productId}`} >
+
+
+                {/* Product Image */}
+                <img
+                  src={each?.bannerImage || "https://via.placeholder.com/300"}
+                  alt={each?.name || "Product Image"}
+                  className="h-[150px]  object-cover rounded-md"
+                />
+                <div>
+                  {/* Product Name */}
+                  <h2 className=" font-semibold text-gray-800 text-sm">
+                    {each?.productName || "Product Name"}
+                  </h2>
+
+                  <div className="flex justify-between">
+
+                    <div className="flex items-center gap-1">
+                      <PiCurrencyInr />
+
+                      <p className="line-through text-red-600 font-semibold"> {each?.price}</p>
+                    </div>
+
+
+                    <div className="flex items-center  gap-1/2">
+
+                      <PiCurrencyInr />
+
+                      <p>{each?.discount}</p>
+
+                    </div>
+                  </div>
+
+                  <div className="flex text-green-600 items-center gap-1/2">
+                    <PiCurrencyInr />
+
+                    <p className=" font-semibold">{finalPrice}/-</p>
+                  </div>
+
+
+                  <div className="flex items-center gap-2">
+                    <CiDeliveryTruck />
+                    <p className="font-semibold items-end">Free delivery</p>
+
+                  </div>
+
+                </div>
+                </Link>
+              </div>
+            )
+          )
+        })}
       </div>
-      
-             <hr className="my-2"/>
+
+      <hr className="my-2" />
 
 
     </>

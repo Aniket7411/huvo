@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
 import { FaArrowRight } from "react-icons/fa";
+import { PiCurrencyInr } from "react-icons/pi";
+import { CiDeliveryTruck } from "react-icons/ci";
 
 export default function KidsCollection() {
   const [allCategories, setAllCategories] = useState([]);
@@ -147,25 +149,30 @@ export default function KidsCollection() {
       <hr className="my-2" />
 
 
-      <div className="flex-wrap px-6 justify-between gap-2 hidden md:flex">
+      <div style={{
+        backgroundImage: "url('/assets/productsbg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        height: "auto",
+        width: "100%",
+      }} className="md:flex  flex-wrap hidden p-5  justify-center gap-2">
         {kidsProducts.map((eachProduct) => {
+          const finalPrice = eachProduct.price - eachProduct.discount
+
           return (
-            <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200 w-[30%]">
-              <h1 className="text-black font-quicksand font-bold text-xl mb-1 text-center">
-                {eachProduct?.productName
-                  || "Product Name"}
-              </h1>
+            <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200 w-[1/5]">
+
 
               <img
                 src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
                 alt={eachProduct?.name || "Product Image"}
-                className="h-40 w-40  object-cover rounded-full mb-1"
+                className="h-40 w-40  object-cover rounded-md mb-1"
               />
+              <h1 className="text-black font-quicksand font-bold text-xl ">
+                {eachProduct?.productName
+                  || "Product Name"}
+              </h1>
 
-              {/* Product Name */}
-              <p className="text-lg font-semibold mb-1 text-gray-700">
-                {eachProduct?.brandName || "Brands Name"}
-              </p>
               <div className="flex items-center gap-4 text-gray-700 mt-1">
                 <p className="flex items-center text-sm font-semibold">
                   <span className="text-yellow-500 mr-1">
@@ -175,13 +182,47 @@ export default function KidsCollection() {
                   </span>
                   Rating: 4.5 / 5
                 </p>
-                <p className="text-sm text-gray-500">Ordered last week</p>
+                <p className="text-sm text-gray-500">200 Ordered last week</p>
               </div>
+
+              <div className="flex justify-between">
+
+                <div className="flex items-center gap-1">
+                  <PiCurrencyInr />
+
+                  <p className="line-through text-red-600 font-semibold"> {eachProduct?.price}</p>
+                </div>
+
+
+                <div className="flex items-center  gap-1/2">
+
+                  <PiCurrencyInr />
+
+                  <p>{eachProduct?.discount}</p>
+
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center w-[100%]">
+
+                <div className="flex items-center text-green-600 gap-1/2">
+                  <PiCurrencyInr />
+
+                  <p className=" font-semibold">{finalPrice} /-</p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <CiDeliveryTruck />
+                  <p className="font-semibold items-end">Free delivery</p>
+
+                </div>
+              </div>
+
 
 
               {/* Explore Button */}
               <Link to={`/product-details/${eachProduct?.productId}`} className="block mt-2 ">
-                <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-md  hover:bg-[#02386e] transition-colors duration-200">
+                <button className="flex items-center justify-center bg-[#011F4B] text-white px-3 py-1 rounded-lg text-md  hover:bg-[#02386e] transition-colors duration-200">
                   Product Details
                   <FaArrowRight className="ml-2" />
                 </button>
@@ -192,6 +233,9 @@ export default function KidsCollection() {
           )
         })}
       </div>
+
+
+
 
       <div className="flex p-2 md:hidden flex-wrap items-center gap-2 ">
         {kidsProducts.map((each, index) => (

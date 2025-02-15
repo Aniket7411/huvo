@@ -491,16 +491,30 @@ export default function Home() {
           backgroundSize: "cover",
           backgroundPosition: "center", // Shift the image downward
           backgroundRepeat: "no-repeat",
-          padding: "5px",
-          height: "250px",
+          padding: "2px",
+          height: "200px",
           display: "flex",
           justifyContent: "start",
-          alignItems: "center",
+          alignItems: "start",
           color: "#ffffff",
           marginBottom: "5px"
         }}
       >
-        <div className="flex items-center  flex-wrap gap-0  md:gap-3 bg-[#fff] px-2 py-1 rounded-lg shadow-md">
+
+<h1
+  className="text-xl font-inter font-bold text-[#191ce3] md:hidden bg-white p-4 rounded-2xl shadow-lg tracking-wide"
+  style={{
+    backgroundImage: "linear-gradient(to right, #e3f2fd, #fff)",
+    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+  }}
+>
+
+  Products by Top Brands
+</h1>
+
+
+        
+        <div className="md:flex items-center hidden flex-wrap gap-0  md:gap-3 bg-[#fff] px-2 py-1 rounded-lg shadow-md">
           <h2
             className="font-[Quicksand] font-medium text-center text-2xl sm:text-sm md:text-4xl bg-clip-text text-transparent"
             style={{
