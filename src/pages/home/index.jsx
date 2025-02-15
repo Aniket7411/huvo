@@ -639,7 +639,7 @@ export default function Home() {
       </section>
 
 
-      <div className="flex flex-wrap md:hidden gap-1 ">
+      <div className="flex flex-wrap md:hidden gap-1 justify-center ">
         {topBrands.map((product, i) => (
           <div
             key={i}
