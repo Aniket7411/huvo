@@ -474,11 +474,17 @@ export default function Home() {
               className="h-20 w-20 object-cover rounded-md"
             />
             {/* Product Name */}
-            <h3 className="text-center font-semibold text-gray-800 text-sm mb-2">
+            <h3 className="text-center font-semibold text-gray-800 text-sm mb-1">
               {each?.productName || "Product Name"}
             </h3>
+            <div className="flex items-center text-sm ">
+            <span className="text-gray-700 ">Ratings: </span>
+            <span>4.5</span>
+            </div>
+            <p className="text-[10px] mt-auto text-center">   
+            200 Ordered <br/> last  week</p>          
             </Link>
-          </div>
+        </div>
         ))}
       </div>
       <hr className="my-5" />
@@ -495,14 +501,14 @@ export default function Home() {
           height: "200px",
           display: "flex",
           justifyContent: "start",
-          alignItems: "start",
+          alignItems: "end",
           color: "#ffffff",
           marginBottom: "5px"
         }}
       >
 
 <h1
-  className="text-xl font-inter font-bold text-[#191ce3] md:hidden bg-white p-4 rounded-2xl shadow-lg tracking-wide"
+  className="text-xl px-2 py-1 font-inter font-bold text-[#191ce3]   md:hidden bg-white rounded-2xl shadow-lg tracking-wide"
   style={{
     backgroundImage: "linear-gradient(to right, #e3f2fd, #fff)",
     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",

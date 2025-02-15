@@ -177,7 +177,9 @@ const matchesCategory = selectedCategories.length === 0 || selectedCategories.in
 console.log("category change filter working")
 
   return (
-    <section className="px-4 mt-10 font-[Quicksand]">
+    <section className="px-4 mt-10 font-[Quicksand]" style={{
+      marginTop:"70px"
+    }}>
       <h2 className="font-[Quicksand] font-bold mt-5 text-c
       enter text-[#011F4B] text-2xl md:text-4xl ">
         WESTERN WEAR

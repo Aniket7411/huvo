@@ -55,7 +55,7 @@ export default function Layout({ changeHeaderColor, children }) {
           {/* Spacer to offset header height */}
 
           <div className="relative" style={{
-            marginTop:"70px"
+            marginTop:"30px"
           }}   >
             {children}
           </div>

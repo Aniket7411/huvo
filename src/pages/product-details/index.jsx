@@ -8,7 +8,7 @@ import { ProductContext } from "../../usecontext1/cartcontext";
 import { FaShare } from "react-icons/fa";
 import { TbJewishStarFilled, TbStarFilled } from "react-icons/tb";
 import Modal from "react-modal";
-import { CiStar } from "react-icons/ci";
+import { CiDeliveryTruck, CiStar } from "react-icons/ci";
 import SimilarProducts from "./similarcategoryproducts";
 
 
@@ -230,7 +230,7 @@ export default function ProductDetails() {
         {/* Product Details */}
         <div className="flex-1">
           <div className="flex items-center gap-2 ">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 ">
+            <h1 className="text-2xl  font-inter md:text-2xl lg:text-3xl font-bold text-[#2563eb] ">
               Product Name: {productDetails.name}
             </h1>
             {/* <button type="button">
@@ -266,9 +266,9 @@ export default function ProductDetails() {
           </p> */}
           <p className="text-gray-700 mb-2">Product description: {productDetails.description}</p>
 
-          <div className="flex md:gap-8 gap-2  flex-wrap items-center">
+          <div className="flex flex-wrap gap-2 md:gap-10 items-center ">
 
-            <div>
+            <div className="">
 
 
               <p className="flex items-center text-lg font-semibold text-gray-800 ">
@@ -290,7 +290,7 @@ export default function ProductDetails() {
                 {/* Sizes Available Section */}
                 <div>
                   <p className="text-gray-600 font-medium ">Sizes Available:</p>
-                  <div className="flex flex-wrap gap-2 mb-2">
+                  <div className="flex flex-wrap gap-2 mt-2">
                     {productDetails.sizes?.length > 0 ? (
                       productDetails.sizes.map((sizeObj, index) => (
                         <span
@@ -315,7 +315,7 @@ export default function ProductDetails() {
             </div>
 
             {/* Quantity Control Section */}
-            <div >
+            <div className="" >
               <p className="text-gray-600 font-medium mb-2">Quantity</p>
               <div className="flex items-center gap-2">
                 <button
@@ -360,16 +360,21 @@ export default function ProductDetails() {
 
 
 
-              <p className="text-[#2562eb] mt-2 font-semibold">
-                <a href="/payment-details" className="hover:underline">
-                  View Payment Details
-                </a>
-              </p>
+
+              <div className="flex items-center mt-1 gap-2">
+                <CiDeliveryTruck size={30}/>
+                <p className="font-semibold items-end">Free delivery</p>
+
+              </div>
 
             </div>
 
           </div>
-
+          <p className="text-[#2562eb] mt-2 font-semibold">
+            <a href="/payment-details" className="hover:underline">
+              View Payment Details
+            </a>
+          </p>
 
 
 

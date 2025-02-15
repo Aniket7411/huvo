@@ -182,9 +182,9 @@ const SimilarProducts = () => {
                         </div>
 
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center font-semibold  gap-2">
                           <CiDeliveryTruck />
-                          <p className="font-semibold items-end">Free delivery</p>
+                          <p className="text-sm  items-end">Free delivery</p>
 
                         </div>
 

@@ -20,7 +20,7 @@ import {
   import { LogOut,setUserData, getUserData  } from "../../../server/user";
   import { useForm } from "react-hook-form";
 
-export default function ProfileAdmin() {
+export default function   ProfileAdmin() {
 
     const [userDetails, setUserDetails] = useState(null);
 
@@ -68,7 +68,7 @@ export default function ProfileAdmin() {
         try {
           const { userData } = await HttpClient.get("/users/me");
           setUserDetails(userData);
-          console.log(userDetails)
+          console.log("userDetails",userDetails)
         } catch (error) {
           console.error(error);
           toast.error(error?.response?.data?.message);
@@ -98,7 +98,7 @@ export default function ProfileAdmin() {
           <div className="flex items-center justify-between">
             <ul>
               <li className="mx-3 font-poppins font-medium text-[#46484D]">
-                Profile
+                Profile Details 
               </li>
             </ul>
          
@@ -107,42 +107,11 @@ export default function ProfileAdmin() {
         <hr className="mx-2 mt-2"></hr>
        <div>
         
-       <section className="px-10 sm:px-20 py-7 font-[Quicksand]">
+       <section className="p-3 font-[Quicksand]">
   <TabGroup>
           <div className="sm:flex gap-6">
-            <div className="w-full sm:w-1/5">
-              {/* <div className="bg-[#EFEFEF] border border-solid border-[#D6D6D6] p-5 mb-8">
-                <p className="text-[#2F2F2F] font-bold text-lg">
-                  {userData.firstName} {userData.lastName}
-                </p>
-                <p className="text-[#717171] font-normal">{userData.email}</p>
-              </div> */}
-              <div>
-                <TabList className="flex sm:flex-col mb-6 flex-wrap">
-                  {/* <Tab.List className="grid grid-cols-3 sm:flex sm:flex-col mb-6 "> */}
-                  <Tab className="outline-none border border-solid border-[#D6D6D6] text-[#626262] font-bold p-3 text-justify">
-                    Profile
-                  </Tab>
-                 
-                 
-                  {/* <Tab className="outline-none border border-solid border-[#D6D6D6] text-[#626262] font-bold p-3 sm:text-justify col-span-2 text-center">
-                    My membership
-                  </Tab> */}
-                </TabList>
-                <div className="flex sm:block w-full gap-3 mb-4 sm:mb-0">
-                  {/* <button className="text-[#FF0000] border border-solid border-[#FF0000]  font-bold p-3 w-1/2 sm:w-full sm:mb-4">
-                    DELETE MY ACCOUNT
-                  </button> */}
-                  <button
-                    onClick={() => logout()}
-                    className="text-[#FF0000] border border-solid border-[#FF0000] font-bold p-3 w-1/2 sm:w-full"
-                  >
-                    LOGOUT
-                  </button>
-                </div>
-              </div>
-            </div>
-            <TabPanels className="w-full sm:w-4/5">
+           
+            <TabPanels className="w-full">
               <TabPanel className="bg-[#F2F2F2] h-full">
                 {/* <div className="border-b-[1px] border-b-solid border-b-[#D6D6D6] py-5 px-5 md:px-[50px]">
                     <p className="text-[#626262] font-bold text-lg mb-2 ml-2">

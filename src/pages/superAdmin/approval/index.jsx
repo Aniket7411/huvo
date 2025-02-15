@@ -111,7 +111,7 @@ export default function Approval() {
             <table className='w-full table-auto'>
               <thead>
                 <tr className="">
-                  <th className="min-w-[150px] p-4 pl-8 font-poppins font-normal text-[14px] leading-[18px] text-[#6C757D]">
+                  <th className=" font-poppins font-normal text-[14px] leading-[18px] text-[#6C757D]">
                     Approval Id
                   </th>
                   <th className="min-w-[150px] p-4 pl-8 font-poppins font-normal text-[14px] leading-[18px]  text-[#6C757D]">

@@ -48,8 +48,6 @@ import CancelSection from "./pages/cancellation/cancellation.jsx";
 import Returnpolicy from "./pages/returnpolicy/index.jsx";
 import InvoicePage from "./pages/invoicepage/index.jsx";
 import UserInvoicePage from "./pages/userinvoice/index.jsx";
-
-
 import ProductProvider from "./usecontext1/cartcontext";
 import ProductsByBrands from "./pages/brandproducts/index.jsx";
 import ProductsByCategory from "./pages/categoryproducts/index.jsx";

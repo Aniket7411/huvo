@@ -155,9 +155,7 @@ export default function WomenCollection() {
         backgroundSize: "cover",
         backgroundPosition: "center",
         width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+    
       }} className="md:flex  flex-wrap hidden p-5  justify-center gap-2">
                  {womenProducts.map((eachProduct) => {
                    const finalPrice = eachProduct.price - eachProduct.discount
@@ -197,7 +195,7 @@ export default function WomenCollection() {
                          </div>
      
      
-                         <div className="flex items-center  gap-1/2">
+                         <div className="flex items-center justify-between">
      
                            <PiCurrencyInr />
      
@@ -294,11 +292,11 @@ export default function WomenCollection() {
                   </div>
 
 
-                  <div className="flex items-center gap-2">
-                    <CiDeliveryTruck />
-                    <p className="font-semibold items-end">Free delivery</p>
+                  <div className="flex items-center font-semibold  gap-2">
+                          <CiDeliveryTruck />
+                          <p className="text-sm  items-end">Free delivery</p>
 
-                  </div>
+                        </div>
 
                 </div>
                 </Link>

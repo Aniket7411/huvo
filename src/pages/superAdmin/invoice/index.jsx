@@ -121,7 +121,7 @@ export default function InvoiceAdmin() {
                 </tr>
               </thead>
               <tbody>
-                {invoiceList.map((item, key) => (
+                {invoiceList?.map((item, key) => (
                   <tr key={key}>
                     <td className="p-4 pl-8">
                       <h5 className="font-poppins font-normal text-[14px] leading-[21px] text-center">
