@@ -485,7 +485,7 @@ export default function Header(props) {
                 onClick={() => closeSubmenu()}
                 className=" cursor-pointer mb-5"
               >
-                <Link to="/">Homee</Link>
+                <Link to="/">Home</Link>
               </li>
 
               <li
