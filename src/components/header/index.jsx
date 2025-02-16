@@ -198,13 +198,13 @@ export default function Header(props) {
   return (
     <>
       <header className={className}>
-        <div  className="hidden md:flex items-center text-[#2563AB] px-8 py-2 justify-between">
+        <div className="hidden md:flex items-center bg-[#fff] text-[#2563AB] px-8 py-2 justify-between">
           <Link to="/" >
             <img src="/assets/newlogo.jpeg" alt="Logo" className="h-[30px]  hidden md:block rounded-xl" />
           </Link>
 
 
-          <ul className="flex gap-5 text-[#fff]">
+          <ul className="flex gap-5 text-[#2563AB]">
             <Link to="/">
               <li className="font-[Poppins] cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
                 Home
@@ -423,7 +423,7 @@ export default function Header(props) {
 
 
 
-        <div className="flex md:hidden  py-2 px-4 mb-auto text-[#000] justify-between items-center"  style={{
+        <div className="flex md:hidden  py-2 px-4 mb-auto text-[#000] justify-between items-center" style={{
           backgroundImage: "linear-gradient(to right, #007bff, #fff)",
         }} >
           <IoReorderThree onClick={() => openSubmenu()} className="text-3xl cursor-pointer" />
@@ -487,7 +487,7 @@ export default function Header(props) {
               >
                 <Link to="/">Homee</Link>
               </li>
-    
+
               <li
                 onClick={() => closeSubmenu()}
                 className=" cursor-pointer mb-5"
