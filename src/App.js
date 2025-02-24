@@ -55,6 +55,7 @@ import GroceriesHomeApplianceCollection from "./pages/appliances/index.jsx";
 import TrendingProducts from "./pages/trendingproducts/index.jsx";
 import Advertisement from "./pages/advertisement/index.jsx";
 import StoreAndProducts from "./pages/storeandproducts/index.jsx";
+import ProductsCarousel from "./pages/productcarousel/index.jsx";
 
 function App() {
   return (
@@ -66,6 +67,17 @@ function App() {
             element={
               <Layout>
                 <Home />
+              </Layout>
+            }
+          />
+        </Routes>
+
+        <Routes>
+          <Route
+            path="/carousel"
+            element={
+              <Layout>
+                <ProductsCarousel />
               </Layout>
             }
           />

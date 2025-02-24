@@ -17,6 +17,8 @@ import Slider from "react-slick";
 import "swiper/css";
 import "swiper/css/navigation"; // Include navigation styles
 
+import ProductsCarousel from "../productcarousel";
+
 
 const testimonials = [
   {
@@ -467,28 +469,30 @@ export default function Home() {
             <Link to={`/product-details/${each?.productId}`} >
 
 
-            {/* Product Image */}
-            <img
-              src={each?.bannerImage || "https://via.placeholder.com/300"}
-              alt={each?.name || "Product Image"}
-              className="h-20 w-20 object-cover rounded-md"
-            />
-            {/* Product Name */}
-            <h3 className="text-center font-semibold text-gray-800 text-sm mb-1">
-              {each?.productName || "Product Name"}
-            </h3>
-            <div className="flex items-center text-sm ">
-            <span className="text-gray-700 ">Ratings: </span>
-            <span>4.5</span>
-            </div>
-            <p className="text-[10px] mt-auto text-center">   
-            200 Ordered <br/> last  week</p>          
+              {/* Product Image */}
+              <img
+                src={each?.bannerImage || "https://via.placeholder.com/300"}
+                alt={each?.name || "Product Image"}
+                className="h-20 w-20 object-cover rounded-md"
+              />
+              {/* Product Name */}
+              <h3 className="text-center font-semibold text-gray-800 text-sm mb-1">
+                {each?.productName || "Product Name"}
+              </h3>
+              <div className="flex items-center text-sm ">
+                <span className="text-gray-700 ">Ratings: </span>
+                <span>4.5</span>
+              </div>
+              <p className="text-[10px] mt-auto text-center">
+                200 Ordered <br /> last  week</p>
             </Link>
-        </div>
+          </div>
         ))}
       </div>
       <hr className="my-5" />
 
+
+<Link to="/products_by_brand">
 
 
       <div
@@ -507,19 +511,19 @@ export default function Home() {
         }}
       >
 
-<h1
-  className="text-xl px-2 py-1 font-inter font-bold text-[#191ce3]   md:hidden bg-white rounded-2xl shadow-lg tracking-wide"
-  style={{
-    backgroundImage: "linear-gradient(to right, #e3f2fd, #fff)",
-    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
-  }}
->
+        <h1
+          className="text-xl px-2 py-1 font-inter font-bold text-[#191ce3]   md:hidden bg-white rounded-2xl shadow-lg tracking-wide"
+          style={{
+            backgroundImage: "linear-gradient(to right, #e3f2fd, #fff)",
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+          }}
+        >
 
-  Products by Top Brands
-</h1>
+          Products by Top Brands
+        </h1>
 
 
-        
+
         <div className="md:flex items-center hidden flex-wrap gap-0  md:gap-3 bg-[#fff] px-2 py-1 rounded-lg shadow-md">
           <h2
             className="font-[Quicksand] font-medium text-center text-2xl sm:text-sm md:text-4xl bg-clip-text text-transparent"
@@ -538,7 +542,7 @@ export default function Home() {
           </p>
         </div>
       </div>
-
+      </Link>
 
       <section className="p-2 hidden md:block ">
 
@@ -613,7 +617,7 @@ export default function Home() {
 
                       {/* Explore Button */}
                       <Link to={`/products_by_brand/${product?.brandName}`}>
-                      <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-lg  hover:bg-[#02386e] transition-colors duration-200">
+                        <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-lg  hover:bg-[#02386e] transition-colors duration-200">
                           Explore Brand
                           <FaArrowRight className="ml-2" />
                         </button>
@@ -646,608 +650,616 @@ export default function Home() {
             className=" w-[31%] flex flex-col   items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
           >
             {/* Heading */}
-            
+
 
             {/* Explore Button */}
             <Link to={`/products_by_brand/${product?.brandName}`}>
-            <h1 className="text-center font-semibold text-gray-800 text-sm mb-2">
-              {product?.onGoingOffer || "On Going Offer"}
-            </h1>
-            
+              <h1 className="text-center font-semibold text-gray-800 text-sm mb-2">
+                {product?.onGoingOffer || "On Going Offer"}
+              </h1>
 
-            {/* Product Image */}
-            <img
-              src={product?.image || "https://via.placeholder.com/300"}
-              alt={product?.name || "Product Image"}
-              className="h-20 w-20 object-cover  mb-2"
-            />
 
-            {/* Product Name */}
-            <p className="text-base flex-end font-semibold  text-gray-700 text-center">
-              {product?.brandName || "Brand Name"}
-            </p>
+              {/* Product Image */}
+              <img
+                src={product?.image || "https://via.placeholder.com/300"}
+                alt={product?.name || "Product Image"}
+                className="h-20 w-20 object-cover  mb-2"
+              />
+
+              {/* Product Name */}
+              <p className="text-base flex-end font-semibold  text-gray-700 text-center">
+                {product?.brandName || "Brand Name"}
+              </p>
             </Link>
           </div>
         ))}
       </div>
 
       <hr className="my-5" />
+      <Link to="/women-collection">
 
-      <div
-        style={{
-          backgroundImage: "url('/assets/womenbanner.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center", // Shift the image downward
-          backgroundRepeat: "no-repeat",
-          padding: "5px",
-          height: "250px",
-          display: "flex",
-          justifyContent: "start",
-          alignItems: "center",
-          color: "#ffffff",
-        }}
-      >
-        <div className="flex items-center flex-wrap gap-0  md:gap-3 bg-[#fff] px-2 py-1 rounded-lg shadow-md">
-          <h2
-            className="font-[Quicksand] font-medium text-center text-2xl sm:text-lg md:text-4xl bg-clip-text text-transparent"
-            style={{
-              backgroundImage: "linear-gradient(90deg, #007bff, #f8d00f, #007bff)", // Blue to Yellow Gradient
-              backgroundSize: "200% auto",
-              backgroundPosition: "0% 50%",
-              animation: "flow-gradient 3s linear infinite",
-            }}
-          >
-            Products for Women
-          </h2>
-          <FaArrowTrendUp size={30} className="text-[#4bd63b] mr-2 " />
-          <p className="text-gray-600 font-semibold">
-            Discover trendy and stylish products for women.
-          </p>
-        </div>
-      </div>
-
-
-
-      <section className="p-2 hidden md:block">
-
-        {allCategories.length ? (
-          <Swiper
-            loop={true}
-            className="mySwiper"
-            modules={[Autoplay]}
-            autoplay={{
-              delay: 3000,
-              disableOnInteraction: false,
-            }}
-            breakpoints={{
-              0: {
-                slidesPerView: 1,
-                spaceBetween: 10,
-              },
-              500: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              640: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-              },
-              1024: {
-                slidesPerView: 4,
-                spaceBetween: 40,
-              },
-              1400: {
-                slidesPerView: 5,
-                spaceBetween: 50,
-              },
-              2000: {
-                slidesPerView: 6,
-                spaceBetween: 60,
-              },
-            }}
-          >
-            {womenProducts.map((category, i) => {
-
-              const discountedPrice = category?.price && category?.discount
-                ? (category.price - (category.price * category.discount) / 100).toFixed(2)
-                : null;
-              return (
-                <SwiperSlide key={i}>
-                  <div className="p-5">
-
-                    <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
-                      {/* Heading */}
-                      <h1 className="text-black font-quicksand font-bold text-xl mb-1 text-center">
-                        {category?.brand?.name || "Trending Brand Name"}
-                      </h1>
-
-                      {/* Product Image */}
-                      <img
-                        src={category?.bannerImage || "https://via.placeholder.com/300"}
-                        alt={category?.name || "Product Image"}
-                        className="h-48 w-full object-cover rounded-lg mb-1"
-                      />
-
-                      {/* Product Name */}
-                      <p className="text-lg font-semibold mb-1 text-gray-700">
-                        {category?.name || "Product Name"}
-                      </p>
-
-                      {/* Pricing and Discount */}
-                      <div className="flex justify-between items-center w-full mb-2">
-                        <div className="flex items-center text-lg text-gray-800">
-                          <PiCurrencyInr className="mr-1" />
-                          <span>{category?.price || "0.00"}</span>
-                        </div>
-                        {category?.discount && (
-                          <div className="flex items-center text-sm text-green-600">
-                            <p className="mr-1">{category?.discount}% OFF</p>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Discounted Price */}
-                      {discountedPrice && (
-                        <p className="text-sm text-blue-600 font-medium mb-2">
-                          Discounted Price: <PiCurrencyInr className="inline mr-1" />{discountedPrice}
-                        </p>
-                      )}
-
-                      {/* Explore Button */}
-                      <Link to="/store_Products" className="w-full">
-                        <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
-                          Visit Store & Product
-                        </button>
-                      </Link>
-                    </div>
-
-
-
-                  </div>
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
-        ) : (
-          <h2 className="font-[Quicksand] font-medium text-center text-2xl text-[#011F4B]">
-            No Category Available
-          </h2>
-        )}
-
-
-
-      </section>
-
-      <div className="flex flex-wrap justify-between px-2 md:hidden gap-1">
-
-
-        {womenProducts.map((each, index) => (
-          <div
-            key={index}
-            className="w-[48%]  flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
-          >
-
-
-            <p className="text-[black] font-quicksand font-sm font-bold  mb-1 text-center">
-              {each?.brand?.name || "Trending Brand Name"}
+        <div
+          style={{
+            backgroundImage: "url('/assets/womenbanner.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center", // Shift the image downward
+            backgroundRepeat: "no-repeat",
+            padding: "5px",
+            height: "250px",
+            display: "flex",
+            justifyContent: "start",
+            alignItems: "center",
+            color: "#ffffff",
+          }}
+        >
+          <div className="flex items-center flex-wrap gap-0  md:gap-3 bg-[#fff] px-2 py-1 rounded-lg shadow-md">
+              <h2
+                className="font-[Quicksand] font-medium text-center text-2xl sm:text-lg md:text-4xl bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: "linear-gradient(90deg, #007bff, #f8d00f, #007bff)", // Blue to Yellow Gradient
+                  backgroundSize: "200% auto",
+                  backgroundPosition: "0% 50%",
+                  animation: "flow-gradient 3s linear infinite",
+                }}
+              >
+                Products for Women
+              </h2>
+            <FaArrowTrendUp size={30} className="text-[#4bd63b] mr-2 " />
+            <p className="text-gray-600 font-semibold">
+              Discover trendy and stylish products for women.
             </p>
-
-            {/* Product Image */}
-
-            <img
-              src={each?.bannerImage || "https://via.placeholder.com/300"}
-              alt={each?.name || "Product Image"}
-              className="h-20 w-20 object-cover  mb-2"
-            />
-            {/* Product Name */}
-            <h2 className="text-center font-semibold text-gray-800 text-sm ">
-              {each?.name || "Product Name"}
-            </h2>
-            <div className="flex items-center justify-between  text-sm ">
-              <span className="text-gray-700">Ratings: 4.5</span>
-              <TbJewishStarFilled className="text-[#ebf73d]" />
-            </div>
-
-
-            <Link to="/store_Products">
-              <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
-                Visit Store & Product
-              </button>
-            </Link>
           </div>
-        ))}
-
-      </div>
-      <hr className="my-5" />
-
-
-
-      <div
-        style={{
-          backgroundImage: "url('/assets/menbanner.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          height: "250px",
-          display: "flex",
-          padding: "5px",
-          justifyContent: "start",
-          alignItems: "center",
-          color: "#ffffff",
-        }}
-      >
-        <div className="flex items-center flex-wrap gap-0  md:gap-3 bg-[#fff] px-3 rounded-lg">
-          <h2
-            className="font-[Quicksand] font-medium text-center text-2xl sm:text-lg md:text-4xl bg-clip-text text-transparent"
-            style={{
-              backgroundImage: "linear-gradient(90deg, #007bff, #f8d00f, #007bff)", // Blue to Yellow Gradient
-              backgroundSize: "200% auto",
-              backgroundPosition: "0% 50%",
-              animation: "flow-gradient 3s linear infinite",
-            }}
-          >
-            Products for Men
-          </h2>
-          <FaArrowTrendUp size={30} className="text-[#4bd63b] mr-2 " />
-          <p className="text-gray-600 font-semibold">Explore the best products tailored for men.</p>
-
         </div>
 
-      </div>
+        </Link>
 
 
-      <section className="p-2 hidden md:block ">
 
-        {menProducts.length ? (
-          <Swiper
-            loop={true}
-            className="mySwiper"
-            modules={[Autoplay]}
-            autoplay={{
-              delay: 3000,
-              disableOnInteraction: false,
-            }}
-            breakpoints={{
-              0: {
-                slidesPerView: 1,
-                spaceBetween: 10,
-              },
-              500: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              640: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-              },
-              1024: {
-                slidesPerView: 4,
-                spaceBetween: 40,
-              },
-              1400: {
-                slidesPerView: 5,
-                spaceBetween: 50,
-              },
-              2000: {
-                slidesPerView: 6,
-                spaceBetween: 60,
-              },
-            }}
-          >
-            {menProducts.map((category, i) => {
 
-              const discountedPrice = category?.price && category?.discount
-                ? (category.price - (category.price * category.discount) / 100).toFixed(2)
-                : null;
-              return (
-                <SwiperSlide key={i}>
-                  <div className="p-3">
+        <section className="p-2 hidden md:block">
 
-                    <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
-                      {/* Heading */}
-                      <h1 className="text-black font-quicksand font-bold text-xl mb-1 text-center">
-                        {category?.brand?.name || "Trending Brand Name"}
-                      </h1>
+          {allCategories.length ? (
+            <Swiper
+              loop={true}
+              className="mySwiper"
+              modules={[Autoplay]}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              breakpoints={{
+                0: {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                500: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                640: {
+                  slidesPerView: 3,
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 40,
+                },
+                1400: {
+                  slidesPerView: 5,
+                  spaceBetween: 50,
+                },
+                2000: {
+                  slidesPerView: 6,
+                  spaceBetween: 60,
+                },
+              }}
+            >
+              {womenProducts.map((category, i) => {
 
-                      {/* Product Image */}
-                      <img
-                        src={category?.bannerImage || "https://via.placeholder.com/300"}
-                        alt={category?.name || "Product Image"}
-                        className="h-48 w-full object-cover rounded-lg mb-1"
-                      />
+                const discountedPrice = category?.price && category?.discount
+                  ? (category.price - (category.price * category.discount) / 100).toFixed(2)
+                  : null;
+                return (
+                  <SwiperSlide key={i}>
+                    <div className="p-5">
 
-                      {/* Product Name */}
-                      <p className="text-lg font-semibold mb-1 text-gray-700">
-                        {category?.name || "Product Name"}
-                      </p>
+                      <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
+                        {/* Heading */}
+                        <h1 className="text-black font-quicksand font-bold text-xl mb-1 text-center">
+                          {category?.brand?.name || "Trending Brand Name"}
+                        </h1>
 
-                      {/* Pricing and Discount */}
-                      <div className="flex justify-between items-center w-full mb-2">
-                        <div className="flex items-center text-lg text-gray-800">
-                          <PiCurrencyInr className="mr-1" />
-                          <span>{category?.price || "0.00"}</span>
-                        </div>
-                        {category?.discount && (
-                          <div className="flex items-center text-sm text-green-600">
-                            <p className="mr-1">{category?.discount}% OFF</p>
+                        {/* Product Image */}
+                        <img
+                          src={category?.bannerImage || "https://via.placeholder.com/300"}
+                          alt={category?.name || "Product Image"}
+                          className="h-48 w-full object-cover rounded-lg mb-1"
+                        />
+
+                        {/* Product Name */}
+                        <p className="text-lg font-semibold mb-1 text-gray-700">
+                          {category?.name || "Product Name"}
+                        </p>
+
+                        {/* Pricing and Discount */}
+                        <div className="flex justify-between items-center w-full mb-2">
+                          <div className="flex items-center text-lg text-gray-800">
+                            <PiCurrencyInr className="mr-1" />
+                            <span>{category?.price || "0.00"}</span>
                           </div>
+                          {category?.discount && (
+                            <div className="flex items-center text-sm text-green-600">
+                              <p className="mr-1">{category?.discount}% OFF</p>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Discounted Price */}
+                        {discountedPrice && (
+                          <p className="text-sm text-blue-600 font-medium mb-2">
+                            Discounted Price: <PiCurrencyInr className="inline mr-1" />{discountedPrice}
+                          </p>
                         )}
+
+                        {/* Explore Button */}
+                        <Link to="/store_Products" className="w-full">
+                          <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
+                            Visit Store & Product
+                          </button>
+                        </Link>
                       </div>
 
-                      {/* Discounted Price */}
-                      {discountedPrice && (
-                        <p className="text-sm text-blue-600 font-medium mb-2">
-                          Discounted Price: <PiCurrencyInr className="inline mr-1" />{discountedPrice}
-                        </p>
-                      )}
 
-                      {/* Explore Button */}
-                      <Link to="/store_Products" className="w-full">
-                        <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
-                          Visit Store & Product
-                        </button>
-                      </Link>
+
                     </div>
-
-
-                  </div>
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
-        ) : (
-          <h2 className="font-[Quicksand] font-medium text-center text-2xl text-[#011F4B]">
-            No Category Available
-          </h2>
-        )}
-
-
-
-      </section>
-      <div className="flex flex-wrap justify-between px-2 md:hidden gap-1">
-
-
-        {menProducts.map((each, index) => (
-          <div
-            key={index}
-            className="w-[48%]  flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
-          >
-
-            <p className="text-[black] font-quicksand font-sm font-bold  mb-1 text-center">
-              {each?.brand?.name || "Trending Brand Name"}
-            </p>
-
-            {/* Product Image */}
-
-            <img
-              src={each?.bannerImage || "https://via.placeholder.com/300"}
-              alt={each?.name || "Product Image"}
-              className="h-20 w-20 object-cover  mb-2"
-            />
-            {/* Product Name */}
-            <h2 className="text-center font-semibold text-gray-800 text-sm ">
-              {each?.name || "Product Name"}
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          ) : (
+            <h2 className="font-[Quicksand] font-medium text-center text-2xl text-[#011F4B]">
+              No Category Available
             </h2>
-            <div className="flex items-center justify-between  text-sm ">
-              <span className="text-gray-700">Ratings: 4.5</span>
-              <TbJewishStarFilled className="text-[#ebf73d]" />
+          )}
+
+
+
+        </section>
+
+        <div className="flex flex-wrap justify-between px-2 md:hidden gap-1">
+
+
+          {womenProducts.map((each, index) => (
+            <div
+              key={index}
+              className="w-[48%]  flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
+            >
+
+
+              <p className="text-[black] font-quicksand font-sm font-bold  mb-1 text-center">
+                {each?.brand?.name || "Trending Brand Name"}
+              </p>
+
+              {/* Product Image */}
+
+              <img
+                src={each?.bannerImage || "https://via.placeholder.com/300"}
+                alt={each?.name || "Product Image"}
+                className="h-20 w-20 object-cover  mb-2"
+              />
+              {/* Product Name */}
+              <h2 className="text-center font-semibold text-gray-800 text-sm ">
+                {each?.name || "Product Name"}
+              </h2>
+              <div className="flex items-center justify-between  text-sm ">
+                <span className="text-gray-700">Ratings: 4.5</span>
+                <TbJewishStarFilled className="text-[#ebf73d]" />
+              </div>
+
+
+              <Link to="/store_Products">
+                <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
+                  Visit Store & Product
+                </button>
+              </Link>
             </div>
+          ))}
 
-
-            <Link to="/store_Products">
-              <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
-                Visit Store & Product
-              </button>
-            </Link>
-          </div>
-        ))}
-      </div>
-
-      <hr className="my-5" />
-
-
-
-      <div
-        style={{
-          backgroundImage: "url('/assets/kidsbanner.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "top", // Shift the image downward
-          backgroundRepeat: "no-repeat",
-          height: "250px",
-          padding: "5px",
-          display: "flex",
-          justifyContent: "start",
-          alignItems: "center",
-          color: "#ffffff",
-        }}
-      >
-        <div className="flex items-center flex-wrap gap-0  md:gap-3 bg-[#fff] px-2 py-1 rounded-lg shadow-md">
-          <h2
-            className="font-[Quicksand] font-medium text-center text-2xl sm:text-lg md:text-4xl bg-clip-text text-transparent"
-            style={{
-              backgroundImage: "linear-gradient(90deg, #007bff, #f8d00f, #007bff)", // Blue to Yellow Gradient
-              backgroundSize: "200% auto",
-              backgroundPosition: "0% 50%",
-              animation: "flow-gradient 3s linear infinite",
-            }}
-          >
-            Products for Kids
-          </h2>
-          <FaArrowTrendUp size={30} className="text-[#4bd63b] mr-2 " />
-          <p className="text-gray-600 font-semibold">
-            Find fun and creative products for kids.
-          </p>
         </div>
-      </div>
+        <hr className="my-5" />
+        <Link to="/men-collection">
 
 
 
+        <div
+          style={{
+            backgroundImage: "url('/assets/menbanner.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            height: "250px",
+            display: "flex",
+            padding: "5px",
+            justifyContent: "start",
+            alignItems: "center",
+            color: "#ffffff",
+          }}
+        >
+          <div className="flex items-center flex-wrap gap-0  md:gap-3 bg-[#fff] px-3 rounded-lg">
+            <h2
+              className="font-[Quicksand] font-medium text-center text-2xl sm:text-lg md:text-4xl bg-clip-text text-transparent"
+              style={{
+                backgroundImage: "linear-gradient(90deg, #007bff, #f8d00f, #007bff)", // Blue to Yellow Gradient
+                backgroundSize: "200% auto",
+                backgroundPosition: "0% 50%",
+                animation: "flow-gradient 3s linear infinite",
+              }}
+            >
+              Products for Men
+            </h2>
+            <FaArrowTrendUp size={30} className="text-[#4bd63b] mr-2 " />
+            <p className="text-gray-600 font-semibold">Explore the best products tailored for men.</p>
 
-      <section className="p-2 hidden md:block ">
+          </div>
 
-        {kidsProducts.length ? (
-          <Swiper
-            loop={true}
-            className="mySwiper"
-            modules={[Autoplay]}
-            autoplay={{
-              delay: 3000,
-              disableOnInteraction: false,
-            }}
-            breakpoints={{
-              0: {
-                slidesPerView: 1,
-                spaceBetween: 10,
-              },
-              500: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              640: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-              },
-              1024: {
-                slidesPerView: 4,
-                spaceBetween: 40,
-              },
-              1400: {
-                slidesPerView: 5,
-                spaceBetween: 50,
-              },
-              2000: {
-                slidesPerView: 6,
-                spaceBetween: 60,
-              },
-            }}
-          >
-            {kidsProducts.map((category, i) => {
+        </div>
 
-              const discountedPrice = category?.price && category?.discount
-                ? (category.price - (category.price * category.discount) / 100).toFixed(2)
-                : null;
-              return (
-                <SwiperSlide key={i}>
-                  <div className="p-5">
+        </Link>
 
-                    <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
-                      {/* Heading */}
-                      <h1 className="text-black font-quicksand font-bold text-xl mb-1 text-center">
-                        {category?.brand?.name || "Trending Brand Name"}
-                      </h1>
 
-                      {/* Product Image */}
-                      <img
-                        src={category?.bannerImage || "https://via.placeholder.com/300"}
-                        alt={category?.name || "Product Image"}
-                        className="h-48 w-full object-cover rounded-lg mb-1"
-                      />
+        <section className="p-2 hidden md:block ">
 
-                      {/* Product Name */}
-                      <p className="text-lg font-semibold mb-1 text-gray-700">
-                        {category?.name || "Product Name"}
-                      </p>
+          {menProducts.length ? (
+            <Swiper
+              loop={true}
+              className="mySwiper"
+              modules={[Autoplay]}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              breakpoints={{
+                0: {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                500: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                640: {
+                  slidesPerView: 3,
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 40,
+                },
+                1400: {
+                  slidesPerView: 5,
+                  spaceBetween: 50,
+                },
+                2000: {
+                  slidesPerView: 6,
+                  spaceBetween: 60,
+                },
+              }}
+            >
+              {menProducts.map((category, i) => {
 
-                      {/* Pricing and Discount */}
-                      <div className="flex justify-between items-center w-full mb-2">
-                        <div className="flex items-center text-lg text-gray-800">
-                          <PiCurrencyInr className="mr-1" />
-                          <span>{category?.price || "0.00"}</span>
-                        </div>
-                        {category?.discount && (
-                          <div className="flex items-center text-sm text-green-600">
-                            <p className="mr-1">{category?.discount}% OFF</p>
+                const discountedPrice = category?.price && category?.discount
+                  ? (category.price - (category.price * category.discount) / 100).toFixed(2)
+                  : null;
+                return (
+                  <SwiperSlide key={i}>
+                    <div className="p-3">
+
+                      <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
+                        {/* Heading */}
+                        <h1 className="text-black font-quicksand font-bold text-xl mb-1 text-center">
+                          {category?.brand?.name || "Trending Brand Name"}
+                        </h1>
+
+                        {/* Product Image */}
+                        <img
+                          src={category?.bannerImage || "https://via.placeholder.com/300"}
+                          alt={category?.name || "Product Image"}
+                          className="h-48 w-full object-cover rounded-lg mb-1"
+                        />
+
+                        {/* Product Name */}
+                        <p className="text-lg font-semibold mb-1 text-gray-700">
+                          {category?.name || "Product Name"}
+                        </p>
+
+                        {/* Pricing and Discount */}
+                        <div className="flex justify-between items-center w-full mb-2">
+                          <div className="flex items-center text-lg text-gray-800">
+                            <PiCurrencyInr className="mr-1" />
+                            <span>{category?.price || "0.00"}</span>
                           </div>
+                          {category?.discount && (
+                            <div className="flex items-center text-sm text-green-600">
+                              <p className="mr-1">{category?.discount}% OFF</p>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Discounted Price */}
+                        {discountedPrice && (
+                          <p className="text-sm text-blue-600 font-medium mb-2">
+                            Discounted Price: <PiCurrencyInr className="inline mr-1" />{discountedPrice}
+                          </p>
                         )}
+
+                        {/* Explore Button */}
+                        <Link to="/store_Products" className="w-full">
+                          <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
+                            Visit Store & Product
+                          </button>
+                        </Link>
                       </div>
 
-                      {/* Discounted Price */}
-                      {discountedPrice && (
-                        <p className="text-sm text-blue-600 font-medium mb-2">
-                          Discounted Price: <PiCurrencyInr className="inline mr-1" />{discountedPrice}
-                        </p>
-                      )}
 
-                      {/* Explore Button */}
-                      <Link to={`/product-details/${category?.productId}`} className="w-full">
-                        <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
-                          Visit Store & Product
-                        </button>
-                      </Link>
                     </div>
-
-
-                  </div>
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
-        ) : (
-          <h2 className="font-[Quicksand] font-medium text-center text-2xl text-[#011F4B]">
-            No Category Available
-          </h2>
-        )}
-
-
-
-      </section>
-
-      <div className="flex flex-wrap justify-between px-2 md:hidden gap-1">
-
-
-        {kidsProducts.map((each, index) => (
-          <div
-            key={index}
-            className="w-[48%]  flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
-          >
-
-            <p className="text-[black] font-quicksand font-sm font-bold  mb-1 text-center">
-              {each?.brand?.name || "Trending Brand Name"}
-            </p>
-
-            {/* Product Image */}
-
-            <img
-              src={each?.bannerImage || "https://via.placeholder.com/300"}
-              alt={each?.name || "Product Image"}
-              className="h-20 w-20 object-cover  mb-2"
-            />
-            {/* Product Name */}
-            <h2 className="text-center font-semibold text-gray-800 text-sm ">
-              {each?.name || "Product Name"}
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          ) : (
+            <h2 className="font-[Quicksand] font-medium text-center text-2xl text-[#011F4B]">
+              No Category Available
             </h2>
-            <div className="flex items-center justify-between  text-sm ">
-              <span className="text-gray-700">Ratings: 4.5</span>
-              <TbJewishStarFilled className="text-[#ebf73d]" />
+          )}
+
+
+
+        </section>
+        <div className="flex flex-wrap justify-between px-2 md:hidden gap-1">
+
+
+          {menProducts.map((each, index) => (
+            <div
+              key={index}
+              className="w-[48%]  flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
+            >
+
+              <p className="text-[black] font-quicksand font-sm font-bold  mb-1 text-center">
+                {each?.brand?.name || "Trending Brand Name"}
+              </p>
+
+              {/* Product Image */}
+
+              <img
+                src={each?.bannerImage || "https://via.placeholder.com/300"}
+                alt={each?.name || "Product Image"}
+                className="h-20 w-20 object-cover  mb-2"
+              />
+              {/* Product Name */}
+              <h2 className="text-center font-semibold text-gray-800 text-sm ">
+                {each?.name || "Product Name"}
+              </h2>
+              <div className="flex items-center justify-between  text-sm ">
+                <span className="text-gray-700">Ratings: 4.5</span>
+                <TbJewishStarFilled className="text-[#ebf73d]" />
+              </div>
+
+
+              <Link to="/store_Products">
+                <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
+                  Visit Store & Product
+                </button>
+              </Link>
             </div>
+          ))}
+        </div>
+
+        <hr className="my-5" />
 
 
-            <Link to="/store_Products">
-              <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
-                Visit Store & Product
-              </button>
-            </Link>
+          <Link to="/kids-collection">
+
+        <div
+          style={{
+            backgroundImage: "url('/assets/kidsbanner.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "top", // Shift the image downward
+            backgroundRepeat: "no-repeat",
+            height: "250px",
+            padding: "5px",
+            display: "flex",
+            justifyContent: "start",
+            alignItems: "center",
+            color: "#ffffff",
+          }}
+        >
+          <div className="flex items-center flex-wrap gap-0  md:gap-3 bg-[#fff] px-2 py-1 rounded-lg shadow-md">
+            <h2
+              className="font-[Quicksand] font-medium text-center text-2xl sm:text-lg md:text-4xl bg-clip-text text-transparent"
+              style={{
+                backgroundImage: "linear-gradient(90deg, #007bff, #f8d00f, #007bff)", // Blue to Yellow Gradient
+                backgroundSize: "200% auto",
+                backgroundPosition: "0% 50%",
+                animation: "flow-gradient 3s linear infinite",
+              }}
+            >
+              Products for Kids
+            </h2>
+            <FaArrowTrendUp size={30} className="text-[#4bd63b] mr-2 " />
+            <p className="text-gray-600 font-semibold">
+              Find fun and creative products for kids.
+            </p>
           </div>
-        ))}
-      </div>
+        </div>
+        </Link>
+
+
+
+        <section className="p-2 hidden md:block ">
+
+          {kidsProducts.length ? (
+            <Swiper
+              loop={true}
+              className="mySwiper"
+              modules={[Autoplay]}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              breakpoints={{
+                0: {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                500: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                640: {
+                  slidesPerView: 3,
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 40,
+                },
+                1400: {
+                  slidesPerView: 5,
+                  spaceBetween: 50,
+                },
+                2000: {
+                  slidesPerView: 6,
+                  spaceBetween: 60,
+                },
+              }}
+            >
+              {kidsProducts.map((category, i) => {
+
+                const discountedPrice = category?.price && category?.discount
+                  ? (category.price - (category.price * category.discount) / 100).toFixed(2)
+                  : null;
+                return (
+                  <SwiperSlide key={i}>
+                    <div className="p-5">
+
+                      <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
+                        {/* Heading */}
+                        <h1 className="text-black font-quicksand font-bold text-xl mb-1 text-center">
+                          {category?.brand?.name || "Trending Brand Name"}
+                        </h1>
+
+                        {/* Product Image */}
+                        <img
+                          src={category?.bannerImage || "https://via.placeholder.com/300"}
+                          alt={category?.name || "Product Image"}
+                          className="h-48 w-full object-cover rounded-lg mb-1"
+                        />
+
+                        {/* Product Name */}
+                        <p className="text-lg font-semibold mb-1 text-gray-700">
+                          {category?.name || "Product Name"}
+                        </p>
+
+                        {/* Pricing and Discount */}
+                        <div className="flex justify-between items-center w-full mb-2">
+                          <div className="flex items-center text-lg text-gray-800">
+                            <PiCurrencyInr className="mr-1" />
+                            <span>{category?.price || "0.00"}</span>
+                          </div>
+                          {category?.discount && (
+                            <div className="flex items-center text-sm text-green-600">
+                              <p className="mr-1">{category?.discount}% OFF</p>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Discounted Price */}
+                        {discountedPrice && (
+                          <p className="text-sm text-blue-600 font-medium mb-2">
+                            Discounted Price: <PiCurrencyInr className="inline mr-1" />{discountedPrice}
+                          </p>
+                        )}
+
+                        {/* Explore Button */}
+                        <Link to={`/product-details/${category?.productId}`} className="w-full">
+                          <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
+                            Visit Store & Product
+                          </button>
+                        </Link>
+                      </div>
+
+
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          ) : (
+            <h2 className="font-[Quicksand] font-medium text-center text-2xl text-[#011F4B]">
+              No Category Available
+            </h2>
+          )}
+
+
+
+        </section>
+
+        <div className="flex flex-wrap justify-between px-2 md:hidden gap-1">
+
+
+          {kidsProducts.map((each, index) => (
+            <div
+              key={index}
+              className="w-[48%]  flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
+            >
+
+              <p className="text-[black] font-quicksand font-sm font-bold  mb-1 text-center">
+                {each?.brand?.name || "Trending Brand Name"}
+              </p>
+
+              {/* Product Image */}
+
+              <img
+                src={each?.bannerImage || "https://via.placeholder.com/300"}
+                alt={each?.name || "Product Image"}
+                className="h-20 w-20 object-cover  mb-2"
+              />
+              {/* Product Name */}
+              <h2 className="text-center font-semibold text-gray-800 text-sm ">
+                {each?.name || "Product Name"}
+              </h2>
+              <div className="flex items-center justify-between  text-sm ">
+                <span className="text-gray-700">Ratings: 4.5</span>
+                <TbJewishStarFilled className="text-[#ebf73d]" />
+              </div>
+
+
+              <Link to="/store_Products">
+                <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
+                  Visit Store & Product
+                </button>
+              </Link>
+            </div>
+          ))}
+        </div>
 
 
 
 
 
-      {/*       
+        {/*       
       <section>
 
         <div className="shopping py-[30%] md:py-[25%] lg:py-[14%] mb-3">
@@ -1523,10 +1535,10 @@ export default function Home() {
 
 
 
-      <section>
+        <section>
 
 
-        {/* <div className="py-[30%] md:py-[25%] lg:py-[14%] mb-3" style={{
+          {/* <div className="py-[30%] md:py-[25%] lg:py-[14%] mb-3" style={{
           backgroundImage: `url(/assets/menfashion.jpg)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -1544,215 +1556,215 @@ export default function Home() {
         </div> */}
 
 
-      </section>
-      <hr className="my-5" />
+        </section>
+        <hr className="my-5" />
 
 
 
 
 
 
-      <section className="px-10 py-6 text-center ">
-        <p className="font-[Quicksand] font-medium text-[#011F4B] text-center text-lg  md:text-4xl mb-2 border-3">
-          EXPLORE TOP BRANDS
-        </p>
+        <section className="px-10 py-6 text-center ">
+          <p className="font-[Quicksand] font-medium text-[#011F4B] text-center text-lg  md:text-4xl mb-2 border-3">
+            EXPLORE TOP BRANDS
+          </p>
 
 
-        <div className="flex justify-center items-center">
-          {brands.length ? (
-            <Swiper
-              loop={true}
-              className="mySwiper"
-              modules={[Autoplay]}
-              autoplay={{
-                delay: 3000,
-                disableOnInteraction: false,
-              }}
-              breakpoints={{
-                // For small devices, show 1 slide
-                0: {
-                  slidesPerView: 1,
-                  spaceBetween: 10,
-                },
-                // For medium screens, show 2 slides
-                640: {
-                  slidesPerView: 2,
-                  spaceBetween: 20,
-                },
-                // For large screens, show 3 slides
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 30,
-                },
-              }}
-            >
-              {brands.map((brand, i) => {
-                return (
-                  <SwiperSlide key={i}>
-                    <div className="bg-[#F6F6F6] rounded-lg h-full w-full px-5 py-[15px]">
-                      <Link to={`/collections?brand=${brand?._id}`}>
-                        <img
-                          className="my-2 m-auto h-10"
-                          src={brand.logo}
-                          alt={brand.name}
-                          loading="lazy"
-                        />
-                        <p className="font-[Quicksand] text-center font-medium text-2xl text-[#292929]">
-                          {brand.onGoingOffer}
-                        </p>
+          <div className="flex justify-center items-center">
+            {brands.length ? (
+              <Swiper
+                loop={true}
+                className="mySwiper"
+                modules={[Autoplay]}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                }}
+                breakpoints={{
+                  // For small devices, show 1 slide
+                  0: {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                  },
+                  // For medium screens, show 2 slides
+                  640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                  },
+                  // For large screens, show 3 slides
+                  1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                  },
+                }}
+              >
+                {brands.map((brand, i) => {
+                  return (
+                    <SwiperSlide key={i}>
+                      <div className="bg-[#F6F6F6] rounded-lg h-full w-full px-5 py-[15px]">
+                        <Link to={`/collections?brand=${brand?._id}`}>
+                          <img
+                            className="my-2 m-auto h-10"
+                            src={brand.logo}
+                            alt={brand.name}
+                            loading="lazy"
+                          />
+                          <p className="font-[Quicksand] text-center font-medium text-2xl text-[#292929]">
+                            {brand.onGoingOffer}
+                          </p>
+                        </Link>
+                      </div>
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            ) : (
+              <h2 className="font-[Quicksand] font-medium text-center text-2xl text-[#011F4B]">
+                No Brands Available
+              </h2>
+            )}
+          </div>
+
+
+
+
+        </section>
+
+        <section className="p-2">
+          <Link to="/product_category/eyewear">
+            <p className="font-[Quicksand]  text-center text-[#011F4B] font-bold text-lg  md:text-4xl">
+              Explore Goggles
+            </p>
+          </Link>
+          <p className="font-[Poppins] font-light text-center text-[#949494] mb-3">
+            Discover trendy and protective eyewear for every occasion
+          </p>
+
+
+          <ul className="flex flex-wrap justify-center">
+            {allProducts.length ? (
+              allProducts
+                .filter((item) => item?.category?.name === "Eyewear")
+                .map((data, index) => {
+                  return (
+                    <li className="w-[80px] lg:w-1/6 m-1" >
+                      <Link to={`/product-details/${data.productId}`} key={index}>
+                        <div className="relative">
+                          <img src={data?.bannerImage || "assets/goggles.png"} alt={data.name} className="sm:w-[1/2] lg:h-[180px] rounded-lg h-[80px] w-[100%]" />
+                          <p className="text-black p-1 font-semibold flex justify-between items-center text-[8px] lg:text-[14px]  rounded-lg shadow-sm">
+                            <span className="font-[Quicksand] font-bold truncate text-[10px] lg:text-[16px] tracking-wide">
+                              {data.name.toUpperCase()}
+                            </span>
+                            <span className="font-[Quicksand] font-extrabold ml-4 text-[10px] lg:text-[16px] ">
+                              {"₹" + data.price}
+                            </span>
+                          </p>
+
+                        </div>
                       </Link>
-                    </div>
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
-          ) : (
-            <h2 className="font-[Quicksand] font-medium text-center text-2xl text-[#011F4B]">
-              No Brands Available
-            </h2>
-          )}
-        </div>
+                    </li>
+                  );
+                })
+            ) : (
+              <h2 className="font-[Quicksand] font-medium text-center text-4xl text-[#011F4B]">
+                No Eyewear Available
+              </h2>
+            )}
+          </ul>
+        </section>
+        <section className="p-2">
+          <Link to="/product_category/winterwear">
+            <p className="font-[Quicksand]  text-center text-[#011F4B] font-bold text-lg  md:text-4xl">
+              WINTER WEAR
+            </p>
+          </Link>
 
+          <p className="font-[Poppins] font-light text-center text-[#949494] mb-4">
+            Explore cozy and stylish options for the chilly season
 
-
-
-      </section>
-
-      <section className="p-2">
-        <Link to="/product_category/eyewear">
-          <p className="font-[Quicksand]  text-center text-[#011F4B] font-bold text-lg  md:text-4xl">
-            Explore Goggles
           </p>
-        </Link>
-        <p className="font-[Poppins] font-light text-center text-[#949494] mb-3">
-          Discover trendy and protective eyewear for every occasion
-        </p>
 
 
-        <ul className="flex flex-wrap justify-center">
-          {allProducts.length ? (
-            allProducts
-              .filter((item) => item?.category?.name === "Eyewear")
-              .map((data, index) => {
-                return (
-                  <li className="w-[80px] lg:w-1/6 m-1" >
-                    <Link to={`/product-details/${data.productId}`} key={index}>
-                      <div className="relative">
-                        <img src={data?.bannerImage || "assets/goggles.png"} alt={data.name} className="sm:w-[1/2] lg:h-[180px] rounded-lg h-[80px] w-[100%]" />
-                        <p className="text-black p-1 font-semibold flex justify-between items-center text-[8px] lg:text-[14px]  rounded-lg shadow-sm">
-                          <span className="font-[Quicksand] font-bold truncate text-[10px] lg:text-[16px] tracking-wide">
-                            {data.name.toUpperCase()}
-                          </span>
-                          <span className="font-[Quicksand] font-extrabold ml-4 text-[10px] lg:text-[16px] ">
-                            {"₹" + data.price}
-                          </span>
-                        </p>
+          <ul className="flex flex-wrap justify-center">
+            {allProducts.length ? (
+              allProducts
+                .filter((item) => item?.category?.name === "Winterwear")
+                .map((data, index) => {
+                  return (
+                    <li className="w-[80px] lg:w-1/6 m-1" >
+                      <Link to={`/product-details/${data.productId}`} key={index}>
+                        <div className="relative">
+                          <img src={data?.bannerImage || "assets/goggles.png"} alt={data.name} className="sm:w-[1/2] lg:h-[180px] h-[80px] w-[100%] rounded-lg" />
+                          <p className="text-black p-1 font-semibold flex justify-between items-center text-[8px] lg:text-[14px]  rounded-lg shadow-sm">
+                            <span className="font-[Quicksand] font-bold truncate text-[10px] lg:text-[16px] tracking-wide">
+                              {data.name.toUpperCase()}
+                            </span>
+                            <span className="font-[Quicksand] font-extrabold ml-4 text-[10px] lg:text-[16px]">
+                              {"₹" + data.price}
+                            </span>
+                          </p>
 
-                      </div>
-                    </Link>
-                  </li>
-                );
-              })
-          ) : (
-            <h2 className="font-[Quicksand] font-medium text-center text-4xl text-[#011F4B]">
-              No Eyewear Available
-            </h2>
-          )}
-        </ul>
-      </section>
-      <section className="p-2">
-        <Link to="/product_category/winterwear">
-          <p className="font-[Quicksand]  text-center text-[#011F4B] font-bold text-lg  md:text-4xl">
-            WINTER WEAR
+
+                        </div>
+                      </Link>
+                    </li>
+                  );
+                })
+            ) : (
+              <h2 className="font-[Quicksand] font-medium text-center text-4xl text-[#000]">
+                No Eyewear Available
+              </h2>
+            )}
+          </ul>
+        </section>
+        <section className="px-10 py-3">
+          <p className="font-[Quicksand] text-center font-bold text-[#949494] text-6xl">
+            That’s it!
           </p>
-        </Link>
 
-        <p className="font-[Poppins] font-light text-center text-[#949494] mb-4">
-          Explore cozy and stylish options for the chilly season
+          <button className="font-quicksand font-medium text-xl text-[#011F4B] rounded bg-white shadow hover:shadow-lg transition-all duration-300 m-auto py-1 px-2 border-2 border-[#011F4B] mt-4 flex items-center gap-2 hover:bg-[#011F4B] hover:text-white">
+            EXPLORE ACCESSORIES
+            <MdArrowOutward className="text-xl transition-all" />
+          </button>
 
-        </p>
+        </section>
 
-
-        <ul className="flex flex-wrap justify-center">
-          {allProducts.length ? (
-            allProducts
-              .filter((item) => item?.category?.name === "Winterwear")
-              .map((data, index) => {
-                return (
-                  <li className="w-[80px] lg:w-1/6 m-1" >
-                    <Link to={`/product-details/${data.productId}`} key={index}>
-                      <div className="relative">
-                        <img src={data?.bannerImage || "assets/goggles.png"} alt={data.name} className="sm:w-[1/2] lg:h-[180px] h-[80px] w-[100%] rounded-lg" />
-                        <p className="text-black p-1 font-semibold flex justify-between items-center text-[8px] lg:text-[14px]  rounded-lg shadow-sm">
-                          <span className="font-[Quicksand] font-bold truncate text-[10px] lg:text-[16px] tracking-wide">
-                            {data.name.toUpperCase()}
-                          </span>
-                          <span className="font-[Quicksand] font-extrabold ml-4 text-[10px] lg:text-[16px]">
-                            {"₹" + data.price}
-                          </span>
-                        </p>
-
-
-                      </div>
-                    </Link>
-                  </li>
-                );
-              })
-          ) : (
-            <h2 className="font-[Quicksand] font-medium text-center text-4xl text-[#000]">
-              No Eyewear Available
-            </h2>
-          )}
-        </ul>
-      </section>
-      <section className="px-10 py-3">
-        <p className="font-[Quicksand] text-center font-bold text-[#949494] text-6xl">
-          That’s it!
-        </p>
-
-        <button className="font-quicksand font-medium text-xl text-[#011F4B] rounded bg-white shadow hover:shadow-lg transition-all duration-300 m-auto py-1 px-2 border-2 border-[#011F4B] mt-4 flex items-center gap-2 hover:bg-[#011F4B] hover:text-white">
-          EXPLORE ACCESSORIES
-          <MdArrowOutward className="text-xl transition-all" />
-        </button>
-
-      </section>
-
-      <section className="bg-[#F6F6F6] px-5 py-5 ">
-        <p className="text-center text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
-          Testimonials
-          <span className="block h-1 w-16 bg-blue-500 mx-auto mt-2 rounded"></span>
-        </p>
-        <h2 className="font-[Quicksand] font-medium text-[#011F4B] text-center text-lg  md:text-4xl mb-2 border-3">
-          WHAT THEY ARE SAYING
-          <div className="w-[15%] md:w-[5%] h-[3px] bg-[#011F4B] m-auto mt-[2%]"></div>
-        </h2>
-        <Swiper
-          navigation={true}
-          loop={true}
-          modules={[Autoplay, Navigation]}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-          }}
-          className="mySwiper"
-        >
-          {testimonials.map((testimonial, index) => (
-            <SwiperSlide key={index}>
-              <div className="w-full font-[Poppins] flex flex-col justify-center items-center">
-                <p className="text-[#949494] w-2/3 font-light text-lg p-4 text-center">
-                  "{testimonial.text}"
-                </p>
-                <p className="text-[#011F4B] font-medium text-center mb-2">
-                  {testimonial.name}
-                </p>
-                <p className="text-[#949494] font-light text-sm text-center">
-                  {testimonial.designation}
-                </p>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>;
-      </section>
-    </>
-  );
+        <section className="bg-[#F6F6F6] px-5 py-5 ">
+          <p className="text-center text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
+            Testimonials
+            <span className="block h-1 w-16 bg-blue-500 mx-auto mt-2 rounded"></span>
+          </p>
+          <h2 className="font-[Quicksand] font-medium text-[#011F4B] text-center text-lg  md:text-4xl mb-2 border-3">
+            WHAT THEY ARE SAYING
+            <div className="w-[15%] md:w-[5%] h-[3px] bg-[#011F4B] m-auto mt-[2%]"></div>
+          </h2>
+          <Swiper
+            navigation={true}
+            loop={true}
+            modules={[Autoplay, Navigation]}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            className="mySwiper"
+          >
+            {testimonials.map((testimonial, index) => (
+              <SwiperSlide key={index}>
+                <div className="w-full font-[Poppins] flex flex-col justify-center items-center">
+                  <p className="text-[#949494] w-2/3 font-light text-lg p-4 text-center">
+                    "{testimonial.text}"
+                  </p>
+                  <p className="text-[#011F4B] font-medium text-center mb-2">
+                    {testimonial.name}
+                  </p>
+                  <p className="text-[#949494] font-light text-sm text-center">
+                    {testimonial.designation}
+                  </p>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>;
+        </section>
+      </>
+      );
 }

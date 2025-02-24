@@ -58,7 +58,6 @@ export default function ProductDetails() {
     setReviewsLoading(true)
     try {
       const response = await HttpClient.get(`/review/${projectObjectId}`);
-      console.log("review", response)
       setAllReviews(response.reviews)
       setReviewsLoading(false)
       const formattedDataReview = response.reviews.map((eachReview) => ({
@@ -69,7 +68,6 @@ export default function ProductDetails() {
         userName: eachReview.userName
       }))
 
-      console.log("formattedDataReview", formattedDataReview)
       setAllReviews(formattedDataReview)
 
 
@@ -89,7 +87,6 @@ export default function ProductDetails() {
 
   const tokenIfLoggedIn = localStorage.getItem("accessToken")
 
-  console.log("tokenIfLoggedIn", tokenIfLoggedIn)
 
 
   const addToCart = async (productDetails) => {
@@ -101,7 +98,7 @@ export default function ProductDetails() {
       size: selectedSize,
       color: "red"
     }
-    console.log(dataForCart)
+    console.log("dataForCart",dataForCart)
 
     if (tokenIfLoggedIn === null) {
       addProduct({ ...productDetails, quantity, selectedSize });
@@ -110,7 +107,6 @@ export default function ProductDetails() {
 
       try {
         const response = await HttpClient.post(`/cart/`, dataForCart)
-        console.log(response)
 
       } catch (error) {
 

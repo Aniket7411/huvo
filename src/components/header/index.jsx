@@ -284,7 +284,7 @@ export default function Header(props) {
                   ? navigate("/checkout/cart")
                   : toast.error("Please Login First")
               }
-              className="relative flex items-center justify-center p-2 bg-blue-600 rounded-full hover:bg-blue-700 transition"
+              className="relative flex items-center justify-center p-2 bg-red-600 rounded-full hover:bg-red-700 transition"
             >
               {/* Shopping Bag Icon */}
               <HiOutlineShoppingBag className="text-2xl text-white cursor-pointer" />

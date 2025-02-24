@@ -75,22 +75,6 @@ export default function KidsCollection() {
       </div>
 
 
-      <section>
-
-
-
-        <div class="flex justify-center items-center mt-2">
-          <div class="bg-black p-4 rounded-2xl  shadow-lg w-full">
-            <video class="w-[100vw] rounded-lg h-[200px]" controls>
-              <source src="assets/mensshoppingvideo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </div>
-
-
-      </section>
-
 
       <section className="md:px-[5%] px-[2%]  py-2">
         <div className="flex items-center gap-2 my-2">
