@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
 import { FaArrowRight } from "react-icons/fa";
-import { CiSearch } from "react-icons/ci";
+import { CiDeliveryTruck, CiSearch } from "react-icons/ci";
 import { TbJewishStarFilled } from "react-icons/tb";
 
 import { useParams } from "react-router-dom";
+import { PiCurrencyInr } from "react-icons/pi";
 
 export default function ProductsByBrands() {
   const [allProducts, setAllProducts] = useState([]);
@@ -14,7 +15,7 @@ export default function ProductsByBrands() {
   const [selectedBrand, setSelectedBrand] = useState("")
   const [sortOrder, setSortOrder] = useState("");
   const [selectedSize, setSelectedSize] = useState(""); // State for size selection
-  const {brandName} = useParams();
+  const { brandName } = useParams();
 
   console.log("brandName", brandName)
 
@@ -303,37 +304,71 @@ export default function ProductsByBrands() {
       </div>
       <hr className="my-5" />
 
-      <div className="flex p-1 md:hidden flex-wrap items-center gap-2 ">
-        {allProducts.map((each, index) => (
-          <div
-            key={index}
-            className="w-[31%] flex flex-col justify-between min-h-[180px] p-1 items-center bg-white rounded-lg shadow-md border border-gray-200"
-          >
-            {/* Product Image */}
-            <div className="w-full h-32 mb-2">
-              <img
-                src={each?.bannerImage || "https://via.placeholder.com/300"}
-                alt={each?.name || "Product Image"}
-                className="w-full h-full object-cover rounded-t-lg"
-              />
-            </div>
 
-            {/* Product Name */}
-            <p className="text-center mt-auto font-semibold text-gray-800 text-sm">
-              {each?.productName || "Product Name"}
-            </p>
+      <div className="flex p-auto md:hidden flex-wrap gap-2 justify-center ">
+        {allProducts.map((each, index) => {
 
-            {/* Star Rating */}
-            <div className="flex mt-auto justify-center text-yellow-500">
-              <TbJewishStarFilled />
-              <TbJewishStarFilled />
-              <TbJewishStarFilled />
-              <TbJewishStarFilled />
-            </div>
-          </div>
-        ))}
+          const finalPrice = each.price - each.discount
+
+          return (
+            (
+              <div
+                key={index}
+                className="w-[45%] h-auto  flex flex-col   bg-white rounded-lg shadow-md p-2 border border-gray-200"
+              >
+
+                <Link to={`/product-details/${each?.productId}`}>
 
 
+                  {/* Product Image */}
+                  <img
+                    src={each?.bannerImage || "https://via.placeholder.com/300"}
+                    alt={each?.name || "Product Image"}
+                    className="h-[150px]  object-cover rounded-md"
+                  />
+                  <div>
+                    {/* Product Name */}
+                    <h2 className=" font-semibold text-gray-800 text-sm">
+                      {each?.productName || "Product Name"}
+                    </h2>
+
+                    <div className="flex justify-between">
+
+                      <div className="flex items-center gap-1">
+                        <PiCurrencyInr />
+
+                        <p className="line-through text-red-600 font-semibold"> {each?.price}</p>
+                      </div>
+
+
+                      <div className="flex items-center  gap-1/2">
+
+                        <PiCurrencyInr />
+
+                        <p>{each?.discount}</p>
+
+                      </div>
+                    </div>
+
+                    <div className="flex items-center text-green-600 gap-1/2">
+                      <PiCurrencyInr />
+
+                      <p className=" font-semibold">{finalPrice} /-</p>
+                    </div>
+
+
+                    <div className="flex items-center font-semibold  gap-2">
+                      <CiDeliveryTruck />
+                      <p className="text-sm  items-end">Free delivery</p>
+
+                    </div>
+
+                  </div>
+                </Link>
+              </div>
+            )
+          )
+        })}
       </div>
 
       <hr className="my-2" />

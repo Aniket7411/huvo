@@ -279,23 +279,20 @@ export default function Header(props) {
             </button>
 
             <button
-              onClick={() =>
-                isLoggedIn()
-                  ? navigate("/checkout/cart")
-                  : toast.error("Please Login First")
-              }
-              className="relative flex items-center justify-center p-2 bg-red-600 rounded-full hover:bg-red-700 transition"
-            >
-              {/* Shopping Bag Icon */}
-              <HiOutlineShoppingBag className="text-2xl text-white cursor-pointer" />
+  onClick={() => navigate("/checkout/cart")}
+  className="relative flex items-center justify-center p-2 bg-red-600 rounded-full hover:bg-red-700 transition"
+>
+  {/* Shopping Bag Icon */}
+  <HiOutlineShoppingBag className="text-2xl text-white cursor-pointer" />
 
-              {/* Cart Item Count */}
-              {numberOfCartItems > 0 && (
-                <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
-                  {numberOfCartItems}
-                </span>
-              )}
-            </button>
+  {/* Cart Item Count */}
+  {numberOfCartItems > 0 && (
+    <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
+      {numberOfCartItems}
+    </span>
+  )}
+</button>
+
 
 
 

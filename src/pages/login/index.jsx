@@ -37,12 +37,16 @@ export default function Login() {
     try {
       setLoader(true);
       const response = await HttpClient.post("/users/login", data);
+      console.log("response", response)
+
       if (response) {
         setLoader(false);
       }
       LogIn(response);
       toast.success("Login Successfully");
       localStorage.setItem("role", response?.userData?.role)
+      localStorage.setItem("role", response?.userData?.role)
+
 
       if (response?.userData?.role === "SELLER") {
         navigate("/seller");

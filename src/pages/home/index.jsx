@@ -75,6 +75,7 @@ export default function Home() {
       const { categories } = await HttpClient.get("/category");
 
       setAllCategories(categories);
+      console.log("setAllCategories",setAllCategories)
 
       const formattedData = categories.map((product) => ({
         id: product._id,
@@ -154,6 +155,8 @@ export default function Home() {
   const kidsProducts = allProducts.filter((item) => item.group === "kids").splice(0, 8);
   const womenProducts = allProducts.filter((item) => item.group === "women").splice(0, 8);
   const menProducts = allProducts.filter((item) => item.group === "men").splice(0, 8);
+
+  console.log("allCategories",allCategories)
 
 
 
@@ -270,7 +273,9 @@ export default function Home() {
           >
             {allCategories.map(({ id, categoryId, description, group, image, productName }) => (
               <SwiperSlide key={id}>
-                <div className="flex flex-col  items-center">
+
+                <Link  to={`/${group.toLowerCase()}-collection`}>
+                <div className="flex flex-col items-center">
                   {/* Image */}
                   <img
                     src={image || "https://via.placeholder.com/300"}
@@ -282,6 +287,7 @@ export default function Home() {
                     {description || "No Description"}
                   </p>
                 </div>
+                </Link>
               </SwiperSlide>
             ))}
             {/* Navigation Buttons */}
@@ -460,35 +466,46 @@ export default function Home() {
 
 
 
-      <div className="flex p-2 md:hidden flex-wrap justify-between gap-2 ">
-        {trendingProducts.map((each, index) => (
-          <div
-            key={index}
-            className="w-[31%] flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
-          >
-            <Link to={`/product-details/${each?.productId}`} >
 
+      <div className="flex flex-wrap justify-between px-2 md:hidden gap-1">
+
+
+          {trendingProducts.map((each, index) => (
+            <div
+              key={index}
+              className="w-[48%]  flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
+            >
+
+              <p className="text-[black] font-quicksand font-sm font-bold  mb-1 text-center">
+                {each?.brandName || "Trending Brand Name"}
+              </p>
 
               {/* Product Image */}
+
               <img
                 src={each?.bannerImage || "https://via.placeholder.com/300"}
-                alt={each?.name || "Product Image"}
-                className="h-20 w-20 object-cover rounded-md"
+                alt={each?.productName || "Product Image"}
+                className="h-20 w-20 object-cover  mb-2"
               />
               {/* Product Name */}
-              <h3 className="text-center font-semibold text-gray-800 text-sm mb-1">
+              <h2 className="text-center font-semibold text-gray-800 text-sm ">
                 {each?.productName || "Product Name"}
-              </h3>
-              <div className="flex items-center text-sm ">
-                <span className="text-gray-700 ">Ratings: </span>
-                <span>4.5</span>
+              </h2>
+              <div className="flex items-center justify-between  text-sm ">
+                <span className="text-gray-700">Ratings: 4.5</span>
+                <TbJewishStarFilled className="text-[#ebf73d]" />
               </div>
-              <p className="text-[10px] mt-auto text-center">
-                200 Ordered <br /> last  week</p>
-            </Link>
-          </div>
-        ))}
-      </div>
+              
+
+
+              <Link to="/store_Products">
+                <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
+                  Product detail
+                </button>
+              </Link>
+            </div>
+          ))}
+        </div>
       <hr className="my-5" />
 
 

@@ -234,11 +234,9 @@ function App() {
           <Route
             path="checkout/cart"
             element={
-              <UserAuth>
-                <Layout changeHeaderColor="true">
-                  <CheckOut />
-                </Layout>
-              </UserAuth>
+              <Layout changeHeaderColor="true">
+                <CheckOut />
+              </Layout>
             }
           />
         </Routes>

@@ -74,7 +74,6 @@ function ProductEditPage() {
   }, [id]);
 
   const onSubmit = async (data) => {
-    console.log("aniket", data)
     try {
       const info = {
         ...data,

@@ -88,7 +88,7 @@ export default function MenCollection() {
     <>
 
       <div class="text-center mt-4">
-        <h1 class="text-3xl font-bold text-gray-800 mt-[60px]">Men's Clothing</h1>
+        <h1 class="text-3xl font-bold text-gray-800 mt-[60px]" >Men's Clothing</h1>
 
       </div>
 
@@ -96,36 +96,15 @@ export default function MenCollection() {
 
 
 
-        {/* <div class="flex justify-center items-center mt-2">
-  <div class="bg-black p-4 rounded-2xl  shadow-lg w-full">
-    <video class="w-[100vw] rounded-lg h-[200px]" controls>
-      <source src="assets/mensshoppingvideo.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-  </div>
-</div> */}
-
 
       </section>
       <section className="md:px-[10%] px-[2%]  py-1">
 
-        <div className="flex items-center  gap-2 my-2">
-          <h2
-            className="font-[Quicksand] font-medium text-center text-2xl sm:text-sm md:text-4xl bg-clip-text text-transparent"
-            style={{
-              backgroundImage: "linear-gradient(90deg, #007bff, #f8d00f, #007bff)", // Blue to Yellow Gradient
-              backgroundSize: "200% auto",
-              backgroundPosition: "0% 50%",
-              animation: "flow-gradient 3s linear infinite",
-            }}
-          >
-            CATEGORIES
-          </h2>
-          <p className="font-[Poppins] font-normal text-center  mb-2 text-lg text-[#eb25de] mt-2">
+        
+          <p className="font-[Poppins] font-normal text-center  mb-2 text-lg text-[#2581eb] mt-2">
             Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
 
           </p>
-        </div>
 
         <ul className="flex flex-wrap justify-center">
           {allCategories.length ? (

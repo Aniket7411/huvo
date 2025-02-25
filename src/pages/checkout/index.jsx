@@ -84,14 +84,13 @@ export default function CheckOut() {
   });
 
   const fetchCartProducts = async () => {
-    console.log("cartData")
+
     try {
       const response = await HttpClient.get("/cart");
-      console.log(response)
       const {data} = response
-      console.log("aniket cart data",data)
+      console.log("fetching cart", data)
+
       setCartProducts(data);
-      console.log("this", cartProducts)
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
@@ -130,6 +129,7 @@ export default function CheckOut() {
 
   const openDialogForProduct = async (productIdName) => {
     try {
+      console.log(productIdName)
       const { product } = await HttpClient.get(
         `/product/${cartProducts[productIdName].productId}`
       );

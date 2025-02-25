@@ -66,9 +66,10 @@ export default function KidsCollection() {
 
   return (
     <>
-
       <div class="text-center mt-4">
-        <h1 class="text-3xl font-bold text-gray-800">Kids's Clothing</h1>
+        <h1 class="text-3xl font-bold text-gray-800" style={{
+          marginTop:"70px"
+        }}>Kids's Clothing</h1>
         <p class="text-lg text-[#eb25de] mt-2">
           Discover the latest trends and styles in women's fashion. From elegant dresses to casual outfits, find the perfect look for every occasion.
         </p>
@@ -77,23 +78,7 @@ export default function KidsCollection() {
 
 
       <section className="md:px-[5%] px-[2%]  py-2">
-        <div className="flex items-center gap-2 my-2">
-          <h2
-            className="font-[Quicksand] font-medium text-center text-2xl sm:text-sm md:text-4xl bg-clip-text text-transparent"
-            style={{
-              backgroundImage: "linear-gradient(90deg, #007bff, #f8d00f, #007bff)", // Blue to Yellow Gradient
-              backgroundSize: "200% auto",
-              backgroundPosition: "0% 50%",
-              animation: "flow-gradient 3s linear infinite",
-            }}
-          >
-            CATEGORIES
-          </h2>
-          <p className="font-[Poppins] font-normal text-[#949494] m-auto text-center w-full  mb-2">
-            Explore the Latest Trends and Timeless Pieces Designed for Every Occasion.
 
-          </p>
-        </div>
         <ul className="flex flex-wrap justify-center">
           {allCategories.length ? (
             allCategories.map((category, i) => {

@@ -36,14 +36,14 @@ export default function ProductDetails() {
 
 
 
-
   const getProductDetails = async () => {
     setLoading(true);
     try {
       const data = { productId: id };
       const response = await HttpClient.get("/product/productId", data);
+      console.log("products", response)
+
       setProductDetails(response.product);
-      console.log("products", response.product.bannerImage)
 
       setProjectObjectId(response.product._id)
     } catch (error) {
@@ -113,12 +113,12 @@ export default function ProductDetails() {
         toast.error(error.message)
       }
 
-      if (!selectedSize) {
-        toast.error("Please select a size before adding to the cart!");
-        return;
-      }
+      // if (!selectedSize) {
+      //   toast.error("Please select a size before adding to the cart!");
+      //   return;
+      // }
 
-      toast.success("Product added to cart!");
+      // toast.success("Product added to cart!");
 
       addProduct({ ...productDetails, quantity, selectedSize });
 
@@ -312,7 +312,7 @@ export default function ProductDetails() {
 
             {/* Quantity Control Section */}
             <div className="" >
-              <p className="text-gray-600 font-medium mb-2">Quantity</p>
+              {/* <p className="text-gray-600 font-medium mb-2">Quantity</p>
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleDecrement}
@@ -330,7 +330,7 @@ export default function ProductDetails() {
                 >
                   +
                 </button>
-              </div>
+              </div> */}
 
               <p className="mb-1 mt-1">
                 Returnable : {productDetails.isReturnable ? "Yes" : "No"}
