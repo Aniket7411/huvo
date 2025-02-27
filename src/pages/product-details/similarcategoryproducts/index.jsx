@@ -14,7 +14,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 const SimilarProducts = () => {
   const [trendingProducts, setTrendingProducts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState("");
 
+
+  const handleSearch = () => {
+    console.log("Search Term:", searchTerm);
+    console.log("Sort Option:", sortOption);
+    // Add your search logic here
+  };
 
   const getCategoryProducts = async () => {
     setIsLoading(true)
@@ -59,6 +67,61 @@ const SimilarProducts = () => {
     <>
       {
         isLoading ? <Loader /> : <>
+
+
+          <div style={{ padding: "10px", maxWidth: "300px" }}>
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+              }}
+            >
+              {/* Search Input */}
+              <input
+                type="text"
+                placeholder="Search for clothes..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{
+                  padding: "8px",
+                  border: "1px solid #ccc",
+                  borderRadius: "5px",
+                }}
+              />
+
+              {/* Sorting Dropdown */}
+              <select
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value)}
+                style={{
+                  padding: "8px",
+                  border: "1px solid #ccc",
+                  borderRadius: "5px",
+                }}
+              >
+                <option value="">Sort By</option>
+                <option value="lowToHigh">Price: Low to High</option>
+                <option value="highToLow">Price: High to Low</option>
+                <option value="newArrivals">New Arrivals</option>
+              </select>
+
+              {/* Search Button */}
+              <button
+                onClick={handleSearch}
+                style={{
+                  padding: "8px",
+                  backgroundColor: "#007bff",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                Search
+              </button>
+            </div>
+          </div>
+
           <div style={{
             backgroundImage: "linear-gradient(to top, #030bfc, #ffffff)",
             backgroundSize: "cover",

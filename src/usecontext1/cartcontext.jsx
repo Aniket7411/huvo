@@ -12,6 +12,8 @@ export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
 
 
+
+
   // Function to add a product
   const addProduct = (product) => {
     setProducts((prevProducts) => [...prevProducts, product]);

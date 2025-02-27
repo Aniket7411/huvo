@@ -158,7 +158,7 @@ export default function MenCollection() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              padding: "10px",
+              padding: "8px",
               border: "1px solid #ccc",
               borderRadius: "5px",
             }}
@@ -169,7 +169,7 @@ export default function MenCollection() {
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
             style={{
-              padding: "10px",
+              padding: "8px",
               border: "1px solid #ccc",
               borderRadius: "5px",
             }}
@@ -184,7 +184,7 @@ export default function MenCollection() {
           <button
             onClick={handleSearch}
             style={{
-              padding: "10px",
+              padding: "8px",
               backgroundColor: "#007bff",
               color: "#fff",
               border: "none",

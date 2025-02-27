@@ -12,7 +12,21 @@ import { CiDeliveryTruck, CiStar } from "react-icons/ci";
 import SimilarProducts from "./similarcategoryproducts";
 
 
+
 export default function ProductDetails() {
+
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
+  const openPaymentModal = () => {
+    setIsPaymentModalOpen(true);
+    // Prevent scrolling on the background
+    document.body.style.overflow = "hidden";
+  };
+  const closePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+    // Restore scrolling on the background
+    document.body.style.overflow = "auto";
+  };
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState({});
   const [loading, setLoading] = useState(false);
@@ -34,6 +48,7 @@ export default function ProductDetails() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  console.log("product context", products)
 
 
   const getProductDetails = async () => {
@@ -96,36 +111,33 @@ export default function ProductDetails() {
       productId: productId,
       quantity: quantity,
       size: selectedSize,
-      color: "red"
+      color: "#ffffff"
     }
-    console.log("dataForCart",dataForCart)
+    console.log("dataForCart", dataForCart)
 
-    if (tokenIfLoggedIn === null) {
-      addProduct({ ...productDetails, quantity, selectedSize });
+    try {
+      const response = await HttpClient.post(`/cart/`, dataForCart)
+      console.log(response)
+      toast.success(response.message);
+      getCartData();
 
-    } else {
 
-      try {
-        const response = await HttpClient.post(`/cart/`, dataForCart)
-
-      } catch (error) {
-
-        toast.error(error.message)
-      }
-
-      // if (!selectedSize) {
-      //   toast.error("Please select a size before adding to the cart!");
-      //   return;
-      // }
-
-      // toast.success("Product added to cart!");
-
-      addProduct({ ...productDetails, quantity, selectedSize });
+    } catch (error) {
+      console.log(error)
 
     }
-
-
   };
+
+
+  const getCartData = async () => {
+    try {
+      const response = await HttpClient.get('/cart');
+      console.log(response, ".........121")
+
+    } catch (err) {
+      toast.error(err.message);
+    }
+  }
 
   const removeFromCart = async (productDetails) => {
     console.log("remove", productDetails)
@@ -358,7 +370,7 @@ export default function ProductDetails() {
 
 
               <div className="flex items-center mt-1 gap-2">
-                <CiDeliveryTruck size={30}/>
+                <CiDeliveryTruck size={30} />
                 <p className="font-semibold items-end">Free delivery</p>
 
               </div>
@@ -367,11 +379,43 @@ export default function ProductDetails() {
 
           </div>
           <p className="text-[#2562eb] mt-2 font-semibold">
-            <a href="/payment-details" className="hover:underline">
+            <p onClick={openPaymentModal} className="hover:underline cursor-pointer">
               View Payment Details
-            </a>
+            </p>
           </p>
 
+
+     
+      <Modal
+        isOpen={isPaymentModalOpen}
+        onRequestClose={closePaymentModal}
+        contentLabel="Payment Methods"
+        className="bg-white h-auto rounded-2xl shadow-xl max-w-md mx-auto p-6 relative"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+      >
+        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          Select a Payment Method
+        </h2>
+        <ul className="space-y-3">
+          <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
+            Credit/Debit Card
+          </li>
+          <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
+            Net Banking
+          </li>
+          <li className="text-gray-600 hover:text-gray-800 cursor-pointer">UPI</li>
+          <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
+            Cash on Delivery
+          </li>
+          <li className="text-gray-600 hover:text-gray-800 cursor-pointer">PayPal</li>
+        </ul>
+        <button
+          onClick={closePaymentModal}
+          className="mt-6 w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all"
+        >
+          Close
+        </button>
+      </Modal>
 
 
 
