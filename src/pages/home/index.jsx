@@ -1647,7 +1647,7 @@ export default function Home() {
 
         </section>
 
-        <section className="p-2">
+        {/* <section className="p-2">
           <Link to="/product_category/eyewear">
             <p className="font-[Quicksand]  text-center text-[#011F4B] font-bold text-lg  md:text-4xl">
               Explore Goggles
@@ -1744,7 +1744,7 @@ export default function Home() {
             <MdArrowOutward className="text-xl transition-all" />
           </button>
 
-        </section>
+        </section> */}
 
         <section className="bg-[#F6F6F6] px-5 py-5 ">
           <p className="text-center text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
