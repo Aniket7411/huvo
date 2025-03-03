@@ -48,7 +48,6 @@ export default function ProductDetails() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  console.log("product context", products)
 
 
   const getProductDetails = async () => {
@@ -56,9 +55,13 @@ export default function ProductDetails() {
     try {
       const data = { productId: id };
       const response = await HttpClient.get("/product/productId", data);
-      console.log("products", response)
+
 
       setProductDetails(response.product);
+      console.log("responseresponseresponse", response.product)
+
+
+
 
       setProjectObjectId(response.product._id)
     } catch (error) {
@@ -105,19 +108,17 @@ export default function ProductDetails() {
 
 
   const addToCart = async (productDetails) => {
-    console.log(productDetails)
     const { productId } = productDetails
     const dataForCart = {
       productId: productId,
       quantity: quantity,
       size: selectedSize,
-      color: "#ffffff"
+      color: "red"
     }
-    console.log("dataForCart", dataForCart)
 
     try {
       const response = await HttpClient.post(`/cart/`, dataForCart)
-      console.log(response)
+
       toast.success(response.message);
       getCartData();
 
@@ -385,37 +386,37 @@ export default function ProductDetails() {
           </p>
 
 
-     
-      <Modal
-        isOpen={isPaymentModalOpen}
-        onRequestClose={closePaymentModal}
-        contentLabel="Payment Methods"
-        className="bg-white h-auto rounded-2xl shadow-xl max-w-md mx-auto p-6 relative"
-        overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-      >
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-          Select a Payment Method
-        </h2>
-        <ul className="space-y-3">
-          <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
-            Credit/Debit Card
-          </li>
-          <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
-            Net Banking
-          </li>
-          <li className="text-gray-600 hover:text-gray-800 cursor-pointer">UPI</li>
-          <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
-            Cash on Delivery
-          </li>
-          <li className="text-gray-600 hover:text-gray-800 cursor-pointer">PayPal</li>
-        </ul>
-        <button
-          onClick={closePaymentModal}
-          className="mt-6 w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all"
-        >
-          Close
-        </button>
-      </Modal>
+
+          <Modal
+            isOpen={isPaymentModalOpen}
+            onRequestClose={closePaymentModal}
+            contentLabel="Payment Methods"
+            className="bg-white h-auto rounded-2xl shadow-xl max-w-md mx-auto p-6 relative"
+            overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+          >
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Select a Payment Method
+            </h2>
+            <ul className="space-y-3">
+              <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
+                Credit/Debit Card
+              </li>
+              <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
+                Net Banking
+              </li>
+              <li className="text-gray-600 hover:text-gray-800 cursor-pointer">UPI</li>
+              <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
+                Cash on Delivery
+              </li>
+              <li className="text-gray-600 hover:text-gray-800 cursor-pointer">PayPal</li>
+            </ul>
+            <button
+              onClick={closePaymentModal}
+              className="mt-6 w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all"
+            >
+              Close
+            </button>
+          </Modal>
 
 
 
@@ -553,14 +554,14 @@ export default function ProductDetails() {
         Products similar to above category
       </h3>
 
-      <SimilarProducts />
+      <SimilarProducts productName={productDetails?.name} group={productDetails?.group} />
 
 
       <h3 className="text-[#011F4B] text-xl font-semibold mb-2">
         Similar products in brands
       </h3>
 
-      <SimilarProducts />
+      <SimilarProducts brandName={productDetails?.brand?.name} />
     </div>
   );
 }

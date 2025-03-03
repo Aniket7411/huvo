@@ -11,7 +11,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 
 
-const SimilarProducts = () => {
+const SimilarProducts = (props) => {
+
+  console.log("props",props)
   const [trendingProducts, setTrendingProducts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,6 +75,7 @@ const SimilarProducts = () => {
             <div
               style={{
                 display: "flex",
+                flexWrap: "wrap",
                 gap: "10px",
               }}
             >
@@ -122,15 +125,9 @@ const SimilarProducts = () => {
             </div>
           </div>
 
-          <div style={{
-            backgroundImage: "linear-gradient(to top, #030bfc, #ffffff)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }} className="md:flex flex-wrap hidden p-5  justify-between gap-2">
+          <div
+            className="hidden md:flex bg-gradient-to-t from-blue-900 to-white bg-cover bg-center w-full items-center justify-center flex-wrap p-5 gap-2"
+          >
             <Swiper
               loop={true}
               className="mySwiper"
@@ -171,7 +168,7 @@ const SimilarProducts = () => {
 
                 return (
                   <SwiperSlide key={i}>
-                    <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200 w-full">
+                    <div className="bg-white  flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200 w-full">
                       <img
                         src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
                         alt={eachProduct?.name || "Product Image"}
@@ -312,7 +309,6 @@ const SimilarProducts = () => {
 
   )
 }
-
 
 
 export default SimilarProducts

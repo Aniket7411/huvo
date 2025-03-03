@@ -64,20 +64,20 @@ export default function Footer() {
       </div>
 
       <div className="flex flex-wrap justify-between gap-2 md:gap-6">
-          <Link to="/">
-            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
-              <p className="mr-2">Online shopping</p>
-              <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
-            </div>
-            <p className="text-[#949494] font-light font-[Poppins]">
-              Visit our wide range of products.
-            </p>
-          </Link>
+        <Link to="/">
+          <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
+            <p className="mr-2">Online shopping</p>
+            <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
+          </div>
+          <p className="text-[#949494] font-light font-[Poppins]">
+            Visit our wide range of products.
+          </p>
+        </Link>
 
 
 
-    
-    
+
+
         <div className="flex flex-col items-center ">
           <Link to="/privacy">
 
@@ -93,6 +93,25 @@ export default function Footer() {
 
         </div>
 
+        <div className="flex flex-col items-center">
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=huvoofficial@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center"
+          >
+            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
+              <p className="mr-2">Contact us</p>
+              <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
+            </div>
+
+            <p className="text-[#949494] font-light font-[Poppins]">
+              huvoofficial@gmail.com
+            </p>
+          </a>
+        </div>
+
+
         <div className="flex flex-col items-center ">
           <Link to="/returnpolicy">
             <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
@@ -107,7 +126,7 @@ export default function Footer() {
           </Link>
         </div>
 
-        <div className="flex flex-col items-center ">
+        {/* <div className="flex items-center ">
           <p className="font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-4">
             Stay connected
           </p>
@@ -122,7 +141,7 @@ export default function Footer() {
               <FaWhatsapp /> Whatsapp
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </footer>
   );

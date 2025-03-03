@@ -14,18 +14,39 @@ import { Swiper, SwiperSlide } from "swiper/react";
 export default function MenCollection() {
   const [allCategories, setAllCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-  const [trendingProducts, setTrendingProducts] = useState([])
 
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  let timeout = null;
 
-  const handleSearch = () => {
-    console.log("Search Term:", searchTerm);
-    console.log("Sort Option:", sortOption);
-    // Add your search logic here
+  const handleSearch = (event) => {
+    const term = event.target.value;
+    setSearchTerm(term);
+
+    // Clear previous timeout
+    clearTimeout(timeout);
+
+    // Set new timeout to filter products after 3 seconds
+    timeout = setTimeout(() => {
+      filterProducts(term);
+    }, 3000);
   };
 
+  const filterProducts = async (term) => {
+    try {
+      const response = await HttpClient.get("api", { params: { q: term } });
+      setFilteredProducts(response.data); // Adjust based on API response structure
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
 
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value);
+    console.log("Sort Option:", event.target.value);
+    // Add sorting logic here if needed
+  };
 
 
   const fetchAllProducts = async () => {
@@ -78,6 +99,7 @@ export default function MenCollection() {
   useEffect(() => {
     getAllCategories();
     fetchAllProducts();
+    filterProducts()
   }, []);
 
 
@@ -100,11 +122,11 @@ export default function MenCollection() {
       </section>
       <section className="md:px-[10%] px-[2%]  py-1">
 
-        
-          <p className="font-[Poppins] font-normal text-center  mb-2 text-lg text-[#2581eb] mt-2">
-            Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
 
-          </p>
+        <p className="font-[Poppins] font-normal text-center  mb-2 text-lg text-[#2581eb] mt-2">
+          Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
+
+        </p>
 
         <ul className="flex flex-wrap justify-center">
           {allCategories.length ? (
