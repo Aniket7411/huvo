@@ -130,7 +130,7 @@ export default function Superadminheader() {
 
   return (
     <>
-      <header className="text-white px-3 py-3 w-full ">
+      <header className="text-white px-3 py-3 w-[100%] ">
         <div className=" flex justify-between items-center ">
           <ul>
             {/* <li className="flex-grow">

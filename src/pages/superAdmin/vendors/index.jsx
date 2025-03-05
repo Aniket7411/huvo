@@ -7,6 +7,7 @@ import { HttpClient } from "../../../server/client/http";
 import { CiSearch } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 import Loader from '../../../components/loader';
+import { MdOutlineArrowOutward } from 'react-icons/md';
 
 export default function Vendors() {
   const [vendorList, setVendorList] = useState([]);
@@ -125,9 +126,14 @@ export default function Vendors() {
                         {/* <Link>
                         {item?.vendorId}
                         </Link> */}
-                          <button onClick={() => handleNavigate(item?.vendorId)}>
-                          {item?.vendorId}
-                        </button>
+                      <button
+  onClick={() => handleNavigate(item?.vendorId)}
+  className="flex items-center gap-2 text-blue-500 hover:underline"
+>
+  {item?.vendorId}
+  <MdOutlineArrowOutward className="text-lg" />
+</button>
+
                       </h5>
                     </td>
                     <td className="p-4 pl-8">

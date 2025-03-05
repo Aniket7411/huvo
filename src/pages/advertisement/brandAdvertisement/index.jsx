@@ -114,7 +114,7 @@ const BrandAdvertisement = () => {
   };
 
   return (
-    <div className="mx-auto px-4 py-6 bg-white rounded-lg shadow-lg ">
+    <div className=" bg-white rounded-lg shadow-lg ">
       <h1 className="text-2xl font-semibold mb-4 text-center">Brand Advertisement</h1>
 
       {/* Display error message */}

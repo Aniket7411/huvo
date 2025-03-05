@@ -472,6 +472,8 @@ export default function Home() {
 
 
           {trendingProducts.map((each, index) => (
+                          <Link to={`/store_Products/${each?.productId}`}>
+
             <div
               key={index}
               className="w-[48%]  flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
@@ -499,12 +501,14 @@ export default function Home() {
               
 
 
-              <Link to={`/store_Products/${each?.productId}`}>
               <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
                   Product detail
                 </button>
-              </Link>
             </div>
+            </Link>
+
+
+
           ))}
         </div>
       <hr className="my-5" />
@@ -784,6 +788,8 @@ export default function Home() {
                 return (
                   <SwiperSlide key={i}>
                     <div className="p-5">
+                    <Link to={`/store_Products/${category?.productId}`}>
+
 
                       <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
                         {/* Heading */}
@@ -824,13 +830,12 @@ export default function Home() {
                         )}
 
                         {/* Explore Button */}
-                        <Link to={`/store_Products/${category?.productId}`}>
                         <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
                             Visit Store & Product
                           </button>
-                        </Link>
                       </div>
 
+                      </Link>
 
 
                     </div>
@@ -852,6 +857,8 @@ export default function Home() {
 
 
           {womenProducts.map((each, index) => (
+                          <Link to={`/store_Products/${each?.productId}`}>
+
             <div
               key={index}
               className="w-[48%]  flex flex-col  items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
@@ -879,12 +886,11 @@ export default function Home() {
               </div>
 
 
-              <Link to={`/store_Products/${each?.productId}`}>
               <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
                   Visit Store & Product
                 </button>
-              </Link>
-            </div>
+            </div>              </Link>
+
           ))}
 
         </div>

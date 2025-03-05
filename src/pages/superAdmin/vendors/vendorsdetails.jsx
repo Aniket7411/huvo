@@ -18,6 +18,8 @@ export default function Vendorsdetail() {
   const [vendorDetails, setVendorDetails] = useState([]);
   const [loading, setloading] = useState(false);
   const [detailsId, setdetailsId] = useState();
+  const [basicSellerDetails, setBasicSellerDetails] = useState({})
+  const [sellerStoreDetails, setSellerStoreDetails] = useState({})
 
   const navigate = useNavigate();
 
@@ -32,8 +34,39 @@ export default function Vendorsdetail() {
 
     try {
       const response = await HttpClient.get(`/dashboard/vendors/${_id}`);
-      console.log("Full Response:", response);
-      setVendorDetails(response);
+      console.log(response)
+
+
+
+
+      setVendorDetails(response.vendorDetail);
+      const formattedSellerDetails = response.vendorDetail.address.map((each) => ({
+        address: each.address,
+        city: each.city,
+        isDefault: each.isDefault,
+        mobileNumber: each.mobileNumber,
+        postalCode: each.postalCode,
+        state: each.state,
+        town: each.town,
+        name: each.name
+
+      }))
+
+      setBasicSellerDetails(formattedSellerDetails[0])
+
+      console.log("formattingStoreDetails", response.vendorDetail.storeDetails)
+
+      const formattingStoreDetails = response.vendorDetail.storeDetails.map((eachDetail) => ({
+        storeProducts: eachDetail.products,
+        storeAddress: eachDetail.storeAddress,
+        storeDescription: eachDetail.storeDescription,
+        storeName: eachDetail.storeName
+      }))
+      console.log("formattingStoreDetails", formattingStoreDetails)
+      setSellerStoreDetails(formattingStoreDetails)
+      console.log("sellerStoreDetails", sellerStoreDetails)
+
+
       if (response) {
         setloading(false);
       }
@@ -43,7 +76,6 @@ export default function Vendorsdetail() {
     }
     //getVendorsDetails();
   };
-  console.log("Vendor Status:", vendorDetails);
   useEffect(() => {
     getVendorsDetails(id);
   }, [id]);
@@ -90,10 +122,9 @@ export default function Vendorsdetail() {
                 </div>
                 <div className="items-center flex-col space-y-2">
                   <div className="font-poppins font-normal text-[14px] leading-[21px]">
-                    #1234
+                    {basicSellerDetails?.name}
                   </div>
                   <div className="font-poppins font-normal text-[32px] leading-[21px] text-center">
-                    {vendorDetails?.vendorDetail?.sellerName}
                   </div>
                 </div>
               </div>
@@ -109,11 +140,10 @@ export default function Vendorsdetail() {
                     {" "}
                     Status:
                     <div
-                      className={`font-poppins font-normal ml-1 break-words ${
-                        vendorDetails?.vendorDetail?.status === true
+                      className={`font-poppins font-normal ml-1 break-words ${vendorDetails?.vendorDetail?.status === true
                           ? "text-green-600"
                           : "text-[#FFA940]"
-                      }`}
+                        }`}
                     >
                       {vendorDetails?.vendorDetail?.status === true
                         ? "Verified"
@@ -137,7 +167,7 @@ export default function Vendorsdetail() {
                     Email:
                   </h1>
                   <p className="font-poppins font-normal text-[16px] leading-[21px]">
-                    {vendorDetails?.vendorDetail?.email}
+                    {basicSellerDetails.email}
                   </p>
                 </div>
                 <div className="flex flex-col">
@@ -145,8 +175,8 @@ export default function Vendorsdetail() {
                     Address:
                   </h1>
                   <p className="font-poppins font-normal text-[16px] leading-[21px]">
-                    {vendorDetails?.vendorDetail?.address}
-                  </p>
+                    {basicSellerDetails.address}                 </p>
+                  <p>{basicSellerDetails.postalCode}, {basicSellerDetails.state}</p>
                 </div>
               </div>
               {/* for the vertical line */}
@@ -154,11 +184,10 @@ export default function Vendorsdetail() {
               <div className="flex flex-col space-y-4">
                 <div className="flex flex-col">
                   <h1 className="font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]">
-                    Business Description:
+                    Store Details
                   </h1>
                   <p className="font-poppins font-normal text-[16px] leading-[21px]">
-                    to grow to live to think to gror to fastgrow to point to
-                    note iit is our motothis is the dummy data data dummy
+                  kkk
                   </p>
                 </div>
                 <div className="flex flex-col">
@@ -166,7 +195,7 @@ export default function Vendorsdetail() {
                     Contact Number:
                   </h1>
                   <p className="font-poppins font-normal text-[16px] leading-[21px]">
-                    9414489954
+                    {basicSellerDetails.mobileNumber}
                   </p>
                 </div>
               </div>
