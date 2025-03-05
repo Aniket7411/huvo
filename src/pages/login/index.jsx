@@ -43,7 +43,7 @@ export default function Login() {
         setLoader(false);
       }
       LogIn(response);
-      toast.success("Login Successfully");
+      toast.success("Login Successful");
       localStorage.setItem("role", response?.userData?.role)
       localStorage.setItem("role", response?.userData?.role)
 

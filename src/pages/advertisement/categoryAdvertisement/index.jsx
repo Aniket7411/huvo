@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { HttpClient } from "../../../server/client/http";
+import SuperAdminNav from "../../../components/superadminNavbar/superadminnav";
 
 const CategoryAdvertisement = () => {
   const [categories, setCategories] = useState([]);
@@ -84,6 +85,8 @@ const CategoryAdvertisement = () => {
   };
 
   return (
+    < div className="flex">
+   
     <div className=" mx-auto px-4 bg-white rounded-lg shadow-lg">
       <h1 className="text-2xl font-semibold mb-2 text-center">Category Advertisement</h1>
 
@@ -202,6 +205,7 @@ const CategoryAdvertisement = () => {
           </button>
         </div>
       </form>
+    </div>
     </div>
   );
 };

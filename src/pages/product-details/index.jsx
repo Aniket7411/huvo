@@ -4,16 +4,17 @@ import { Oval } from "react-loader-spinner";
 import { Link, useParams } from "react-router-dom";
 import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
-import { ProductContext } from "../../usecontext1/cartcontext";
 import { FaShare } from "react-icons/fa";
 import { TbJewishStarFilled, TbStarFilled } from "react-icons/tb";
 import Modal from "react-modal";
 import { CiDeliveryTruck, CiStar } from "react-icons/ci";
 import SimilarProducts from "./similarcategoryproducts";
+import { CartContext } from "../../usecontext1/cartcontext";
 
 
 
 export default function ProductDetails() {
+
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
@@ -30,7 +31,7 @@ export default function ProductDetails() {
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState({});
   const [loading, setLoading] = useState(false);
-  const { products, addProduct } = useContext(ProductContext);
+  const { cart, addToCartContext, removeFromCartContext } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1); // Track the quantity, default to 1
   const [selectedSize, setSelectedSize] = useState(""); // Track selected size
   const [reviews, addReviews] = useState()
@@ -48,6 +49,7 @@ export default function ProductDetails() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  console.log("cartcartcart", cart)
 
 
   const getProductDetails = async () => {
@@ -58,7 +60,6 @@ export default function ProductDetails() {
 
 
       setProductDetails(response.product);
-      console.log("responseresponseresponse", response.product)
 
 
 
@@ -107,6 +108,7 @@ export default function ProductDetails() {
 
 
 
+
   const addToCart = async (productDetails) => {
     const { productId } = productDetails
     const dataForCart = {
@@ -115,6 +117,12 @@ export default function ProductDetails() {
       size: selectedSize,
       color: "red"
     }
+
+
+    addToCartContext(dataForCart);
+
+
+
 
     try {
       const response = await HttpClient.post(`/cart/`, dataForCart)
@@ -129,11 +137,17 @@ export default function ProductDetails() {
     }
   };
 
+  const removeProductFromCart = (productDetails) => {
+    removeFromCartContext(productDetails)
+  };
+
+
+  console.log("cart", cart)
+
 
   const getCartData = async () => {
     try {
       const response = await HttpClient.get('/cart');
-      console.log(response, ".........121")
 
     } catch (err) {
       toast.error(err.message);
@@ -141,12 +155,10 @@ export default function ProductDetails() {
   }
 
   const removeFromCart = async (productDetails) => {
-    console.log("remove", productDetails)
     const { productId } = productDetails
 
     const dataToRemove = productId + selectedSize + "red"
 
-    console.log("dataToRemove", dataToRemove)
 
 
     try {
@@ -356,6 +368,16 @@ export default function ProductDetails() {
                   className="px-2 py-1 bg-[#011F4B] text-white font-semibold rounded-md pointer transition"
                 >
                   Add to Cart
+                </button>
+
+                <button
+                  key={productDetails}
+                  type="button"
+                  onClick={() => removeProductFromCart(productDetails
+                    
+                  )}
+                >
+                  Remove from cart
                 </button>
 
                 <button key={productDetails._id}

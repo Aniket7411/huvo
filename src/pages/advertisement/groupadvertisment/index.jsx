@@ -100,7 +100,7 @@ const GroupAdvertisement = () => {
   }, []);
 
   return (
-    <div className="mx-auto px-4 bg-white rounded-lg shadow-lg ">
+    <div className=" px-4 bg-white  rounded-lg shadow-lg ">
       <h1 className="text-2xl font-semibold mb-2 text-center">Group Advertisement</h1>
 
       {/* Display error message */}

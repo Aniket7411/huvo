@@ -155,6 +155,7 @@ export default function Home() {
   const kidsProducts = allProducts.filter((item) => item.group === "kids").splice(0, 8);
   const womenProducts = allProducts.filter((item) => item.group === "women").splice(0, 8);
   const menProducts = allProducts.filter((item) => item.group === "men").splice(0, 8);
+  console.log("kidsProducts",kidsProducts)
 
   console.log("allCategories",allCategories)
 
@@ -498,8 +499,8 @@ export default function Home() {
               
 
 
-              <Link to="/store_Products">
-                <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
+              <Link to={`/store_Products/${each?.productId}`}>
+              <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
                   Product detail
                 </button>
               </Link>
@@ -633,8 +634,8 @@ export default function Home() {
 
 
                       {/* Explore Button */}
-                      <Link to={`/products_by_brand/${product?.brandName}`}>
-                        <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-lg  hover:bg-[#02386e] transition-colors duration-200">
+                      <Link to={`/collections?brand=${product?.id}`}>
+                      <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-lg  hover:bg-[#02386e] transition-colors duration-200">
                           Explore Brand
                           <FaArrowRight className="ml-2" />
                         </button>
@@ -823,8 +824,8 @@ export default function Home() {
                         )}
 
                         {/* Explore Button */}
-                        <Link to="/store_Products" className="w-full">
-                          <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
+                        <Link to={`/store_Products/${category?.productId}`}>
+                        <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
                             Visit Store & Product
                           </button>
                         </Link>
@@ -878,8 +879,8 @@ export default function Home() {
               </div>
 
 
-              <Link to="/store_Products">
-                <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
+              <Link to={`/store_Products/${each?.productId}`}>
+              <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
                   Visit Store & Product
                 </button>
               </Link>
@@ -1018,8 +1019,8 @@ export default function Home() {
                         )}
 
                         {/* Explore Button */}
-                        <Link to="/store_Products" className="w-full">
-                          <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
+                        <Link to={`/store_Products/${category?.productId}`}>
+                        <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
                             Visit Store & Product
                           </button>
                         </Link>

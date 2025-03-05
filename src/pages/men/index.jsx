@@ -166,7 +166,7 @@ export default function MenCollection() {
 
       <hr className="my-2" />
 
-      <div style={{ padding: "10px", maxWidth: "300px" }}>
+      <div className="flex" style={{ padding: "10px", maxWidth: "300px" }}>
         <div
           style={{
             display: "flex",

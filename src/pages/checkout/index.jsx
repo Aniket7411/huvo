@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ProductContext } from "../../usecontext1/cartcontext";
 import {
   Tab,
   TabGroup,
@@ -35,7 +34,6 @@ export default function CheckOut() {
   const [productSize, setProductSize] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenAddress, setIsOpenAddress] = useState(false);
-  const { products, addProduct } = useContext(ProductContext);
 
 
   const [isOpenCoupon, setIsOpenCoupon] = useState(false);
@@ -87,7 +85,7 @@ export default function CheckOut() {
 
     try {
       const response = await HttpClient.get("/cart");
-      const {data} = response
+      const { data } = response
       console.log("fetching cart", data)
 
       setCartProducts(data);
@@ -223,7 +221,6 @@ export default function CheckOut() {
       toast.error(error?.response?.data?.message);
     }
   };
-  console.log("card product", products)
   const orderPlace = async () => {
 
     try {
@@ -434,18 +431,18 @@ export default function CheckOut() {
                                 </p>
                               )}
                               <div className="flex items-center gap-4">
-                              <h3>Product Name : Plazo</h3>
-                              <p className="rounded-md px-1 " style={{
-                                outline:"1px solid gray"
-                              }}> <strong>Color :</strong>  {cartProducts[key].color}</p>
+                                <h3>Product Name : Plazo</h3>
+                                <p className="rounded-md px-1 " style={{
+                                  outline: "1px solid gray"
+                                }}> <strong>Color :</strong>  {cartProducts[key].color}</p>
                               </div>
 
                               <div className="flex gap-2 mb-2 items-center">
-                                  <p className="text-[#4D4D4D] font-medium">
-                                    Size : {cartProducts[key].size}
-                                  </p>
-                      
-                     
+                                <p className="text-[#4D4D4D] font-medium">
+                                  Size : {cartProducts[key].size}
+                                </p>
+
+
                                 {cartProducts[key].quantity && (
                                   <p className="text-[#4D4D4D] text-md font-medium">
                                     Quantity: {cartProducts[key].quantity}
@@ -1437,8 +1434,8 @@ export default function CheckOut() {
                                     <button
                                       // className="text-base px-3 py-2 bg-[#14CDA8]"
                                       className={`text-base px-3 py-2 ${item.couponCode === couponCode
-                                          ? "bg-[#14CDA8]"
-                                          : "bg-[#011F4B] text-white"
+                                        ? "bg-[#14CDA8]"
+                                        : "bg-[#011F4B] text-white"
                                         }`}
                                       onClick={() =>
                                         getCouponDetails({

@@ -3,6 +3,8 @@ import BrandAdvertisement from "./brandAdvertisement";
 import GroupAdvertisement from "./groupadvertisment";
 import CategoryAdvertisement from "./categoryAdvertisement";
 import DiscountAdvertisment from "./discountadvertisement";
+import Superadminheader from "../../components/superadminheader";
+import SuperAdminNav from "../../components/superadminNavbar/superadminnav";
 
 const Advertisement = () => {
   // State to track the selected advertisement type
@@ -14,7 +16,20 @@ const Advertisement = () => {
   };
 
   return (
-    <div className="p-6 mx-auto bg-white rounded-lg">
+
+    <div className="flex w-[100%]">
+  <div className="bg-[#E7EFFA] h-[100vh]">
+        <SuperAdminNav />
+      </div>
+
+
+              
+    <div>
+      <div>
+      <Superadminheader/>
+      </div>
+  
+    <div className="p-6      rounded-lg" >
        {/* Select Dropdown for Advertisement Type */}
       <div className="mb-2">
         <label className="block text-lg font-medium mt-2 mb-2">Select Advertisement Type</label>
@@ -31,12 +46,15 @@ const Advertisement = () => {
       </div>
 
       {/* Content for Active Advertisement Type */}
-      <div className="tab-content">
+      <div className="tab-content ">
         {activeTab === "category" && <CategoryAdvertisement />}
         {activeTab === "brand" && <BrandAdvertisement />}
         {activeTab === "group" && <GroupAdvertisement />}
         {activeTab === "discounted" && <DiscountAdvertisment />}
       </div>
+    </div>
+
+    </div>
     </div>
   );
 };

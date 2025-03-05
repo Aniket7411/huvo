@@ -183,9 +183,9 @@ export default function Dashboard() {
                 <div className="w-10 h-10 bg-[#A2A1FF]/40 rounded-lg flex items-center justify-center ">
                   <BsFillWalletFill className="p-1 w-8 h-8 text-[#6563FF]" />
                 </div>
-                <div className="text-[#22303E]">
+                {/* <div className="text-[#22303E]">
                   <BsThreeDotsVertical />
-                </div>
+                </div> */}
               </div>
               <div className="py-2 font-sans font-normal text-[15px] leading-[22px] text-[#22303E]/70 mx-2">
                 Sales Previous Month

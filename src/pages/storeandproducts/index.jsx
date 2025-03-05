@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Loader from "../../components/loader";
 import { Link } from "react-router-dom";
 import { TbJewishStarFilled } from "react-icons/tb";
+import { useParams } from "react-router-dom";
 
 const StoreAndProducts = () => {
   const [genderCategory, setGenderCategory] = useState("men");
@@ -14,12 +15,22 @@ const StoreAndProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const { id } = useParams();
+
+  console.log("ididid", id)
+  console.log("genderCategory", genderCategory)
+
+  console.log("sortOrder", sortOrder)
+
+
 
   const fetchAllProducts = async (page = 1) => {
     setIsLoading(true);
     try {
-      const response = await HttpClient.get(`/product/`);
-      const formattedData = response.products.map((eachProduct) => ({
+      const response = await HttpClient.get(`/product/storeproducts`, {productId: id,genderCategory,sortOrder });
+      console.log("storeproducts",response.data)
+      
+      const formattedData = response.data.map((eachProduct) => ({
         objectId: eachProduct._id,
         bannerImage: eachProduct.bannerImage,
         productName: eachProduct.name,
@@ -52,7 +63,7 @@ const StoreAndProducts = () => {
 
   useEffect(() => {
     fetchAllProducts(currentPage);
-  }, [currentPage]);
+  }, [currentPage,genderCategory,sortOrder]);
 
   const handleGenderChange = (e) => setGenderCategory(e.target.value);
   const handleSortChange = (e) => setSortOrder(e.target.value);

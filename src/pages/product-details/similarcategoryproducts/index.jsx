@@ -70,8 +70,10 @@ const SimilarProducts = (props) => {
       {
         isLoading ? <Loader /> : <>
 
+        
 
-          <div style={{ padding: "10px", maxWidth: "300px" }}>
+
+          <div style={{ padding: "10px" }}>
             <div
               style={{
                 display: "flex",

@@ -9,9 +9,9 @@ import { LogOut, isLoggedIn } from "../../server/user";
 import { toast } from "react-toastify";
 import { HttpClient } from "../../server/client/http";
 import { CiSearch } from "react-icons/ci";
-import { ProductContext } from "../../usecontext1/cartcontext";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaBars, FaTimes } from "react-icons/fa";
+
 
 
 
@@ -24,7 +24,6 @@ console.log("loginStatus", loginStatus)
 export default function Header(props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { products } = useContext(ProductContext);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -128,7 +127,7 @@ export default function Header(props) {
 
 
 
-  const numberOfCartItems = products.length
+  const numberOfCartItems = 0
 
   console.log(numberOfCartItems)
 
@@ -279,19 +278,19 @@ export default function Header(props) {
             </button>
 
             <button
-  onClick={() => navigate("/checkout/cart")}
-  className="relative flex items-center justify-center p-2 bg-red-600 rounded-full hover:bg-red-700 transition"
->
-  {/* Shopping Bag Icon */}
-  <HiOutlineShoppingBag className="text-2xl text-white cursor-pointer" />
+              onClick={() => navigate("/checkout/cart")}
+              className="relative flex items-center justify-center p-2 bg-red-600 rounded-full hover:bg-red-700 transition"
+            >
+              {/* Shopping Bag Icon */}
+              <HiOutlineShoppingBag className="text-2xl text-white cursor-pointer" />
 
-  {/* Cart Item Count */}
-  {numberOfCartItems > 0 && (
-    <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
-      {numberOfCartItems}
-    </span>
-  )}
-</button>
+              {/* Cart Item Count */}
+              {numberOfCartItems > 0 && (
+                <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
+                  {numberOfCartItems}
+                </span>
+              )}
+            </button>
 
 
 
