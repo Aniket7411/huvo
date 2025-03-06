@@ -186,7 +186,7 @@ export default function Home() {
         d="M9.75 9L3 15.75M9.75 9l6-6m0 0h4.5m-4.5 0V9M3 15.75l6 6m6-6l6-6m-6 6l-6 6"
       />
     </svg>
-    <p className="text-lg md:text-xl font-semibold tracking-wide">
+    <p className="text-lg md:text-xl font-semibold font-[Quicksand] tracking-wide">
       Huvo is currently being dressed, stay tuned for more!
     </p>
   </div>
@@ -214,7 +214,7 @@ export default function Home() {
                 <p className="font-[Quicksand] font-bold text-xl md:text-7xl mb-2">
                   Every Story
                 </p>
-                <p className="font-[Poppins] font-normal text-[#fff]">
+                <p className="font-[Quicksand] font-semibold  text-[#fff]">
                   Discover a world of fashion for the whole family—trendy, <br /> timeless, and tailored for all budgets.
 
                 </p>
@@ -233,11 +233,11 @@ export default function Home() {
                 <p className="font-[Quicksand] font-bold text-xl md:text-7xl mb-2">
                   TO SHOP
                 </p>
-                <p className="font-[Poppins] font-normal text-[#fff]">
+                <p className="font-[Quicksand] font-semibold text-[#fff]">
                   Unlock exclusive offers and browse through <br /> our vast collection of
                   premium products.
                 </p>
-                <p className="font-[Poppins] font-normal text-[#fff]">
+                <p className="font-[Quicksand] font-semibold  text-[#fff]">
                   Now is the best time to elevate your style with high-quality <br />
                   essentials at amazing prices.
                 </p>
