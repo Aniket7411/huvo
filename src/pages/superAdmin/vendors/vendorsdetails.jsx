@@ -20,6 +20,8 @@ export default function Vendorsdetail() {
   const [detailsId, setdetailsId] = useState();
   const [basicSellerDetails, setBasicSellerDetails] = useState({})
   const [sellerStoreDetails, setSellerStoreDetails] = useState({})
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -35,10 +37,6 @@ export default function Vendorsdetail() {
     try {
       const response = await HttpClient.get(`/dashboard/vendors/${_id}`);
       console.log(response)
-
-
-
-
       setVendorDetails(response.vendorDetail);
       const formattedSellerDetails = response.vendorDetail.address.map((each) => ({
         address: each.address,
@@ -54,7 +52,8 @@ export default function Vendorsdetail() {
 
       setBasicSellerDetails(formattedSellerDetails[0])
 
-      console.log("formattingStoreDetails", response.vendorDetail.storeDetails)
+      console.log(sellerStoreDetails)
+
 
       const formattingStoreDetails = response.vendorDetail.storeDetails.map((eachDetail) => ({
         storeProducts: eachDetail.products,
@@ -62,9 +61,10 @@ export default function Vendorsdetail() {
         storeDescription: eachDetail.storeDescription,
         storeName: eachDetail.storeName
       }))
-      console.log("formattingStoreDetails", formattingStoreDetails)
       setSellerStoreDetails(formattingStoreDetails)
-      console.log("sellerStoreDetails", sellerStoreDetails)
+
+      console.log("sellerStoreDetails",sellerStoreDetails)
+
 
 
       if (response) {
@@ -297,10 +297,16 @@ export default function Vendorsdetail() {
                 </div>
               </div>
               <div className="flex flex-wrap py-10 gap-5">
-                <Button className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] border-[#8592A3] bg-[#F6FAFF] text-[#000000]">
-                  Send Message
-                </Button>
-                <Button className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#FFFAF1] border-[#B9861F] text-[#B9861F]">
+              <Button
+  className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] border-[#8592A3] bg-[#F6FAFF] text-[#000000]"
+  onClick={() => {
+    window.location.href = "mailto:seller@example.com?subject=Message%20from%20Buyer&body=Hello%20Seller,";
+  }}
+>
+  Send Message
+</Button>
+
+                <Button onClick={() => console.log("Aaahhh")} className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#FFFAF1] border-[#B9861F] text-[#B9861F]">
                   Suspend
                 </Button>
                 <Button className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#FFEFEF] border-[#EB001B] text-[#EB001B]">
@@ -310,6 +316,7 @@ export default function Vendorsdetail() {
                   Approve
                 </Button>
               </div>
+              
             </div>
           </div>
         ) : (

@@ -312,7 +312,7 @@ export default function CheckOut() {
   return (
     <>
       <section className="px-10 py-7 font-[Quicksand]">
-        {Object.keys(cartProducts).length ? (
+        {Object?.keys(cartProducts)?.length ? (
           <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
             <TabList className="flex justify-between mt-4 sm:justify-center">
               <Tab className="font-medium text-[#474747] focus:text-[#011F4B] active:text-[#011F4B] focus:outline-none  font-[Poppins]">

@@ -14,6 +14,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 const SimilarProducts = (props) => {
 
   console.log("props",props)
+
+  const {recommendedProducts} = props
+  console.log("sssssssss",recommendedProducts)
   const [trendingProducts, setTrendingProducts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState("");
@@ -51,7 +54,6 @@ const SimilarProducts = (props) => {
         productId: eachProduct.productId,
       }))
       setTrendingProducts(formattedData)
-      console.log("formattedData", formattedData)
       setIsLoading(false)
     } catch (error) {
       console.error(error);

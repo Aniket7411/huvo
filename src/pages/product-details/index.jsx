@@ -40,6 +40,9 @@ export default function ProductDetails() {
   const [description, setDescription] = useState("")
   const [allReviews, setAllReviews] = useState([])
   const [reviewLoading, setReviewsLoading] = useState(false)
+
+  const [recommendedProducts, setRecommendedProducts] = useState([])
+
   const handleStarClick = (value) => {
     setRating(value); // Set the rating when a star is clicked
   };
@@ -49,7 +52,6 @@ export default function ProductDetails() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  console.log("cartcartcart", cart)
 
 
   const getProductDetails = async () => {
@@ -57,6 +59,25 @@ export default function ProductDetails() {
     try {
       const data = { productId: id };
       const response = await HttpClient.get("/product/productId", data);
+
+      const formattedRecommendedProducts = response.recommendProduct.map((each) => ({
+        bannerImage: each.bannerImage,
+        brandId: each.brand,
+        categoryId: each.category,
+        productDescription: each.category,
+        discount: each.discount,
+        group: each.group,
+        productDetails: each.productDetails,
+        materialAndCare: each.materialAndCare,
+        productName: each.name,
+        price: each.price,
+        sellerId: each.seller
+      }))
+
+
+      setRecommendedProducts(formattedRecommendedProducts)
+      console.log("recommendedProducts",recommendedProducts)
+
 
 
       setProductDetails(response.product);
@@ -118,19 +139,12 @@ export default function ProductDetails() {
       color: "red"
     }
 
-
     addToCartContext(dataForCart);
-
-
-
 
     try {
       const response = await HttpClient.post(`/cart/`, dataForCart)
-
       toast.success(response.message);
       getCartData();
-
-
     } catch (error) {
       console.log(error)
 
@@ -142,7 +156,6 @@ export default function ProductDetails() {
   };
 
 
-  console.log("cart", cart)
 
 
   const getCartData = async () => {
@@ -175,17 +188,14 @@ export default function ProductDetails() {
     if (tokenIfLoggedIn === null) {
       toast.error("Please login First")
       const response = await HttpClient.get(`/review/67406d37c477d4dbe88f5304`)
-      console.log(response)
     }
     else {
-      console.log("add to wishlist", productDetails)
       const { productId } = productDetails
       const wishlistData = {
         productId: productId,
         size: selectedSize,
         color: "red"
       }
-      console.log(wishlistData)
       try {
         const response = await HttpClient.post("/wishlist/", wishlistData)
         console.log(response)
@@ -214,7 +224,6 @@ export default function ProductDetails() {
 
 
   const submitReview = async (productId) => {
-    console.log(rating, description, productId)
 
     try {
       const response = await HttpClient.post(
@@ -222,7 +231,6 @@ export default function ProductDetails() {
         { rating, description }
       );
 
-      console.log(response)
       if (response) {
         toast.success("Review Added")
         getReviews()
@@ -374,7 +382,7 @@ export default function ProductDetails() {
                   key={productDetails}
                   type="button"
                   onClick={() => removeProductFromCart(productDetails
-                    
+
                   )}
                 >
                   Remove from cart
@@ -576,7 +584,7 @@ export default function ProductDetails() {
         Products similar to above category
       </h3>
 
-      <SimilarProducts productName={productDetails?.name} group={productDetails?.group} />
+      <SimilarProducts productName={productDetails?.name} group={productDetails?.group} recommendedProducts={recommendedProducts} />
 
 
       <h3 className="text-[#011F4B] text-xl font-semibold mb-2">
