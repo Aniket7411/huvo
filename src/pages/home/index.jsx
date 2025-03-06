@@ -171,7 +171,7 @@ export default function Home() {
   className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white text-center py-2 md:py-6 shadow-lg"
   style={{ marginTop: "45px", position: "relative" }}
 >
-  <div className="flex justify-center items-center mt-2  space-x-3 animate-pulse">
+  <div className="flex justify-center items-center mt-2 h-[100px] px-2  md:h-[250px]  space-x-3 animate-pulse">
     <svg
       className="w-6 h-6 text-yellow-300"
       xmlns="http://www.w3.org/2000/svg"
@@ -186,13 +186,13 @@ export default function Home() {
         d="M9.75 9L3 15.75M9.75 9l6-6m0 0h4.5m-4.5 0V9M3 15.75l6 6m6-6l6-6m-6 6l-6 6"
       />
     </svg>
-    <p className="text-lg md:text-xl font-semibold font-[Quicksand] tracking-wide">
+    <p className="text-lg md:text-6xl font-semibold font-[Quicksand] tracking-wide">
       Huvo is currently being dressed, stay tuned for more!
     </p>
   </div>
   <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-yellow-400 rounded-full"></div>
 </div>
-
+{/* 
       <section>
         <Swiper
           pagination={true}
@@ -248,7 +248,7 @@ export default function Home() {
           </SwiperSlide>
 
         </Swiper>
-      </section>
+      </section> */}
 
       <section className="px-2 md:px-10 py-3 ">
         <h2 className="font-[Quicksand]  font-bold text-center text-sm md:text-4xl text-[#011F4B]">
