@@ -243,7 +243,7 @@ export default function Superadminheader() {
               </div>
               <div className="flex items-center px-8 py-5">
                 <p className="font-[Poppins] font-bold  text-[#000000] ">
-                  Vardakart
+                  Huvo
                 </p>
               </div>
               <div className="flex items-center px-4 py-5">

@@ -41,17 +41,15 @@ code {
 }
 
 .home-banner {
-  background-image: url('../public/assets/ladybanner.jpg');
+  background-image: url('../public/assets/topbanner.jpg');
   background-position: center;
   background-size: cover;
-  height: 60vh;
 }
 
 .man-women {
   background-image: url('../public/assets/mangirlbannertop.jpg');
   background-position: center;
   background-size: cover;
-  height: 60vh;
 }
 
 .shopping {
@@ -75,7 +73,6 @@ code {
   background-image: url('../public/assets/men\ collection.png');
   background-position: center;
   background-size: cover;
-  height: 100vh;
 }
 
 .kids-banner {

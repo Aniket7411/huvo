@@ -178,46 +178,46 @@ export default function Home() {
           }}
         >
           <SwiperSlide>
-            <div className="man-women  text-[#fff] sm:h-screen py-[33%] md:py-[20%] xl:py-[16%] px-[10%]">
-              <div>
-                <p className="font-[Quicksand]  md:font-normal  font-bold   text-xl md:text-7xl ">
-                  Style for {" "}
-                </p>{" "}
-                <p className="font-[Quicksand] md:font-normal font-bold  text-xl md:text-7xl mb-2">
-                  {" "}
-                  Every Story
-                </p>
-                <p className="font-[Poppins]  font-normal  ">
-                  Discover a world of fashion for the whole family—trendy, <br /> timeless, and tailored for all budgets.
-                </p>
 
-                <div className="ml-3 w-[15%] md:w-[5%] h-[3px] bg-[#011F4B]  mt-[1%]"></div>
-              </div>
+          <div className="man-women text-[#fff] h-[60vh] flex items-end p-6">
+  <div>
+    <p className="font-[Quicksand] font-bold text-xl md:text-7xl">
+    Style for {" "}
+    </p>
+    <p className="font-[Quicksand] font-bold text-xl md:text-7xl mb-2">
+    Every Story
+    </p>
+    <p className="font-[Poppins] font-normal text-[#fff]">
+    Discover a world of fashion for the whole family—trendy, <br /> timeless, and tailored for all budgets.
 
+    </p>
 
-            </div>
+  </div>
+</div>
+         
           </SwiperSlide>
 
           <SwiperSlide>
-            <div className="home-banner text-[#fff]   sm:h-screen py-[33%] md:py-[20%] xl:py-[16%] px-[10%]">
-              <div>
-                <p className="font-[Quicksand]  md:font-normal  font-bold   text-xl md:text-7xl ">
-                  PERFECT TIME{" "}
-                </p>{" "}
-                <p className="font-[Quicksand] md:font-normal font-bold  text-xl md:text-7xl mb-2">
-                  {" "}
-                  TO SHOP
-                </p>
-                <p className="font-[Poppins]  font-normal text-[#fff] ">
-                  Unlock exclusive offers and browse through <br /> our vast collection of premium products.
+          <div className="home-banner text-[#fff] h-[60vh] flex items-end p-6">
+  <div>
+    <p className="font-[Quicksand] font-bold text-xl md:text-7xl">
+      PERFECT TIME{" "}
+    </p>
+    <p className="font-[Quicksand] font-bold text-xl md:text-7xl mb-2">
+      TO SHOP
+    </p>
+    <p className="font-[Poppins] font-normal text-[#fff]">
+      Unlock exclusive offers and browse through <br /> our vast collection of
+      premium products.
+    </p>
+    <p className="font-[Poppins] font-normal text-[#fff]">
+      Now is the best time to elevate your style with high-quality <br />
+      essentials at amazing prices.
+    </p>
+    <div className="w-[15%] md:w-[5%] h-[3px] bg-[#011F4B] mt-3"></div>
+  </div>
+</div>
 
-                </p>
-                <p className="font-[Poppins]  font-normal text-[#fff]">
-                  {" "}
-                  Now is the best time to elevate your style with high-quality <br /> essentials at amazing prices.                </p>
-                <div className="ml-3 w-[15%] md:w-[5%] h-[3px] bg-[#011F4B]  mt-[1%]"></div>
-              </div>
-            </div>
           </SwiperSlide>
 
         </Swiper>
@@ -403,6 +403,7 @@ export default function Home() {
               return (
                 <SwiperSlide key={i}>
                   <div className="p-5 ">
+                  <Link to={`/product-details/${category?.productId}`} className="block mt-2 ">
 
                     <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
                       {/* Heading */}
@@ -436,15 +437,14 @@ export default function Home() {
 
 
                       {/* Explore Button */}
-                      <Link to={`/product-details/${category?.productId}`} className="block mt-2 ">
                         <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-md  hover:bg-[#02386e] transition-colors duration-200">
                           Product Details
                           <FaArrowRight className="ml-2" />
                         </button>
-                      </Link>
 
                     </div>
 
+                    </Link>
 
 
                   </div>
@@ -472,7 +472,6 @@ export default function Home() {
 
 
           {trendingProducts.map((each, index) => (
-                          <Link to={`/store_Products/${each?.productId}`}>
 
             <div
               key={index}
@@ -499,13 +498,15 @@ export default function Home() {
                 <TbJewishStarFilled className="text-[#ebf73d]" />
               </div>
               
+              <Link to={`/store_Products/${each?.productId}`}>
 
 
               <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
                   Product detail
                 </button>
+                </Link>
+
             </div>
-            </Link>
 
 
 
@@ -614,6 +615,7 @@ export default function Home() {
               return (
                 <SwiperSlide key={i}>
                   <div className="p-5">
+                  <Link to={`/collections?brand=${product?.id}`}>
 
                     <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
                       {/* Heading */}
@@ -638,14 +640,13 @@ export default function Home() {
 
 
                       {/* Explore Button */}
-                      <Link to={`/collections?brand=${product?.id}`}>
                       <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-lg  hover:bg-[#02386e] transition-colors duration-200">
                           Explore Brand
                           <FaArrowRight className="ml-2" />
                         </button>
-                      </Link>
 
                     </div>
+                    </Link>
 
 
 
@@ -857,7 +858,6 @@ export default function Home() {
 
 
           {womenProducts.map((each, index) => (
-                          <Link to={`/store_Products/${each?.productId}`}>
 
             <div
               key={index}
@@ -884,12 +884,15 @@ export default function Home() {
                 <span className="text-gray-700">Ratings: 4.5</span>
                 <TbJewishStarFilled className="text-[#ebf73d]" />
               </div>
+              <Link to={`/store_Products/${each?.productId}`}>
 
 
               <button className="bg-[#011F4B] mt-2 text-white text-sm px-2 py-1 rounded-lg">
                   Visit Store & Product
                 </button>
-            </div>              </Link>
+
+                </Link>
+            </div>            
 
           ))}
 
@@ -985,6 +988,7 @@ export default function Home() {
                 return (
                   <SwiperSlide key={i}>
                     <div className="p-3">
+                    <Link to={`/store_Products/${category?.productId}`}>
 
                       <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
                         {/* Heading */}
@@ -1025,12 +1029,11 @@ export default function Home() {
                         )}
 
                         {/* Explore Button */}
-                        <Link to={`/store_Products/${category?.productId}`}>
                         <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
                             Visit Store & Product
                           </button>
-                        </Link>
                       </div>
+                      </Link>
 
 
                     </div>
@@ -1177,6 +1180,7 @@ export default function Home() {
                 return (
                   <SwiperSlide key={i}>
                     <div className="p-5">
+                    <Link to={`/product-details/${category?.productId}`} className="w-full">
 
                       <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
                         {/* Heading */}
@@ -1217,12 +1221,11 @@ export default function Home() {
                         )}
 
                         {/* Explore Button */}
-                        <Link to={`/product-details/${category?.productId}`} className="w-full">
                           <button className="bg-[#011F4B] w-full text-white px-5 py-2 rounded-lg">
                             Visit Store & Product
                           </button>
-                        </Link>
                       </div>
+                      </Link>
 
 
                     </div>

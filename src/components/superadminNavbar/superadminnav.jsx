@@ -43,7 +43,7 @@ function SuperAdminNav() {
         </div>
         <div className="flex items-center px-8 py-5">
 
-          <p className="font-[Poppins] font-bold  text-[#000000] ">Vardakart</p>
+          <p className="font-[Poppins] font-bold  text-[#000000] ">Huvo</p>
 
         </div>
         <hr className=' bg-gray-500 mx-10'></hr>

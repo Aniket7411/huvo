@@ -171,7 +171,7 @@ function ProductEditPage() {
     <div className="container px-4 sm:mx-auto my-8">
       <h1 className="text-4xl font-bold mb-4 text-center">
         <Link to="/seller" className="text-2xl font-bold mb-4 hover:underline">
-          Vardakart Seller
+        Huvo Seller
         </Link>
         <Link
           to="/"
