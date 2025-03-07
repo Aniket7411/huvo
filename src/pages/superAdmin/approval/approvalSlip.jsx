@@ -170,23 +170,23 @@ export default function ApprovalSlip() {
                 <div className='flex flex-col space-y-2 '>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>GSTN Status</h1>
                   <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                    {approvalDetails?.message?.gst?.gstinStatus}
+                  approvalDetails?.message?.gst?.gstinStatus
                   </p>
                 </div>
                 <div className='flex flex-col  space-y-2'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Center Jurisdiction</h1>
-                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>{approvalDetails?.message?.gst?.centreJurisdiction}
+                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>pprovalDetails?.message?.gst?.centreJurisdiction
                   </p>
                 </div>
                 <div className='flex flex-col  space-y-2 w-2/3'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Center Jurisdiction Code</h1>
-                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>{approvalDetails?.message?.gst?.centreJurisdictionCode}</p>
+                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>approvalDetails?.message?.gst?.centreJurisdictionCode</p>
                 </div>
                 <div className='flex flex-col  space-y-2'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Legal Name Of Business</h1>
                   <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                    {approvalDetails?.message?.gst?.legalNameOfBusiness
-                    }
+                  approvalDetails?.message?.gst?.legalNameOfBusiness
+                    
                   </p>
                 </div>
               </div>
@@ -197,32 +197,32 @@ export default function ApprovalSlip() {
                 <div className='flex flex-col space-y-2 w-2/3'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>State Jurisdiction</h1>
                   <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                    {approvalDetails?.message?.gst?.stateJurisdiction
+                    approvalDetails?.message?.gst?.stateJurisdiction
 
-                    }
+                    
                   </p>
                 </div>
                 <div className='flex flex-col space-y-2'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>State Jurisdiction Code</h1>
                   <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                    {approvalDetails?.message?.gst?.stateJurisdictionCode
+                    approvalDetails?.message?.gst?.stateJurisdictionCode
 
-                    }
+                    
                   </p>
                 </div>
                 <div className='flex flex-col space-y-2'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Tax Payer Type</h1>
-                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>  {approvalDetails?.message?.gst?.taxpayerType
+                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>  approvalDetails?.message?.gst?.taxpayerType
 
 
-                  }</p>
+                  </p>
                 </div>
                 <div className='flex flex-col space-y-2'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Reference Id</h1>
                   <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                    {approvalDetails?.message?.gst?.
+                  approvalDetails?.message?.gst?.
                       referenceId
-                    }
+                    
                   </p>
                 </div>
               </div>
@@ -239,9 +239,9 @@ export default function ApprovalSlip() {
               <div className='flex flex-col space-y-6 pr-2 w-1/3'>
                 <div className='flex flex-col space-y-2 '>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>PAN Number</h1>
-                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>{approvalDetails?.message?.pan?.
+                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>approvalDetails?.message?.pan?.
                      pan
-                    }</p>
+                    </p>
                 </div>
                 <div className='flex flex-col space-y-2 '>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>First Name</h1>
@@ -253,15 +253,15 @@ export default function ApprovalSlip() {
                 </div>
                 <div className='flex flex-col  space-y-2'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Last Name</h1>
-                  <p className='font-poppins font-normal text-[16px] leading-[21px]'> {approvalDetails?.message?.pan?.    lastName}</p>
+                  <p className='font-poppins font-normal text-[16px] leading-[21px]'> approvalDetails?.message?.pan?.    lastName</p>
                 </div>
                 <div className='flex flex-col  space-y-2'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Gender</h1>
-                  <p className='font-poppins font-normal text-[16px] leading-[21px]'> {approvalDetails?.message?.pan?.    gender}</p>
+                  <p className='font-poppins font-normal text-[16px] leading-[21px]'> approvalDetails?.message?.pan?.    gender</p>
                 </div>
                 <div className='flex flex-col  space-y-2'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Dob</h1>
-                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>{approvalDetails?.message?.pan?.   dob}</p>
+                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>approvalDetails?.message?.pan?.   dob</p>
                 </div>
               </div>
 
@@ -272,12 +272,12 @@ export default function ApprovalSlip() {
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Aadhar Link Status</h1>
                   <p className={`font-poppins font-normal text-[16px] leading-[21px] ${
       approvalDetails?.message?.pan?.aadhaarLinked ? 'text-green-600' : 'text-red-600'
-    }`}>{approvalDetails?.message?.pan?.   aadhaarLinked? "Already Linked" : "Aadhaar Not Linked"}</p>
+    }`}>approvalDetails?.message?.pan?.   aadhaarLinked? "Already Linked" : "Aadhaar Not Linked"</p>
                 </div>
                 <div className='flex flex-col space-y-2'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Aadhar Number</h1>
-                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>{approvalDetails?.message?.pan?.   maskedAadhaarNumber
-                  }</p>
+                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>approvalDetails?.message?.pan?.   maskedAadhaarNumber
+                  </p>
                 </div>
                 <div className='flex flex-col space-y-2'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Nature Of Business</h1>
@@ -285,8 +285,8 @@ export default function ApprovalSlip() {
                 </div>
                 <div className='flex flex-col space-y-2'>
                   <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Address</h1>
-                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>{approvalDetails?.message?.pan?.   address
-                  }
+                  <p className='font-poppins font-normal text-[16px] leading-[21px]'>approvalDetails?.message?.pan?.   address
+                  
                   </p>
                 </div>
               </div>

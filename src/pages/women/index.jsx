@@ -146,6 +146,8 @@ export default function WomenCollection() {
 
       </section>
 
+      <section className="bg-gradient-to-t from-[#fdbdff] to-[#fff]">
+
       <hr className="my-2" />
       <div style={{ padding: "10px", maxWidth: "300px" }}>
         <div
@@ -203,7 +205,6 @@ export default function WomenCollection() {
 
 
       <div style={{
-        backgroundImage: "linear-gradient(to top, #e303fc, #ffffff)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         width: "100%",
@@ -319,7 +320,6 @@ export default function WomenCollection() {
 
 
       <div style={{
-        backgroundImage: "linear-gradient(to top, #e303fc, #ffffff)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         width: "100%",
@@ -470,7 +470,7 @@ export default function WomenCollection() {
           )
         })}
       </div>
-
+      </section>
       <hr className="my-2" />
 
 

@@ -165,8 +165,9 @@ export default function MenCollection() {
       </section>
 
       <hr className="my-2" />
+      <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
 
-      <div className="flex" style={{ padding: "10px", maxWidth: "300px" }}>
+      <div className="flex" style={{ padding: "10px", maxWidth: "300px" }} >
         <div
           style={{
             display: "flex",
@@ -220,7 +221,6 @@ export default function MenCollection() {
       </div>
 
       <div style={{
-        backgroundImage: "linear-gradient(to top, #6065f7, #ffffff)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         width: "100%",
@@ -336,7 +336,6 @@ export default function MenCollection() {
       <hr className="my-5" />
 
       <div style={{
-        backgroundImage: "linear-gradient(to top, #6065f7, #ffffff)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         width: "100%",
@@ -484,7 +483,7 @@ export default function MenCollection() {
           )
         })}
       </div>
-
+      </section>
     </>
   );
 }

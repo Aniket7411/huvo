@@ -584,14 +584,13 @@ export default function ProductDetails() {
         Products similar to above category
       </h3>
 
-      <SimilarProducts productName={productDetails?.name} group={productDetails?.group} recommendedProducts={recommendedProducts} />
+      <SimilarProducts loading={loading} productName={productDetails?.name} group={productDetails?.group} recommendedProducts={recommendedProducts} />
 
 
       <h3 className="text-[#011F4B] text-xl font-semibold mb-2">
         Similar products in brands
       </h3>
 
-      <SimilarProducts brandName={productDetails?.brand?.name} />
     </div>
   );
 }

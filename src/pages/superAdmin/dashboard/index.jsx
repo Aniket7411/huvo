@@ -131,9 +131,9 @@ export default function Dashboard() {
                 <div className="w-10 h-10 bg-[#03C3EC]/30 rounded-lg flex items-center justify-center ">
                   <FaWallet className="p-1 w-8 h-8 text-[#03C3EC]" />
                 </div>
-                <div className="text-[#22303E]">
+                {/* <div className="text-[#22303E]">
                   <BsThreeDotsVertical />
-                </div>
+                </div> */}
               </div>
               <div className="py-2 font-sans font-normal text-[15px] leading-[22px] text-[#22303E]/70 mx-2">
                 Total Revenue

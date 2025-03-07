@@ -167,32 +167,33 @@ export default function Home() {
   return (
     <>
 
-<div
-  className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white text-center py-2 md:py-6 shadow-lg"
-  style={{ marginTop: "45px", position: "relative" }}
->
-  <div className="flex justify-center items-center mt-2 h-[100px] px-2  md:h-[250px]  space-x-3 animate-pulse">
-    <svg
-      className="w-6 h-6 text-yellow-300"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M9.75 9L3 15.75M9.75 9l6-6m0 0h4.5m-4.5 0V9M3 15.75l6 6m6-6l6-6m-6 6l-6 6"
-      />
-    </svg>
-    <p className="text-lg md:text-6xl font-semibold font-[Quicksand] tracking-wide">
-      Huvo is currently being dressed, stay tuned for more!
-    </p>
-  </div>
-  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-yellow-400 rounded-full"></div>
-</div>
-{/* 
+      <div
+        className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white text-center py-2 md:py-6 shadow-lg"
+        style={{ marginTop: "45px", position: "relative" }}
+      >
+        <div className="flex justify-center items-center mt-2 h-[100px] px-2  md:h-[250px]  space-x-3 animate-pulse">
+          <svg
+            className="w-6 h-6 text-yellow-300"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9.75 9L3 15.75M9.75 9l6-6m0 0h4.5m-4.5 0V9M3 15.75l6 6m6-6l6-6m-6 6l-6 6"
+            />
+          </svg>
+          <p className="text-lg md:text-6xl font-semibold font-[Quicksand] tracking-wide">
+
+            Huvo is currently being dressed, stay tuned for more!
+          </p>
+        </div>
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-yellow-400 rounded-full"></div>
+      </div>
+      {/* 
       <section>
         <Swiper
           pagination={true}
@@ -768,6 +769,136 @@ export default function Home() {
 
       <section className="p-2 hidden md:block">
 
+
+
+        <section className="p-2 hidden md:block ">
+
+          {topBrands.length ? (
+            <Swiper
+              loop={true}
+              className="mySwiper"
+              modules={[Autoplay]}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              breakpoints={{
+                0: {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                500: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                640: {
+                  slidesPerView: 3,
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 40,
+                },
+                1400: {
+                  slidesPerView: 5,
+                  spaceBetween: 50,
+                },
+                2000: {
+                  slidesPerView: 6,
+                  spaceBetween: 60,
+                },
+              }}
+            >
+              {topBrands.map((product, i) => {
+
+
+                return (
+                  <SwiperSlide key={i}>
+                    <div className="p-5">
+                      <Link to={`/collections?brand=${product?.id}`}>
+
+                        <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
+                         
+
+                          {/* Product Image */}
+                          <img
+                            src={product?.image || "https://via.placeholder.com/300"}
+                            alt={product?.name || "Product Image"}
+                            className="h-24 w-24  object-cover rounded-full mb-1"
+                          />
+
+                          {/* Product Name */}
+                          <p className="text-lg font-semibold mb-1 text-gray-700">
+                            {product?.brandName || "Brand Name"}
+                          </p>
+
+                          {/* brandName */}
+
+
+
+                          {/* Explore Button */}
+                          <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-lg  hover:bg-[#02386e] transition-colors duration-200">
+                            Explore Brand
+                            <FaArrowRight className="ml-2" />
+                          </button>
+
+                        </div>
+                      </Link>
+
+
+
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          ) : (
+            <h2 className="font-[Quicksand] font-medium text-center text-2xl text-[#011F4B]">
+              No Category Available
+            </h2>
+          )}
+
+
+
+        </section>
+
+
+        <div className="flex flex-wrap md:hidden gap-1 justify-center ">
+          {topBrands.map((product, i) => (
+            <div
+              key={i}
+              className=" w-[31%] flex flex-col   items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
+            >
+              {/* Heading */}
+
+
+              {/* Explore Button */}
+              <Link to={`/products_by_brand/${product?.brandName}`}>
+                <h1 className="text-center font-semibold text-gray-800 text-sm mb-2">
+                  {product?.onGoingOffer || "On Going Offer"}
+                </h1>
+
+
+                {/* Product Image */}
+                <img
+                  src={product?.image || "https://via.placeholder.com/300"}
+                  alt={product?.name || "Product Image"}
+                  className="h-20 w-20 object-cover  mb-2"
+                />
+
+                {/* Product Name */}
+                <p className="text-base flex-end font-semibold  text-gray-700 text-center">
+                  {product?.brandName || "Brand Name"}
+                </p>
+              </Link>
+            </div>
+          ))}
+        </div>
+
         {allCategories.length ? (
           <Swiper
             loop={true}
@@ -966,6 +1097,136 @@ export default function Home() {
 
 
       <section className="p-2 hidden md:block ">
+
+
+
+        <section className="p-2 hidden md:block ">
+
+          {topBrands.length ? (
+            <Swiper
+              loop={true}
+              className="mySwiper"
+              modules={[Autoplay]}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              breakpoints={{
+                0: {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                500: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                640: {
+                  slidesPerView: 3,
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 40,
+                },
+                1400: {
+                  slidesPerView: 5,
+                  spaceBetween: 50,
+                },
+                2000: {
+                  slidesPerView: 6,
+                  spaceBetween: 60,
+                },
+              }}
+            >
+              {topBrands.map((product, i) => {
+
+
+                return (
+                  <SwiperSlide key={i}>
+                    <div className="p-5">
+                      <Link to={`/collections?brand=${product?.id}`}>
+
+                        <div className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200">
+                        
+
+                          {/* Product Image */}
+                          <img
+                            src={product?.image || "https://via.placeholder.com/300"}
+                            alt={product?.name || "Product Image"}
+                            className="h-24 w-24  object-cover rounded-full mb-1"
+                          />
+
+                          {/* Product Name */}
+                          <p className="text-lg font-semibold mb-1 text-gray-700">
+                            {product?.brandName || "Brand Name"}
+                          </p>
+
+                          {/* brandName */}
+
+
+
+                          {/* Explore Button */}
+                          <button className="flex items-center justify-center bg-[#011F4B] text-white px-2 py-1 rounded-lg text-lg  hover:bg-[#02386e] transition-colors duration-200">
+                            Explore Brand
+                            <FaArrowRight className="ml-2" />
+                          </button>
+
+                        </div>
+                      </Link>
+
+
+
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          ) : (
+            <h2 className="font-[Quicksand] font-medium text-center text-2xl text-[#011F4B]">
+              No Category Available
+            </h2>
+          )}
+
+
+
+        </section>
+
+
+        <div className="flex flex-wrap md:hidden gap-1 justify-center ">
+          {topBrands.map((product, i) => (
+            <div
+              key={i}
+              className=" w-[31%] flex flex-col   items-center bg-white rounded-lg shadow-md p-2 border border-gray-200"
+            >
+              {/* Heading */}
+
+
+              {/* Explore Button */}
+              <Link to={`/products_by_brand/${product?.brandName}`}>
+                <h1 className="text-center font-semibold text-gray-800 text-sm mb-2">
+                  {product?.onGoingOffer || "On Going Offer"}
+                </h1>
+
+
+                {/* Product Image */}
+                <img
+                  src={product?.image || "https://via.placeholder.com/300"}
+                  alt={product?.name || "Product Image"}
+                  className="h-20 w-20 object-cover  mb-2"
+                />
+
+                {/* Product Name */}
+                <p className="text-base flex-end font-semibold  text-gray-700 text-center">
+                  {product?.brandName || "Brand Name"}
+                </p>
+              </Link>
+            </div>
+          ))}
+        </div>
 
         {menProducts.length ? (
           <Swiper

@@ -26,6 +26,7 @@ function BrandList() {
   };
 
   const deleteBrand = async (_id) => {
+    console.log(_id)
     try {
       const { message } = await HttpClient.delete(`/brand/${_id}`);
       toast.success(message);

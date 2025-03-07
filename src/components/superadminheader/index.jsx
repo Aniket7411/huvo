@@ -179,7 +179,7 @@ export default function Superadminheader() {
                     <IoCloseCircleOutline className="h-6 w-6" />
                   </button>
                 </div>
-                {notification.length > 0 ? (
+                {notification?.length > 0 ? (
                   <div>
                     {notification?.map((item, index) =>
                     (
