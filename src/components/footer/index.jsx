@@ -35,7 +35,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#FAFAFA] px-10 py-[50px]">
+    <footer className="bg-[#FAFAFA] px-3 md:px-10  py-[30px]">
       <div className="mb-12 flex flex-col lg:flex-row gap-6">
         <div className="lg:w-3/4">
           <p className="font-[Quicksand] text-[#011F4B] font-semibold mb-4 text-xl">
@@ -68,163 +68,123 @@ export default function Footer() {
           {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
         </div>
       </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+  {/* Online Shopping */}
+  <Link to="/" className="flex flex-col">
+    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+      <p className="mr-2">Online shopping</p>
+      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+    </div>
+    <p className="text-[#949494] font-[Poppins] font-light">
+      Visit our wide range of products.
+    </p>
+  </Link>
 
-      <div className="flex flex-wrap justify-between gap-2 md:gap-6">
-        <Link to="/">
-          <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
-            <p className="mr-2">Online shopping</p>
-            <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
-          </div>
-          <p className="text-[#949494] font-light font-[Poppins]">
-            Visit our wide range of products.
-          </p>
-        </Link>
+  {/* Privacy Policy */}
+  <Link to="/privacy" className="flex flex-col">
+    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+      <p className="mr-2">Privacy Policy</p>
+      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+    </div>
+    <p className="text-[#949494] font-[Poppins] font-light">
+      Complete description of our privacy policy.
+    </p>
+  </Link>
 
+  {/* Mail Us */}
+  <a
+    href="https://mail.google.com/mail/?view=cm&fs=1&to=huvoofficial@gmail.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex flex-col"
+  >
+    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+      <p className="mr-2">Mail us</p>
+      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+    </div>
+    <p className="text-[#949494] font-[Poppins] font-light">
+      huvoofficial@gmail.com
+    </p>
+  </a>
 
+  {/* Contact Us (Modal Trigger) */}
+  <div onClick={openModal} className="flex flex-col cursor-pointer">
+    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+      <p className="mr-2">Contact Us</p>
+      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+    </div>
+    <p className="text-[#949494] font-[Poppins] font-light">
+      Our Address
+    </p>
+  </div>
 
+  {/* Return Policy */}
+  <Link to="/returnpolicy" className="flex flex-col">
+    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+      <p className="mr-2">Return Policy</p>
+      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+    </div>
+    <p className="text-[#949494] font-[Poppins] font-light">
+      Complete description of our return policy.
+    </p>
+  </Link>
 
+  {/* Terms and Conditions */}
+  <Link to="/termsandconditions" className="flex flex-col">
+    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+      <p className="mr-2">Terms and Conditions</p>
+      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+    </div>
+    <p className="text-[#949494] font-[Poppins] font-light">
+      Complete description of Terms and Conditions.
+    </p>
+  </Link>
 
-        <div className="flex flex-col items-center ">
-          <Link to="/privacy">
+  {/* Cancellations and Refunds */}
+  <Link to="/cancellation_refund" className="flex flex-col">
+    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+      <p className="mr-2">Cancellations and Refunds</p>
+      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+    </div>
+    <p className="text-[#949494] font-[Poppins] font-light">
+      Complete description of our cancellations and refunds.
+    </p>
+  </Link>
+</div>
 
-            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
-              <p className="mr-2">Privacy Policy</p>
-              <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
-            </div>
-
-            <p className="text-[#949494] font-light font-[Poppins]">
-              Complete description of our privacy policy.
-            </p>
-          </Link>
-
-        </div>
-
-        <div className="flex flex-col items-center">
-          <a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=huvoofficial@gmail.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col items-center"
-          >
-            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
-              <p className="mr-2">Mail us</p>
-              <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
-            </div>
-
-            <p className="text-[#949494] font-light font-[Poppins]">
-              huvoofficial@gmail.com
-            </p>
-          </a>
-        </div>
-
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={closeModal}
-          contentLabel="Contact Information"
-          className="bg-white w-11/12 md:w-1/2 mx-auto my-20 p-6 rounded-lg shadow-lg outline-none"
-          overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-        >
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Contact Us</h2>
-          <p className="text-gray-600 mb-2">
-            <strong>Merchant Legal Entity Name:</strong> VRADAKART PRIVATE LIMITED
-          </p>
-          <p className="text-gray-600 mb-2">
-            <strong>Registered Address:</strong>  #78/1 BEEMANENI TOWERS NAGAWARA MAIN ROAD HEBBAL Bengaluru KARNATAKA 560045
-          </p>
-          <p className="text-gray-600 mb-2">
-            <strong>Operational Address:</strong> #78/1 BEEMANENI TOWERS NAGAWARA MAIN ROAD HEBBAL Bengaluru KARNATAKA 560045
-          </p>
-          <p className="text-gray-600 mb-2">
-            <strong>Telephone No:</strong> 7899542105 
-          </p>
-          <p className="text-gray-600 mb-2">
-            <strong>E-Mail ID:</strong>  huvoofficial@gmail.com 
-          </p>
-          <button
-            onClick={closeModal}
-            className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-          >
-            Close
-          </button>
-        </Modal>
-
-        <div onClick={openModal} className="flex cursor-pointer flex-col items-center">
-
-          <div  className="flex items-center  font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
-            <p className="mr-2"
-            >Contact US
-            </p>
-            <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
-          
-          </div>
-          <p className="text-[#949494] font-light font-[Poppins]">
-              Our Address
-            </p>
-
-        </div>
-
-
-        <div className="flex flex-col items-center ">
-          <Link to="/returnpolicy">
-            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
-              <p className="mr-2">Return Policy</p>
-              <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
-            </div>
-
-
-            <p className="text-[#949494] font-light font-[Poppins]">
-              Complete description of our return policy.
-            </p>
-          </Link>
-        </div>
-
-        <div className="flex flex-col items-center ">
-          <Link to="/termsandconditions">
-            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
-              <p className="mr-2">Terms and conditions
-              </p>
-              <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
-            </div>
+{/* Modal for Contact Information */}
+<Modal
+  isOpen={isModalOpen}
+  onRequestClose={closeModal}
+  contentLabel="Contact Information"
+  className="bg-white w-11/12 md:w-1/2 mx-auto my-20 p-6 rounded-lg shadow-lg outline-none"
+  overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+>
+  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Contact Us</h2>
+  <p className="text-gray-600 mb-2">
+    <strong>Merchant Legal Entity Name:</strong> VRADAKART PRIVATE LIMITED
+  </p>
+  <p className="text-gray-600 mb-2">
+    <strong>Registered Address:</strong> #78/1 BEEMANENI TOWERS NAGAWARA MAIN ROAD HEBBAL Bengaluru KARNATAKA 560045
+  </p>
+  <p className="text-gray-600 mb-2">
+    <strong>Operational Address:</strong> #78/1 BEEMANENI TOWERS NAGAWARA MAIN ROAD HEBBAL Bengaluru KARNATAKA 560045
+  </p>
+  <p className="text-gray-600 mb-2">
+    <strong>Telephone No:</strong> 7899542105
+  </p>
+  <p className="text-gray-600 mb-2">
+    <strong>E-Mail ID:</strong> huvoofficial@gmail.com
+  </p>
+  <button
+    onClick={closeModal}
+    className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+  >
+    Close
+  </button>
+</Modal>
 
 
-            <p className="text-[#949494] font-light font-[Poppins]">
-              Complete description of Terms and conditions.
-            </p>
-          </Link>
-        </div>
-
-
-        <div className="flex flex-col items-center ">
-          <Link to="/cancellation_refund">
-            <div className="flex items-center font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-1">
-              <p className="mr-2">Cancellations and refunds</p>
-              <MdArrowOutward className="text-[#0F0F0F] text-2xl" />
-            </div>
-
-
-            <p className="text-[#949494] font-light font-[Poppins]">
-              Complete description of our cancellations and refunds.
-            </p>
-          </Link>
-        </div>
-
-        {/* <div className="flex items-center ">
-          <p className="font-[Quicksand] font-medium text-xl text-[#0F0F0F] mb-4">
-            Stay connected
-          </p>
-          <ul className="space-y-2">
-            <li className="flex items-center gap-2 text-[#949494] font-[Quicksand]">
-              <FaInstagram /> Instagram
-            </li>
-            <li className="flex items-center gap-2 text-[#949494] font-[Quicksand]">
-              <FaFacebook /> Facebook
-            </li>
-            <li className="flex items-center gap-2 text-[#949494] font-[Quicksand]">
-              <FaWhatsapp /> Whatsapp
-            </li>
-          </ul>
-        </div> */}
-      </div>
     </footer>
   );
 }
