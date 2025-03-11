@@ -59,6 +59,7 @@ import ProductsCarousel from "./pages/productcarousel/index.jsx";
 import CartProvider from "./usecontext1/cartcontext";
 import CancellationAndRefundPolicies from "./pages/cancellationrefund/index.jsx";
 import TermsAndConditions from "./pages/termsincondition/index.jsx";
+import ContactUs from "./pages/contactus/index.jsx";
 
 function App() {
   return (
@@ -127,6 +128,18 @@ function App() {
             }
           />
         </Routes>
+
+        <Routes>
+          <Route
+            path="/contact_us"
+            element={
+              <Layout>
+                <ContactUs />
+              </Layout>
+            }
+          />
+        </Routes>
+
         <Routes>
           <Route
             path="/termsandconditions"

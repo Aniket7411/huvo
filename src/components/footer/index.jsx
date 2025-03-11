@@ -108,7 +108,8 @@ export default function Footer() {
   </a>
 
   {/* Contact Us (Modal Trigger) */}
-  <div onClick={openModal} className="flex flex-col cursor-pointer">
+  <Link to="/contact_us">
+  <div  className="flex flex-col cursor-pointer">
     <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
       <p className="mr-2">Contact Us</p>
       <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
@@ -117,6 +118,7 @@ export default function Footer() {
       Our Address
     </p>
   </div>
+  </Link>
 
   {/* Return Policy */}
   <Link to="/returnpolicy" className="flex flex-col">

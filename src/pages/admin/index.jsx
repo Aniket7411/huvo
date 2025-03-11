@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getUserData } from "../../server/user";
 import SalesChart from "../../components/salesChart/SalesChart";
 import SalesDonutChart from "../../components/salesDonutChart/salesDonutChart";
@@ -12,19 +12,24 @@ import { MdOutlineCurrencyRupee } from "react-icons/md";
 import Modal from 'react-modal';
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+
+
 function Admin() {
 
   const [dashboardData, setDashboardData] = useState([]);
-  const [loader, setLoader] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate();
+
   let subtitle;
 
   const getdashboardData = async () => {
+    setIsLoading(true)
     try {
       const response = await HttpClient.get("/dashboard")
-      console.log(response)
       const data = response
       setDashboardData(data);
+      setIsLoading(false)
 
     } catch (error) {
       console.error(error);
@@ -54,7 +59,10 @@ function Admin() {
   }, []);
   return (
 
-    <div className="container-fluid" style={{ overflowY: "auto" }}>
+    <>
+
+    {
+      isLoading ? <div className="h-screen">  <Loader /> </div>:  <div className="container-fluid" style={{ overflowY: "auto" }}>
       <div className="flex flex-wrap mt-6 p-2 h-[100vh]" style={{ overflowY: "auto" }}>
         <div className="sm:w-full shadow-bottom rounded-md lg:w-1/2  sm:mb-2 lg:mb-0">
           <SalesChart />
@@ -193,53 +201,53 @@ function Admin() {
                       backgroundColor: '#8C4CF5'
                     }} className="w-12 h-12 mr-2 rounded-full overflow-hidden flex justify-center items-center">
                       {/* <img
-                        src="/assets/orders.svg"
-                        alt="orders"
-                        className="w-full h-full object-cover"
-                      /> */}
+                      src="/assets/orders.svg"
+                      alt="orders"
+                      className="w-full h-full object-cover"
+                    /> */}
 
                     </div>
                   </div>
                   <div>
                     {/* <div className="mb-2 pb-0 reviewName" >
-                      {dashboardData?.report?.
-                        recentReview
-                        .name}
-                    </div> */}
+                    {dashboardData?.report?.
+                      recentReview
+                      .name}
+                  </div> */}
                     <div className="pb-0">
 
                     </div>
                     {/* <div className="flex items-center gap-2">
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <span key={i}>
-                          {i < Math.floor(dashboardData?.report?.
-                            recentReview
-                            .rating) ? (
-                            <FaStar style={{ color: '#FFD700' }} />
-                          ) : i < dashboardData?.report?.
-                            recentReview
-                            .rating ? (
-                            <FaStarHalfAlt style={{ color: '#FFD700' }} />
-                          ) : (
-                            <FaRegStar style={{ color: '#FFD700' }} />
-                          )}
-                        </span>
-                      ))}
-                      <span className="
-                      ">({dashboardData?.report?.
-                            recentReview
-                            .rating})</span>
-                    </div> */}
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <span key={i}>
+                        {i < Math.floor(dashboardData?.report?.
+                          recentReview
+                          .rating) ? (
+                          <FaStar style={{ color: '#FFD700' }} />
+                        ) : i < dashboardData?.report?.
+                          recentReview
+                          .rating ? (
+                          <FaStarHalfAlt style={{ color: '#FFD700' }} />
+                        ) : (
+                          <FaRegStar style={{ color: '#FFD700' }} />
+                        )}
+                      </span>
+                    ))}
+                    <span className="
+                    ">({dashboardData?.report?.
+                          recentReview
+                          .rating})</span>
+                  </div> */}
                   </div>
 
                 </div>
 
                 <div className="flex align-center">
                   {/* <span className="text-base reviewSpan">
-                    {dashboardData?.report?.
-                      recentReview
-                      .desc}
-                  </span> */}
+                  {dashboardData?.report?.
+                    recentReview
+                    .desc}
+                </span> */}
                   <span className="flex align-center">
                     <img src="/assets/riseFall.svg" alt="" />
                   </span>
@@ -255,46 +263,76 @@ function Admin() {
             <div className="p-3 activityOverview shadow">
               <h5 className="text-xl mb-4 pb-0 cardHeading">Activity Overview</h5>
 
-                <div className="flex justify-between mb-4 px-4">
-                  <div className="flex flex-col justify-center items-center text-center">
-                    <img src="/assets/delivered.svg" alt="orders" className="" height={35} width={35} />
-                    <h5>Dispatched</h5>
-                    {/* <p>{dashboardData?.report?.dispatched}</p> */}
-                  </div>
-                  <div className="flex flex-col justify-center items-center text-center">
-                    <img src="/assets/ordered.svg" alt="orders" className="" height={35} width={35} />
-                    <h5>Confirm</h5>
-                    {/* <p>{dashboardData?.report?.confirm}</p> */}
-                  </div>
+              <div className="flex justify-between mb-4 px-4">
+                <div className="flex flex-col justify-center items-center text-center">
+                  <img src="/assets/delivered.svg" alt="orders" className="" height={35} width={35} />
+                  <h5>Dispatched</h5>
+                  {/* <p>{dashboardData?.report?.dispatched}</p> */}
                 </div>
-                <div className="flex justify-between px-4">
-                  <div className="flex flex-col justify-center items-center text-center">
-                    <img src="/assets/reported.svg" alt="orders" className="" height={35} width={35} />
-                    <h5>Pending</h5>
-                    {/* <p>{dashboardData?.report?.pending}</p> */}
-                  </div>
-                  <div className="flex flex-col justify-center items-center text-center">
-                    <img src="/assets/arrived.svg" alt="orders" className="" height={35} width={35} />
-                    <h5>Delivered</h5>
-                    {/* <p>{dashboardData?.report?.delivered}</p> */}
-                  </div>
+                <div className="flex flex-col justify-center items-center text-center">
+                  <img src="/assets/ordered.svg" alt="orders" className="" height={35} width={35} />
+                  <h5>Confirm</h5>
+                  {/* <p>{dashboardData?.report?.confirm}</p> */}
+                </div>
+              </div>
+              <div className="flex justify-between px-4">
+                <div className="flex flex-col justify-center items-center text-center">
+                  <img src="/assets/reported.svg" alt="orders" className="" height={35} width={35} />
+                  <h5>Pending</h5>
+                  {/* <p>{dashboardData?.report?.pending}</p> */}
+                </div>
+                <div className="flex flex-col justify-center items-center text-center">
+                  <img src="/assets/arrived.svg" alt="orders" className="" height={35} width={35} />
+                  <h5>Delivered</h5>
+                  {/* <p>{dashboardData?.report?.delivered}</p> */}
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-        </div>
-        <div className="w-full md:w-2/3 ">
-          <div className="shadow-bottom rounded-md mb-2" style={{
-            height: '270px',
-            overflowY: 'auto',
-          }}>
-            <StocksTable />
-          </div>
-        </div>
-      
+        {/* Button to trigger the condition check */}
+
+
+        {/* Modal */}
+        <Modal
+          isOpen={!dashboardData?.sellerDetails?.verificationStatus}
+          contentLabel="Upload Document Prompt"
+          className="bg-white p-6 w-[400px] mx-auto rounded-lg shadow-lg"
+          overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+        >
+          <h2 className="text-xl font-bold mb-4">Document Upload Required</h2>
+          <p className="text-gray-700 mb-6">
+            A document upload is required to proceed. Do you want to upload it now?
+          </p>
+         
+            <button
+                  onClick={() => navigate("/seller/profile")}
+
+              className="px-4 py-2 bg-green-500 text-white rounded-md"
+            >
+              Upload Document
+            </button>
+        </Modal>
+
       </div>
- 
+      <div className="w-full md:w-2/3 ">
+        <div className="shadow-bottom rounded-md mb-2" style={{
+          height: '270px',
+          overflowY: 'auto',
+        }}>
+          <StocksTable />
+        </div>
+      </div>
+
+    </div>
+    }
+
+
+     
+    </>
+
+
   );
 }
 

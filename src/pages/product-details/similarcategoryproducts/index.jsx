@@ -24,7 +24,6 @@ const SimilarProducts = (props) => {
     console.log("Sort Option:", sortOption);
     // Add your search logic here
   };
-  console.log("recommendedProducts", recommendedProducts)
 
 
   const getCategoryProducts = async () => {

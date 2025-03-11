@@ -11,6 +11,8 @@ import { HttpClient } from "../../server/client/http";
 import { CiSearch } from "react-icons/ci";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { CartContext } from "../../usecontext1/cartcontext";
+
 
 
 
@@ -24,6 +26,8 @@ console.log("loginStatus", loginStatus)
 export default function Header(props) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { cart } = useContext(CartContext)
+
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -284,10 +288,11 @@ export default function Header(props) {
               {/* Shopping Bag Icon */}
               <HiOutlineShoppingBag className="text-2xl text-white cursor-pointer" />
 
+
               {/* Cart Item Count */}
-              {numberOfCartItems > 0 && (
+              {cart.length > 0 && (
                 <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
-                  {numberOfCartItems}
+                  {cart.length}
                 </span>
               )}
             </button>
@@ -444,7 +449,18 @@ export default function Header(props) {
                   : toast.error("Please Login First")
               }
             >
-              <HiOutlineShoppingBag className="text-xl cursor-pointer" />
+              <div className="relative">
+                {/* Shopping Bag Icon */}
+                <HiOutlineShoppingBag className="text-2xl cursor-pointer" />
+
+                {/* Cart Item Count Badge */}
+                {cart.length > 0 && (
+                  <span className="absolute top-0 right-0 flex items-center justify-center mt-3 h-5 w-5 bg-[#7272e9] text-white text-xs font-bold rounded-full">
+                    {cart.length}
+                  </span>
+                )}
+              </div>
+
             </button>
             {/* <FaRegUser
                 onClick={() => SetdropdownContent(!dropdownContent)}

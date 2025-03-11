@@ -51,7 +51,7 @@ function Sidenavbar() {
         </div>
 
         <p className="text-[#011F4B] font-[Poppins] font-bold">
-          {getUserData()?.storeDetails?.storeName.toLowerCase()}{" "}
+          {getUserData()?.storeDetails?.storeName?.toLowerCase()}{" "}
 
         </p>
       </div>

@@ -22,6 +22,7 @@ import { FiEdit } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import { getUserData, setUserData } from "../../server/user";
 import IndiaTime from "../../components/getIndiaTime";
+import CheckoutWithoutLogin from "../checkoutwithoutlogin";
 
 export default function CheckOut() {
   const navigate = useNavigate();
@@ -34,6 +35,8 @@ export default function CheckOut() {
   const [productSize, setProductSize] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenAddress, setIsOpenAddress] = useState(false);
+
+
 
 
   const [isOpenCoupon, setIsOpenCoupon] = useState(false);
@@ -50,7 +53,7 @@ export default function CheckOut() {
   const [totalDiscount, setTotalDiscount] = useState(0);
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [shippingAddress, setShippingAddress] = useState(
-    getUserData()?.address.filter((item) => item.isDefault === true).length !==
+    getUserData()?.address?.filter((item) => item?.isDefault === true).length !==
       0
       ? {
         ...getUserData()?.address.filter(
@@ -86,7 +89,6 @@ export default function CheckOut() {
     try {
       const response = await HttpClient.get("/cart");
       const { data } = response
-      console.log("fetching cart", data)
 
       setCartProducts(data);
     } catch (error) {
@@ -133,8 +135,8 @@ export default function CheckOut() {
       );
       setProductSize(product?.sizes);
       setStock(
-        product?.sizes.filter(
-          (item) => item.size === cartProducts[productIdName]?.size
+        product?.sizes?.filter(
+          (item) => item?.size === cartProducts[productIdName]?.size
         )[0]?.stock
       );
       setSelectedProduct(productIdName);
@@ -311,6 +313,9 @@ export default function CheckOut() {
 
   return (
     <>
+
+      <CheckoutWithoutLogin />
+
       <section className="px-10 py-7 font-[Quicksand]">
         {Object?.keys(cartProducts)?.length ? (
           <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>

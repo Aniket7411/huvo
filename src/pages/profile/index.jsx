@@ -22,6 +22,7 @@ import { PiCurrencyInr } from "react-icons/pi";
 import { Switch } from "antd"
 
 import Modal from "react-modal";
+import uploadImageOnCloudinary from "../../server/client/imageUpload";
 
 Modal.setAppElement('#root'); // Assuming your root element's ID is 'root'
 
@@ -37,12 +38,15 @@ export default function Profile() {
   const [verStatGst, setVerStatGst] = useState(false);
   const [verStatPan, setVerStatPan] = useState(false);
   const [pan, setPan] = useState('');
+  const [panUrl, setPanUrl] = useState(null)
   const [gst, setGst] = useState('');
+  const [gstUrl, setGstUrl] = useState(null);
+
   const [userDetails, setUserDetails] = useState(null);
   const [orderDetails, setOrderDetails] = useState(null);
   const [allOrders, setAllOrders] = useState([]);
-  const [allInvoice,setAllInvoice] = useState([]);
-  const [userInvoice,setUserInvoice] = useState([])
+  const [allInvoice, setAllInvoice] = useState([]);
+  const [userInvoice, setUserInvoice] = useState([])
 
   const [allCoupon, setAllCoupon] = useState([]);
   const [isOpenAddress, setIsOpenAddress] = useState(false);
@@ -77,7 +81,7 @@ export default function Profile() {
 
   const userType = localStorage.getItem("role")
 
-  
+
   const logout = async () => {
     try {
       const { message } = await HttpClient.post("/users/logout");
@@ -89,7 +93,7 @@ export default function Profile() {
     }
   };
 
-  
+
   const handleApproval = async () => {
     try {
       const response = await HttpClient.post(`/approval/submit`);
@@ -124,7 +128,6 @@ export default function Profile() {
         setPanInfo(response?.panInfo?.data);
 
         setVerStatPan(true);
-        // console.log("Verified PAN info:", response?.panInfo?.data);
         toast.success(response?.panInfo?.responseMessage || "PAN verification successful.");
       }
 
@@ -185,7 +188,7 @@ export default function Profile() {
     try {
       const { userData } = await HttpClient.get("/users/me");
       setUserDetails(userData);
-      console.log("userData",userData)
+      console.log("userData", userData)
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
@@ -219,6 +222,20 @@ export default function Profile() {
       console.error("Failed to copy text: ", error);
     }
   };
+
+  const getPanImageUrl = async (e) => {
+    const uploadedPanUrl = await uploadImageOnCloudinary(e)
+    setPanUrl(uploadedPanUrl)
+    console.log("panUrlpanUrlpanUrl", panUrl)
+
+  }
+
+  const getGstUrl = async (e) => {
+    const uploadedGstUrl = await uploadImageOnCloudinary(e)
+    setGstUrl(uploadedGstUrl)
+    console.log(gstUrl)
+  }
+
 
   const addAddress = async (data) => {
     try {
@@ -274,29 +291,29 @@ export default function Profile() {
       toast.error(error?.response?.data?.message);
     }
   };
-  const fetchAllInvoices= async () => {
+  const fetchAllInvoices = async () => {
     // debugger
- 
+
     try {
       const response = await HttpClient.get("/invoice/");
-      
+
       setAllInvoice(response.allInvoices);
-      console.log("allInvoices",response.allInvoices)
-     // console.log(allInvoice)
-      
+      console.log("allInvoices", response.allInvoices)
+      // console.log(allInvoice)
+
     } catch (error) {
       console.error("Error fetching data:", error);
       toast.error(error?.response?.data?.message || "Something went wrong!");
     }
   };
   useEffect(() => {
-  
+
     fetchAllInvoices();
-  
+
   }, [])
 
- 
-  
+
+
 
   useEffect(() => {
     addressReset(formData);
@@ -413,69 +430,66 @@ export default function Profile() {
   const verificationStatus = isSeller ? userData?.verificationStatus : null;
 
   //fetching invoices
-   const handleNavigate = (invoice) => {
+  const handleNavigate = (invoice) => {
     navigate(`/seller/invoice/${invoice._id}`, { state: { invoice } });
     console.log();
   };
-//fetchall invoices for the user customer
-const fetchUserInvoices= async (orderId) => {
-  // debugger
+  //fetchall invoices for the user customer
+  const fetchUserInvoices = async (orderId) => {
+    // debugger
 
-  try {
-    const response = await HttpClient.get(`/invoice/user/${orderId}`);
-    console.log("API Response:", response)
-    
-    setUserInvoice(response.Invoice);
-    console.log(response.Invoice)
-    navigate(`/profile/invoice/${orderId}`);
-   // console.log(allInvoice)
-    
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    toast.error(error?.response?.data?.message || "Something went wrong!");
-  }
-};
-useEffect(() => {
-  
-  // fetchUserInvoices();
+    try {
+      const response = await HttpClient.get(`/invoice/user/${orderId}`);
+      console.log("API Response:", response)
 
-}, [userInvoice])
+      setUserInvoice(response.Invoice);
+      console.log(response.Invoice)
+      navigate(`/profile/invoice/${orderId}`);
+      // console.log(allInvoice)
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      toast.error(error?.response?.data?.message || "Something went wrong!");
+    }
+  };
+  useEffect(() => {
+
+    // fetchUserInvoices();
+
+  }, [userInvoice])
 
 
 
 
   return (
     <>
-   {isSeller && (
-      <div
-        className={`flex flex-col items-center mt-2 mx-2 ${
-          verificationStatus
+      {isSeller && (
+        <div
+          className={`flex flex-col items-center mt-2 mx-2 ${verificationStatus
             ? "bg-green-100 border border-green-500 text-green-800"
             : "bg-red-100 border border-red-500 text-red-800"
-        } p-6 rounded-lg`}
-      >
-        {verificationStatus ? (
-          <p className="text-green-600 font-bold text-lg">
-            Your business is verified.
-          </p>
-        ) : (
-          <div className="text-center">
-            <p className="text-red-600 font-bold text-lg">
-              Your business is not verified yet. Please verify!
+            } p-4 rounded-lg`}
+        >
+          {verificationStatus ? (
+            <p className="text-green-600 font-bold text-lg">
+              Your business is verified.
             </p>
-            <button className="bg-[#C8102E] text-white font-bold py-2 px-6 rounded-full hover:opacity-90 mt-4">
-              Verify Now
-            </button>
-          </div>
-        )}
-      </div>
-    )}
+          ) : (
+            <div className="text-center">
+              <p className="text-red-600 font-bold text-lg">
+                Your business is not verified yet. Please verify!
+              </p>
+              <button className="bg-[#C8102E] text-white font-bold py-2 px-6 rounded-full hover:opacity-90 mt-4">
+                Verify Now
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       <section className="px-2 font-[Quicksand]">
         <TabGroup className="mt-10">
-          <div className="sm:flex gap-6" style={{
-            marginTop:"75px"
-          }}>
+          <div className="sm:flex gap-6" >
             <div className="w-full sm:w-1/5">
               {/* <div className="bg-[#EFEFEF] border border-solid border-[#D6D6D6] p-5 mb-8">
                 <p className="text-[#2F2F2F] font-bold text-lg">
@@ -500,33 +514,33 @@ useEffect(() => {
                     Addresses
                   </Tab>
 
-{userType === "USER" ? "" : <Tab className="outline-none rounded-sm  border border-solid border-[#D6D6D6] text-[#626262] font-bold m-1 p-3 text-justify">
+                  {userType === "USER" ? "" : <Tab className="outline-none rounded-sm  border border-solid border-[#D6D6D6] text-[#626262] font-bold m-1 p-3 text-justify">
                     Business Details
-                  </Tab> }
+                  </Tab>}
 
-                  {userType === "USER" ? "" :  <Tab className="outline-none rounded-sm  border border-solid border-[#D6D6D6] text-[#626262] font-bold m-1 p-3 text-justify">
+                  {userType === "USER" ? "" : <Tab className="outline-none rounded-sm  border border-solid border-[#D6D6D6] text-[#626262] font-bold m-1 p-3 text-justify">
                     Verfication Details
-                  </Tab> }
+                  </Tab>}
 
-                  {userType === "USER" ? "" :     <Tab className="outline-none border border-solid border-[#D6D6D6] text-[#626262] font-bold m-1 p-3 sm:text-justify col-span-2 text-center">
+                  {userType === "USER" ? "" : <Tab className="outline-none border border-solid border-[#D6D6D6] text-[#626262] font-bold m-1 p-3 sm:text-justify col-span-2 text-center">
                     Registration
                   </Tab>}
 
-                  
-                  {userType === "USER" ? "" :      <Tab className="outline-none border border-solid border-[#D6D6D6] text-[#626262] font-bold m-1 p-3 sm:text-justify col-span-2 text-center">
+
+                  {userType === "USER" ? "" : <Tab className="outline-none border border-solid border-[#D6D6D6] text-[#626262] font-bold m-1 p-3 sm:text-justify col-span-2 text-center">
                     Subscription Plan
                   </Tab>}
 
-                  
-                 
-               
-                
+
+
+
+
                   {isSeller &&
                     <Tab className="outline-none border border-solid border-[#D6D6D6] text-[#626262] font-bold m-1 p-3 sm:text-justify col-span-2 text-center">
-                 Invoices
-                  </Tab>
+                      Invoices
+                    </Tab>
                   }
-                  
+
                 </TabList>
                 {/* <div className="flex sm:block w-full gap-3 mb-4 sm:mb-0">
                   <button className="text-[#FF0000] border border-solid border-[#FF0000]  font-bold p-3 w-1/2 sm:w-full sm:mb-4">
@@ -731,8 +745,8 @@ useEffect(() => {
                                 >
                                   {order.product.name}
                                 </button>
-                               
-                                
+
+
                                 <p className="text-[#8A8A8A] font-medium">
                                   Size : <span>{order.product.size}</span>
                                 </p>
@@ -800,9 +814,9 @@ useEffect(() => {
                               <button
                                 value={order.orderId}
                                 onClick
-                                
-                                
-                                
+
+
+
                                 ={() => {
                                   setShowCancelModal(true); // Open the cancel modal
                                   getOrderId(order.orderId, order.product.productId);; // Pass orderId directly to the function
@@ -811,20 +825,20 @@ useEffect(() => {
                               >
                                 CANCEL ORDER
                               </button>
-                             <div>
-                              <button
-                              value={order.orderId}
-                              onClick={() => {
-                                console.log("Order ID:", order.Id); // 
-                                fetchUserInvoices(order.orderId); // Call the function with the order ID
-                              }}
-                              
-                               >
-                                Show Invoice
-                              </button>
-                             </div>
+                              <div>
+                                <button
+                                  value={order.orderId}
+                                  onClick={() => {
+                                    console.log("Order ID:", order.Id); // 
+                                    fetchUserInvoices(order.orderId); // Call the function with the order ID
+                                  }}
+
+                                >
+                                  Show Invoice
+                                </button>
+                              </div>
                             </div>
-                            
+
 
                           </div>
 
@@ -1452,7 +1466,22 @@ useEffect(() => {
                       }}
 
                     />
-                    <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-6 ml-auto"
+
+                    <label className="block text-[#626262] font-medium mb-2 ">
+                      Upload Gst document Image
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="block w-full text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+
+                      onChange={(e) => getPanImageUrl(e,)}
+                    />
+
+                    
+
+
+                    <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-3 ml-auto"
                       onClick={handlePanVerification}
 
                     >Verify Pan </button>
@@ -1468,8 +1497,7 @@ useEffect(() => {
                         <div className='flex flex-col space-y-6 pr-2 w-1/3'>
                           <div className='flex flex-col space-y-2 '>
                             <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>PAN Number</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
-                              pan
+                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.pan
                             }</p>
                           </div>
                           <div className='flex flex-col space-y-2 '>
@@ -1539,6 +1567,17 @@ useEffect(() => {
                     // {...register("gstin", {
                     //   // required: "*Last Name is required.",
                     // })}
+                    />
+                       <label className="block text-[#626262] font-medium mb-2 mt-2">
+                      Upload PAN Image
+                    </label>
+
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="block w-full text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+
+                      onChange={(e) => getGstUrl(e,)}
                     />
                     <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-6 ml-auto"
                       onClick={handleGstVerification}
@@ -1741,36 +1780,36 @@ useEffect(() => {
 
               </TabPanel>
               <TabPanel className=" bg-[#F2F2F2]  h-full">
-              <h1 className="text-xl font-semibold sm:pt-10 lg:pt-2">Invoices</h1>
-              <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="">Invoice Number</th>
-              <th className="">Total Products</th>
-              <th className="">Total Amount</th>
-              <th className="">Customer Name</th>
-              <th className="">View Details</th>
-            <th>
-              
-            </th>
-            </tr>
-          </thead>
-          <tbody>
-            {allInvoice.map((invoice) => (
-              <tr key={invoice._id} className="">
-                <td className="px-4 py-2">{invoice.invoiceNumber}</td>
-                <td className="px-4 py-2">{invoice.orderSummary.totalProducts}</td>
-                <td className="px-4 py-2">${invoice.orderSummary.totalPrice}</td>
-                <td className="px-4 py-2">{invoice.customer.name}</td>
-                <td className="px-4 py-2"> <button onClick={() => handleNavigate(invoice)}>
-          <a>View Details</a>
-        </button></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                <h1 className="text-xl font-semibold sm:pt-10 lg:pt-2">Invoices</h1>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full bg-white border border-gray-300">
+                    <thead className="bg-gray-100">
+                      <tr>
+                        <th className="">Invoice Number</th>
+                        <th className="">Total Products</th>
+                        <th className="">Total Amount</th>
+                        <th className="">Customer Name</th>
+                        <th className="">View Details</th>
+                        <th>
+
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allInvoice.map((invoice) => (
+                        <tr key={invoice._id} className="">
+                          <td className="px-4 py-2">{invoice.invoiceNumber}</td>
+                          <td className="px-4 py-2">{invoice.orderSummary.totalProducts}</td>
+                          <td className="px-4 py-2">${invoice.orderSummary.totalPrice}</td>
+                          <td className="px-4 py-2">{invoice.customer.name}</td>
+                          <td className="px-4 py-2"> <button onClick={() => handleNavigate(invoice)}>
+                            <a>View Details</a>
+                          </button></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
               </TabPanel>
             </TabPanels>

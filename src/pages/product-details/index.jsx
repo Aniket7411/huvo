@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PiCurrencyInr } from "react-icons/pi";
 import { Oval } from "react-loader-spinner";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
 import { FaShare } from "react-icons/fa";
@@ -14,8 +14,6 @@ import { CartContext } from "../../usecontext1/cartcontext";
 
 
 export default function ProductDetails() {
-
-
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const openPaymentModal = () => {
@@ -51,6 +49,11 @@ export default function ProductDetails() {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  const navigate = useNavigate();
+
+
+  console.log("cartcartcart", cart)
+
 
 
 
@@ -76,7 +79,6 @@ export default function ProductDetails() {
 
 
       setRecommendedProducts(formattedRecommendedProducts)
-      console.log("recommendedProducts",recommendedProducts)
 
 
 
@@ -140,6 +142,7 @@ export default function ProductDetails() {
     }
 
     addToCartContext(dataForCart);
+    console.log(dataForCart)
 
     try {
       const response = await HttpClient.post(`/cart/`, dataForCart)
@@ -151,8 +154,9 @@ export default function ProductDetails() {
     }
   };
 
-  const removeProductFromCart = (productDetails) => {
-    removeFromCartContext(productDetails)
+  const removeProductFromCart = (productId) => {
+    console.log("productDetailsremove", productId)
+    removeFromCartContext(productId)
   };
 
 
@@ -187,7 +191,10 @@ export default function ProductDetails() {
   const addToWishlist = async (productDetails) => {
     if (tokenIfLoggedIn === null) {
       toast.error("Please login First")
-      const response = await HttpClient.get(`/review/67406d37c477d4dbe88f5304`)
+      navigate("/login");
+
+
+
     }
     else {
       const { productId } = productDetails
@@ -214,6 +221,7 @@ export default function ProductDetails() {
     );
   }
 
+  console.log("sjsjsjsjssj", tokenIfLoggedIn)
 
   const scrollToReview = () => {
     const reviewSection = document.getElementById('review');
@@ -242,6 +250,9 @@ export default function ProductDetails() {
     }
   }
 
+  const isInCart = cart.some((item) => item.productId === productDetails.productId);
+
+
   return (
     <div className="px-3 mt-10 md:p-10">
       <div className="flex flex-wrap gap-2 md:gap-16">
@@ -269,27 +280,48 @@ export default function ProductDetails() {
             </button> */}
           </div>
 
-          <div className="flex gap-2 mt-1 items-center">
-            <div className="bg-[#338E3C] w-auto gap-1 text-[#fff] px-1 flex items-center rounded-md">
+          <div className="flex flex-col gap-2 mt-3">
+  {/* Ratings Section */}
+  <div className="flex flex-col sm:flex-row sm:gap-4 gap-2">
+    {/* Product Rating */}
+    <div className="flex gap-2 items-center">
+      <div className="bg-[#338E3C] text-white px-2 py-1 flex items-center rounded-md gap-1">
+        <p className="text-sm font-bold">4.6</p>
+        <TbJewishStarFilled className="text-sm" />
+      </div>
+      <button
+        onClick={() => {
+          scrollToReview();
+          getReviews();
+        }}
+        className="text-[#717478] font-semibold text-sm hover:underline"
+      >
+        Product Rating & Reviews
+      </button>
+    </div>
 
-              <p >4.6 </p>
-              <TbJewishStarFilled />
+    {/* Brand Rating */}
+    <div className="flex gap-2 items-center">
+      <div className="bg-[#FF9800] text-white px-2 py-1 flex items-center rounded-md gap-1">
+        <p className="text-sm font-bold">{productDetails.brand?.rating || "4.5"}</p>
+        <TbJewishStarFilled className="text-sm" />
+      </div>
+      <p className="text-[#717478] font-semibold text-sm">Brand Rating</p>
+    </div>
+  </div>
 
-            </div>
+  {/* Brand Section */}
+  <div>
+    <p className="text-lg font-medium text-gray-600">
+      Brand:{" "}
+      <span className="text-gray-800 font-semibold">
+        {productDetails.brand?.name || "Unknown"}
+      </span>
+    </p>
+  </div>
+</div>
 
-            <button onClick={() => {
-              scrollToReview();
-              getReviews();
-            }}
-              className="text-[#717478] font-semibold">
-              Rating & Reviews
-            </button>
 
-          </div>
-
-          <p className="text-lg font-medium text-gray-600 mb-1">
-            Brand: <span className="text-gray-800">{productDetails.brand?.name}</span>
-          </p>
           {/* <p className="text-lg font-medium text-gray-600 mb-2">
             Sold By: <span className="text-gray-800">{productDetails.seller}</span>
           </p> */}
@@ -365,37 +397,69 @@ export default function ProductDetails() {
                 </button>
               </div> */}
 
-              <p className="mb-1 mt-1">
+              <p className="mb-1 mt-1 font-semibold">
                 Returnable : {productDetails.isReturnable ? "Yes" : "No"}
               </p>
 
-              <div className="flex gap-2 items-center">
-                <button
-                  key={productDetails}
-                  onClick={() => addToCart(productDetails, selectedSize, quantity)} // Pass productDetails, selectedSize, and quantity
-                  className="px-2 py-1 bg-[#011F4B] text-white font-semibold rounded-md pointer transition"
-                >
-                  Add to Cart
-                </button>
+              {
+                tokenIfLoggedIn === null ?
 
-                <button
-                  key={productDetails}
-                  type="button"
-                  onClick={() => removeProductFromCart(productDetails
+                  <div className="flex gap-2 items-center">
+                    <button
+                      onClick={() => {
+                        if (isInCart) {
+                          removeFromCartContext(productDetails.productId); // Remove from cart
+                          toast.error("Removed from cart");
+                        } else {
+                          addToCartContext({ ...productDetails, selectedSize, quantity }); // Add to cart
+                          toast.success("Added to cart");
+                        }
+                      }}
+                      className={`px-2 py-1 font-semibold rounded-md pointer transition ${isInCart ? "bg-[#011F4B] text-white" : "bg-[#011F4B] text-white"
+                        }`}
+                    >
+                      {isInCart ? "Remove from cart" : "Add to Cart"}
+                    </button>
 
-                  )}
-                >
-                  Remove from cart
-                </button>
 
+
+
+                    <button key={productDetails._id}
+                      onClick={() => addToWishlist(productDetails, selectedSize, quantity)} // Pass productDetails, selectedSize, and quantity
+
+                      className="px-2 py-1 bg-gray-200 text-gray-800 font-semibold rounded-md hover:bg-gray-300 transition"
+                    >
+                      Add to Wishlist
+                    </button>
+
+
+                  </div> : <button
+                    key={productDetails.productId}
+                    onClick={() => addToCart(productDetails)}
+                    className="px-4 py-2 bg-[#011F4B] text-white font-semibold rounded-lg shadow-md hover:bg-bg-[#011F4B] transition duration-200"
+                  >
+                    Add to Cart
+                  </button>
+
+              }
+
+
+
+
+
+
+
+
+              {/* 
                 <button key={productDetails._id}
                   onClick={() => addToWishlist(productDetails, selectedSize, quantity)} // Pass productDetails, selectedSize, and quantity
 
                   className="px-2 py-1 bg-gray-200 text-gray-800 font-semibold rounded-md hover:bg-gray-300 transition"
                 >
                   Add to Wishlist
-                </button>
-              </div>
+                </button> */}
+
+
 
 
 

@@ -6,10 +6,11 @@ import "../superadmin.css";
 import { Link } from "react-router-dom";
 import { HttpClient } from "../../../server/client/http";
 import "react-circular-progressbar/dist/styles.css";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import "./vendorsDetails.css";
 import Loader from "../../../components/loader";
+import { toast } from "react-toastify";
 
 export default function Vendorsdetail() {
   const { id } = useParams();
@@ -21,6 +22,7 @@ export default function Vendorsdetail() {
   const [basicSellerDetails, setBasicSellerDetails] = useState({})
   const [sellerStoreDetails, setSellerStoreDetails] = useState({})
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [actionModal, setActionModal] = useState(true)
 
 
   const navigate = useNavigate();
@@ -36,7 +38,7 @@ export default function Vendorsdetail() {
 
     try {
       const response = await HttpClient.get(`/dashboard/vendors/${_id}`);
-      console.log(response)
+      console.log("reefsgsgsgsggsggsgsg", id)
       setVendorDetails(response.vendorDetail);
       const formattedSellerDetails = response.vendorDetail.address.map((each) => ({
         address: each.address,
@@ -63,7 +65,6 @@ export default function Vendorsdetail() {
       }))
       setSellerStoreDetails(formattingStoreDetails)
 
-      console.log("sellerStoreDetails",sellerStoreDetails)
 
 
 
@@ -83,6 +84,60 @@ export default function Vendorsdetail() {
   const handleNavigate = () => {
     navigate(`/admin/vendors`);
   };
+
+
+  const vendorActions = async (action, id) => {
+    console.log(action)
+    console.log(id)
+
+    if (action === "block") {
+
+      try {
+
+        const response = await HttpClient.put("/users/block", {
+          sellerId: id,
+          blockType: action
+        })
+        toast.success(response.message)
+      } catch (error) {
+        toast.error("Could't Suspend")
+      }
+
+    }
+    else if (action === "delete") {
+      try {
+        const response = await HttpClient.put("/users/delete", {
+          sellerId: id,
+
+        })
+        console.log(response)
+      } catch (error) {
+
+      }
+
+    }
+    else if (action === "approve") {
+      try {
+        const response = await HttpClient.put("/approval/verify", {
+          sellerId: id,
+
+        })
+        console.log(response)
+      } catch (error) {
+
+      }
+    }
+
+
+  }
+
+  const handleModalClose = () => {
+    setActionModal(false)
+  }
+
+  const handleConfirmAction = () => {
+    console.log("handleConfirmAction")
+  }
 
   return (
     <div className="flex h-screen">
@@ -141,8 +196,8 @@ export default function Vendorsdetail() {
                     Status:
                     <div
                       className={`font-poppins font-normal ml-1 break-words ${vendorDetails?.vendorDetail?.status === true
-                          ? "text-green-600"
-                          : "text-[#FFA940]"
+                        ? "text-green-600"
+                        : "text-[#FFA940]"
                         }`}
                     >
                       {vendorDetails?.vendorDetail?.status === true
@@ -187,7 +242,7 @@ export default function Vendorsdetail() {
                     Store Details
                   </h1>
                   <p className="font-poppins font-normal text-[16px] leading-[21px]">
-                  kkk
+                    kkk
                   </p>
                 </div>
                 <div className="flex flex-col">
@@ -200,6 +255,34 @@ export default function Vendorsdetail() {
                 </div>
               </div>
             </div>
+
+            {actionModal && (
+              <Modal
+                title="Action Confirmation"
+                isOpen={actionModal}
+                onClose={handleModalClose}
+              >
+                <div className="p-4">
+                  <p className="text-gray-700 mb-4">
+                    Are you sure you want to perform this action?
+                  </p>
+                  <div className="flex gap-4 justify-end">
+                    <Button
+                      onClick={handleModalClose}
+                      className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={handleConfirmAction}
+                      className="px-4 py-2 bg-green-500 text-white rounded-md"
+                    >
+                      Confirm
+                    </Button>
+                  </div>
+                </div>
+              </Modal>
+            )}
 
             <div className="my-10 mx-6">
               <h1 className="font-poppins font-medium text-[20px] leading-[21px] text-[#011F4B]">
@@ -297,26 +380,28 @@ export default function Vendorsdetail() {
                 </div>
               </div>
               <div className="flex flex-wrap py-10 gap-5">
-              <Button
-  className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] border-[#8592A3] bg-[#F6FAFF] text-[#000000]"
-  onClick={() => {
-    window.location.href = "mailto:seller@example.com?subject=Message%20from%20Buyer&body=Hello%20Seller,";
-  }}
->
-  Send Message
-</Button>
+                <Button
+                  className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] border-[#8592A3] bg-[#F6FAFF] text-[#000000]"
+                  onClick={() => {
+                    window.location.href = "mailto:seller@example.com?subject=Message%20from%20Buyer&body=Hello%20Seller,";
+                  }}
+                >
+                  Send Message
+                </Button>
 
-                <Button onClick={() => console.log("Aaahhh")} className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#FFFAF1] border-[#B9861F] text-[#B9861F]">
+                <Button onClick={() => { vendorActions("block", id) }} className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#FFFAF1] border-[#B9861F] text-[#B9861F]">
                   Suspend
                 </Button>
-                <Button className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#FFEFEF] border-[#EB001B] text-[#EB001B]">
+                <Button onClick={() => { vendorActions("delete", id) }} className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#FFEFEF] border-[#EB001B] text-[#EB001B]">
                   Delete
                 </Button>
-                <Button className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#18B348] border-[#007D27] text-[#FFFFFF]">
+                <Button onClick={() => { vendorActions("approve", id) }} className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#18B348] border-[#007D27] text-[#FFFFFF]">
                   Approve
                 </Button>
               </div>
-              
+
+
+
             </div>
           </div>
         ) : (

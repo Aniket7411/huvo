@@ -238,7 +238,7 @@ function ProductAddPage() {
       </div>
       <div className="relative h-[70vh] overflow-auto shadow-md sm:rounded-lg">
         <form onSubmit={handleSubmit(onSubmit)} className="p-4 ">
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
@@ -258,7 +258,7 @@ function ProductAddPage() {
               <span className="text-red-500">{errors.name.message}</span>
             )}
           </div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="description"
               className="block text-sm font-medium text-gray-700"
@@ -277,7 +277,7 @@ function ProductAddPage() {
               <span className="text-red-500">{errors.description.message}</span>
             )}
           </div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="prodcuctDetails"
               className="block text-sm font-medium text-gray-700"
@@ -316,7 +316,7 @@ function ProductAddPage() {
               </span>
             )}
           </div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Group
             </label>
@@ -357,7 +357,7 @@ function ProductAddPage() {
               <span className="text-red-500">{errors.group.message}</span>
             )}
           </div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="category"
               className="block text-sm font-medium text-gray-700"
@@ -467,7 +467,7 @@ function ProductAddPage() {
 
           </form>
 
-          {isShoeSelectionEnabled ? "" : <div className="mb-4">
+          {isShoeSelectionEnabled ? "" : <div className="mb-3">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Sizes
             </label>
@@ -501,7 +501,7 @@ function ProductAddPage() {
             </div>
           </div>}
 
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="brand"
               className="block text-sm font-medium text-gray-700"
@@ -527,7 +527,7 @@ function ProductAddPage() {
               <span className="text-red-500">{errors.brand.message}</span>
             )}
           </div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="materialAndCare"
               className="block text-sm font-medium text-gray-700"
@@ -549,7 +549,7 @@ function ProductAddPage() {
               </span>
             )}
           </div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="price"
               className="block text-sm font-medium text-gray-700"
@@ -573,7 +573,22 @@ function ProductAddPage() {
               <span className="text-red-500">{errors.price.message}</span>
             )}
           </div>
-          <div className="mb-4">
+
+          <div className="mb-3">
+  <p className="text-sm text-gray-600">
+    Additional shipping charge of Rs. 100 and platform fee will be added to the price you set.
+  </p>
+  <p className="text-sm text-gray-600 mt-1">
+    Platform fee is calculated as per the following:
+  </p>
+  <ul className="text-sm text-gray-600 list-disc pl-4">
+    <li>Amount up to 500 → Rs. 10</li>
+    <li>Amount from 501 to 1000 → Rs. 15</li>
+    <li>Amount above 1000 → Rs. 20</li>
+  </ul>
+</div>
+
+          <div className="mb-3">
             <label
               htmlFor="discount"
               className="block text-sm font-medium text-gray-700"
@@ -594,7 +609,7 @@ function ProductAddPage() {
             )}
           </div>
 
-          {/* {isShoeSelectionEnabled ? "" :  <div className="mb-4">
+          {/* {isShoeSelectionEnabled ? "" :  <div className="mb-3">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Sizes
             </label>
@@ -631,7 +646,7 @@ function ProductAddPage() {
 
 
 
-          <div className="mb-4">
+          <div className="mb-2">
             <label className="block text-md font-medium text-gray-700">
               Colors
             </label>
@@ -728,7 +743,7 @@ function ProductAddPage() {
               Add More Color
             </button>
           </div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Banner Image
             </label>
@@ -760,7 +775,7 @@ function ProductAddPage() {
               </label>
             </div>
           </div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Returnability
             </label>
@@ -790,7 +805,7 @@ function ProductAddPage() {
               <span className="text-red-500">{errors.isReturnable.message}</span>
             )}
           </div>
-          {/* <div className="mb-4">
+          {/* <div className="mb-3">
   <label className="block text-sm font-medium text-gray-700 mb-2">
     Returnability
   </label>
