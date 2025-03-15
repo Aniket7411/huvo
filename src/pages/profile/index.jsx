@@ -95,8 +95,18 @@ export default function Profile() {
 
 
   const handleApproval = async () => {
+
+    console.log(gst,gstUrl, pan)
+
+    const verficationDetails = {
+      gst,
+      pan,
+      gstDoc: gstUrl,
+      panDoc : panUrl
+    }
+
     try {
-      const response = await HttpClient.post(`/approval/submit`);
+      const response = await HttpClient.post(`/approval/submit`, verficationDetails );
       toast.success(response?.status);
 
     }
@@ -117,60 +127,60 @@ export default function Profile() {
   }
 
 
-  const handlePanVerification = async () => {
-    try {
+  // const handlePanVerification = async () => {
+  //   try {
 
-      const response = await HttpClient.post('/verify/pan', { pan });
-
-
-      if (response?.success && response?.verified) {
-
-        setPanInfo(response?.panInfo?.data);
-
-        setVerStatPan(true);
-        toast.success(response?.panInfo?.responseMessage || "PAN verification successful.");
-      }
-
-    } catch (error) {
-
-      const errorStatus = error?.response?.status;
-
-      if (errorStatus === 406) {
-
-        const errorMessage = error?.response?.data?.message?.message || "PAN verification failed: Not Acceptable.";
-        console.error("Error during PAN verification:", errorMessage);
-        toast.error(errorMessage);
-        setVerStatPan(false);
-      } else {
-
-        const generalErrorMessage = error?.response?.data?.message || "An unexpected error occurred.";
-        console.error("Error during PAN verification:", error);
-        toast.error(generalErrorMessage);
-      }
-    }
-  };
+  //     const response = await HttpClient.post('/verify/pan', { pan });
 
 
+  //     if (response?.success && response?.verified) {
 
-  const handleGstVerification = async () => {
-    try {
-      const { response } = await HttpClient.post('/verify/gst',
-        { gstin: gst }
-      );
-      const { msg, success } = response.data;
+  //       setPanInfo(response?.panInfo?.data);
 
-      if (success) {
-        setVerStatGst(true);
-      } else {
-        setVerStatGst(false);
-      }
+  //       setVerStatPan(true);
+  //       toast.success(response?.panInfo?.responseMessage || "PAN verification successful.");
+  //     }
 
-      setGstInfo(msg)
+  //   } catch (error) {
 
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     const errorStatus = error?.response?.status;
+
+  //     if (errorStatus === 406) {
+
+  //       const errorMessage = error?.response?.data?.message?.message || "PAN verification failed: Not Acceptable.";
+  //       console.error("Error during PAN verification:", errorMessage);
+  //       toast.error(errorMessage);
+  //       setVerStatPan(false);
+  //     } else {
+
+  //       const generalErrorMessage = error?.response?.data?.message || "An unexpected error occurred.";
+  //       console.error("Error during PAN verification:", error);
+  //       toast.error(generalErrorMessage);
+  //     }
+  //   }
+  // };
+
+
+
+  // const handleGstVerification = async () => {
+  //   try {
+  //     const { response } = await HttpClient.post('/verify/gst',
+  //       { gstin: gst }
+  //     );
+  //     const { msg, success } = response.data;
+
+  //     if (success) {
+  //       setVerStatGst(true);
+  //     } else {
+  //       setVerStatGst(false);
+  //     }
+
+  //     setGstInfo(msg)
+
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const onSubmit = async (data) => {
     try {
@@ -465,10 +475,13 @@ export default function Profile() {
     <>
       {isSeller && (
         <div
-          className={`flex flex-col items-center mt-2 mx-2 ${verificationStatus
+          style={{
+            marginTop: "70px"
+          }}
+          className={`flex flex-col items-center  mx-2 ${verificationStatus
             ? "bg-green-100 border border-green-500 text-green-800"
             : "bg-red-100 border border-red-500 text-red-800"
-            } p-4 rounded-lg`}
+            } p-3 rounded-lg`}
         >
           {verificationStatus ? (
             <p className="text-green-600 font-bold text-lg">
@@ -479,7 +492,7 @@ export default function Profile() {
               <p className="text-red-600 font-bold text-lg">
                 Your business is not verified yet. Please verify!
               </p>
-              <button className="bg-[#C8102E] text-white font-bold py-2 px-6 rounded-full hover:opacity-90 mt-4">
+              <button className="bg-[#C8102E] text-white font-bold py-1 px-4 rounded-full hover:opacity-90 mt-4">
                 Verify Now
               </button>
             </div>
@@ -488,7 +501,7 @@ export default function Profile() {
       )}
 
       <section className="px-2 font-[Quicksand]">
-        <TabGroup className="mt-10">
+        <TabGroup className="mt-6">
           <div className="sm:flex gap-6" >
             <div className="w-full sm:w-1/5">
               {/* <div className="bg-[#EFEFEF] border border-solid border-[#D6D6D6] p-5 mb-8">
@@ -1473,18 +1486,18 @@ export default function Profile() {
                     <input
                       type="file"
                       accept="image/*"
-                      className="block w-full text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+                      className="block text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
 
                       onChange={(e) => getPanImageUrl(e,)}
                     />
 
-                    
 
+{/* 
 
                     <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-3 ml-auto"
                       onClick={handlePanVerification}
 
-                    >Verify Pan </button>
+                    >Verify Pan </button> */}
 
                   </div>
                   {panInfo && (
@@ -1556,33 +1569,35 @@ export default function Profile() {
                       GSTN
                     </label>
                     <input
-                      onChange={(e) => {
+  onChange={(e) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value) && value.length <= 15) {
+      setGst(value);
+    }
+  }}
+  value={gst}
+  type="text"
+  maxLength={15}
+  placeholder="Enter your GST Number"
+  className="border border-gray-300 rounded-lg p-3 w-full"
+/>
 
-                        setGst(e.target.value)
-                      }}
-                      value={gst}
-                      type="text"
-                      placeholder="Enter your GST Number"
-                      className="border border-gray-300 rounded-lg p-3 w-full"
-                    // {...register("gstin", {
-                    //   // required: "*Last Name is required.",
-                    // })}
-                    />
-                       <label className="block text-[#626262] font-medium mb-2 mt-2">
+
+                    <label className="block text-[#626262] font-medium mb-2 mt-2">
                       Upload PAN Image
                     </label>
 
                     <input
                       type="file"
                       accept="image/*"
-                      className="block w-full text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+                      className="block  text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
 
                       onChange={(e) => getGstUrl(e,)}
                     />
-                    <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-6 ml-auto"
+                    {/* <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-6 ml-auto"
                       onClick={handleGstVerification}
 
-                    >Verify Gstn</button>
+                    >Verify Gstn</button> */}
                   </div>
                   {gstInfo && (
                     <div className='mx-2 mt-2' >
@@ -1659,7 +1674,7 @@ export default function Profile() {
                     </div>)}
 
                   <div>
-                    <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-8 py-3 mx-auto block my-12"
+                    <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-8 py-3 mx-auto block"
                       onClick={handleApproval}
 
                     >Submit Docs</button>

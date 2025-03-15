@@ -22,7 +22,8 @@ export default function Vendorsdetail() {
   const [basicSellerDetails, setBasicSellerDetails] = useState({})
   const [sellerStoreDetails, setSellerStoreDetails] = useState({})
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [actionModal, setActionModal] = useState(true)
+  const [actionModal, setActionModal] = useState(true);
+  const [vendorProductDetails, setVendorProductDetails] =useState()
 
 
   const navigate = useNavigate();
@@ -38,8 +39,8 @@ export default function Vendorsdetail() {
 
     try {
       const response = await HttpClient.get(`/dashboard/vendors/${_id}`);
-      console.log("reefsgsgsgsggsggsgsg", id)
       setVendorDetails(response.vendorDetail);
+      setVendorProductDetails(response)
       const formattedSellerDetails = response.vendorDetail.address.map((each) => ({
         address: each.address,
         city: each.city,
@@ -222,7 +223,7 @@ export default function Vendorsdetail() {
                     Email:
                   </h1>
                   <p className="font-poppins font-normal text-[16px] leading-[21px]">
-                    {basicSellerDetails.email}
+                    {basicSellerDetails?.email}
                   </p>
                 </div>
                 <div className="flex flex-col">
@@ -230,8 +231,8 @@ export default function Vendorsdetail() {
                     Address:
                   </h1>
                   <p className="font-poppins font-normal text-[16px] leading-[21px]">
-                    {basicSellerDetails.address}                 </p>
-                  <p>{basicSellerDetails.postalCode}, {basicSellerDetails.state}</p>
+                    {basicSellerDetails?.address}                 </p>
+                  <p>{basicSellerDetails?.postalCode}, {basicSellerDetails?.state}</p>
                 </div>
               </div>
               {/* for the vertical line */}
@@ -284,11 +285,8 @@ export default function Vendorsdetail() {
               </Modal>
             )}
 
-            <div className="my-10 mx-6">
-              <h1 className="font-poppins font-medium text-[20px] leading-[21px] text-[#011F4B]">
-                Recently Added Products
-              </h1>
-              <div className="overflow-x-auto">
+
+            {/* <div className="overflow-x-auto">
                 <table className="my-6 border-gray-300 w-full">
                   <thead className="border-b border-gray-300">
                     <tr>
@@ -305,6 +303,15 @@ export default function Vendorsdetail() {
                         Amount
                       </th>
                     </tr>
+            <Link
+      to="/admin/vendors/product_details"
+      aria-label="Go to home page"
+      className="block p-4 mb-2 bg-blue-50 hover:bg-blue-100 rounded-lg shadow-md transition-all duration-200"
+    >
+      <h1 className="font-poppins font-semibold text-xl text-blue-800">
+        Products added by Seller
+      </h1>
+    </Link>
                   </thead>
                   <tbody>
                     {vendorDetails?.productDetails
@@ -328,14 +335,22 @@ export default function Vendorsdetail() {
                       ))}
                   </tbody>
                 </table>
-              </div>
-            </div>
-            <div className="mx-8">
-              <Link className="font-poppins font-normal text-[14px] leading-[21px] text-[#253B80]">
-                See All
-              </Link>
-            </div>
+              </div> */}
+
             <div className="mx-5 py-5">
+
+            <Link
+            state={vendorProductDetails}
+      to="/admin/vendors/product_details"
+      aria-label="Go to home page"
+      className="block p-4 mb-2 bg-blue-50 hover:bg-blue-100 rounded-lg shadow-md transition-all duration-200"
+    >
+      <h1 className="font-poppins font-semibold text-xl text-blue-800">
+        Products added by Seller
+      </h1>
+    </Link>
+
+    
               <h5 className="font-poppins font-medium text-[20px] leading-[21px] text-[#011F4B] ">
                 Performance Metrics
               </h5>

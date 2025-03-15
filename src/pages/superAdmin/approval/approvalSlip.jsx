@@ -26,8 +26,19 @@ export default function ApprovalSlip() {
     setloading(true);
 
     try {
-      const response = await HttpClient.get(`/verify/get/${_id}`);
+      const response = await HttpClient.get("/approval/requests",{sellerId : _id});
       console.log("Full Response:", response);
+
+      const formattedSellerDetails = () => response.map((each)=> ({
+        gstInNumber : each.GSTIN,
+        panNumber : each.PAN,
+        gstDocument :each.gstDoc,
+
+
+
+      }))
+
+      console.log(formattedSellerDetails)
       setApprovalDetails(response
       );
       setUserId(response?.message?.pan?.userId)

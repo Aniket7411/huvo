@@ -60,6 +60,7 @@ import CartProvider from "./usecontext1/cartcontext";
 import CancellationAndRefundPolicies from "./pages/cancellationrefund/index.jsx";
 import TermsAndConditions from "./pages/termsincondition/index.jsx";
 import ContactUs from "./pages/contactus/index.jsx";
+import SellerProducts from "./pages/sellerproducts/index.jsx";
 
 function App() {
   return (
@@ -643,6 +644,16 @@ function App() {
             element={
               <SuperAdminAuth>
                 <Vendorsdetail />
+              </SuperAdminAuth>
+            }
+          />
+        </Routes>
+        <Routes>
+          <Route
+            path="admin/vendors/product_details"
+            element={
+              <SuperAdminAuth>
+                <SellerProducts />
               </SuperAdminAuth>
             }
           />
