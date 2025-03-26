@@ -142,7 +142,7 @@ export default function ProductsByBrands() {
 
       <hr className="my-2" />
 
-      <div className="flex flex-wrap gap-2 items-center p-3 bg-gray-50 rounded-lg shadow">
+      <div className="flex flex-wrap gap-2 items-center  bg-gray-50 rounded-lg shadow">
         {/* Search Box */}
         <div className="flex items-center border border-gray-300 bg-[#fff] rounded-lg px-2 py-1 w-full md:w-auto">
           <CiSearch className="text-gray-500 mr-2" />
@@ -252,7 +252,7 @@ export default function ProductsByBrands() {
       </div>
 
 
-      <hr className="my-5" />
+      <hr className="my-2" />
 
 
 
@@ -302,7 +302,7 @@ export default function ProductsByBrands() {
           )
         })}
       </div>
-      <hr className="my-5" />
+      <hr className="my-2" />
 
 
       <div className="flex p-auto md:hidden flex-wrap gap-2 justify-center ">

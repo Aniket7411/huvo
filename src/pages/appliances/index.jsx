@@ -126,7 +126,7 @@ export default function GroceriesHomeApplianceCollection() {
           )}
         </ul>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 my-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 my-2">
           <div className="relative col-span-2">
             <Link to={`/collections?newArrival=true&group=groceries-home-appliance`}>
               <img src="https://via.placeholder.com/600x400.png?text=New+Arrivals" alt="New Arrivals" />

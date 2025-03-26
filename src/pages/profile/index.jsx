@@ -96,17 +96,17 @@ export default function Profile() {
 
   const handleApproval = async () => {
 
-    console.log(gst,gstUrl, pan)
+    console.log(gst, gstUrl, pan)
 
     const verficationDetails = {
       gst,
       pan,
       gstDoc: gstUrl,
-      panDoc : panUrl
+      panDoc: panUrl
     }
 
     try {
-      const response = await HttpClient.post(`/approval/submit`, verficationDetails );
+      const response = await HttpClient.post(`/approval/submit`, verficationDetails);
       toast.success(response?.status);
 
     }
@@ -209,6 +209,8 @@ export default function Profile() {
     try {
       const { data } = await HttpClient.get("/order");
       setAllOrders(data);
+
+      console.log("datadata", data)
     } catch (error) {
       console.error("Error fetching data:", error);
       toast.error(error?.response?.data?.message);
@@ -511,7 +513,7 @@ export default function Profile() {
                 <p className="text-[#717171] font-normal">{userData.email}</p>
               </div> */}
               <div>
-                <TabList className="flex sm:flex-col mb-4 flex-wrap">
+                <TabList className="flex sm:flex-col md:mb-4 mt-[50px] md:mt-[0px] flex-wrap">
                   {/* <Tab.List className="grid grid-cols-3 sm:flex sm:flex-col mb-6 "> */}
                   <Tab className="outline-none border rounded-sm  border-solid border-[#D6D6D6] text-[#626262] font-bold m-1 p-3 text-justify">
                     Profile
@@ -555,26 +557,11 @@ export default function Profile() {
                   }
 
                 </TabList>
-                {/* <div className="flex sm:block w-full gap-3 mb-4 sm:mb-0">
-                  <button className="text-[#FF0000] border border-solid border-[#FF0000]  font-bold p-3 w-1/2 sm:w-full sm:mb-4">
-                    DELETE MY ACCOUNT
-                  </button>
-                  <button
-                    onClick={() => logout()}
-                    className="text-[#FF0000] border border-solid border-[#FF0000] font-bold p-3 w-1/2 sm:w-full"
-                  >
-                    LOGOUT
-                  </button>
-                </div> */}
               </div>
             </div>
             <TabPanels className="w-full sm:w-4/5">
               <TabPanel className="bg-[#F2F2F2] h-full">
-                {/* <div className="border-b-[1px] border-b-solid border-b-[#D6D6D6] py-5 px-5 md:px-[50px]">
-                    <p className="text-[#626262] font-bold text-lg mb-2 ml-2">
-                      Edit Profile
-                    </p>
-                  </div> */}
+
                 <div className="py-5">
                   <div className="px-5 md:px-12 border-b border-solid border-[#D6D6D6]">
                     <p className="text-[#2F2F2F] font-semibold text-lg mb-2">
@@ -719,7 +706,7 @@ export default function Profile() {
                     ORDERS & RETURNS
                   </p>
                 </div>
-                <div className="px-5 md:px-12 my-4">
+                <div className="px-5 h-auto overflow-auto  md:px-12 my-4">
                   {allOrders
                     .filter(
                       (order) =>
@@ -894,7 +881,7 @@ export default function Profile() {
                             </ol>
                           </div>
 
-                          <div className="block sm:hidden my-5">
+                          <div className="block sm:hidden my-2">
                             <ol className="relative text-gray-500 border-s border-gray-200 dark:border-gray-700">
                               <li className="mb-10 ms-6">
                                 <span className="absolute flex items-center justify-center w-8 h-8 bg-[#011F4B] rounded-full -start-4 "></span>
@@ -1492,7 +1479,7 @@ export default function Profile() {
                     />
 
 
-{/* 
+                    {/* 
 
                     <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-3 ml-auto"
                       onClick={handlePanVerification}
@@ -1569,18 +1556,18 @@ export default function Profile() {
                       GSTN
                     </label>
                     <input
-  onChange={(e) => {
-    const value = e.target.value;
-    if (/^\d*$/.test(value) && value.length <= 15) {
-      setGst(value);
-    }
-  }}
-  value={gst}
-  type="text"
-  maxLength={15}
-  placeholder="Enter your GST Number"
-  className="border border-gray-300 rounded-lg p-3 w-full"
-/>
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (/^\d*$/.test(value) && value.length <= 15) {
+                          setGst(value);
+                        }
+                      }}
+                      value={gst}
+                      type="text"
+                      maxLength={15}
+                      placeholder="Enter your GST Number"
+                      className="border border-gray-300 rounded-lg p-3 w-full"
+                    />
 
 
                     <label className="block text-[#626262] font-medium mb-2 mt-2">

@@ -8,6 +8,7 @@ import { CiDeliveryTruck, CiDiscount1, CiSearch } from "react-icons/ci";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import Brandslider from "../brands";
 
 
 export default function WomenCollection() {
@@ -84,32 +85,19 @@ export default function WomenCollection() {
       <div class="text-center mt-4">
         <h1 class="text-3xl font-bold mt-[60px] text-gray-800" >Women's Clothing</h1>
 
+        <p className=" text-[#eb25de] font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg  mt-2 ">
+            Discover the latest trends and styles in women's fashion. From elegant dresses to casual outfits, find the perfect look for every occasion.
+
+          </p>
       </div>
 
 
-      <section>
-
-
-        {/* 
-        <div class="flex justify-center items-center mt-2">
-          <div class="bg-black p-4 rounded-2xl  shadow-lg w-full">
-            <video class="w-[100vw] rounded-lg h-[200px]" controls>
-              <source src="assets/mensshoppingvideo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </div> */}
-
-
-      </section>
+    
 
 
       <section className="md:px-[5%] px-[2%]  py-1">
           
-          <p className="font-[Poppins] font-normal text-center  text-lg text-[#eb25de] ">
-            Discover the latest trends and styles in women's fashion. From elegant dresses to casual outfits, find the perfect look for every occasion.
-
-          </p>
+        
         <ul className="flex flex-wrap justify-center">
           {allCategories.length ? (
             allCategories.map((category, i) => {
@@ -121,7 +109,7 @@ export default function WomenCollection() {
                   <Link to={`/collections?category=${category?._id}&group=women`}>
                     <div className="relative mb-2">
                       <img
-                        className="md:h-[220px] h-[100px] object-cover w-full rounded-lg"
+                        className="md:h-[220px]  h-[90px] object-cover w-full rounded-lg"
                         src={groupDetails?.image}
                         alt={groupDetails?.name}
                       />
@@ -146,71 +134,52 @@ export default function WomenCollection() {
 
       </section>
 
+      <Brandslider />
+
+
       <section className="bg-gradient-to-t from-[#fdbdff] to-[#fff]">
 
       <hr className="my-2" />
-      <div style={{ padding: "10px", maxWidth: "300px" }}>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "10px",
-          }}
-        >
-          {/* Search Input */}
-          <input
-            type="text"
-            placeholder="Search for clothes..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            style={{
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-            }}
-          />
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-2 p-4">
+  {/* Search Input */}
+  <input
+    type="text"
+    placeholder="Search for clothes..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="w-full sm:w-48 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    aria-label="Search products"
+  />
 
-          {/* Sorting Dropdown */}
-          <select
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            style={{
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-            }}
-          >
-            <option value="">Sort By</option>
-            <option value="lowToHigh">Price: Low to High</option>
-            <option value="highToLow">Price: High to Low</option>
-            <option value="newArrivals">New Arrivals</option>
-          </select>
+  {/* Sorting Dropdown */}
+  <select
+    value={sortOption}
+    onChange={(e) => setSortOption(e.target.value)}
+    className="w-full sm:w-48 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    aria-label="Sort products"
+  >
+    <option value="">Sort By</option>
+    <option value="lowToHigh">Price: Low to High</option>
+    <option value="highToLow">Price: High to Low</option>
+    <option value="newArrivals">New Arrivals</option>
+  </select>
 
-          {/* Search Button */}
-          <button
-            onClick={handleSearch}
-            style={{
-              padding: "10px",
-              backgroundColor: "#007bff",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            Search
-          </button>
-        </div>
-      </div>
+  {/* Search Button */}
+  <button
+    onClick={handleSearch}
+    className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    aria-label="Search"
+  >
+    Search
+  </button>
+</div>
 
 
       <div style={{
         backgroundSize: "cover",
         backgroundPosition: "center",
         width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+ 
       }} className="md:flex flex-wrap hidden p-5  justify-between gap-2">
         <Swiper
           loop={true}

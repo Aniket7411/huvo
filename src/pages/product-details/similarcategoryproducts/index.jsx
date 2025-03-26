@@ -122,7 +122,6 @@ const SimilarProducts = (props) => {
             </div>
           </div>
 
-          
 
 
 
@@ -130,7 +129,8 @@ const SimilarProducts = (props) => {
 
 
 
-          <hr className="my-5" />
+
+          <hr className="my-2" />
         </>
       }
 

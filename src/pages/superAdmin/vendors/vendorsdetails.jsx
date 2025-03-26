@@ -92,7 +92,6 @@ export default function Vendorsdetail() {
     console.log(id)
 
     if (action === "block") {
-
       try {
 
         const response = await HttpClient.put("/users/block", {
@@ -283,60 +282,7 @@ export default function Vendorsdetail() {
                   </div>
                 </div>
               </Modal>
-            )}
-
-
-            {/* <div className="overflow-x-auto">
-                <table className="my-6 border-gray-300 w-full">
-                  <thead className="border-b border-gray-300">
-                    <tr>
-                      <th className="font-poppins font-normal text-[14px] leading-[21px] text-[#6C757D] px-5 border-r  border-gray-300">
-                        S.N.
-                      </th>
-                      <th className="font-poppins font-normal text-[14px] leading-[21px] text-[#6C757D] px-5  border-r  border-gray-300">
-                        Order Id
-                      </th>
-                      <th className="font-poppins font-normal text-[14px] leading-[21px] text-[#6C757D] px-5  border-r  border-gray-300">
-                        Date
-                      </th>
-                      <th className="font-poppins font-normal text-[14px] leading-[21px] text-[#6C757D]  px-5 ">
-                        Amount
-                      </th>
-                    </tr>
-            <Link
-      to="/admin/vendors/product_details"
-      aria-label="Go to home page"
-      className="block p-4 mb-2 bg-blue-50 hover:bg-blue-100 rounded-lg shadow-md transition-all duration-200"
-    >
-      <h1 className="font-poppins font-semibold text-xl text-blue-800">
-        Products added by Seller
-      </h1>
-    </Link>
-                  </thead>
-                  <tbody>
-                    {vendorDetails?.productDetails
-                      ?.slice(0, 3)
-                      .map((product, index) => (
-                        <tr key={product.productId}>
-                          <td className="text-center font-poppins font-normal text-[14px] leading-[21px] text-[#000000] px-5  border-r  border-gray-300">
-                            {index + 1}
-                          </td>
-                          <td className="text-center font-poppins font-normal text-[14px] leading-[21px] text-[#000000] px-5  border-r  border-gray-300">
-                            {" "}
-                            {product.productId}
-                          </td>
-                          <td className="text-center font-poppins font-normal text-[14px] leading-[21px] text-[#000000] px-5 border-r  border-gray-300">
-                            {product.createdAt}
-                          </td>
-                          <td className="text-center font-poppins font-normal text-[14px] leading-[21px] text-[#000000] px-5 ">
-                            {product.price}
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              </div> */}
-
+            )}         
             <div className="mx-5 py-5">
 
             <Link

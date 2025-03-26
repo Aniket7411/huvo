@@ -68,25 +68,25 @@ export default function Footer() {
           {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-3">
   {/* Online Shopping */}
   <Link to="/" className="flex flex-col">
-    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
       <p className="mr-2">Online shopping</p>
       <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
     </div>
-    <p className="text-[#949494] font-[Poppins] font-light">
+    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
       Visit our wide range of products.
     </p>
   </Link>
 
   {/* Privacy Policy */}
-  <Link to="/privacy" className="flex flex-col">
-    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+  <Link to="/privacy_policy" className="flex flex-col">
+    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
       <p className="mr-2">Privacy Policy</p>
       <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
     </div>
-    <p className="text-[#949494] font-[Poppins] font-light">
+    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
       Complete description of our privacy policy.
     </p>
   </Link>
@@ -98,11 +98,11 @@ export default function Footer() {
     rel="noopener noreferrer"
     className="flex flex-col"
   >
-    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
       <p className="mr-2">Mail us</p>
       <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
     </div>
-    <p className="text-[#949494] font-[Poppins] font-light">
+    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
       huvoofficial@gmail.com
     </p>
   </a>
@@ -110,11 +110,11 @@ export default function Footer() {
   {/* Contact Us (Modal Trigger) */}
   <Link to="/contact_us">
   <div  className="flex flex-col cursor-pointer">
-    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
       <p className="mr-2">Contact Us</p>
       <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
     </div>
-    <p className="text-[#949494] font-[Poppins] font-light">
+    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
       Our Address
     </p>
   </div>
@@ -122,33 +122,33 @@ export default function Footer() {
 
   {/* Return Policy */}
   <Link to="/returnpolicy" className="flex flex-col">
-    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
       <p className="mr-2">Return Policy</p>
       <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
     </div>
-    <p className="text-[#949494] font-[Poppins] font-light">
+    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
       Complete description of our return policy.
     </p>
   </Link>
 
   {/* Terms and Conditions */}
   <Link to="/termsandconditions" className="flex flex-col">
-    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
       <p className="mr-2">Terms and Conditions</p>
       <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
     </div>
-    <p className="text-[#949494] font-[Poppins] font-light">
+    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
       Complete description of Terms and Conditions.
     </p>
   </Link>
 
   {/* Cancellations and Refunds */}
   <Link to="/cancellation_refund" className="flex flex-col">
-    <div className="flex items-center text-xl font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
       <p className="mr-2">Cancellations and Refunds</p>
       <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
     </div>
-    <p className="text-[#949494] font-[Poppins] font-light">
+    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
       Complete description of our cancellations and refunds.
     </p>
   </Link>

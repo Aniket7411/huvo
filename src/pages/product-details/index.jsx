@@ -256,7 +256,6 @@ export default function ProductDetails() {
   return (
     <div className="px-3 mt-10 md:p-10">
       <div className="flex flex-wrap gap-2 md:gap-16">
-        {/* Product Image */}
         <div className="flex-1 min-w-[300px] max-w-[350px]">
           <div className="p-2 rounded-md border border-gray-300 mt-5">
             <img
@@ -267,23 +266,16 @@ export default function ProductDetails() {
           </div>
         </div>
 
-        {/* Product Details */}
         <div className="flex-1">
           <div className="flex items-center gap-2 ">
-            <h1 className="text-2xl  font-inter md:text-2xl lg:text-3xl font-bold text-[#2563eb] ">
+            <h1 className="text-2xl  font-inter md:text-xl lg:text-2xl font-semibold text-[#2563eb] ">
               Product Name: {productDetails.name}
             </h1>
-            {/* <button type="button">
-              <FaShare size={25} className="text-[#2370f4]" />
-
-
-            </button> */}
+          
           </div>
 
           <div className="flex flex-col gap-2 mt-3">
-  {/* Ratings Section */}
   <div className="flex flex-col sm:flex-row sm:gap-4 gap-2">
-    {/* Product Rating */}
     <div className="flex gap-2 items-center">
       <div className="bg-[#338E3C] text-white px-2 py-1 flex items-center rounded-md gap-1">
         <p className="text-sm font-bold">4.6</p>
@@ -300,7 +292,6 @@ export default function ProductDetails() {
       </button>
     </div>
 
-    {/* Brand Rating */}
     <div className="flex gap-2 items-center">
       <div className="bg-[#FF9800] text-white px-2 py-1 flex items-center rounded-md gap-1">
         <p className="text-sm font-bold">{productDetails.brand?.rating || "4.5"}</p>
@@ -310,7 +301,6 @@ export default function ProductDetails() {
     </div>
   </div>
 
-  {/* Brand Section */}
   <div>
     <p className="text-lg font-medium text-gray-600">
       Brand:{" "}
@@ -322,9 +312,6 @@ export default function ProductDetails() {
 </div>
 
 
-          {/* <p className="text-lg font-medium text-gray-600 mb-2">
-            Sold By: <span className="text-gray-800">{productDetails.seller}</span>
-          </p> */}
           <p className="text-gray-700 mb-2">Product description: {productDetails.description}</p>
 
           <div className="flex flex-wrap gap-2 md:gap-10 items-center ">
@@ -338,7 +325,7 @@ export default function ProductDetails() {
                 </span>
                 <span className="text-green-500">
                   <PiCurrencyInr className="mr-1" />
-                  {productDetails.price - (productDetails.price * (productDetails.discount / 100))}
+                  {productDetails.price -  productDetails.discount }
                 </span>
                 <span className="text-sm text-gray-500 ml-2">
                   ({productDetails.discount}% Off)
@@ -348,7 +335,6 @@ export default function ProductDetails() {
               <p className="text-gray-600 font-medium ">Material & Care:</p>
               <p className="text-gray-700">{productDetails.materialAndCare}</p>
               <div className="flex gap-4">
-                {/* Sizes Available Section */}
                 <div>
                   <p className="text-gray-600 font-medium ">Sizes Available:</p>
                   <div className="flex flex-wrap gap-2 mt-2">
@@ -375,27 +361,8 @@ export default function ProductDetails() {
 
             </div>
 
-            {/* Quantity Control Section */}
             <div className="" >
-              {/* <p className="text-gray-600 font-medium mb-2">Quantity</p>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleDecrement}
-                  className="px-2  border border-gray-300 rounded-md bg-gray-200 text-lg font-medium disabled:opacity-50"
-                  disabled={quantity <= 1}
-                  aria-label="Decrement quantity"
-                >
-                  -
-                </button>
-                <p className="text-lg font-semibold">{quantity}</p>
-                <button
-                  onClick={handleIncrement}
-                  className="px-2  border border-gray-300 rounded-md bg-gray-200 text-lg font-medium"
-                  aria-label="Increment quantity"
-                >
-                  +
-                </button>
-              </div> */}
+         
 
               <p className="mb-1 mt-1 font-semibold">
                 Returnable : {productDetails.isReturnable ? "Yes" : "No"}
@@ -408,14 +375,14 @@ export default function ProductDetails() {
                     <button
                       onClick={() => {
                         if (isInCart) {
-                          removeFromCartContext(productDetails.productId); // Remove from cart
+                          removeFromCartContext(productDetails.productId); 
                           toast.error("Removed from cart");
                         } else {
-                          addToCartContext({ ...productDetails, selectedSize, quantity }); // Add to cart
+                          addToCartContext({ ...productDetails, selectedSize, quantity }); 
                           toast.success("Added to cart");
                         }
                       }}
-                      className={`px-2 py-1 font-semibold rounded-md pointer transition ${isInCart ? "bg-[#011F4B] text-white" : "bg-[#011F4B] text-white"
+                      className={`px-2 py-1 rounded-md pointer text-md transition ${isInCart ? "bg-[#011F4B] text-white" : "bg-[#011F4B] text-white"
                         }`}
                     >
                       {isInCart ? "Remove from cart" : "Add to Cart"}
@@ -425,7 +392,7 @@ export default function ProductDetails() {
 
 
                     <button key={productDetails._id}
-                      onClick={() => addToWishlist(productDetails, selectedSize, quantity)} // Pass productDetails, selectedSize, and quantity
+                      onClick={() => addToWishlist(productDetails, selectedSize, quantity)} 
 
                       className="px-2 py-1 bg-gray-200 text-gray-800 font-semibold rounded-md hover:bg-gray-300 transition"
                     >
@@ -436,7 +403,7 @@ export default function ProductDetails() {
                   </div> : <button
                     key={productDetails.productId}
                     onClick={() => addToCart(productDetails)}
-                    className="px-4 py-2 bg-[#011F4B] text-white font-semibold rounded-lg shadow-md hover:bg-bg-[#011F4B] transition duration-200"
+                    className="px-2 py-1 bg-[#011F4B] text-white  rounded-lg shadow-md hover:bg-bg-[#011F4B] transition duration-200"
                   >
                     Add to Cart
                   </button>
@@ -522,10 +489,10 @@ export default function ProductDetails() {
           >
             <div>
               <div className="flex justify-between">
-                <h2 className="text-2xl font-semibold text-[#000]">Ratings & Reviews</h2>
+                <h2 className="text-md md:text-2xl font-semibold text-[#000]">Ratings & Reviews</h2>
                 <button
                   onClick={openModal}
-                  className="bg-[#011F4B] px-2 py-1 rounded-md text-[#fff]"
+                  className="bg-[#011F4B] px-2 py-1 text-md md:text-2xl rounded-md text-[#fff]"
                 >
                   Rate Product
                 </button>
@@ -541,10 +508,8 @@ export default function ProductDetails() {
               ) : (
                 allReviews.map((review) => (
                   <div key={review.id} className="mt-4 border-b border-gray-200 pb-4">
-                    {/* Reviewer Information */}
                     <p className="font-bold">{review.userName}</p>
 
-                    {/* Star Rating */}
                     <div className="flex items-center">
                       {Array.from({ length: 5 }, (_, index) => {
                         const star = index + 1;
@@ -556,7 +521,6 @@ export default function ProductDetails() {
                       })}
                     </div>
 
-                    {/* Review Text */}
                     <p className="mt-2 text-gray-700">{review.description}</p>
                   </div>
                 ))
@@ -571,7 +535,6 @@ export default function ProductDetails() {
 
           </section>
 
-          {/* Modal Component */}
           <Modal
             isOpen={isModalOpen}
             onRequestClose={closeModal}
@@ -642,6 +605,9 @@ export default function ProductDetails() {
             </div>
           </Modal>
         </div>
+
+
+        
       </div>
       <hr className="my-2" />
       <h3 className="text-[#011F4B] text-xl font-semibold mb-2">

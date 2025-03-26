@@ -106,28 +106,39 @@ function ProductAddPage() {
 
 
   const onSubmit = async (data) => {
-    console.log("onsubmit a")
+    let platformCharge = 0;
+    const shippingFee = 100
+
+    // Calculate platform fee based on data.price
+    if (data.price <= 500) {
+      platformCharge = 10; // Rs. 10 for amount up to 500
+    } else if (data.price > 500 && data.price <= 1000) {
+      platformCharge = 15; // Rs. 15 for amount between 501 and 1000
+    } else if (data.price > 1000) {
+      platformCharge = 20; // Rs. 20 for amount above 1000
+    }
+
     try {
       const info = {
         ...data,
         bannerImage,
-        isReturnable: data.isReturnable === "true",
+        isReturnable: data?.isReturnable === "true",
         sizes: sizeWithStock,
         colors: colorWithImages,
         productDetails,
+        platformCharge,
+        shippingFee
 
       };
       console.log("Form Submission Data:", info);
-      const { message } = await HttpClient.post("/product", info);
-      toast.success(message || "Product Added Successfully");
-      navigate("/seller/products");
+      const response = await HttpClient.post("/product", info);
+      console.log(response)
 
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
     }
   };
-  console.log("on submit b")
   const handleRemoveColorWithImages = (colorIndex) => {
     const newColorWithImages = [...colorWithImages];
     newColorWithImages.splice(colorIndex, 1);
@@ -223,7 +234,7 @@ function ProductAddPage() {
   };
 
   return (
-    <div className="container  sm:mx-auto my-5">
+    <div className="container  sm:mx-auto my-2">
       <div className="flex justify-between border-b py-2 px-3 ">
         <h2 className="text-lg font-bold">Add Product below</h2>
         <Link
@@ -554,7 +565,7 @@ function ProductAddPage() {
               htmlFor="price"
               className="block text-sm font-medium text-gray-700"
             >
-              Price
+              Price (In Rupees)
             </label>
             <input
               id="price"
@@ -575,25 +586,27 @@ function ProductAddPage() {
           </div>
 
           <div className="mb-3">
-  <p className="text-sm text-gray-600">
-    Additional shipping charge of Rs. 100 and platform fee will be added to the price you set.
-  </p>
-  <p className="text-sm text-gray-600 mt-1">
-    Platform fee is calculated as per the following:
-  </p>
-  <ul className="text-sm text-gray-600 list-disc pl-4">
-    <li>Amount up to 500 → Rs. 10</li>
-    <li>Amount from 501 to 1000 → Rs. 15</li>
-    <li>Amount above 1000 → Rs. 20</li>
-  </ul>
-</div>
+            <p className="text-sm text-gray-600">
+              Additional shipping charge of Rs. 100 and platform fee will be added to the price you set.
+            </p>
+            <p className="text-sm text-gray-600 mt-1">
+              Platform fee is calculated as per the following:
+            </p>
+            <ul className="text-sm text-gray-600 list-disc pl-4">
+              <li>Amount up to 500 → Rs. 10</li>
+              <li>Amount from 501 to 1000 → Rs. 15</li>
+              <li>Amount above 1000 → Rs. 20</li>
+            </ul>
+          </div>
+
+
 
           <div className="mb-3">
             <label
               htmlFor="discount"
               className="block text-sm font-medium text-gray-700"
             >
-              Discount
+              Discount  (In Rupees)
             </label>
             <input
               id="discount"
@@ -805,23 +818,7 @@ function ProductAddPage() {
               <span className="text-red-500">{errors.isReturnable.message}</span>
             )}
           </div>
-          {/* <div className="mb-3">
-  <label className="block text-sm font-medium text-gray-700 mb-2">
-    Returnability
-  </label>
-  <div className="flex items-center gap-2">
-    <input
-      type="checkbox"
-      name="isReturnable"
-      {...register("isReturnable", { valueAsBoolean: true })}
-      id="isReturnable"
-    />
-    <label htmlFor="isReturnable">Is this product returnable?</label>
-  </div>
-  {errors.isReturnable && (
-    <span className="text-red-500">{errors.isReturnable.message}</span>
-  )}
-</div> */}
+
 
           <div>
             <button

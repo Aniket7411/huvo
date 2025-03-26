@@ -270,10 +270,15 @@ export default function SignIn() {
                   type="checkbox"
                   required
                 />{" "}
+
                 <span className="text-[#5A5A5A] font-[Poppins]">
-                  YOU AGREE <span className="text-[#011F4B]">THE TERMS</span>{" "}
+                  YOU AGREE                 <Link to="/termsandconditions">
+                  <span className="text-[#011F4B]">THE TERMS</span>                 </Link>
+                  {" "}
                   SERVICES AND{" "}
+                  <Link  to="/privacy_policy">
                   <span className="text-[#011F4B]">PRIVACY POLICIES</span>{" "}
+                  </Link>
                 </span>
               </div>
               <button className="bg-[#011F4B] text-white font-medium w-full sm:w-3/4 radius-[3px] text-lg p-3  ">

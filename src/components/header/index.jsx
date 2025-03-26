@@ -9,7 +9,6 @@ import { LogOut, isLoggedIn } from "../../server/user";
 import { toast } from "react-toastify";
 import { HttpClient } from "../../server/client/http";
 import { CiSearch } from "react-icons/ci";
-import { GiHamburgerMenu } from "react-icons/gi";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { CartContext } from "../../usecontext1/cartcontext";
 
@@ -345,20 +344,25 @@ export default function Header(props) {
 
         <div className="relative " onClick={toggleNav}>
           {/* Hamburger Icon */}
-          <GiHamburgerMenu
-            onClick={() => openSubmenu()}
-            style={{
-              position: "fixed",
-              top: "16px",
-              left: "16px",
-              zIndex: 50,
-              padding: "8px",
-              borderRadius: "8px",
-              color: "#fff",
-              fontSize: "24px",
-            }}
+       
 
-          />
+{/* <img
+  src={`${process.env.PUBLIC_URL}/favicon.svg`}
+  alt="Menu Icon"
+  onClick={() => openSubmenu()}
+  style={{
+    position: "fixed",
+    top: "16px",
+    left: "16px",
+    zIndex: 50,
+    padding: "8px",
+    borderRadius: "8px",
+    cursor: "pointer",
+    width: "32px", // Adjust size as needed
+    height: "32px",
+  }}
+/> */}
+
 
 
 
@@ -427,7 +431,19 @@ export default function Header(props) {
         <div className="flex md:hidden  py-2 px-4 mb-auto text-[#000] justify-between items-center" style={{
           backgroundImage: "linear-gradient(to right, #007bff, #fff)",
         }} >
-          <IoReorderThree onClick={() => openSubmenu()} className="text-3xl cursor-pointer" />
+
+
+          <div className="flex items-center gap-1">
+
+          <IoReorderThree  className="text-3xl cursor-pointer"   onClick={() => openSubmenu()}
+          />
+
+          <img src ="/assets/favicon.svg" alt="logo" className="w-[20px] bg-[#fff] rounded-full" />
+
+          </div>
+
+          
+
 
           <div className="flex gap-3 justify-between items-center cursor-pointer">
             {/* <MdOutlineShoppingBag />
@@ -481,7 +497,7 @@ export default function Header(props) {
       {isSubmenu && (
         // tab nabbar
         <section>
-          <div className="block md:hidden z-10 text-[blue] bg-[#fff] fixed sm:w-[50%] w-[100%] p-5 top-0 h-full right-0">
+          <div className="block md:hidden z-10 text-[blue] bg-[#fff] fixed sm:w-[50%] w-[100%] p-5 top-0 right-0">
             <div className="flex justify-between items-center">
               <div className="mb-5">
                 {/* <img src="assets/newlogo.jpeg" alt="logo" /> */}

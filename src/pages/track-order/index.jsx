@@ -68,7 +68,7 @@ export default function TrackOrder() {
               <li className="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700">
                 <span className="flex items-center justify-center w-[30px] h-[30px] bg-gray-100 rounded-full lg:w-[40px] lg:h-[40px]  shrink-0"></span>
               </li>
-              
+
               {/* <li className="flex w-full items-center before:content-[''] before:w-full before:h-1 before:border-b before:border-gray-100 before:border-4 before:inline-block dark:before:border-gray-700">
                 <span className="flex items-center justify-center w-[30px] h-[30px] bg-gray-100 rounded-full lg:w-[40px] lg:h-[40px]  shrink-0"></span>
               </li> */}
@@ -77,7 +77,7 @@ export default function TrackOrder() {
               </li>
             </ol>
           </div>
-          <div className="block sm:hidden my-5">
+          <div className="block sm:hidden my-2">
             <ol className="relative text-gray-500 border-s border-gray-200 dark:border-gray-700">
               <li className="mb-10 ms-6">
                 <span className="absolute flex items-center justify-center w-8 h-8 bg-[#011F4B] rounded-full -start-4 "></span>

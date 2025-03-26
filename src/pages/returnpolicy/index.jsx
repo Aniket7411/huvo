@@ -52,7 +52,7 @@ function Returnpolicy() {
       text-[#949494] font-light font-[Poppins]  [text-align:justify]" mt-5 ml-10'>
                 If you have opted for the Wrong/Defect return option and are eligible to return the product as per applicable policies, you may return the product free of cost if fault with the product lies with the supplier. The following are the faults that lie with the supplier:
             </p>
-            <div className="overflow-x-auto mx-10 my-5">
+            <div className="overflow-x-auto mx-10 my-2">
                 <table className="min-w-full bg-white border border-gray-300">
                     <thead>
                         <tr>
@@ -318,7 +318,7 @@ function Returnpolicy() {
 
                 When will I get my refund?
             </p>
-            <div className="overflow-x-auto mx-10 my-5">
+            <div className="overflow-x-auto mx-10 my-2">
                 <table className="min-w-full bg-white border border-gray-300">
                     <thead>
                         <tr>

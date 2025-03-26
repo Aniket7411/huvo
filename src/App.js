@@ -61,6 +61,8 @@ import CancellationAndRefundPolicies from "./pages/cancellationrefund/index.jsx"
 import TermsAndConditions from "./pages/termsincondition/index.jsx";
 import ContactUs from "./pages/contactus/index.jsx";
 import SellerProducts from "./pages/sellerproducts/index.jsx";
+import CategoryPage from "./pages/categorysearch/index.jsx";
+import OrderAndReturn from "./pages/orderandreturn/index.jsx";
 
 function App() {
   return (
@@ -77,6 +79,17 @@ function App() {
           />
         </Routes>
 
+
+        <Routes>
+          <Route
+            path="/test"
+            element={
+              <Layout>
+                <OrderAndReturn />
+              </Layout>
+            }
+          />
+        </Routes>
 
         <Routes>
           <Route
@@ -100,7 +113,7 @@ function App() {
         </Routes>
         <Routes>
           <Route
-            path="/privacy"
+            path="/privacy_policy"
             element={
               <Layout>
                 <Privacypolicy />
@@ -188,6 +201,17 @@ function App() {
             element={
               <Layout>
                 <KidsCollection />
+              </Layout>
+            }
+          />
+        </Routes>
+
+        <Routes>
+          <Route
+             path="/category_search/:group/:categoryId" 
+            element={
+              <Layout>
+                <CategoryPage />
               </Layout>
             }
           />

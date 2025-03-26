@@ -49,14 +49,12 @@ export default function Layout({ changeHeaderColor, children }) {
               isScrolled ? "bg-[#FFFFFF]" : "bg-transparent"
             }`}
           >
-            <Header changeHeaderColor={changeHeaderColor} />
+            <Header changeHeaderColor={changeHeaderColor}  />
           </div>
 
           {/* Spacer to offset header height */}
 
-          <div className="relative" style={{
-            marginTop:"20px"
-          }}   >
+          <div className="relative  md:mt-[80px]"   >
             {children}
           </div>
 
