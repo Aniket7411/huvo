@@ -204,18 +204,17 @@ export default function WomenCollection() {
 
 
       {/* Filter Button for Small Screens */}
-      <div className="top-0 left-0 w-full bg-white shadow-md z-10 p-4 flex justify-between lg:hidden">
-        <h2 className="text-lg font-bold">Filter
-        </h2>
+      <div className="top-0 left-0 w-full bg-white shadow-md z-10 p-2 flex justify-between lg:hidden border border-gray-300 rounded-lg ring-1 ring-blue-300">
+        <h2 className="text-lg font-bold text-gray-800">Filter</h2>
 
         <button
           onClick={() => setFiltersVisible(!filtersVisible)}
-          className="text-blue-600 font-semibold focus:outline-none"
+          className="text-blue-600 font-semibold focus:outline-none px-3 py-2 border border-blue-600 rounded-lg hover:bg-blue-100 transition-colors duration-200"
         >
-          {filtersVisible ? <FaFilterCircleXmark size={25} />
-            : <CiFilter size={25} />}
+          {filtersVisible ? <FaFilterCircleXmark size={25} /> : <CiFilter size={25} />}
         </button>
       </div>
+
 
       {/* Filter Sidebar */}
 
