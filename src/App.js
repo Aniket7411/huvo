@@ -4,7 +4,6 @@ import Layout from "./components/layout";
 import Layoutadmin from "./components/layoutadmin/index.jsx";
 import Home from "./pages/home/index.jsx";
 import ProductDetails from "./pages/product-details/index.jsx";
-import MenCollection from "./pages/men/index.jsx";
 import WomenCollection from "./pages/women/index.jsx";
 import Collections from "./pages/collections/index.jsx";
 import CheckOut from "./pages/checkout/index.jsx";
@@ -63,6 +62,8 @@ import ContactUs from "./pages/contactus/index.jsx";
 import SellerProducts from "./pages/sellerproducts/index.jsx";
 import CategoryPage from "./pages/categorysearch/index.jsx";
 import OrderAndReturn from "./pages/orderandreturn/index.jsx";
+import CategorySlider from "./pages/categoryslider/index.jsx";
+import NewMenCollection from "./pages/newmen/index.jsx";
 
 function App() {
   return (
@@ -85,7 +86,7 @@ function App() {
             path="/test"
             element={
               <Layout>
-                <OrderAndReturn />
+                <CategorySlider />
               </Layout>
             }
           />
@@ -180,7 +181,7 @@ function App() {
             path="men-collection"
             element={
               <Layout>
-                <MenCollection />
+                <NewMenCollection />
               </Layout>
             }
           />
@@ -208,7 +209,7 @@ function App() {
 
         <Routes>
           <Route
-             path="/category_search/:group/:categoryId" 
+            path="/category_search/:category/:id"
             element={
               <Layout>
                 <CategoryPage />
@@ -251,7 +252,7 @@ function App() {
 
         <Routes>
           <Route
-            path="products_by_brand/:id"
+            path="products_by_brand"
             element={
               <Layout changeHeaderColor="true">
                 <ProductsByBrands />

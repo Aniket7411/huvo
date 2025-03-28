@@ -9,55 +9,19 @@ import Select from "react-dropdown-select";
 import { MdArrowOutward } from "react-icons/md";
 
 function ProductAddPage() {
-
   const options = [
-    {
-      id: 1,
-      name: 'Red'
-    },
-    {
-      id: 2,
-      name: 'Green'
-    },
-    {
-      id: 3,
-      name: 'Blue'
-    },
-    {
-      id: 4,
-      name: 'Yellow'
-    },
-    {
-      id: 5,
-      name: 'Pink'
-    },
-    {
-      id: 6,
-      name: 'Purple'
-    },
-    {
-      id: 7,
-      name: 'Orange'
-    },
-    {
-      id: 8,
-      name: 'Black'
-    },
-    {
-      id: 9,
-      name: 'White'
-    },
-    {
-      id: 10,
-      name: 'Grey'
-    },
-    {
-      id: 11,
-      name: 'Turquoise'
-    }
+    { id: 1, name: "Red", value: "red", colorCode: "#FF0000" },
+    { id: 2, name: "Green", value: "green", colorCode: "#008000" },
+    { id: 3, name: "Blue", value: "blue", colorCode: "#0000FF" },
+    { id: 4, name: "Yellow", value: "yellow", colorCode: "#FFFF00" },
+    { id: 5, name: "Pink", value: "pink", colorCode: "#FFC0CB" },
+    { id: 6, name: "Purple", value: "purple", colorCode: "#800080" },
+    { id: 7, name: "Orange", value: "orange", colorCode: "#FFA500" },
+    { id: 8, name: "Black", value: "black", colorCode: "#000000" },
+    { id: 9, name: "White", value: "white", colorCode: "#FFFFFF" },
+    { id: 10, name: "Grey", value: "grey", colorCode: "#808080" },
+    { id: 11, name: "Turquoise", value: "turquoise", colorCode: "#40E0D0" },
   ];
-
-
 
   const navigate = useNavigate();
   const {
@@ -225,13 +189,13 @@ function ProductAddPage() {
     newSizeWithStock[index].stock = e.target.value;
     setSizeWithStock(newSizeWithStock);
   };
-
-  const handleColorChange = (selectedOption, i) => {
+  const handleColorChange = (selectedColorCode, i) => {
     const newColorWithImages = [...colorWithImages];
-    newColorWithImages[i].colorCode = selectedOption.value;
+    newColorWithImages[i].colorCode = selectedColorCode; // Update colorCode based on selection
     setColorWithImages(newColorWithImages);
-    console.log(`Color changed for index ${i}: ${selectedOption.value}`);
+    console.log(`Color changed for index ${i}: ${selectedColorCode}`); // Log the selected color code
   };
+  
 
   return (
     <div className="container  sm:mx-auto my-2">
@@ -673,18 +637,20 @@ function ProductAddPage() {
                     >
                       {`Color-${i + 1}`}
                     </label>
-                    <div className="flex gap-3 my-2">
+                    <div className="flex  p-3 gap-3 my-2">
+
+                    <select
+  value={item.colorCode} // Bind the current colorCode value
+  onChange={(e) => handleColorChange(e.target.value, i)} // Pass the selected value and index
+>
+  {options.map((option) => (
+    <option key={option.id} value={option.colorCode}>
+      {option.name}
+    </option>
+  ))}
+</select>
 
 
-                      <Select
-                        options={options}
-                        key={i}
-                        labelField="name"
-                        valueField="id"
-                        value={options.find(option => option.value === item.colorCode)}
-                        onChange={(selectedOption) => handleColorChange(selectedOption, i)}
-
-                      />
 
                       <button
                         type="button"

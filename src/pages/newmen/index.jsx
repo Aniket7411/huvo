@@ -17,7 +17,7 @@ import { FaFilterCircleXmark } from "react-icons/fa6";
 import Brandslider from "../brands";
 
 
-export default function WomenCollection() {
+export default function NewMenCollection() {
   const [allCategories, setAllCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const { category, id } = useParams(); // Extract route params
@@ -61,7 +61,7 @@ export default function WomenCollection() {
       price,
       colors: selectedColors,
       searchTerm,
-      group: "women"
+      group: "men"
     }
 
     console.log(dataForFilter)
@@ -83,7 +83,7 @@ export default function WomenCollection() {
 
       const response = await HttpClient.get("/product",
         {
-          group: "women",
+          group: "men",
           category: "jeans",
         },
       );
@@ -140,7 +140,7 @@ export default function WomenCollection() {
 
   const getAllCategories = async () => {
     try {
-      const { categories } = await HttpClient.get("/category?group=women");
+      const { categories } = await HttpClient.get("/category?group=men");
       setAllCategories(categories);
 
       console.log("categoriescategories", categories)
@@ -181,17 +181,17 @@ export default function WomenCollection() {
   }, []);
 
 
-  const womenProducts = allProducts.filter((item) => item.group === "women").splice(0, 8);
+  const menProducts = allProducts.filter((item) => item.group === "men").splice(0, 8);
 
-  console.log("menProductsmenProducts", womenProducts)
-  console.log("searchGroupsearchGroupsearchGroup", searchGroup)
+  console.log("menProductsmenProducts", menProducts)
+  console.log("searchGroupsearchGroupsearchGroup",searchGroup)
 
 
   return (
     <div className="h-auto">
 
 
-      <div class="text-center mt-3">
+<div class="text-center mt-3">
         <h1 class="md:text-3xl text-lg  font-bold text-gray-800 mt-[60px] " >Men's Clothing</h1>
         <p className="font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg text-[#2581eb] mt-2">
           Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
@@ -221,107 +221,108 @@ export default function WomenCollection() {
 
 
       <div className="flex h-auto">
-        <div
-          style={{
-            maxHeight: '100vh',
-            overflowY: 'auto',
-          }}
-          className={`${filtersVisible ? "translate-x-0" : "-translate-x-full"
-            } lg:translate-x-0 fixed lg:static top-14 left-0 lg:w-1/4 bg-white shadow-md p-4 z-20 transition-transform duration-300`}
-        >
-          {/* Search Input */}
-          <div className="mb-4">
-            <input
-              type="text"
-              placeholder="Search for products..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label="Search products"
-            />
-          </div>
+      <div
+  style={{
+    maxHeight: '100vh',
+    overflowY: 'auto',
+  }}
+  className={`${
+    filtersVisible ? "translate-x-0" : "-translate-x-full"
+  } lg:translate-x-0 fixed lg:static top-14 left-0 lg:w-1/4 bg-white shadow-md p-4 z-20 transition-transform duration-300`}
+>
+  {/* Search Input */}
+  <div className="mb-4">
+    <input
+      type="text"
+      placeholder="Search for products..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      aria-label="Search products"
+    />
+  </div>
 
-          {/* Sorting Dropdown */}
-          <div className="mb-4">
-            <select
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label="Sort products"
-            >
-              <option value="">Sort By</option>
-              <option value="lowToHigh">Price: Low to High</option>
-              <option value="highToLow">Price: High to Low</option>
-            </select>
-          </div>
+  {/* Sorting Dropdown */}
+  <div className="mb-4">
+    <select
+      value={sortOption}
+      onChange={(e) => setSortOption(e.target.value)}
+      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      aria-label="Sort products"
+    >
+      <option value="">Sort By</option>
+      <option value="lowToHigh">Price: Low to High</option>
+      <option value="highToLow">Price: High to Low</option>
+    </select>
+  </div>
 
-          {/* Group Filter */}
-          <div className="mb-4">
-            <select
-              value={searchGroup}
-              onChange={(e) => setSearchGroup(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label="Filter by group"
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Kids">Kids</option>
-            </select>
-          </div>
+  {/* Group Filter */}
+  <div className="mb-4">
+    <select
+      value={searchGroup}
+      onChange={(e) => setSearchGroup(e.target.value)}
+      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      aria-label="Filter by group"
+    >
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Kids">Kids</option>
+    </select>
+  </div>
 
-          {/* Color Filter */}
-          <div className="mb-4">
-            <h3 className="font-semibold mb-2">Colors</h3>
-            {colors.map((color) => (
-              <label key={color} className="flex items-center mb-1">
-                <input
-                  type="checkbox"
-                  value={color}
-                  checked={selectedColors.includes(color)}
-                  onChange={() =>
-                    handleCheckboxChange(selectedColors, setSelectedColors, color)
-                  }
-                  className="mr-2"
-                />
-                {color}
-              </label>
-            ))}
-          </div>
+  {/* Color Filter */}
+  <div className="mb-4">
+    <h3 className="font-semibold mb-2">Colors</h3>
+    {colors.map((color) => (
+      <label key={color} className="flex items-center mb-1">
+        <input
+          type="checkbox"
+          value={color}
+          checked={selectedColors.includes(color)}
+          onChange={() =>
+            handleCheckboxChange(selectedColors, setSelectedColors, color)
+          }
+          className="mr-2"
+        />
+        {color}
+      </label>
+    ))}
+  </div>
 
-          {/* Brand Filter */}
-          <div className="mb-4">
-            <h3 className="font-semibold mb-2">Brands</h3>
-            {allBrands.map((brand) => (
-              <label key={brand.id} className="flex items-center mb-2">
-                <input
-                  type="checkbox"
-                  value={brand.id}
-                  checked={selectedBrands.includes(brand.id)}
-                  onChange={() =>
-                    handleCheckboxChange(selectedBrands, setSelectedBrands, brand.id)
-                  }
-                  className="mr-2"
-                />
-                <img
-                  src={brand.image}
-                  alt={brand.brandName}
-                  className="w-8 h-8 object-cover rounded-full mr-2"
-                />
-                <span>{brand.brandName}</span>
-              </label>
-            ))}
-          </div>
+  {/* Brand Filter */}
+  <div className="mb-4">
+    <h3 className="font-semibold mb-2">Brands</h3>
+    {allBrands.map((brand) => (
+      <label key={brand.id} className="flex items-center mb-2">
+        <input
+          type="checkbox"
+          value={brand.id}
+          checked={selectedBrands.includes(brand.id)}
+          onChange={() =>
+            handleCheckboxChange(selectedBrands, setSelectedBrands, brand.id)
+          }
+          className="mr-2"
+        />
+        <img
+          src={brand.image}
+          alt={brand.brandName}
+          className="w-8 h-8 object-cover rounded-full mr-2"
+        />
+        <span>{brand.brandName}</span>
+      </label>
+    ))}
+  </div>
 
-          {/* Apply Filters Button */}
-          <div className="mb-[30px]">
-            <button
-              onClick={handleSearch}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              Apply Filters
-            </button>
-          </div>
-        </div>
+  {/* Apply Filters Button */}
+  <div className="mb-[30px]">
+    <button
+      onClick={handleSearch}
+      className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      Apply Filters
+    </button>
+  </div>
+</div>
 
         <div className="lg:w-3/4 w-full mx-auto">
 
@@ -332,7 +333,7 @@ export default function WomenCollection() {
 
           {/* Desktop Grid Section */}
           <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
-            <Brandslider />
+          <Brandslider/>
 
 
             {searchTerm !== "" ? (
@@ -347,7 +348,7 @@ export default function WomenCollection() {
 
 
             <div className="hidden md:grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4">
-              {womenProducts.map((eachProduct, i) => {
+              {menProducts.map((eachProduct, i) => {
                 const finalPrice = eachProduct.price - eachProduct.discount;
                 return (
                   <div
@@ -428,7 +429,7 @@ export default function WomenCollection() {
 
             {/* Mobile Grid Section */}
             <div className="md:hidden grid grid-cols-2 gap-3 p-3">
-              {womenProducts.map((each, index) => {
+              {menProducts.map((each, index) => {
                 const finalPrice = each.price - each.discount;
                 return (
                   <div

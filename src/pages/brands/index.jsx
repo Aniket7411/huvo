@@ -74,11 +74,15 @@ const Brandslider = () => {
   }
 
   return (
-    <div className="bg-gray-100 py-2 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gray-100 py-2   sm:px-5 ">
+      
+      <h1 className="font-bold font-inter px-3 py-1 text-gray-500">
+      Explore by Brands
+              </h1>
       <Slider {...settings}>
         {topBrands.map((brand) => (
-          <div key={brand.id} className="px-2">
-            <div className="flex flex-col items-center p-3 bg-white border  border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300">
+          <div key={brand.id} className="">
+            <div className="flex flex-col items-center p-2 bg-white border  border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300">
           
               <img
                 src={brand.image}

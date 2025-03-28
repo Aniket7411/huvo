@@ -22,6 +22,7 @@ import ProductCarouselmd from "../productcarousel";
 import MobileProductCarousel from "../MobileProduct";
 import Loader from "../../components/loader";
 import { CiSearch } from "react-icons/ci";
+import CategorySlider from "../categoryslider";
 
 
 const testimonials = [
@@ -63,7 +64,6 @@ export default function Home() {
         logo: eachBrand.logo,
         brandName: eachBrand.name,
         onGoingOffer: eachBrand.onGoingOffer
-
       }))
       setTopBrands(formattedBrands)
 
@@ -76,7 +76,7 @@ export default function Home() {
     setIsLoading(true)
 
     try {
-      const {categories}= await HttpClient.get("/category");
+      const { categories } = await HttpClient.get("/category");
       console.log("setAllCategories", categories)
 
 
@@ -226,95 +226,9 @@ export default function Home() {
 
 
 
-            {allCategories.length ? (
-              <Swiper
-                loop={true}
-                className="mySwiper"
-                modules={[Autoplay, Navigation]}
-                autoplay={{
-                  delay: 3000,
-                  disableOnInteraction: false,
-                }}
-                navigation={{
-                  nextEl: ".swiper-button-next",
-                  prevEl: ".swiper-button-prev",
-                }}
-                breakpoints={{
-                  0: {
-                    slidesPerView: 3,
-                    spaceBetween: 5,
-                  },
-                  500: {
-                    slidesPerView: 4,
-                    spaceBetween: 10,
-                  },
-                  768: {
-                    slidesPerView: 6,
-                    spaceBetween: 10,
-                  },
-                  1024: {
-                    slidesPerView: 8,
-                    spaceBetween: 10,
-                  },
-                  1400: {
-                    slidesPerView: 10,
-                    spaceBetween: 8,
-                  },
-                  2000: {
-                    slidesPerView: 12,
-                    spaceBetween: 6,
-                  },
-                }}
-              >
-               {allCategories.map((category) => (
-  <SwiperSlide key={category.id}>
-<Link
-  to={{
-    pathname: `/category_search/${category.group}/${category.id}`,
-    state: {
-      group: category.group,
-      categoryId: category.id,
-    },
-  }}
-  className="flex flex-col items-center"
->
-      <div className="flex flex-col items-center">
-        {/* Image */}
-        <img
-          src={category.image || "https://via.placeholder.com/300"}
-          alt={category.description || "Product Image"}
-          className="h-[55px] w-[55px] md:h-[90px] md:w-[90px] object-cover rounded-full mb-2 shadow-md"
-        />
-
-        {/* Description */}
-        <p className="text-sm font-inter lg:text-lg font-medium text-center text-[#2E3C7E]">
-          {category.description || "No Description"}
-        </p>
-      </div>
-    </Link>
-  </SwiperSlide>
-))}
-
-                {/* Navigation Buttons */}
-                {/* <button
-              className="swiper-button-prev absolute top-1/2 left-2 transform -translate-y-1/2  text-white p-2 rounded-full "
-              style={{ zIndex: 10 }}
-            >
-
-            </button> */}
-                {/* <button
-              className="swiper-button-next absolute top-1/2 right-2 transform -translate-y-1/2  text-white p-2 rounded-full"
-              style={{ zIndex: 10 }}
-            >
-
-            </button> */}
-              </Swiper>
-            ) : (
-              <h2 className="font-[Quicksand] font-medium text-center text-2xl text-[#011F4B]">
-                No Categories Available
-              </h2>
-            )}
           </section>
+          <CategorySlider />
+
           <hr className="my-2" />
 
 
