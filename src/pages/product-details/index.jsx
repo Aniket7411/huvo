@@ -9,12 +9,15 @@ import { TbJewishStarFilled, TbStarFilled } from "react-icons/tb";
 import Modal from "react-modal";
 import { CiDeliveryTruck, CiStar } from "react-icons/ci";
 import SimilarProducts from "./similarcategoryproducts";
+import ProductImages from "../productimages";
+import { IoClose } from "react-icons/io5";
 // import { CartContext } from "../../usecontext1/cartcontext";
 
 
 
 export default function ProductDetails() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [isSizeModal, setIsSizeModal] = useState(false)
 
   const openPaymentModal = () => {
     setIsPaymentModalOpen(true);
@@ -61,41 +64,12 @@ export default function ProductDetails() {
     try {
       const data = { productId: id };
       const response = await HttpClient.get("/product/productId", data);
+      console.log("responseresponseresponse", response)
 
-      console.log("formattedRecommendedProducts", response.product)
       setProductDetails(response.product)
 
 
 
-
-
-      const formattedRecommendedProducts = response.recommendProduct.map((each) => ({
-        colors: each?.colors,
-        bannerImage: each?.bannerImage,
-        brandId: each?.brand,
-        categoryId: each?.category,
-        productDescription: each?.category,
-        discount: each?.discount,
-        group: each?.group,
-        productDetails: each?.productDetails,
-        materialAndCare: each?.materialAndCare,
-        productName: each?.name,
-        price: each?.price,
-        sellerId: each?.seller
-      }))
-
-
-      console.log("formattedRecommendedProducts", formattedRecommendedProducts)
-
-      setRecommendedProducts(formattedRecommendedProducts)
-
-
-
-
-
-
-
-      console.log("ProductdProductdProductd", productDetails)
 
 
 
@@ -148,24 +122,27 @@ export default function ProductDetails() {
 
 
   const addToCart = async (productDetails) => {
-    const { productId } = productDetails
-    const dataForCart = {
-      productId: productId,
-      quantity: quantity,
-      size: selectedSize,
-      color: "red"
-    }
+
+
+
+    console.log("dataForCartdataForCart", productDetails)
+
+
+    console.log("dataForCartdataForCart", JSON.stringify(productDetails))
+    const parsedProductDetails = JSON.parse(JSON.stringify(productDetails));
+    console.log("Parsed Product Details:", parsedProductDetails);
+
 
     // addToCartContext(dataForCart);
 
-    try {
-      const response = await HttpClient.post(`/cart/`, dataForCart)
-      toast.success(response.message);
-      getCartData();
-    } catch (error) {
-      console.log(error)
+    // try {
+    //   const response = await HttpClient.post(`/cart/`, dataForCart)
+    //   toast.success(response.message);
+    //   getCartData();
+    // } catch (error) {
+    //   console.log(error)
 
-    }
+    // }
   };
 
   // const removeProductFromCart = (productId) => {
@@ -264,372 +241,417 @@ export default function ProductDetails() {
 
   console.log("productDetailsproductDetailsproductDetails", productDetails)
   return (
-    <div className="px-3 mt-10 md:p-10">
-      <div className="flex flex-wrap gap-2 md:gap-16">
-        <div className="flex-1 min-w-[300px] max-w-[350px]">
-          <div className="p-2 rounded-md border border-gray-300 mt-5">
-            <img
-              className="h-[240px] md:h-[400px] w-full object-cover rounded-md"
-              src={productDetails?.bannerImage}
-              alt="Product"
-            />
-          </div>
-        </div>
-
-        <div className="flex-1">
-          <div className="flex items-center gap-2 ">
-            <h1 className="text-2xl  font-inter md:text-xl lg:text-2xl font-semibold text-[#2563eb] ">
-              Product Name: {productDetails?.name}
-            </h1>
-
-          </div>
-
-          <div className="flex flex-col gap-2 mt-3">
-            <div className="flex flex-col sm:flex-row sm:gap-4 gap-2">
-              <div className="flex gap-2 items-center">
-                <div className="bg-[#338E3C] text-white px-2 py-1 flex items-center rounded-md gap-1">
-                  <p className="text-sm font-bold">4.6</p>
-                  <TbJewishStarFilled className="text-sm" />
-                </div>
-                <button
-                  onClick={() => {
-                    scrollToReview();
-                    getReviews();
-                  }}
-                  className="text-[#717478] font-semibold text-sm hover:underline"
-                >
-                  Product Rating & Reviews
-                </button>
-              </div>
-
-              <div className="flex gap-2 items-center">
-                <div className="bg-[#FF9800] text-white px-2 py-1 flex items-center rounded-md gap-1">
-                  <p className="text-sm font-bold">{productDetails?.brand?.rating || "4.5"}</p>
-                  <TbJewishStarFilled className="text-sm" />
-                </div>
-                <p className="text-[#717478] font-semibold text-sm">Brand Rating</p>
-              </div>
-            </div>
-
-            <div>
-              <p className="text-lg font-medium text-gray-600">
-                Brand:{" "}
-                <span className="text-gray-800 font-semibold">
-                  {productDetails?.brand?.name || "Unknown"}
-                </span>
-              </p>
-            </div>
-          </div>
+    <>
 
 
-          <p className="text-gray-700 mb-2">Product description: {productDetails?.productDetails}</p>
+      {
+        loading ? "aniket" :
+          <div className="px-3 mt-10 md:mt-5 md:p-10">
+            <div className="flex flex-wrap gap-2 md:gap-16">
+              <div className="flex-1 min-w-[300px] max-w-[350px]">
+                <div className="p-1 rounded-md border border-gray-300 mt-5">
+                  <ProductImages images={productDetails?.colors} />
 
-          <div className="flex flex-wrap gap-2 md:gap-10 items-center ">
-
-            <div className="">
-
-
-              <p className="flex items-center text-lg font-semibold text-gray-800 ">
-                <span className="line-through text-gray-500 mr-2">
-                  <PiCurrencyInr className="mr-1" /> {productDetails?.price}
-                </span>
-                <span className="text-green-500">
-                  <PiCurrencyInr className="mr-1" />
-                  {productDetails?.price - productDetails?.discount}
-                </span>
-                <span className="text-sm text-gray-500 ml-2">
-                  (<PiCurrencyInr /> {productDetails?.discount})
-                </span>
-              </p>
-
-              <p className="text-gray-600 font-medium ">Material & Care:</p>
-              <p className="text-gray-700">{productDetails?.materialAndCare}</p>
-              <div className="flex gap-4">
-                <div>
-                  <p className="text-gray-600 font-medium ">Sizes Available:</p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {productDetails?.sizes?.length > 0 ? (
-                      productDetails?.sizes.map((sizeObj, index) => (
-                        <span
-                          key={index}
-                          onClick={() => setSelectedSize(sizeObj.size)}
-                          className={`px-3 py-1 border border-gray-300 rounded-md bg-blue-200 text-sm font-medium cursor-pointer ${selectedSize === sizeObj.size ? 'bg-green-500 text-white' : ''
-                            }`}
-                          role="button"
-                          tabIndex={0}
-                          aria-label={`Select size ${sizeObj.size}`}
-                        >
-                          {sizeObj.size}
-                        </span>
-                      ))
-                    ) : (
-                      <p className="text-gray-500">No sizes available</p>
-                    )}
-                  </div>
                 </div>
               </div>
 
-            </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 ">
+                  <h1 className="text-2xl  font-inter md:text-xl lg:text-2xl font-semibold text-[#2563eb] ">
+                    Product Name: {productDetails?.name}
+                  </h1>
 
-
-
-
-            <p className="mb-1 mt-1 font-semibold">
-              Returnable : {productDetails?.isReturnable ? "Yes" : "No"}
-            </p>
-
-            {/* {
-              tokenIfLoggedIn === null ?
-
-                <div className="flex gap-2 items-center">
-                  <button
-                    onClick={() => {
-                      if (isInCart) {
-                        removeFromCartContext(productDetails?.productId);
-                        toast.error("Removed from cart");
-                      } else {
-                        addToCartContext({ ...productDetails, selectedSize, quantity });
-                        toast.success("Added to cart");
-                      }
-                    }}
-                    className={`px-2 py-1 rounded-md pointer text-md transition ${isInCart ? "bg-[#011F4B] text-white" : "bg-[#011F4B] text-white"
-                      }`}
-                  >
-                    {isInCart ? "Remove from cart" : "Add to Cart"}
-                  </button>
-
-
-
-
-                  <button key={productDetails?._id}
-                    onClick={() => addToWishlist(productDetails, selectedSize, quantity)}
-
-                    className="px-2 py-1 bg-gray-200 text-gray-800 font-semibold rounded-md hover:bg-gray-300 transition"
-                  >
-                    Add to Wishlist
-                  </button>
-
-
-                </div> :
-                <button
-                  key={productDetails?.productId}
-                  onClick={() => addToCart(productDetails)}
-                  className="px-2 py-1 bg-[#011F4B] text-white  rounded-lg shadow-md hover:bg-bg-[#011F4B] transition duration-200"
-                >
-                  Add to Cart
-                </button>
-
-            } */}
-
-
-
-            <button
-              key={productDetails?.productId}
-              onClick={() => addToCart(productDetails)}
-              className="px-2 py-1 bg-[#011F4B] text-white  rounded-lg shadow-md hover:bg-bg-[#011F4B] transition duration-200"
-            >
-              Add to Cart
-            </button>
-
-
-
-
-
-
-            {/* 
-                <button key={productDetails?._id}
-                  onClick={() => addToWishlist(productDetails, selectedSize, quantity)} // Pass productDetails, selectedSize, and quantity
-
-                  className="px-2 py-1 bg-gray-200 text-gray-800 font-semibold rounded-md hover:bg-gray-300 transition"
-                >
-                  Add to Wishlist
-                </button> */}
-
-
-
-
-
-
-            <div className="flex items-center mt-1 gap-2">
-              <CiDeliveryTruck size={30} />
-              <p className="font-semibold items-end">Free delivery</p>
-
-            </div>
-
-
-
-          </div>
-          <p className="text-[#2562eb] mt-2 font-semibold">
-            <p onClick={openPaymentModal} className="hover:underline cursor-pointer">
-              View Payment Details
-            </p>
-          </p>
-
-
-
-          <Modal
-            isOpen={isPaymentModalOpen}
-            onRequestClose={closePaymentModal}
-            contentLabel="Payment Methods"
-            className="bg-white h-auto rounded-2xl shadow-xl max-w-md mx-auto p-6 relative"
-            overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-          >
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              Select a Payment Method
-            </h2>
-            <ul className="space-y-3">
-              <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
-                Credit/Debit Card
-              </li>
-              <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
-                Net Banking
-              </li>
-              <li className="text-gray-600 hover:text-gray-800 cursor-pointer">UPI</li>
-              <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
-                Cash on Delivery
-              </li>
-              <li className="text-gray-600 hover:text-gray-800 cursor-pointer">PayPal</li>
-            </ul>
-            <button
-              onClick={closePaymentModal}
-              className="mt-6 w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all"
-            >
-              Close
-            </button>
-          </Modal>
-
-
-
-
-          <section
-            id="review"
-            className="h-auto p-2 bg-gray-100 rounded-md"
-            style={{ scrollMarginTop: '100px' }}
-          >
-            <div>
-              <div className="flex justify-between">
-                <h2 className="text-md md:text-2xl font-semibold text-[#000]">Ratings & Reviews</h2>
-                <button
-                  onClick={openModal}
-                  className="bg-[#011F4B] px-2 py-1 text-md md:text-2xl rounded-md text-[#fff]"
-                >
-                  Rate Product
-                </button>
-              </div>
-              {reviewLoading ? (
-                <div className="flex justify-center">
-                  <Oval height={50} width={50} color="#4A90E2" visible={true} />
                 </div>
-              ) : allReviews.length === 0 ? (
-                <div className="text-center text-gray-500 mt-4">
-                  <p>No reviews added yet.</p>
-                </div>
-              ) : (
-                allReviews.map((review) => (
-                  <div key={review.id} className="mt-4 border-b border-gray-200 pb-4">
-                    <p className="font-bold">{review.userName}</p>
 
-                    <div className="flex items-center">
-                      {Array.from({ length: 5 }, (_, index) => {
-                        const star = index + 1;
-                        return star <= review.rating ? (
-                          <TbStarFilled key={index} className="text-yellow-400" />
-                        ) : (
-                          <CiStar key={index} className="text-gray-400" />
-                        );
-                      })}
+                <div className="flex flex-col gap-2 mt-3">
+                  <div className="flex flex-col sm:flex-row sm:gap-4 gap-2">
+                    <div className="flex gap-2 items-center">
+                      <div className="bg-[#338E3C] text-white px-2 py-1 flex items-center rounded-md gap-1">
+                        <p className="text-sm font-bold">4.6</p>
+                        <TbJewishStarFilled className="text-sm" />
+                      </div>
+                      <button
+                        onClick={() => {
+                          scrollToReview();
+                          getReviews();
+                        }}
+                        className="text-[#717478] font-semibold text-sm hover:underline"
+                      >
+                        Product Rating & Reviews
+                      </button>
                     </div>
 
-                    <p className="mt-2 text-gray-700">{review.description}</p>
+                    <div className="flex gap-2 items-center">
+                      <div className="bg-[#FF9800] text-white px-2 py-1 flex items-center rounded-md gap-1">
+                        <p className="text-sm font-bold">{productDetails?.brand?.rating || "4.5"}</p>
+                        <TbJewishStarFilled className="text-sm" />
+                      </div>
+                      <p className="text-[#717478] font-semibold text-sm">Brand Rating</p>
+                    </div>
                   </div>
-                ))
-              )}
+
+                  <div>
+                    <p className="text-lg font-medium text-gray-600">
+                      Brand:{" "}
+                      <span className="text-gray-800 font-semibold">
+                        {productDetails?.brand?.name || "Unknown"}
+                      </span>
+                    </p>
+                  </div>
+                </div>
 
 
-
-            </div>
-
+                <p className="text-gray-700 mb-1">Product description: {productDetails?.productDetails}</p>
 
 
+                {/* Product Info Container */}
+                <div className="bg-white rounded-lg   w-full">
+                  {/* Pricing Section */}
+                  <p className="flex flex-wrap items-center text-lg font-semibold text-gray-800">
+                    {/* Original Price */}
+                    <span className="line-through text-gray-500 mr-2 flex items-center">
+                      <PiCurrencyInr className="mr-1" /> {productDetails?.price}
+                    </span>
 
-          </section>
+                    {/* Discounted Price */}
+                    <span className="text-green-500 flex items-center text-xl font-bold">
+                      <PiCurrencyInr className="mr-1" />
+                      {productDetails?.price - productDetails?.discount}
+                    </span>
 
-          <Modal
-            isOpen={isModalOpen}
-            onRequestClose={closeModal}
-            contentLabel="Write and Share"
-            style={{
-              content: {
-                width: "50%",
-                margin: "auto",
-                height: "300px",
-                padding: "20px",
-                borderRadius: "10px",
-                backgroundColor: "#f9f9f9",
-              },
-            }}
-          >
-            {/* Modal Header */}
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="font-semibold text-lg">Write and Share</h2>
-              <button
-                className="font-bold text-red-500 text-lg"
-                onClick={closeModal}
-              >
-                X
-              </button>
-            </div>
+                    {/* Discount Amount */}
+                    <span className="text-sm text-gray-500 ml-2 flex items-center"> -
+                      (<PiCurrencyInr className="mr-1" />{productDetails?.discount})
+                    </span>
+                  </p>
 
-            {/* Review Input */}
-            <textarea
-              placeholder="Write your review here..."
-              className="p-2 rounded-md w-full mb-4 border border-gray-300"
-              rows={4}
-              style={{ resize: "none" }}
-              value={description}
-              onChange={(e) => {
-                setDescription(e.target.value)
-              }}
-            />
+                  {/* Material & Care Section */}
+                  <p className="text-gray-600 font-medium mt-1">Material & Care:</p>
+                  <p className="text-gray-700">{productDetails?.materialAndCare}</p>
 
-            {/* Star Rating */}
-            <div className="flex items-center gap-2">
-              {[1, 2, 3, 4, 5].map((star, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleStarClick(star)}
-                  className="text-2xl"
+                  {/* Returnable Info */}
+                  <p className="mb-1 mt-1 font-semibold text-gray-800">
+                    Returnable:{" "}
+                    <span
+                      className={`font-bold ${productDetails?.isReturnable ? "text-green-600" : "text-red-600"
+                        }`}
+                    >
+                      {productDetails?.isReturnable ? "Yes" : "No"}
+                    </span>
+                  </p>
+
+                  {/* Sizes Section */}
+                  <div className="mt-1 mb-1">
+                    <p className="text-gray-600 font-medium">Sizes Available: <span onClick={()=> setIsSizeModal(true)} className="text-blue-500 text-lg underline cursor-pointer ">Size Chart</span></p>
+                    <div className="flex flex-wrap gap-3 mt-1">
+                      {productDetails?.sizes?.length > 0 ? (
+                        productDetails.sizes.map((sizeObj, index) => (
+                          <span
+                            key={index}
+                            onClick={() => setSelectedSize(sizeObj.size)}
+                            className={`px-5 py-2 border rounded-md text-sm font-medium cursor-pointer transition-all duration-200 shadow-sm
+                    ${selectedSize === sizeObj.size
+                                ? "bg-green-500 text-white border-green-600 shadow-md"
+                                : "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-200 hover:scale-105"
+                              }`}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={`Select size ${sizeObj.size}`}
+                          >
+                            {sizeObj.size}
+                          </span>
+                        ))
+                      ) : (
+                        <p className="text-gray-500">No sizes available</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <Modal
+                  isOpen={isSizeModal}
+                  className="fixed inset-0 flex items-center justify-center p-4"
+                  overlayClassName="fixed inset-0 bg-black bg-opacity-50"
                 >
-                  {star <= rating ? (
-                    <TbStarFilled className="text-yellow-400" />
-                  ) : (
-                    <CiStar className="text-gray-400" />
-                  )}
-                </button>
-              ))}
+                  <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-5 relative">
+                    {/* Close Button */}
+                    <button
+                    onClick={()=> setIsSizeModal(false)}
+                      className="absolute top-3 right-3 text-gray-600 hover:text-gray-900"
+                    >
+                      <IoClose size={24} />
+                    </button>
+
+                    {/* Title */}
+                    <h2 className="text-xl font-semibold text-center text-gray-800 mb-4">
+                      Size Chart
+                    </h2>
+
+                    {/* Size Chart Table */}
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse border border-gray-300">
+                        <thead>
+                          <tr className="bg-gray-100">
+                            <th className="border border-gray-300 px-4 py-2">Size</th>
+                            <th className="border border-gray-300 px-4 py-2">Chest (in)</th>
+                            <th className="border border-gray-300 px-4 py-2">Waist (in)</th>
+                            <th className="border border-gray-300 px-4 py-2">Hip (in)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {[
+                            { size: "S", chest: "34-36", waist: "28-30", hip: "34-36" },
+                            { size: "M", chest: "38-40", waist: "32-34", hip: "38-40" },
+                            { size: "L", chest: "42-44", waist: "36-38", hip: "42-44" },
+                            { size: "XL", chest: "46-48", waist: "40-42", hip: "46-48" },
+                          ].map((row, index) => (
+                            <tr key={index} className="text-center">
+                              <td className="border border-gray-300 px-4 py-2">
+                                {row.size}
+                              </td>
+                              <td className="border border-gray-300 px-4 py-2">
+                                {row.chest}
+                              </td>
+                              <td className="border border-gray-300 px-4 py-2">
+                                {row.waist}
+                              </td>
+                              <td className="border border-gray-300 px-4 py-2">{row.hip}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Close Button */}
+                    <div className="flex justify-center mt-4">
+                      <button
+                        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                        onClick={()=> setIsSizeModal(false)}
+
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
+
+                {/* Buttons & Delivery Section */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex mt-2 flex-wrap items-center gap-2">
+                    {/* Add to Wishlist Button */}
+
+
+                    <button
+                      key={productDetails?.productId}
+                      onClick={() => addToWishlist(productDetails)}
+                      className="px-3 py-1 bg-[#011F4B] text-white font-semibold rounded-lg shadow-md hover:bg-[#022C6B] transition-all duration-200 transform hover:scale-105"
+                    >
+                      Add to Wishlist
+                    </button>
+
+                    {/* Add to Cart Button */}
+
+                    <button
+                      key={productDetails?.productId}
+                      onClick={() => addToCart(productDetails)}
+                      className="px-3 py-1 bg-[#011F4B] text-white font-semibold rounded-lg shadow-md hover:bg-[#022C6B] transition-all duration-200 transform hover:scale-105"
+                    >
+                      Add to Cart
+                    </button>
+
+
+                  </div>
+
+                  {/* Free Delivery Info */}
+                  <div className="flex items-center gap-2 mt-1 text-gray-800">
+                    <CiDeliveryTruck size={30} className="text-gray-600" />
+                    <p className="font-semibold">Free delivery</p>
+                  </div>
+                </div>
+
+                <p className="text-[#2562eb] mt-1 font-semibold">
+                  <p onClick={openPaymentModal} className="hover:underline cursor-pointer">
+                    View Payment Details
+                  </p>
+                </p>
+
+
+
+                <Modal
+                  isOpen={isPaymentModalOpen}
+                  onRequestClose={closePaymentModal}
+                  contentLabel="Payment Methods"
+                  className="bg-white h-auto rounded-2xl shadow-xl max-w-md mx-auto p-6 relative"
+                  overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+                >
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                    Select a Payment Method
+                  </h2>
+                  <ul className="space-y-3">
+                    <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
+                      Credit/Debit Card
+                    </li>
+                    <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
+                      Net Banking
+                    </li>
+                    <li className="text-gray-600 hover:text-gray-800 cursor-pointer">UPI</li>
+                    <li className="text-gray-600 hover:text-gray-800 cursor-pointer">
+                      Cash on Delivery
+                    </li>
+                    <li className="text-gray-600 hover:text-gray-800 cursor-pointer">PayPal</li>
+                  </ul>
+                  <button
+                    onClick={closePaymentModal}
+                    className="mt-6 w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all"
+                  >
+                    Close
+                  </button>
+                </Modal>
+
+
+
+                <section
+                  id="review"
+                  className="h-auto p-4 md:p-6 bg-gray-100 rounded-lg shadow-sm"
+                  style={{ scrollMarginTop: '100px' }}
+                >
+                  <div>
+                    {/* Header Section */}
+                    <div className="flex justify-between items-center border-b pb-3 border-gray-300">
+                      <h2 className="text-lg md:text-2xl font-semibold text-gray-900">
+                        Ratings & Reviews
+                      </h2>
+                      <button
+                        onClick={openModal}
+                        className="bg-[#011F4B] px-3 py-2 text-sm md:text-lg font-semibold rounded-md text-white shadow-md 
+                   hover:bg-[#022C6B] transition-all duration-200 transform hover:scale-105"
+                      >
+                        Rate Product
+                      </button>
+                    </div>
+
+                    {/* Loading Indicator */}
+                    {reviewLoading ? (
+                      <div className="flex justify-center mt-6">
+                        <Oval height={50} width={50} color="#4A90E2" visible={true} />
+                      </div>
+                    ) : allReviews.length === 0 ? (
+                      <div className="text-center text-gray-500 mt-6">
+                        <p className="text-lg">No reviews added yet.</p>
+                      </div>
+                    ) : (
+                      <div className="mt-4">
+                        {allReviews.map((review) => (
+                          <div
+                            key={review.id}
+                            className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 mb-4"
+                          >
+                            {/* Reviewer Name */}
+                            <p className="font-bold text-gray-900">{review.userName}</p>
+
+                            {/* Rating Stars */}
+                            <div className="flex items-center mt-1">
+                              {Array.from({ length: 5 }, (_, index) => {
+                                const star = index + 1;
+                                return star <= review.rating ? (
+                                  <TbStarFilled key={index} className="text-yellow-400 text-lg" />
+                                ) : (
+                                  <CiStar key={index} className="text-gray-400 text-lg" />
+                                );
+                              })}
+                            </div>
+
+                            {/* Review Description */}
+                            <p className="mt-2 text-gray-700">{review.description}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </section>
+
+
+                <Modal
+                  isOpen={isModalOpen}
+                  onRequestClose={closeModal}
+                  contentLabel="Write and Share"
+                  style={{
+                    content: {
+                      width: "50%",
+                      margin: "auto",
+                      height: "300px",
+                      padding: "20px",
+                      borderRadius: "10px",
+                      backgroundColor: "#f9f9f9",
+                    },
+                  }}
+                >
+                  {/* Modal Header */}
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="font-semibold text-lg">Write and Share</h2>
+                    <button
+                      className="font-bold text-red-500 text-lg"
+                      onClick={closeModal}
+                    >
+                      X
+                    </button>
+                  </div>
+
+                  {/* Review Input */}
+                  <textarea
+                    placeholder="Write your review here..."
+                    className="p-2 rounded-md w-full mb-4 border border-gray-300"
+                    rows={4}
+                    style={{ resize: "none" }}
+                    value={description}
+                    onChange={(e) => {
+                      setDescription(e.target.value)
+                    }}
+                  />
+
+                  {/* Star Rating */}
+                  <div className="flex items-center gap-2">
+                    {[1, 2, 3, 4, 5].map((star, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleStarClick(star)}
+                        className="text-2xl"
+                      >
+                        {star <= rating ? (
+                          <TbStarFilled className="text-yellow-400" />
+                        ) : (
+                          <CiStar className="text-gray-400" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="mt-4">
+                    <button key={productDetails?._id}
+                      onClick={() => {
+                        submitReview(productDetails?._id);
+                        closeModal();
+                      }}
+                      className="p-2 bg-blue-500 text-white rounded-md w-full"
+                    >
+                      Submit Review
+                    </button>
+
+                  </div>
+                </Modal>
+              </div>
+
+
+
             </div>
+            <hr className="my-2" />
 
-            {/* Submit Button */}
-            <div className="mt-4">
-              <button key={productDetails?._id}
-                onClick={() => {
-                  submitReview(productDetails?._id);
-                  closeModal();
-                }}
-                className="p-2 bg-blue-500 text-white rounded-md w-full"
-              >
-                Submit Review
-              </button>
+          </div>
+      }
 
-            </div>
-          </Modal>
-        </div>
+    </>
 
 
-
-      </div>
-      <hr className="my-2" />
-
-    </div>
   );
 }
