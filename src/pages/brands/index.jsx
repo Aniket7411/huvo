@@ -78,7 +78,7 @@ const BrandSlider = () => {
         {brands.map((brand) => (
           <Link to={`/brand_products/${brand.uniqueId}`} key={brand.uniqueId}>
             <div className="px-1 sm:px-2">
-              <div className="flex flex-col items-center p-1 sm:p-2 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300">
+              <div className="flex  items-center p-1 sm:p-2 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300">
                 <div className="relative">
                   <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-tr from-blue-300 to-blue-500 p-1">
                     <img

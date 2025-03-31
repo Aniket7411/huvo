@@ -9,7 +9,7 @@ import { TbJewishStarFilled, TbStarFilled } from "react-icons/tb";
 import Modal from "react-modal";
 import { CiDeliveryTruck, CiStar } from "react-icons/ci";
 import SimilarProducts from "./similarcategoryproducts";
-import { CartContext } from "../../usecontext1/cartcontext";
+// import { CartContext } from "../../usecontext1/cartcontext";
 
 
 
@@ -29,7 +29,7 @@ export default function ProductDetails() {
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState({});
   const [loading, setLoading] = useState(false);
-  const { cart, addToCartContext, removeFromCartContext } = useContext(CartContext);
+  // const { cart, addToCartContext, removeFromCartContext } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1); // Track the quantity, default to 1
   const [selectedSize, setSelectedSize] = useState(""); // Track selected size
   const [reviews, addReviews] = useState()
@@ -62,29 +62,30 @@ export default function ProductDetails() {
       const data = { productId: id };
       const response = await HttpClient.get("/product/productId", data);
 
-      console.log("formattedRecommendedProducts",response.recommendProduct)
+      console.log("formattedRecommendedProducts", response.product)
+      setProductDetails(response.product)
 
 
 
 
 
       const formattedRecommendedProducts = response.recommendProduct.map((each) => ({
-        colors : each?.colors,
-        bannerImage: each.bannerImage,
-        brandId: each.brand,
-        categoryId: each.category,
-        productDescription: each.category,
-        discount: each.discount,
-        group: each.group,
-        productDetails: each.productDetails,
-        materialAndCare: each.materialAndCare,
-        productName: each.name,
-        price: each.price,
-        sellerId: each.seller
+        colors: each?.colors,
+        bannerImage: each?.bannerImage,
+        brandId: each?.brand,
+        categoryId: each?.category,
+        productDescription: each?.category,
+        discount: each?.discount,
+        group: each?.group,
+        productDetails: each?.productDetails,
+        materialAndCare: each?.materialAndCare,
+        productName: each?.name,
+        price: each?.price,
+        sellerId: each?.seller
       }))
 
 
-      console.log("formattedRecommendedProducts",formattedRecommendedProducts)
+      console.log("formattedRecommendedProducts", formattedRecommendedProducts)
 
       setRecommendedProducts(formattedRecommendedProducts)
 
@@ -93,11 +94,10 @@ export default function ProductDetails() {
 
 
 
-      setProductDetails(formattedRecommendedProducts[0]);
 
-      console.log("Productd",productDetails)
+      console.log("ProductdProductdProductd", productDetails)
 
-      
+
 
 
 
@@ -156,7 +156,7 @@ export default function ProductDetails() {
       color: "red"
     }
 
-    addToCartContext(dataForCart);
+    // addToCartContext(dataForCart);
 
     try {
       const response = await HttpClient.post(`/cart/`, dataForCart)
@@ -168,9 +168,9 @@ export default function ProductDetails() {
     }
   };
 
-  const removeProductFromCart = (productId) => {
-    removeFromCartContext(productId)
-  };
+  // const removeProductFromCart = (productId) => {
+  //   removeFromCartContext(productId)
+  // };
 
 
 
@@ -260,9 +260,9 @@ export default function ProductDetails() {
     }
   }
 
-  const isInCart = cart.some((item) => item.productId === productDetails.productId);
+  // const isInCart = cart.some((item) => item.productId === productDetails?.productId);
 
-console.log("productDetailsproductDetailsproductDetails",productDetails)
+  console.log("productDetailsproductDetailsproductDetails", productDetails)
   return (
     <div className="px-3 mt-10 md:p-10">
       <div className="flex flex-wrap gap-2 md:gap-16">
@@ -279,50 +279,50 @@ console.log("productDetailsproductDetailsproductDetails",productDetails)
         <div className="flex-1">
           <div className="flex items-center gap-2 ">
             <h1 className="text-2xl  font-inter md:text-xl lg:text-2xl font-semibold text-[#2563eb] ">
-              Product Name: {productDetails?.productName} ({productDetails?.group})
+              Product Name: {productDetails?.name}
             </h1>
-          
+
           </div>
 
           <div className="flex flex-col gap-2 mt-3">
-  <div className="flex flex-col sm:flex-row sm:gap-4 gap-2">
-    <div className="flex gap-2 items-center">
-      <div className="bg-[#338E3C] text-white px-2 py-1 flex items-center rounded-md gap-1">
-        <p className="text-sm font-bold">4.6</p>
-        <TbJewishStarFilled className="text-sm" />
-      </div>
-      <button
-        onClick={() => {
-          scrollToReview();
-          getReviews();
-        }}
-        className="text-[#717478] font-semibold text-sm hover:underline"
-      >
-        Product Rating & Reviews
-      </button>
-    </div>
+            <div className="flex flex-col sm:flex-row sm:gap-4 gap-2">
+              <div className="flex gap-2 items-center">
+                <div className="bg-[#338E3C] text-white px-2 py-1 flex items-center rounded-md gap-1">
+                  <p className="text-sm font-bold">4.6</p>
+                  <TbJewishStarFilled className="text-sm" />
+                </div>
+                <button
+                  onClick={() => {
+                    scrollToReview();
+                    getReviews();
+                  }}
+                  className="text-[#717478] font-semibold text-sm hover:underline"
+                >
+                  Product Rating & Reviews
+                </button>
+              </div>
 
-    <div className="flex gap-2 items-center">
-      <div className="bg-[#FF9800] text-white px-2 py-1 flex items-center rounded-md gap-1">
-        <p className="text-sm font-bold">{productDetails.brand?.rating || "4.5"}</p>
-        <TbJewishStarFilled className="text-sm" />
-      </div>
-      <p className="text-[#717478] font-semibold text-sm">Brand Rating</p>
-    </div>
-  </div>
+              <div className="flex gap-2 items-center">
+                <div className="bg-[#FF9800] text-white px-2 py-1 flex items-center rounded-md gap-1">
+                  <p className="text-sm font-bold">{productDetails?.brand?.rating || "4.5"}</p>
+                  <TbJewishStarFilled className="text-sm" />
+                </div>
+                <p className="text-[#717478] font-semibold text-sm">Brand Rating</p>
+              </div>
+            </div>
 
-  <div>
-    <p className="text-lg font-medium text-gray-600">
-      Brand:{" "}
-      <span className="text-gray-800 font-semibold">
-        {productDetails.brand?.name || "Unknown"}
-      </span>
-    </p>
-  </div>
-</div>
+            <div>
+              <p className="text-lg font-medium text-gray-600">
+                Brand:{" "}
+                <span className="text-gray-800 font-semibold">
+                  {productDetails?.brand?.name || "Unknown"}
+                </span>
+              </p>
+            </div>
+          </div>
 
 
-          <p className="text-gray-700 mb-2">Product description: {productDetails?.productDetails[0]}</p>
+          <p className="text-gray-700 mb-2">Product description: {productDetails?.productDetails}</p>
 
           <div className="flex flex-wrap gap-2 md:gap-10 items-center ">
 
@@ -331,25 +331,25 @@ console.log("productDetailsproductDetailsproductDetails",productDetails)
 
               <p className="flex items-center text-lg font-semibold text-gray-800 ">
                 <span className="line-through text-gray-500 mr-2">
-                  <PiCurrencyInr className="mr-1" /> {productDetails.price}
+                  <PiCurrencyInr className="mr-1" /> {productDetails?.price}
                 </span>
                 <span className="text-green-500">
                   <PiCurrencyInr className="mr-1" />
-                  {productDetails.price -  productDetails.discount }
+                  {productDetails?.price - productDetails?.discount}
                 </span>
                 <span className="text-sm text-gray-500 ml-2">
-                  (<PiCurrencyInr/> {productDetails.discount})
+                  (<PiCurrencyInr /> {productDetails?.discount})
                 </span>
               </p>
 
               <p className="text-gray-600 font-medium ">Material & Care:</p>
-              <p className="text-gray-700">{productDetails.materialAndCare}</p>
+              <p className="text-gray-700">{productDetails?.materialAndCare}</p>
               <div className="flex gap-4">
                 <div>
                   <p className="text-gray-600 font-medium ">Sizes Available:</p>
                   <div className="flex flex-wrap gap-2 mt-2">
-                    {productDetails.sizes?.length > 0 ? (
-                      productDetails.sizes.map((sizeObj, index) => (
+                    {productDetails?.sizes?.length > 0 ? (
+                      productDetails?.sizes.map((sizeObj, index) => (
                         <span
                           key={index}
                           onClick={() => setSelectedSize(sizeObj.size)}
@@ -371,64 +371,73 @@ console.log("productDetailsproductDetailsproductDetails",productDetails)
 
             </div>
 
-            <div className="" >
-         
-
-              <p className="mb-1 mt-1 font-semibold">
-                Returnable : {productDetails.isReturnable ? "Yes" : "No"}
-              </p>
-
-              {
-                tokenIfLoggedIn === null ?
-
-                  <div className="flex gap-2 items-center">
-                    <button
-                      onClick={() => {
-                        if (isInCart) {
-                          removeFromCartContext(productDetails.productId); 
-                          toast.error("Removed from cart");
-                        } else {
-                          addToCartContext({ ...productDetails, selectedSize, quantity }); 
-                          toast.success("Added to cart");
-                        }
-                      }}
-                      className={`px-2 py-1 rounded-md pointer text-md transition ${isInCart ? "bg-[#011F4B] text-white" : "bg-[#011F4B] text-white"
-                        }`}
-                    >
-                      {isInCart ? "Remove from cart" : "Add to Cart"}
-                    </button>
 
 
 
+            <p className="mb-1 mt-1 font-semibold">
+              Returnable : {productDetails?.isReturnable ? "Yes" : "No"}
+            </p>
 
-                    <button key={productDetails._id}
-                      onClick={() => addToWishlist(productDetails, selectedSize, quantity)} 
+            {/* {
+              tokenIfLoggedIn === null ?
 
-                      className="px-2 py-1 bg-gray-200 text-gray-800 font-semibold rounded-md hover:bg-gray-300 transition"
-                    >
-                      Add to Wishlist
-                    </button>
-
-
-                  </div> : <button
-                    key={productDetails.productId}
-                    onClick={() => addToCart(productDetails)}
-                    className="px-2 py-1 bg-[#011F4B] text-white  rounded-lg shadow-md hover:bg-bg-[#011F4B] transition duration-200"
+                <div className="flex gap-2 items-center">
+                  <button
+                    onClick={() => {
+                      if (isInCart) {
+                        removeFromCartContext(productDetails?.productId);
+                        toast.error("Removed from cart");
+                      } else {
+                        addToCartContext({ ...productDetails, selectedSize, quantity });
+                        toast.success("Added to cart");
+                      }
+                    }}
+                    className={`px-2 py-1 rounded-md pointer text-md transition ${isInCart ? "bg-[#011F4B] text-white" : "bg-[#011F4B] text-white"
+                      }`}
                   >
-                    Add to Cart
+                    {isInCart ? "Remove from cart" : "Add to Cart"}
                   </button>
 
-              }
+
+
+
+                  <button key={productDetails?._id}
+                    onClick={() => addToWishlist(productDetails, selectedSize, quantity)}
+
+                    className="px-2 py-1 bg-gray-200 text-gray-800 font-semibold rounded-md hover:bg-gray-300 transition"
+                  >
+                    Add to Wishlist
+                  </button>
+
+
+                </div> :
+                <button
+                  key={productDetails?.productId}
+                  onClick={() => addToCart(productDetails)}
+                  className="px-2 py-1 bg-[#011F4B] text-white  rounded-lg shadow-md hover:bg-bg-[#011F4B] transition duration-200"
+                >
+                  Add to Cart
+                </button>
+
+            } */}
+
+
+
+            <button
+              key={productDetails?.productId}
+              onClick={() => addToCart(productDetails)}
+              className="px-2 py-1 bg-[#011F4B] text-white  rounded-lg shadow-md hover:bg-bg-[#011F4B] transition duration-200"
+            >
+              Add to Cart
+            </button>
 
 
 
 
 
 
-
-
-              {/* 
-                <button key={productDetails._id}
+            {/* 
+                <button key={productDetails?._id}
                   onClick={() => addToWishlist(productDetails, selectedSize, quantity)} // Pass productDetails, selectedSize, and quantity
 
                   className="px-2 py-1 bg-gray-200 text-gray-800 font-semibold rounded-md hover:bg-gray-300 transition"
@@ -441,13 +450,13 @@ console.log("productDetailsproductDetailsproductDetails",productDetails)
 
 
 
-              <div className="flex items-center mt-1 gap-2">
-                <CiDeliveryTruck size={30} />
-                <p className="font-semibold items-end">Free delivery</p>
-
-              </div>
+            <div className="flex items-center mt-1 gap-2">
+              <CiDeliveryTruck size={30} />
+              <p className="font-semibold items-end">Free delivery</p>
 
             </div>
+
+
 
           </div>
           <p className="text-[#2562eb] mt-2 font-semibold">
@@ -602,9 +611,9 @@ console.log("productDetailsproductDetailsproductDetails",productDetails)
 
             {/* Submit Button */}
             <div className="mt-4">
-              <button key={productDetails._id}
+              <button key={productDetails?._id}
                 onClick={() => {
-                  submitReview(productDetails._id);
+                  submitReview(productDetails?._id);
                   closeModal();
                 }}
                 className="p-2 bg-blue-500 text-white rounded-md w-full"
@@ -617,19 +626,9 @@ console.log("productDetailsproductDetailsproductDetails",productDetails)
         </div>
 
 
-        
+
       </div>
       <hr className="my-2" />
-      <h3 className="text-[#011F4B] text-xl font-semibold mb-2">
-        Products similar to above category
-      </h3>
-
-      <SimilarProducts loading={loading} productName={productDetails?.name} group={productDetails?.group} recommendedProducts={recommendedProducts} />
-
-
-      <h3 className="text-[#011F4B] text-xl font-semibold mb-2">
-        Similar products in brands
-      </h3>
 
     </div>
   );

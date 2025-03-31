@@ -348,7 +348,7 @@ export default function MenCollection() {
                       <img
                         src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
                         alt={eachProduct?.name || "Product Image"}
-                        className="h-full w-full object-cover"
+                        className=" h-52 w-full object-cover"
                         loading="lazy"
                       />
                     </div>
