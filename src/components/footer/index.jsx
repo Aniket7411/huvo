@@ -141,6 +141,17 @@ export default function Footer() {
       Complete description of Terms and Conditions.
     </p>
   </Link>
+  {/* Shopping Policies */}
+
+  <Link to="/shopping_policies" className="flex flex-col">
+    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+      <p className="mr-2">Shopping policies</p>
+      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+    </div>
+    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
+      Complete description of Shopping policies.
+    </p>
+  </Link>
 
   {/* Cancellations and Refunds */}
   <Link to="/cancellation_refund" className="flex flex-col">

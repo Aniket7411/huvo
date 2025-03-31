@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
-import { FaArrowRight, FaFilter } from "react-icons/fa";
+import { FaArrowRight, FaFilter, FaStar } from "react-icons/fa";
 import { PiCurrencyInr } from "react-icons/pi";
 import { CiDeliveryTruck, CiDiscount1, CiFilter } from "react-icons/ci";
 import ProductsCarousel from "../productcarousel";
@@ -183,7 +183,7 @@ export default function MenCollection() {
   const menProducts = allProducts.filter((item) => item.group === "men").splice(0, 8);
 
   console.log("menProductsmenProducts", menProducts)
-  console.log("searchGroupsearchGroupsearchGroup",searchGroup)
+  console.log("searchGroupsearchGroupsearchGroup", searchGroup)
 
 
   return (
@@ -197,123 +197,122 @@ export default function MenCollection() {
 
       {/* Filter Button for Small Screens */}
       <div className="top-0 left-0 w-full bg-white shadow-md z-10 p-2 flex justify-between lg:hidden border border-gray-300 rounded-lg ring-1 ring-blue-300">
-  <h2 className="text-lg font-bold text-gray-800">Filter</h2>
+        <h2 className="text-lg font-bold text-gray-800">Filter</h2>
 
-  <button
-    onClick={() => setFiltersVisible(!filtersVisible)}
-    className="text-blue-600 font-semibold focus:outline-none px-3 py-2 border border-blue-600 rounded-lg hover:bg-blue-100 transition-colors duration-200"
-  >
-    {filtersVisible ? <FaFilterCircleXmark size={25} /> : <CiFilter size={25} />}
-  </button>
-</div>
+        <button
+          onClick={() => setFiltersVisible(!filtersVisible)}
+          className="text-blue-600 font-semibold focus:outline-none px-3 py-2 border border-blue-600 rounded-lg hover:bg-blue-100 transition-colors duration-200"
+        >
+          {filtersVisible ? <FaFilterCircleXmark size={25} /> : <CiFilter size={25} />}
+        </button>
+      </div>
 
 
       {/* Filter Sidebar */}
 
 
       <div className="flex h-auto">
-    <div
-  style={{
-    maxHeight: '100vh',
-    overflowY: 'auto',
-  }}
-  className={`${
-    filtersVisible ? "translate-x-0" : "-translate-x-full"
-  } lg:translate-x-0 fixed lg:static top-14 left-0 lg:w-1/4 bg-white shadow-md p-4 z-20 transition-transform duration-300`}
->
-  {/* Search Input */}
-  <div className="mb-4">
-    <input
-      type="text"
-      placeholder="Search for products..."
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-      aria-label="Search products"
-    />
-  </div>
+        <div
+          style={{
+            maxHeight: '100vh',
+            overflowY: 'auto',
+          }}
+          className={`${filtersVisible ? "translate-x-0" : "-translate-x-full"
+            } lg:translate-x-0 fixed lg:static top-14 left-0 lg:w-1/4 bg-white shadow-md p-4 z-20 transition-transform duration-300`}
+        >
+          {/* Search Input */}
+          <div className="mb-4">
+            <input
+              type="text"
+              placeholder="Search for products..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="Search products"
+            />
+          </div>
 
-  {/* Sorting Dropdown */}
-  <div className="mb-4">
-    <select
-      value={sortOption}
-      onChange={(e) => setSortOption(e.target.value)}
-      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-      aria-label="Sort products"
-    >
-      <option value="">Sort By</option>
-      <option value="lowToHigh">Price: Low to High</option>
-      <option value="highToLow">Price: High to Low</option>
-    </select>
-  </div>
+          {/* Sorting Dropdown */}
+          <div className="mb-4">
+            <select
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="Sort products"
+            >
+              <option value="">Sort By</option>
+              <option value="lowToHigh">Price: Low to High</option>
+              <option value="highToLow">Price: High to Low</option>
+            </select>
+          </div>
 
-  {/* Group Filter */}
-  <div className="mb-4">
-    <select
-      value={searchGroup}
-      onChange={(e) => setSearchGroup(e.target.value)}
-      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-      aria-label="Filter by group"
-    >
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-      <option value="Kids">Kids</option>
-    </select>
-  </div>
+          {/* Group Filter */}
+          <div className="mb-4">
+            <select
+              value={searchGroup}
+              onChange={(e) => setSearchGroup(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="Filter by group"
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Kids">Kids</option>
+            </select>
+          </div>
 
-  {/* Color Filter */}
-  <div className="mb-4">
-    <h3 className="font-semibold mb-2">Colors</h3>
-    {colors.map((color) => (
-      <label key={color} className="flex items-center mb-1">
-        <input
-          type="checkbox"
-          value={color}
-          checked={selectedColors.includes(color)}
-          onChange={() =>
-            handleCheckboxChange(selectedColors, setSelectedColors, color)
-          }
-          className="mr-2"
-        />
-        {color}
-      </label>
-    ))}
-  </div>
+          {/* Color Filter */}
+          <div className="mb-4">
+            <h3 className="font-semibold mb-2">Colors</h3>
+            {colors.map((color) => (
+              <label key={color} className="flex items-center mb-1">
+                <input
+                  type="checkbox"
+                  value={color}
+                  checked={selectedColors.includes(color)}
+                  onChange={() =>
+                    handleCheckboxChange(selectedColors, setSelectedColors, color)
+                  }
+                  className="mr-2"
+                />
+                {color}
+              </label>
+            ))}
+          </div>
 
-  {/* Brand Filter */}
-  <div className="mb-4">
-    <h3 className="font-semibold mb-2">Brands</h3>
-    {allBrands.map((brand) => (
-      <label key={brand.id} className="flex items-center mb-2">
-        <input
-          type="checkbox"
-          value={brand.id}
-          checked={selectedBrands.includes(brand.id)}
-          onChange={() =>
-            handleCheckboxChange(selectedBrands, setSelectedBrands, brand.id)
-          }
-          className="mr-2"
-        />
-        <img
-          src={brand.image}
-          alt={brand.brandName}
-          className="w-8 h-8 object-cover rounded-full mr-2"
-        />
-        <span>{brand.brandName}</span>
-      </label>
-    ))}
-  </div>
+          {/* Brand Filter */}
+          <div className="mb-4">
+            <h3 className="font-semibold mb-2">Brands</h3>
+            {allBrands.map((brand) => (
+              <label key={brand.id} className="flex items-center mb-2">
+                <input
+                  type="checkbox"
+                  value={brand.id}
+                  checked={selectedBrands.includes(brand.id)}
+                  onChange={() =>
+                    handleCheckboxChange(selectedBrands, setSelectedBrands, brand.id)
+                  }
+                  className="mr-2"
+                />
+                <img
+                  src={brand.image}
+                  alt={brand.brandName}
+                  className="w-8 h-8 object-cover rounded-full mr-2"
+                />
+                <span>{brand.brandName}</span>
+              </label>
+            ))}
+          </div>
 
-  {/* Apply Filters Button */}
-  <div className="mb-[30px]">
-    <button
-      onClick={handleSearch}
-      className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    >
-      Apply Filters
-    </button>
-  </div>
-</div>
+          {/* Apply Filters Button */}
+          <div className="mb-[30px]">
+            <button
+              onClick={handleSearch}
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              Apply Filters
+            </button>
+          </div>
+        </div>
 
         <div className="lg:w-3/4 w-full mx-auto">
 
@@ -336,83 +335,70 @@ export default function MenCollection() {
             )}
 
 
-            <div className="hidden md:grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4">
+            <div className="p-4 grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {menProducts.map((eachProduct, i) => {
                 const finalPrice = eachProduct.price - eachProduct.discount;
                 return (
                   <div
                     key={i}
-                    className="bg-white flex flex-col rounded-xl p-3 shadow-md border border-gray-200 h-full"
+                    className="bg-white flex flex-col rounded-xl p-3 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300"
                   >
                     {/* Product Image */}
-                    <div className="aspect-square w-full mb-2">
+                    <div className="w-full aspect-square mb-3 overflow-hidden rounded-md">
                       <img
                         src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
                         alt={eachProduct?.name || "Product Image"}
-                        className="h-full w-full object-cover rounded-md"
+                        className="h-full w-full object-cover"
                         loading="lazy"
                       />
                     </div>
 
-                    {/* Product Name */}
-                    <h1 className="text-black font-quicksand font-bold text-lg line-clamp-2">
+                    {/* Product Details */}
+                    <h1 className="text-black font-semibold text-lg line-clamp-2 mb-2">
                       {eachProduct?.productName || "Product Name"}
                     </h1>
 
-                    {/* Product Rating and Orders */}
-                    <div className="flex items-center gap-2 text-gray-700 mt-1 flex-wrap">
-                      <div className="flex items-center text-sm">
-                        <span className="text-yellow-500 mr-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                            width="16"
-                            height="16"
-                          >
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                          </svg>
-                        </span>
-                        4.5
+                    {/* Product Rating */}
+                    <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
+                      <div className="flex text-yellow-500">
+                        {[...Array(5)].map((_, index) => (
+                          <FaStar key={index} className="w-4 h-4" />
+                        ))}
                       </div>
-                      <p className="text-xs text-gray-500">200+ orders</p>
+                      <span className="text-xs text-gray-500">(200+ orders)</span>
                     </div>
 
                     {/* Pricing Details */}
-                    <div className="flex justify-between w-full items-center mt-2">
-                      {/* Original Price */}
-                      <div className="flex items-center gap-1">
-                        <PiCurrencyInr className="text-red-600 text-sm" />
-                        <p className="line-through text-red-600 text-sm font-semibold">
-                          {eachProduct?.price}
-                        </p>
+                    <div className="flex justify-between items-center text-sm mb-2">
+                      <div className="flex items-center gap-1 text-red-600">
+                        <PiCurrencyInr />
+                        <p className="line-through font-medium">{eachProduct?.price}</p>
                       </div>
-
-                      {/* Discount Price */}
-                      <div className="flex items-center gap-1">
-                        <CiDiscount1 className="text-green-600 text-sm" />
-                        <PiCurrencyInr className="text-green-600 text-sm" />
-                        <p className="font-semibold text-green-600 text-sm">
-                          {eachProduct?.discount}
-                        </p>
+                      <div className="flex items-center gap-1 text-green-600">
+                        <CiDiscount1 />
+                        <PiCurrencyInr />
+                        <p className="font-medium">{eachProduct?.discount} off</p>
                       </div>
                     </div>
 
+                    {/* Final Price */}
+                    <div className="flex justify-between items-center text-lg font-bold text-gray-800 mb-3">
+                      <div className="flex items-center">
+                        <PiCurrencyInr />
+                        <span>{finalPrice}</span>
+                      </div>
+                      <span className="text-green-500 text-sm">Free Delivery</span>
+                    </div>
+
                     {/* View Product Button */}
-                    <Link
-                      to={`/product-details/${eachProduct?.productId}`}
-                      className="w-full mt-3"
-                    >
-                      <button className="w-full flex items-center justify-center bg-[#011F4B] text-white px-3 py-2 rounded-lg text-sm hover:bg-[#02386e] transition-colors duration-200">
-                        View Product
-                        <FaArrowRight className="ml-2" />
+                    <Link to={`/product-details/${eachProduct?.productId}`} className="w-full">
+                      <button className="w-full flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-all">
+                        View Product <FaArrowRight className="ml-2" />
                       </button>
                     </Link>
                   </div>
                 );
               })}
-
-
             </div>
 
 

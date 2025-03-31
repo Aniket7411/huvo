@@ -64,6 +64,7 @@ import CategoryPage from "./pages/categorysearch/index.jsx";
 import OrderAndReturn from "./pages/orderandreturn/index.jsx";
 import CategorySlider from "./pages/categoryslider/index.jsx";
 import NewMenCollection from "./pages/newmen/index.jsx";
+import ShippingInfo from "./pages/shippingpolicies/index.jsx";
 
 function App() {
   return (
@@ -128,6 +129,17 @@ function App() {
             element={
               <Layout>
                 <Returnpolicy />
+              </Layout>
+            }
+          />
+        </Routes>
+
+        <Routes>
+          <Route
+            path="/shopping_policies"
+            element={
+              <Layout>
+                <ShippingInfo />
               </Layout>
             }
           />

@@ -358,7 +358,7 @@ export default function WomenCollection() {
                       <img
                         src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
                         alt={eachProduct?.name || "Product Image"}
-                        className="h-full w-full object-cover rounded-md"
+                        className="h-52 w-full object-cover rounded-md"
                         loading="lazy"
                       />
                     </div>

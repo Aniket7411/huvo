@@ -52,7 +52,6 @@ export default function ProductDetails() {
   const navigate = useNavigate();
 
 
-  console.log("cartcartcart", cart)
 
 
 
@@ -63,7 +62,14 @@ export default function ProductDetails() {
       const data = { productId: id };
       const response = await HttpClient.get("/product/productId", data);
 
+      console.log("formattedRecommendedProducts",response.recommendProduct)
+
+
+
+
+
       const formattedRecommendedProducts = response.recommendProduct.map((each) => ({
+        colors : each?.colors,
         bannerImage: each.bannerImage,
         brandId: each.brand,
         categoryId: each.category,
@@ -78,11 +84,20 @@ export default function ProductDetails() {
       }))
 
 
+      console.log("formattedRecommendedProducts",formattedRecommendedProducts)
+
       setRecommendedProducts(formattedRecommendedProducts)
 
 
 
-      setProductDetails(response.product);
+
+
+
+      setProductDetails(formattedRecommendedProducts[0]);
+
+      console.log("Productd",productDetails)
+
+      
 
 
 
@@ -142,7 +157,6 @@ export default function ProductDetails() {
     }
 
     addToCartContext(dataForCart);
-    console.log(dataForCart)
 
     try {
       const response = await HttpClient.post(`/cart/`, dataForCart)
@@ -155,7 +169,6 @@ export default function ProductDetails() {
   };
 
   const removeProductFromCart = (productId) => {
-    console.log("productDetailsremove", productId)
     removeFromCartContext(productId)
   };
 
@@ -180,7 +193,6 @@ export default function ProductDetails() {
 
     try {
       const response = await HttpClient.put(`/cart/remove`, { "productIdName": dataToRemove })
-      console.log(response)
 
 
     } catch (error) {
@@ -205,7 +217,6 @@ export default function ProductDetails() {
       }
       try {
         const response = await HttpClient.post("/wishlist/", wishlistData)
-        console.log(response)
       } catch (error) {
         toast.error(error.message)
       }
@@ -221,7 +232,6 @@ export default function ProductDetails() {
     );
   }
 
-  console.log("sjsjsjsjssj", tokenIfLoggedIn)
 
   const scrollToReview = () => {
     const reviewSection = document.getElementById('review');
@@ -252,7 +262,7 @@ export default function ProductDetails() {
 
   const isInCart = cart.some((item) => item.productId === productDetails.productId);
 
-
+console.log("productDetailsproductDetailsproductDetails",productDetails)
   return (
     <div className="px-3 mt-10 md:p-10">
       <div className="flex flex-wrap gap-2 md:gap-16">
@@ -260,7 +270,7 @@ export default function ProductDetails() {
           <div className="p-2 rounded-md border border-gray-300 mt-5">
             <img
               className="h-[240px] md:h-[400px] w-full object-cover rounded-md"
-              src={productDetails.bannerImage}
+              src={productDetails?.bannerImage}
               alt="Product"
             />
           </div>
@@ -269,7 +279,7 @@ export default function ProductDetails() {
         <div className="flex-1">
           <div className="flex items-center gap-2 ">
             <h1 className="text-2xl  font-inter md:text-xl lg:text-2xl font-semibold text-[#2563eb] ">
-              Product Name: {productDetails.name}
+              Product Name: {productDetails?.productName} ({productDetails?.group})
             </h1>
           
           </div>
@@ -312,7 +322,7 @@ export default function ProductDetails() {
 </div>
 
 
-          <p className="text-gray-700 mb-2">Product description: {productDetails.description}</p>
+          <p className="text-gray-700 mb-2">Product description: {productDetails?.productDetails[0]}</p>
 
           <div className="flex flex-wrap gap-2 md:gap-10 items-center ">
 
@@ -328,7 +338,7 @@ export default function ProductDetails() {
                   {productDetails.price -  productDetails.discount }
                 </span>
                 <span className="text-sm text-gray-500 ml-2">
-                  ({productDetails.discount}% Off)
+                  (<PiCurrencyInr/> {productDetails.discount})
                 </span>
               </p>
 

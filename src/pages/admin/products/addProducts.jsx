@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import './products.css'
 import Select from "react-dropdown-select";
 import { MdArrowOutward } from "react-icons/md";
+import Loader from "../../../components/loader";
 
 function ProductAddPage() {
   const options = [
@@ -23,6 +24,9 @@ function ProductAddPage() {
     { id: 11, name: "Turquoise", value: "turquoise", colorCode: "#40E0D0" },
   ];
 
+
+  const [isLoading,setIsloading] = useState(false)
+
   const navigate = useNavigate();
   const {
     register,
@@ -35,6 +39,8 @@ function ProductAddPage() {
       group: "men",
     },
   });
+
+  const [returnableDays,setReturnableDays] = useState()
 
   const [bannerImage, setBannerImage] = useState("");
   const [productDetails, setProductDetails] = useState([""]);
@@ -67,6 +73,8 @@ function ProductAddPage() {
     toggleShoeSelection((prevValue) => !prevValue);
   };
 
+  console.log(returnableDays)
+
 
 
   const onSubmit = async (data) => {
@@ -83,6 +91,7 @@ function ProductAddPage() {
     }
 
     try {
+      setIsloading(true)
       const info = {
         ...data,
         bannerImage,
@@ -91,15 +100,17 @@ function ProductAddPage() {
         colors: colorWithImages,
         productDetails,
         platformCharge,
-        shippingFee
+        shippingFee,
+        returnableDays
 
       };
-      console.log("Form Submission Data:", info);
       const response = await HttpClient.post("/product", info);
-      console.log(response)
+      console.log("response",response)
+      isLoading(false)
+      toast.success("Product added successfully")
+
 
     } catch (error) {
-      console.error(error);
       toast.error(error?.response?.data?.message);
     }
   };
@@ -783,7 +794,25 @@ function ProductAddPage() {
             {errors.isReturnable && (
               <span className="text-red-500">{errors.isReturnable.message}</span>
             )}
+
+
           </div>
+
+          <div className="flex items-center gap-2">
+  <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+    Returnable within
+  </label>
+  <input 
+    type="number" 
+    min="1"
+    max="30"
+    value={returnableDays}
+    onChange={(e) => {setReturnableDays(e.target.value)}}
+    className="w-16 px-2 py-1 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+    placeholder="Days"
+  />
+</div>
+          
 
 
           <div>

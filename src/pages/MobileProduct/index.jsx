@@ -1,67 +1,94 @@
 import { Link } from "react-router-dom";
 import { PiCurrencyInr } from "react-icons/pi";
-import { CiDeliveryTruck } from "react-icons/ci";
+import { CiDeliveryTruck, CiDiscount1 } from "react-icons/ci";
+import { FaStar } from "react-icons/fa";
 
-const MobileProductCarousel = (props) => {
-  const { allProducts } = props;
-
-  // Filter products by group
-  const menProducts = allProducts.filter((item) => item.group === "men").splice(0, 8);
-
-
+const MobileProductCarousel = ({ womenProducts }) => {
   return (
-    <div className="flex flex-wrap gap-2 justify-center p-4 md:hidden">
-      {menProducts.map((each, index) => {
-        const finalPrice = each.price - each.discount;
+    <div className="grid grid-cols-2 gap-3 p-4 md:hidden">
+      {womenProducts.map((product) => {
+        const finalPrice = product.price - product.discount;
+        const discountPercentage = Math.round((product.discount / product.price) * 100);
 
         return (
           <div
-            key={index}
-            className="w-[45%] h-auto flex flex-col bg-white rounded-lg shadow-md p-2 border border-gray-200 hover:shadow-lg transition-shadow duration-300"
+            key={product.productId}
+            className="group relative flex flex-col bg-white rounded-lg shadow-sm p-2 border border-gray-100 hover:shadow-md transition-all duration-200"
           >
-            <Link to={`/product-details/${each?.productId}`} className="flex flex-col gap-2">
+            {/* Discount Badge */}
+            {discountPercentage > 0 && (
+              <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
+                {discountPercentage}% OFF
+              </span>
+            )}
+
+            <Link 
+              to={`/product-details/${product.productId}`} 
+              className="flex flex-col gap-1.5"
+            >
               {/* Product Image */}
-              <img
-                src={each?.bannerImage || "https://via.placeholder.com/300"}
-                alt={each?.name || "Product Image"}
-                className="h-[150px] w-full object-cover rounded-md"
-                loading="lazy"
-              />
+              <div className="relative aspect-square overflow-hidden rounded-md bg-gray-50">
+                <img
+                  src={product.bannerImage || "https://via.placeholder.com/300"}
+                  alt={product.name || "Product Image"}
+                  className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
 
-              {/* Product Name */}
-              <h2 className="font-semibold text-gray-800 text-sm mt-1">
-                {each?.name || "Product Name"}
-              </h2>
+              {/* Product Info */}
+              <div className="mt-1 px-1">
+                {/* Product Name */}
+                <h2 className="font-medium text-gray-800 text-sm line-clamp-2 h-10">
+                  {product.name}
+                </h2>
 
-              {/* Price Details */}
-              <div className="flex justify-between items-center">
-                {/* Original Price */}
-                <div className="flex items-center gap-1">
-                  <PiCurrencyInr className="text-red-600" />
-                  <p className="line-through text-red-600 font-semibold text-sm">
-                    {each?.price}
-                  </p>
+                {/* Rating */}
+                <div className="flex items-center mt-1">
+                  <div className="flex text-yellow-400">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} className="w-3 h-3" />
+                    ))}
+                  </div>
+                  <span className="text-xs text-gray-500 ml-1">(24)</span>
                 </div>
 
-                {/* Discount Price */}
-                <div className="flex items-center gap-1">
-                  <PiCurrencyInr className="text-green-600" />
-                  <p className="text-green-600 font-semibold text-sm">{each?.discount}</p>
+                {/* Price Section */}
+                <div className="mt-2">
+                  {/* Final Price */}
+                  <div className="flex items-center">
+                    <PiCurrencyInr className="text-gray-900" />
+                    <span className="font-bold text-gray-900">{finalPrice}</span>
+                  </div>
+
+                  {/* Original Price */}
+                  <div className="flex items-center">
+                    <PiCurrencyInr className="text-gray-400 text-xs" />
+                    <span className="line-through text-gray-400 text-xs">
+                      {product.price}
+                    </span>
+                    {product.discount > 0 && (
+                      <span className="text-green-600 text-xs font-medium ml-1 flex items-center">
+                        <CiDiscount1 className="mr-0.5" /> {product.discount} off
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Delivery Info */}
+                <div className="flex items-center mt-1 text-xs text-gray-500">
+                  <CiDeliveryTruck className="mr-1" />
+                  <span>Free Delivery</span>
                 </div>
               </div>
 
-              {/* Final Price */}
-              {/* <div className="flex items-center text-green-600 gap-1">
-                <PiCurrencyInr />
-                <p className="font-semibold text-sm">{finalPrice} /-</p>
-              </div> */}
-
-              {/* Free Delivery */}
-              {/* <div className="flex items-center gap-2">
-                <CiDeliveryTruck className="text-gray-600" />
-                <p className="text-gray-600 font-semibold text-sm">Free delivery</p>
-              </div> */}
-              <button type="button" className="bg-[#011F4B] text-[#fff] rounded-lg py-1">Visit Store</button>
+              {/* CTA Button */}
+              <button 
+                type="button" 
+                className="mt-2 bg-[#011F4B] hover:bg-[#02386e] text-white text-sm font-medium rounded-md py-1.5 transition-colors duration-200"
+              >
+                View Details
+              </button>
             </Link>
           </div>
         );
