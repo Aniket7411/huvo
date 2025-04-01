@@ -16,17 +16,10 @@ import { CartContext } from "../../usecontext1/cartcontext";
 
 
 const isLoggedIn = localStorage.getItem("accessToken")
-
-console.log("isLoggedInisLoggedIn",isLoggedIn)
-
-
-
-
-
 export default function ProductDetails() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isSizeModal, setIsSizeModal] = useState(false)
-  const { addToCartContext, cart, removeFromCartContext } = useContext(CartContext)
+  const { addToCartContext, cart, wishList, removeFromCartContext } = useContext(CartContext)
 
 
   const openPaymentModal = () => {
@@ -74,7 +67,6 @@ export default function ProductDetails() {
     try {
       const data = { productId: id };
       const response = await HttpClient.get("/product/productId", data);
-      console.log("responseresponseresponse", response)
 
       setProductDetails(response.product)
 
@@ -119,6 +111,7 @@ export default function ProductDetails() {
 
 
 
+
   useEffect(() => {
     getProductDetails(id);
   }, [id]);
@@ -130,52 +123,38 @@ export default function ProductDetails() {
 
 
 
-
   const addToCart = async (productDetails, selectedSize) => {
-    // Check if a size has been selected
-    if (selectedSize === null) {
+    if (!selectedSize) {
       toast.warn("Please select a size");
-      return;  // Exit the function early if no size is selected
+      return;
     }
-  
-    // Check if the user is logged in
-    if (isLoggedIn === null) {
-      // If not logged in, add to cart context immediately (using only product details)
+
+    if (!isLoggedIn) {
       addToCartContext(productDetails, selectedSize);
       toast.success("Product added to cart locally.");
-      return;  // Exit early since the cart is updated without needing an API call
-    } else {
-      try {
-
-
-        // Prepare the cart data object to send to the server
-     const cartData = {
-       productId: productDetails?.productId,
-       color: productDetails?.colors[0]?.colorCode,  // Assuming colors array exists and has colorCode
-       size: selectedSize,
-     };
-   
-     console.log("Logged in, sending cart data:", cartData);
-       // Make an API call to add the product to the cart on the server
-       const response = await HttpClient.post("/cart/", cartData);
-   
-       if (response?.status === 200) {
-         toast.success("Product added to cart successfully.");
-         getCartData();  // Assuming this function updates the cart data in the UI
-       } else {
-         toast.error("Failed to add product to cart.");
-       }
-     } catch (error) {
-       console.error("Error adding product to cart:", error);
-       toast.error("Failed to add product to cart.");
-     }
+      return;
     }
-  
-   
-  
-   
+
+    const cartData = {
+      productId: productDetails?.productId,
+      color: productDetails?.colors?.[0]?.colorCode || "Default Color", // Handle missing color
+      size: selectedSize,
+    };
+
+    try {
+      const response = await HttpClient.post("/cart/", cartData);
+
+      if (response?.status === 200) {
+        console.log("Cart Response:", response?.status);
+        toast.success("Product added to cart successfully.");
+        } 
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+      toast.error("An error occurred while adding to the cart.");
+    }
   };
-  
+
+
   // const removeProductFromCart = (productId) => {
   //   removeFromCartContext(productId)
   // };
@@ -183,14 +162,6 @@ export default function ProductDetails() {
 
 
 
-  const getCartData = async () => {
-    try {
-      const response = await HttpClient.get('/cart');
-
-    } catch (err) {
-      toast.error(err.message);
-    }
-  }
 
   const removeFromCart = async (productDetails) => {
     const { productId } = productDetails
@@ -211,23 +182,26 @@ export default function ProductDetails() {
   const addToWishlist = async (productDetails) => {
     if (tokenIfLoggedIn === null) {
       toast.error("Please login First")
-      navigate("/login");
-
-
-
     }
     else {
       const { productId } = productDetails
-      const wishlistData = {
-        productId: productId,
-        size: selectedSize,
-        color: "red"
+
+      if (selectedSize === null) {
+        toast.warn("Please select a size")
+      } else {
+        const wishlistData = {
+          productId: productId,
+          size: selectedSize,
+          color: "red"
+        }
+        try {
+          const response = await HttpClient.post("/wishlist/", wishlistData)
+        } catch (error) {
+          toast.error(error.message)
+        }
       }
-      try {
-        const response = await HttpClient.post("/wishlist/", wishlistData)
-      } catch (error) {
-        toast.error(error.message)
-      }
+
+
     }
 
   };
@@ -270,7 +244,6 @@ export default function ProductDetails() {
 
   // const isInCart = cart.some((item) => item.productId === productDetails?.productId);
 
-  console.log("productDetailsproductDetailsproductDetails", productDetails)
   return (
     <>
 
@@ -340,9 +313,15 @@ export default function ProductDetails() {
                   {/* Pricing Section */}
                   <p className="flex flex-wrap items-center text-lg font-semibold text-gray-800">
                     {/* Original Price */}
-                    <span className="line-through text-gray-500 mr-2 flex items-center">
+                    <span className="line-through text-gray-500  flex items-center">
                       <PiCurrencyInr className="mr-1" /> {productDetails?.price}
                     </span>
+
+
+                    {/* Discount Amount */}
+                    <span className="text-sm mr-2 text-gray-500 ml-2 flex items-center"> -
+                      (<PiCurrencyInr className="mr-1" />{productDetails?.discount})
+                    </span> 
 
                     {/* Discounted Price */}
                     <span className="text-green-500 flex items-center text-xl font-bold">
@@ -350,10 +329,7 @@ export default function ProductDetails() {
                       {productDetails?.price - productDetails?.discount}
                     </span>
 
-                    {/* Discount Amount */}
-                    <span className="text-sm text-gray-500 ml-2 flex items-center"> -
-                      (<PiCurrencyInr className="mr-1" />{productDetails?.discount})
-                    </span>
+                    
                   </p>
 
                   {/* Material & Care Section */}

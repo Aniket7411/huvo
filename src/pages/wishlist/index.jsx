@@ -16,6 +16,8 @@ export default function WishList() {
     setIsLoading(true); // Start loading
     try {
       const { data } = await HttpClient.get("/wishlist");
+
+      console.log("formattedDat", data)
       const formattedData = data.map((item) => ({
         bannerImage: item.bannerImage || "https://via.placeholder.com/300",
         color: item.color,
@@ -28,6 +30,8 @@ export default function WishList() {
         objectID: item._id,
       }));
       setProducts(formattedData);
+
+      console.log("formattedDatawishlist", formattedData)
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message || "Failed to fetch wishlist");
@@ -50,6 +54,8 @@ export default function WishList() {
   const moveToCart = async (productId) => {
     try {
       const { message } = await HttpClient.put("/wishlist/addToBag", { productId });
+
+      console.log("messagemessage", message)
       toast.success(message);
       fetchWishlist();
     } catch (error) {
@@ -160,14 +166,16 @@ export default function WishList() {
                 </div>
 
                 {/* Move to Cart Button */}
+
+                <Link to={`/product-details/${product.productId}`}>
                 <button
-                  className="flex items-center justify-center bg-[#011F4B] text-white px-3 py-2 rounded-lg text-md hover:bg-[#02386e] transition-colors duration-200 w-full"
-                  onClick={() => moveToCart(product.objectID)}
-                  aria-label="Move to Cart"
-                >
-                  Move to Cart
-                  <FaArrowRight className="ml-2" />
-                </button>
+                    className="flex items-center justify-center bg-[#011F4B] text-white px-3 py-2 rounded-lg text-md hover:bg-[#02386e] transition-colors duration-200 w-full"
+                    aria-label="Product details"
+                  >
+                      Product Details
+                    <FaArrowRight className="ml-2" />
+                  </button>
+                </Link>
               </div>
             ))}
           </div>

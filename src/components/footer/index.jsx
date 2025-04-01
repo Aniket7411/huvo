@@ -35,8 +35,8 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#FAFAFA] px-3 md:px-10  py-[30px]">
-      <div className="mb-12 flex flex-col lg:flex-row gap-6">
+    <footer className="bg-[#FAFAFA] px-3 md:px-10  py-[20px]">
+      <div className="mb-12 flex flex-col lg:flex-row gap-4">
         <div className="lg:w-3/4">
           <p className="font-[Quicksand] text-[#011F4B] font-semibold mb-4 text-xl">
             Like to hear from us!
@@ -69,133 +69,133 @@ export default function Footer() {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-3">
-  {/* Online Shopping */}
-  <Link to="/" className="flex flex-col">
-    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
-      <p className="mr-2">Online shopping</p>
-      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
-    </div>
-    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
-      Visit our wide range of products.
-    </p>
-  </Link>
+        {/* Online Shopping */}
+        <Link to="/" className="flex flex-col">
+          <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+            <p className="mr-2">Online shopping</p>
+            <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+          </div>
+          <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
+            Visit our wide range of products.
+          </p>
+        </Link>
 
-  {/* Privacy Policy */}
-  <Link to="/privacy_policy" className="flex flex-col">
-    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
-      <p className="mr-2">Privacy Policy</p>
-      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
-    </div>
-    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
-      Complete description of our privacy policy.
-    </p>
-  </Link>
+        {/* Privacy Policy */}
+        <Link to="/privacy_policy" className="flex flex-col">
+          <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+            <p className="mr-2">Privacy Policy</p>
+            <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+          </div>
+          <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
+            Complete description of our privacy policy.
+          </p>
+        </Link>
 
-  {/* Mail Us */}
-  <a
-    href="https://mail.google.com/mail/?view=cm&fs=1&to=huvoofficial@gmail.com"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="flex flex-col"
-  >
-    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
-      <p className="mr-2">Mail us</p>
-      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
-    </div>
-    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
-      huvoofficial@gmail.com
-    </p>
-  </a>
+        {/* Mail Us */}
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=huvoofficial@gmail.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col"
+        >
+          <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+            <p className="mr-2">Mail us</p>
+            <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+          </div>
+          <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
+            huvoofficial@gmail.com
+          </p>
+        </a>
 
-  {/* Contact Us (Modal Trigger) */}
-  <Link to="/contact_us">
-  <div  className="flex flex-col cursor-pointer">
-    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
-      <p className="mr-2">Contact Us</p>
-      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
-    </div>
-    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
-      Our Address
-    </p>
-  </div>
-  </Link>
+        {/* Contact Us (Modal Trigger) */}
+        <Link to="/contact_us">
+          <div className="flex flex-col cursor-pointer">
+            <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+              <p className="mr-2">Contact Us</p>
+              <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+            </div>
+            <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
+              Our Address
+            </p>
+          </div>
+        </Link>
 
-  {/* Return Policy */}
-  <Link to="/returnpolicy" className="flex flex-col">
-    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
-      <p className="mr-2">Return Policy</p>
-      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
-    </div>
-    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
-      Complete description of our return policy.
-    </p>
-  </Link>
+        {/* Return Policy */}
+        <Link to="/returnpolicy" className="flex flex-col">
+          <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+            <p className="mr-2">Return Policy</p>
+            <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+          </div>
+          <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
+            Complete description of our return policy.
+          </p>
+        </Link>
 
-  {/* Terms and Conditions */}
-  <Link to="/termsandconditions" className="flex flex-col">
-    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
-      <p className="mr-2">Terms and Conditions</p>
-      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
-    </div>
-    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
-      Complete description of Terms and Conditions.
-    </p>
-  </Link>
-  {/* Shopping Policies */}
+        {/* Terms and Conditions */}
+        <Link to="/termsandconditions" className="flex flex-col">
+          <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+            <p className="mr-2">Terms and Conditions</p>
+            <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+          </div>
+          <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
+            Detailed Terms and Conditions.
+          </p>
+        </Link>
+        {/* Shopping Policies */}
 
-  <Link to="/shopping_policies" className="flex flex-col">
-    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
-      <p className="mr-2">Shopping policies</p>
-      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
-    </div>
-    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
-      Complete description of Shopping policies.
-    </p>
-  </Link>
+        <Link to="/shopping_policies" className="flex flex-col">
+          <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+            <p className="mr-2">Shipping policies</p>
+            <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+          </div>
+          <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
+            Complete description of Shipping policies.
+          </p>
+        </Link>
 
-  {/* Cancellations and Refunds */}
-  <Link to="/cancellation_refund" className="flex flex-col">
-    <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
-      <p className="mr-2">Cancellations and Refunds</p>
-      <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
-    </div>
-    <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
-      Complete description of our cancellations and refunds.
-    </p>
-  </Link>
-</div>
+        {/* Cancellations and Refunds */}
+        <Link to="/cancellation_refund" className="flex flex-col">
+          <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
+            <p className="mr-2">Cancellations and Refunds</p>
+            <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
+          </div>
+          <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
+            Detailed cancellations and refunds policies.
+          </p>
+        </Link>
+      </div>
 
-{/* Modal for Contact Information */}
-<Modal
-  isOpen={isModalOpen}
-  onRequestClose={closeModal}
-  contentLabel="Contact Information"
-  className="bg-white w-11/12 md:w-1/2 mx-auto my-20 p-6 rounded-lg shadow-lg outline-none"
-  overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
->
-  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Contact Us</h2>
-  <p className="text-gray-600 mb-2">
-    <strong>Merchant Legal Entity Name:</strong> VRADAKART PRIVATE LIMITED
-  </p>
-  <p className="text-gray-600 mb-2">
-    <strong>Registered Address:</strong> #78/1 BEEMANENI TOWERS NAGAWARA MAIN ROAD HEBBAL Bengaluru KARNATAKA 560045
-  </p>
-  <p className="text-gray-600 mb-2">
-    <strong>Operational Address:</strong> #78/1 BEEMANENI TOWERS NAGAWARA MAIN ROAD HEBBAL Bengaluru KARNATAKA 560045
-  </p>
-  <p className="text-gray-600 mb-2">
-    <strong>Telephone No:</strong> 7899542105
-  </p>
-  <p className="text-gray-600 mb-2">
-    <strong>E-Mail ID:</strong> huvoofficial@gmail.com
-  </p>
-  <button
-    onClick={closeModal}
-    className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-  >
-    Close
-  </button>
-</Modal>
+      {/* Modal for Contact Information */}
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Contact Information"
+        className="bg-white w-11/12 md:w-1/2 mx-auto my-20 p-6 rounded-lg shadow-lg outline-none"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+      >
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Contact Us</h2>
+        <p className="text-gray-600 mb-2">
+          <strong>Merchant Legal Entity Name:</strong> VRADAKART PRIVATE LIMITED
+        </p>
+        <p className="text-gray-600 mb-2">
+          <strong>Registered Address:</strong> #78/1 BEEMANENI TOWERS NAGAWARA MAIN ROAD HEBBAL Bengaluru KARNATAKA 560045
+        </p>
+        <p className="text-gray-600 mb-2">
+          <strong>Operational Address:</strong> #78/1 BEEMANENI TOWERS NAGAWARA MAIN ROAD HEBBAL Bengaluru KARNATAKA 560045
+        </p>
+        <p className="text-gray-600 mb-2">
+          <strong>Telephone No:</strong> 7899542105
+        </p>
+        <p className="text-gray-600 mb-2">
+          <strong>E-Mail ID:</strong> huvoofficial@gmail.com
+        </p>
+        <button
+          onClick={closeModal}
+          className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+        >
+          Close
+        </button>
+      </Modal>
 
 
     </footer>

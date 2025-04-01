@@ -91,9 +91,9 @@ export default function CheckOut() {
 
     try {
       const response = await HttpClient.get("/cart");
-      const { data } = response
 
-      setCartProducts(data);
+      console.log("cartcartcartcart", response)
+
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
@@ -422,8 +422,8 @@ export default function CheckOut() {
                                 <div className="sm:w-1/4">
                                   <img
                                     className="w-full h-auto max-h-48 object-cover rounded-lg"
-                                    src={cartProducts[key].bannerImage}
-                                    alt={cartProducts[key].name}
+                                    src={cartProducts[key]?.bannerImage}
+                                    alt={cartProducts[key]?.name}
                                     loading="lazy"
                                   />
                                 </div>
@@ -433,29 +433,29 @@ export default function CheckOut() {
                                   {/* Product Name and Discount */}
                                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                                     <h3 className="text-lg font-semibold text-gray-900">
-                                      {cartProducts[key].name}
+                                      {cartProducts[key]?.name}
                                     </h3>
-                                    {cartProducts[key].discount > 0 && (
+                                    {cartProducts[key]?.discount > 0 && (
                                       <span className="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded-full">
-                                        {cartProducts[key].discount}% OFF
+                                        {cartProducts[key]?.discount}% OFF
                                       </span>
                                     )}
                                   </div>
 
                                   {/* Description */}
-                                  {cartProducts[key].description && (
+                                  {cartProducts[key]?.description && (
                                     <p className="text-gray-600 text-sm">
-                                      {cartProducts[key].description}
+                                      {cartProducts[key]?.description}
                                     </p>
                                   )}
 
                                   {/* Attributes */}
                                   <div className="flex flex-wrap gap-2 mt-2">
                                     <div className="bg-gray-100 px-3 py-1 rounded-full text-sm">
-                                      <span className="font-medium">Color:</span> {cartProducts[key].color}
+                                      <span className="font-medium">Color:</span> {cartProducts[key]?.color}
                                     </div>
                                     <div className="bg-gray-100 px-3 py-1 rounded-full text-sm">
-                                      <span className="font-medium">Size:</span> {cartProducts[key].size}
+                                      <span className="font-medium">Size:</span> {cartProducts[key]?.size}
                                     </div>
                                   </div>
 
@@ -463,13 +463,13 @@ export default function CheckOut() {
                                   <div className="flex items-center gap-4 mt-3">
                                     <div className="flex items-center border border-gray-300 rounded-full">
                                       <button
-                                        disabled={cartProducts[key].quantity <= 1}
+                                        disabled={cartProducts[key]?.quantity <= 1}
                                         className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-full disabled:opacity-50"
                                       >
                                         -
                                       </button>
                                       <span className="px-3 py-1 text-center min-w-[2rem]">
-                                        {cartProducts[key].quantity}
+                                        {cartProducts[key]?.quantity}
                                       </span>
                                       <button
                                         className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-full"

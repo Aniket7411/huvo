@@ -25,7 +25,7 @@ console.log("loginStatus", loginStatus)
 export default function Header(props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { cart } = useContext(CartContext)
+  const { cart, } = useContext(CartContext)
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -344,9 +344,9 @@ export default function Header(props) {
 
         <div className="relative " onClick={toggleNav}>
           {/* Hamburger Icon */}
-       
 
-{/* <img
+
+          {/* <img
   src={`${process.env.PUBLIC_URL}/favicon.svg`}
   alt="Menu Icon"
   onClick={() => openSubmenu()}
@@ -435,63 +435,60 @@ export default function Header(props) {
 
           <div className="flex items-center gap-1">
 
-          <IoReorderThree  className="text-3xl cursor-pointer"   onClick={() => openSubmenu()}
-          />
+            <IoReorderThree className="text-3xl cursor-pointer" onClick={() => openSubmenu()}
+            />
 
-          <img src ="/assets/favicon.svg" alt="logo" className="w-[20px] bg-[#fff] rounded-full" />
+            <img src="/assets/favicon.svg" alt="logo" className="w-[20px] bg-[#fff] rounded-full" />
 
           </div>
 
-          
 
 
-          <div className="flex gap-3 justify-between items-center cursor-pointer">
-            {/* <MdOutlineShoppingBag />
-            <CiSearch />
-            <FaRegUser onClick={() => SetdropdownContent(true)} /> */}
+
+          <div className="flex gap-3 justify-between items-center cursor-pointer relative">
+            {/* Wishlist Button */}
             <button
+              aria-label="Wishlist"
               onClick={() =>
-                isLoggedIn()
-                  ? navigate("/wishlist")
-                  : toast.error("Please Login First")
+                isLoggedIn() ? navigate("/wishlist") : toast.error("Please Login First")
               }
+              className="relative"
             >
               <FiHeart className="text-xl cursor-pointer" />
+              {wishListItems > 0 && (
+                <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
+                  {wishListItems}
+                </span>
+              )}
             </button>
+
+            {/* Cart Button */}
             <button
+              aria-label="Cart"
               onClick={() =>
-                isLoggedIn()
-                  ? navigate("/checkout/cart")
-                  : toast.error("Please Login First")
+                isLoggedIn() ? navigate("/checkout/cart") : toast.error("Please Login First")
               }
+              className="relative"
             >
-              <div className="relative">
-                {/* Shopping Bag Icon */}
-                <HiOutlineShoppingBag className="text-2xl cursor-pointer" />
-
-                {/* Cart Item Count Badge */}
-                {cart.length > 0 && (
-                  <span className="absolute top-0 right-0 flex items-center justify-center mt-3 h-5 w-5 bg-[#7272e9] text-white text-xs font-bold rounded-full">
-                    {cart.length}
-                  </span>
-                )}
-              </div>
-
+              <HiOutlineShoppingBag className="text-2xl cursor-pointer" />
+              {cart.length > 0 && (
+                <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#7272e9] text-white text-xs font-bold rounded-full">
+                  {cart.length}
+                </span>
+              )}
             </button>
-            {/* <FaRegUser
-                onClick={() => SetdropdownContent(!dropdownContent)}
-                className="text-lg cursor-pointer"
-              /> */}
+
+            {/* User Profile Button */}
             <button
+              aria-label="Profile"
               onClick={() =>
-                isLoggedIn()
-                  ? navigate("/profile")
-                  : SetdropdownContent(!dropdownContent)
+                isLoggedIn() ? navigate("/profile") : SetdropdownContent(!dropdownContent)
               }
             >
               <FaRegUser className="text-lg cursor-pointer" />
             </button>
           </div>
+
         </div>
       </header >
       {isSubmenu && (
