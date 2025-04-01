@@ -90,7 +90,6 @@ export default function Home() {
       }))
       setAllCategories(formattedData)
 
-      console.log("formattedDataCateg", formattedData)
       setIsLoading(false)
 
 

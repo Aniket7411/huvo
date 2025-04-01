@@ -5,10 +5,11 @@ import { CiDeliveryTruck, CiDiscount1, CiTrash } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { FaArrowRight, FaMinus, FaPlus } from "react-icons/fa";
 import Modal from "react-modal"
+import CartProvider from "../../usecontext1/cartcontext";
 
 const CheckoutWithoutLogin = () => {
   const { cart, updateCartItem, removeCartItem } = useContext(CartContext);
-  
+
 
   const handleQuantityChange = (productId, action) => {
     updateCartItem(productId, action);
@@ -24,12 +25,12 @@ const CheckoutWithoutLogin = () => {
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-5 mt-8 text-center">Your Shopping Cart</h1>
-        
+
         {cart.length === 0 ? (
           <div className="text-center py-12">
             <h2 className="text-xl font-medium text-gray-700">Your cart is empty</h2>
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="mt-4 inline-block px-6 py-2 bg-[#011F4B] text-white rounded-lg hover:bg-[#011F4B] transition-colors"
             >
               Continue Shopping
@@ -48,15 +49,15 @@ const CheckoutWithoutLogin = () => {
                     <div className="col-span-3 text-center">Quantity</div>
                     <div className="col-span-2 text-right">Subtotal</div>
                   </div>
-                  
+
                   {cart.map((item) => {
                     const finalPrice = item.price - item.discount;
                     return (
                       <div key={item._id} className="grid grid-cols-12 items-center p-4 border-b border-gray-200">
                         <div className="col-span-5 flex items-center gap-4">
-                          <img 
-                            src={item.bannerImage || "https://via.placeholder.com/300"} 
-                            alt={item.name} 
+                          <img
+                            src={item.bannerImage || "https://via.placeholder.com/300"}
+                            alt={item.name}
                             className="w-20 h-20 object-cover rounded-lg"
                           />
                           <div>
@@ -64,7 +65,7 @@ const CheckoutWithoutLogin = () => {
                             <p className="text-sm text-gray-500">{item.brand.name}</p>
                           </div>
                         </div>
-                        
+
                         <div className="col-span-2 text-center">
                           <div className="flex items-center justify-center gap-1">
                             <PiCurrencyInr className="text-green-600" />
@@ -78,9 +79,9 @@ const CheckoutWithoutLogin = () => {
                             </div>
                           )}
                         </div>
-                        
+
                         <div className="col-span-3 flex items-center justify-center gap-3">
-                          <button 
+                          <button
                             onClick={() => handleQuantityChange(item.productId, "decrement")}
                             className="p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
                             disabled={item.quantity <= 1}
@@ -88,20 +89,20 @@ const CheckoutWithoutLogin = () => {
                             <FaMinus className="text-sm" />
                           </button>
                           <span className="w-8 text-center">{item.quantity}</span>
-                          <button 
+                          <button
                             onClick={() => handleQuantityChange(item.productId, "increment")}
                             className="p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
                           >
                             <FaPlus className="text-sm" />
                           </button>
                         </div>
-                        
+
                         <div className="col-span-2 flex items-center justify-end gap-4">
                           <div className="font-medium">
                             <PiCurrencyInr className="inline mr-1" />
                             {(finalPrice * item.quantity).toFixed(2)}
                           </div>
-                          <button 
+                          <button
                             onClick={() => removeCartItem(item.productId)}
                             className="text-red-500 hover:text-red-700 transition-colors"
                           >
@@ -121,15 +122,15 @@ const CheckoutWithoutLogin = () => {
                   return (
                     <div key={item._id} className="bg-white rounded-lg shadow-sm p-4">
                       <div className="flex gap-4">
-                        <img 
-                          src={item.bannerImage || "https://via.placeholder.com/300"} 
-                          alt={item.name} 
+                        <img
+                          src={item.bannerImage || "https://via.placeholder.com/300"}
+                          alt={item.name}
                           className="w-24 h-24 object-cover rounded-lg"
                         />
                         <div className="flex-1">
                           <h3 className="font-medium text-gray-900">{item.name}</h3>
                           <p className="text-sm text-gray-500 mb-2">{item.brand.name}</p>
-                          
+
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-1">
                               <PiCurrencyInr className="text-green-600" />
@@ -142,18 +143,18 @@ const CheckoutWithoutLogin = () => {
                                 </>
                               )}
                             </div>
-                            
-                            <button 
+
+                            <button
                               onClick={() => removeCartItem(item.productId)}
                               className="text-red-500"
                             >
                               <CiTrash className="text-lg" />
                             </button>
                           </div>
-                          
+
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3 bg-gray-100 rounded-full px-3 py-1">
-                              <button 
+                              <button
                                 onClick={() => handleQuantityChange(item.productId, "decrement")}
                                 disabled={item.quantity <= 1}
                                 className="disabled:opacity-50"
@@ -165,7 +166,7 @@ const CheckoutWithoutLogin = () => {
                                 <FaPlus className="text-xs" />
                               </button>
                             </div>
-                            
+
                             <div className="font-medium">
                               <PiCurrencyInr className="inline mr-1" />
                               {(finalPrice * item.quantity).toFixed(2)}
@@ -183,7 +184,7 @@ const CheckoutWithoutLogin = () => {
             <div className="lg:w-1/3">
               <div className="bg-white rounded-xl shadow-sm p-6 sticky top-4">
                 <h2 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h2>
-                
+
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal</span>
@@ -211,7 +212,7 @@ const CheckoutWithoutLogin = () => {
                     </span>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <CiDeliveryTruck className="text-lg" />
@@ -222,13 +223,13 @@ const CheckoutWithoutLogin = () => {
                     <span>Apply promo code at checkout</span>
                   </div>
                 </div>
-                
+
                 <button className="w-full mt-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
                   Proceed to Checkout
                 </button>
-                
-                <Link 
-                  to="/" 
+
+                <Link
+                  to="/"
                   className="mt-4 inline-block w-full text-center text-blue-600 hover:text-blue-800 transition-colors"
                 >
                   Continue Shopping

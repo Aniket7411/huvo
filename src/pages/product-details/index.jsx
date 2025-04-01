@@ -11,13 +11,23 @@ import { CiDeliveryTruck, CiStar } from "react-icons/ci";
 import SimilarProducts from "./similarcategoryproducts";
 import ProductImages from "../productimages";
 import { IoClose } from "react-icons/io5";
+import { CartContext } from "../../usecontext1/cartcontext";
 // import { CartContext } from "../../usecontext1/cartcontext";
+
+
+const isLoggedIn = localStorage.getItem("accessToken")
+
+console.log("isLoggedInisLoggedIn",isLoggedIn)
+
+
 
 
 
 export default function ProductDetails() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isSizeModal, setIsSizeModal] = useState(false)
+  const { addToCartContext, cart, removeFromCartContext } = useContext(CartContext)
+
 
   const openPaymentModal = () => {
     setIsPaymentModalOpen(true);
@@ -34,7 +44,7 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(false);
   // const { cart, addToCartContext, removeFromCartContext } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1); // Track the quantity, default to 1
-  const [selectedSize, setSelectedSize] = useState(""); // Track selected size
+  const [selectedSize, setSelectedSize] = useState(null); // Track selected size
   const [reviews, addReviews] = useState()
   const [projectObjectId, setProjectObjectId] = useState()
   const [rating, setRating] = useState(0); // State to track the selected star rating
@@ -121,30 +131,51 @@ export default function ProductDetails() {
 
 
 
-  const addToCart = async (productDetails) => {
+  const addToCart = async (productDetails, selectedSize) => {
+    // Check if a size has been selected
+    if (selectedSize === null) {
+      toast.warn("Please select a size");
+      return;  // Exit the function early if no size is selected
+    }
+  
+    // Check if the user is logged in
+    if (isLoggedIn === null) {
+      // If not logged in, add to cart context immediately (using only product details)
+      addToCartContext(productDetails, selectedSize);
+      toast.success("Product added to cart locally.");
+      return;  // Exit early since the cart is updated without needing an API call
+    } else {
+      try {
 
 
-
-    console.log("dataForCartdataForCart", productDetails)
-
-
-    console.log("dataForCartdataForCart", JSON.stringify(productDetails))
-    const parsedProductDetails = JSON.parse(JSON.stringify(productDetails));
-    console.log("Parsed Product Details:", parsedProductDetails);
-
-
-    // addToCartContext(dataForCart);
-
-    // try {
-    //   const response = await HttpClient.post(`/cart/`, dataForCart)
-    //   toast.success(response.message);
-    //   getCartData();
-    // } catch (error) {
-    //   console.log(error)
-
-    // }
+        // Prepare the cart data object to send to the server
+     const cartData = {
+       productId: productDetails?.productId,
+       color: productDetails?.colors[0]?.colorCode,  // Assuming colors array exists and has colorCode
+       size: selectedSize,
+     };
+   
+     console.log("Logged in, sending cart data:", cartData);
+       // Make an API call to add the product to the cart on the server
+       const response = await HttpClient.post("/cart/", cartData);
+   
+       if (response?.status === 200) {
+         toast.success("Product added to cart successfully.");
+         getCartData();  // Assuming this function updates the cart data in the UI
+       } else {
+         toast.error("Failed to add product to cart.");
+       }
+     } catch (error) {
+       console.error("Error adding product to cart:", error);
+       toast.error("Failed to add product to cart.");
+     }
+    }
+  
+   
+  
+   
   };
-
+  
   // const removeProductFromCart = (productId) => {
   //   removeFromCartContext(productId)
   // };
@@ -342,13 +373,16 @@ export default function ProductDetails() {
 
                   {/* Sizes Section */}
                   <div className="mt-1 mb-1">
-                    <p className="text-gray-600 font-medium">Sizes Available: <span onClick={()=> setIsSizeModal(true)} className="text-blue-500 text-lg underline cursor-pointer ">Size Chart</span></p>
+                    <p className="text-gray-600 font-medium">Sizes Available: <span onClick={() => setIsSizeModal(true)} className="text-blue-500 text-sm underline cursor-pointer ">Size Chart</span></p>
                     <div className="flex flex-wrap gap-3 mt-1">
                       {productDetails?.sizes?.length > 0 ? (
                         productDetails.sizes.map((sizeObj, index) => (
                           <span
                             key={index}
-                            onClick={() => setSelectedSize(sizeObj.size)}
+                            onClick={() => {
+                              setSelectedSize(sizeObj.size);
+                              console.log(`Size selected: ${sizeObj.size}`);
+                            }}
                             className={`px-5 py-2 border rounded-md text-sm font-medium cursor-pointer transition-all duration-200 shadow-sm
                     ${selectedSize === sizeObj.size
                                 ? "bg-green-500 text-white border-green-600 shadow-md"
@@ -376,7 +410,7 @@ export default function ProductDetails() {
                   <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-5 relative">
                     {/* Close Button */}
                     <button
-                    onClick={()=> setIsSizeModal(false)}
+                      onClick={() => setIsSizeModal(false)}
                       className="absolute top-3 right-3 text-gray-600 hover:text-gray-900"
                     >
                       <IoClose size={24} />
@@ -426,7 +460,7 @@ export default function ProductDetails() {
                     <div className="flex justify-center mt-4">
                       <button
                         className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-                        onClick={()=> setIsSizeModal(false)}
+                        onClick={() => setIsSizeModal(false)}
 
                       >
                         Close
@@ -443,7 +477,7 @@ export default function ProductDetails() {
 
                     <button
                       key={productDetails?.productId}
-                      onClick={() => addToWishlist(productDetails)}
+                      onClick={() => addToWishlist(productDetails, selectedSize)}
                       className="px-3 py-1 bg-[#011F4B] text-white font-semibold rounded-lg shadow-md hover:bg-[#022C6B] transition-all duration-200 transform hover:scale-105"
                     >
                       Add to Wishlist
@@ -451,13 +485,23 @@ export default function ProductDetails() {
 
                     {/* Add to Cart Button */}
 
-                    <button
-                      key={productDetails?.productId}
-                      onClick={() => addToCart(productDetails)}
-                      className="px-3 py-1 bg-[#011F4B] text-white font-semibold rounded-lg shadow-md hover:bg-[#022C6B] transition-all duration-200 transform hover:scale-105"
-                    >
-                      Add to Cart
-                    </button>
+                    {cart.some((each) => each.productId === productDetails?.productId) ? (
+                      <button
+                        onClick={() => removeFromCartContext(productDetails?.productId)}
+
+                        className="px-3 py-1 bg-green-500 text-white font-semibold rounded-lg shadow-md">
+                        Added to Cart
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => addToCart(productDetails, selectedSize)}
+                        className="px-3 py-1 bg-[#011F4B] text-white font-semibold rounded-lg shadow-md hover:bg-[#022C6B] transition-all duration-200 transform hover:scale-105"
+                      >
+                        Add to Cart
+                      </button>
+                    )}
+
+
 
 
                   </div>
@@ -512,7 +556,7 @@ export default function ProductDetails() {
 
                 <section
                   id="review"
-                  className="h-auto p-4 md:p-6 bg-gray-100 rounded-lg shadow-sm"
+                  className="h-auto p-4 md:p-4 bg-gray-100 rounded-lg shadow-sm"
                   style={{ scrollMarginTop: '100px' }}
                 >
                   <div>

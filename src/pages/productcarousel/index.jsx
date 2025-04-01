@@ -32,7 +32,9 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
 
   return (
     <div className="p-4 bg-gray-50">
-      <h1 className="text-2xl font-bold mb-6 text-center">{title}</h1>
+<h1 className="text-3xl font-inter font-extrabold text-transparent font-sans bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600  text-center transform transition-all duration-300 hover:scale-105">
+  {title}
+</h1>
       {products.length ? (
         <Slider {...settings}>
           {products.map((product) => {
@@ -71,7 +73,9 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
           })}
         </Slider>
       ) : (
-        <h1 className="text-2xl font-bold mb-6 text-center">No products available</h1>
+<h1 className="text-2xl font-semibold text-gray-800 text-center">
+  No products available
+</h1>
       )}
     </div>
   );
