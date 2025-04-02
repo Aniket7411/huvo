@@ -67,17 +67,8 @@ export default function ProductDetails() {
     try {
       const data = { productId: id };
       const response = await HttpClient.get("/product/productId", data);
-
+      console.log("responseresponseresponse", response)
       setProductDetails(response.product)
-
-
-
-
-
-
-
-
-
       setProjectObjectId(response.product._id)
     } catch (error) {
       toast.error(error?.response?.data?.message);
