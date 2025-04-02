@@ -23,6 +23,7 @@ import { Switch } from "antd"
 
 import Modal from "react-modal";
 import uploadImageOnCloudinary from "../../server/client/imageUpload";
+import LoadSpinner from "../../components/LoadSpinner";
 
 Modal.setAppElement('#root'); // Assuming your root element's ID is 'root'
 
@@ -47,6 +48,7 @@ export default function Profile() {
   const [allOrders, setAllOrders] = useState([]);
   const [allInvoice, setAllInvoice] = useState([]);
   const [userInvoice, setUserInvoice] = useState([])
+  const [loading,setLoading]=useState(false);
 
   const [allCoupon, setAllCoupon] = useState([]);
   const [isOpenAddress, setIsOpenAddress] = useState(false);
@@ -95,6 +97,7 @@ export default function Profile() {
 
 
   const handleApproval = async () => {
+    debugger
 
     console.log(gst, gstUrl, pan)
 
@@ -106,12 +109,17 @@ export default function Profile() {
     }
 
     try {
+      //debugger;
+      setLoading(true)
       const response = await HttpClient.post(`/approval/submit`, verficationDetails);
-      toast.success(response?.status);
+      setLoading(false)
+      toast.success(response?.message);
 
     }
     catch (error) {
-      console.error(error);
+      setLoading(false);
+     // console.error(error);
+      toast.error(error?.response?.data?.message)
     }
   }
 
@@ -492,11 +500,14 @@ export default function Profile() {
           ) : (
             <div className="text-center">
               <p className="text-red-600 font-bold text-lg">
-                Your business is not verified yet. Please verify!
+                Your business is not verified yet. Upload Document in
+                Verification Details and Complete Business Details
               </p>
-              <button className="bg-[#C8102E] text-white font-bold py-1 px-4 rounded-full hover:opacity-90 mt-4">
+              {/* <button 
+             // onClick={}
+              className="bg-[#C8102E] text-white font-bold py-1 px-4 rounded-full hover:opacity-90 mt-4">
                 Verify Now
-              </button>
+              </button> */}
             </div>
           )}
         </div>
@@ -1449,6 +1460,9 @@ export default function Profile() {
                   </form>
                 </div>
               </TabPanel>
+
+
+
               <TabPanel className="bg-[#F2F2F2] h-full">
                 <div className=" grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div className=" py-5 px-10">
@@ -1661,13 +1675,22 @@ export default function Profile() {
                     </div>)}
 
                   <div>
+                   {
+                   loading===false?
                     <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-8 py-3 mx-auto block"
                       onClick={handleApproval}
 
                     >Submit Docs</button>
+                    :
+                    <LoadSpinner/>
+                   }
                   </div>
                 </div>
               </TabPanel>
+
+
+
+              
               <TabPanel className=" h-full">
                 <div className="font-inter text-[24px] font-medium leading-[29.05px] text-left">
                   One Time Platform Fees For Registration

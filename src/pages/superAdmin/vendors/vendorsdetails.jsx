@@ -287,7 +287,7 @@ export default function Vendorsdetail() {
 
             <Link
             state={vendorProductDetails}
-      to="/admin/vendors/product_details"
+      to="/admin/vendors/product_details/"
       aria-label="Go to home page"
       className="block p-4 mb-2 bg-blue-50 hover:bg-blue-100 rounded-lg shadow-md transition-all duration-200"
     >

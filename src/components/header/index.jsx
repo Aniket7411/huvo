@@ -11,6 +11,7 @@ import { HttpClient } from "../../server/client/http";
 import { CiSearch } from "react-icons/ci";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { CartContext } from "../../usecontext1/cartcontext";
+import Loader from "../loader";
 
 
 
@@ -36,6 +37,7 @@ export default function Header(props) {
 
 
   const { pathname } = location;
+  const [loading,setLoading]=useState(false);
   const pathInclude = pathname === '/men-collection' || pathname === '/women-collection' || pathname === '/kids-collection' || pathname === '/'
   const [isSubmenu, setisSubmenu] = useState(false);
   const [dropdownContent, SetdropdownContent] = useState(false);
@@ -83,7 +85,10 @@ export default function Header(props) {
 
   const clickToLogout = async () => {
     try {
+
+      setLoading(true);
       const { message } = await HttpClient.post("/users/logout");
+      setLoading(false);
       toast.success(message);
       navigate("/login");
       LogOut();
@@ -324,8 +329,13 @@ export default function Header(props) {
                           <li className="p-2 hover:bg-gray-100 cursor-pointer">My Profile</li>
                         </Link>
 
+                      {
+                        loading===false?
                         <li className="p-2 hover:bg-gray-100 cursor-pointer" onClick={clickToLogout}
                         >Logout</li>
+                        :
+                        <Loader/>
+                      }
                       </ul>
 
 
