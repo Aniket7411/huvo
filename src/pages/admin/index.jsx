@@ -18,6 +18,7 @@ function Admin() {
 
   const [dashboardData, setDashboardData] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [checkDocModal,setCheckDocModal]=useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate();
 
@@ -29,6 +30,7 @@ function Admin() {
       const response = await HttpClient.get("/dashboard")
       const data = response
       setDashboardData(data);
+      setCheckDocModal(!(data?.sellerDetails?.verificationStatus));
       setIsLoading(false)
 
     } catch (error) {
@@ -296,7 +298,7 @@ function Admin() {
 
         {/* Modal */}
         <Modal
-          isOpen={!dashboardData?.sellerDetails?.verificationStatus}
+          isOpen={checkDocModal}
           contentLabel="Upload Document Prompt"
           className="bg-white p-6 w-[400px] mx-auto rounded-lg shadow-lg"
           overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
@@ -304,6 +306,7 @@ function Admin() {
           <h2 className="text-xl font-bold mb-4">Document Upload Required</h2>
           <p className="text-gray-700 mb-6">
             A document upload is required to proceed. Do you want to upload it now?
+            If already uploaded , ignore this message
           </p>
          
             <button
@@ -312,6 +315,13 @@ function Admin() {
               className="px-4 py-2 bg-green-500 text-white rounded-md"
             >
               Upload Document
+            </button>
+            <button
+                  onClick={() =>setCheckDocModal(false)}
+
+              className="px-4 py-2 mx-2 bg-red-500 text-white rounded-md"
+            >
+              Close
             </button>
         </Modal>
 
