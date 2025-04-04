@@ -12,6 +12,7 @@ import { CiSearch } from "react-icons/ci";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { CartContext } from "../../usecontext1/cartcontext";
 import Loader from "../loader";
+import { motion } from "framer-motion";
 
 
 
@@ -37,7 +38,7 @@ export default function Header(props) {
 
 
   const { pathname } = location;
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
   const pathInclude = pathname === '/men-collection' || pathname === '/women-collection' || pathname === '/kids-collection' || pathname === '/'
   const [isSubmenu, setisSubmenu] = useState(false);
   const [dropdownContent, SetdropdownContent] = useState(false);
@@ -68,6 +69,14 @@ export default function Header(props) {
     getWishList()
   }, [])
 
+
+  const handleCategoryChange = (type, event) => {
+    const category = event.target.value;
+    if (category) {
+      navigate(`/${type}-collection/${category}`);
+      closeSubmenu();
+    }
+  };
 
   const handleMouseEnter = () => {
     // Clear any existing hide timeout
@@ -329,13 +338,13 @@ export default function Header(props) {
                           <li className="p-2 hover:bg-gray-100 cursor-pointer">My Profile</li>
                         </Link>
 
-                      {
-                        loading===false?
-                        <li className="p-2 hover:bg-gray-100 cursor-pointer" onClick={clickToLogout}
-                        >Logout</li>
-                        :
-                        <Loader/>
-                      }
+                        {
+                          loading === false ?
+                            <li className="p-2 hover:bg-gray-100 cursor-pointer" onClick={clickToLogout}
+                            >Logout</li>
+                            :
+                            <Loader />
+                        }
                       </ul>
 
 
@@ -450,9 +459,12 @@ export default function Header(props) {
 
             <img src="/assets/favicon.svg" alt="logo" className="w-[20px] bg-[#fff] rounded-full" />
 
+
+
           </div>
 
 
+          <img src="/assets/newlogo.jpeg" alt="logo" className=" w-[110px] h-[22px] bg-[#fff] rounded-full" />
 
 
           <div className="flex gap-3 justify-between items-center cursor-pointer relative">
@@ -516,37 +528,45 @@ export default function Header(props) {
               </button>
             </div>
             <ul className="text-[#56B6E6] font-semibold">
-              <li
-                onClick={() => closeSubmenu()}
-                className=" cursor-pointer mb-5"
-              >
+              <li onClick={closeSubmenu} className="cursor-pointer mb-2">
                 <Link to="/">Home</Link>
               </li>
 
-              <li
-                onClick={() => closeSubmenu()}
-                className=" cursor-pointer mb-5"
-              >
-                <Link to="/men-collection">Men</Link>
-              </li>
-              <li
-                onClick={() => closeSubmenu()}
-                className=" cursor-pointer mb-5"
-              >
-                <Link to="/women-collection">Women</Link>
-              </li>
-              <li
-                onClick={() => closeSubmenu()}
-                className="cursor-pointer mb-5"
-              >
-                <Link to="/kids-collection">Kids</Link>
-              </li>
-              {/* <li
-                onClick={() => closeSubmenu()}
-                className="text-[#515151] cursor-pointer mb-3"
-              >
-                <Link to="/brands">Brands</Link>
-              </li> */}
+              {["men", "women", "kids"].map((type) => (
+                <li key={type} className="cursor-pointer mb-2 relative">
+                  <label className="block mb-1 capitalize">{type}</label>
+                  <motion.select
+                    onChange={(e) => handleCategoryChange(type, e)}
+                    className="p-2 border rounded w-auto bg-white"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  >
+                    <option value="">Select Category</option>
+                    {type === "men" && (
+                      <>
+                        <option value="jeans">Jeans</option>
+                        <option value="shirt">Shirt</option>
+                        <option value="pant">Pant</option>
+                      </>
+                    )}
+                    {type === "women" && (
+                      <>
+                        <option value="dress">Dress</option>
+                        <option value="skirt">Skirt</option>
+                        <option value="top">Top</option>
+                      </>
+                    )}
+                    {type === "kids" && (
+                      <>
+                        <option value="t-shirt">T-Shirt</option>
+                        <option value="shorts">Shorts</option>
+                        <option value="jacket">Jacket</option>
+                      </>
+                    )}
+                  </motion.select>
+                </li>
+              ))}
             </ul>
           </div>
         </section>

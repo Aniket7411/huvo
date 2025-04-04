@@ -94,6 +94,8 @@ export default function CheckOut() {
 
       console.log("cartcartcartcart", response)
 
+      
+
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
@@ -745,17 +747,17 @@ export default function CheckOut() {
                                       />
                                       <div>
                                         <div className="flex items-center gap-2 mb-2">
-                                          <p>{item.name}</p>
+                                          <p>{item?.name}</p>
                                           {/* <p className="border-[1px] border-[#011F4B] rounded-[20px] py-1 px-3">
                                           HOME
                                         </p> */}
                                         </div>
                                         <p className="text-[#353535] font-normal mb-3">
-                                          {item.address}, {item.town}, {item.city},{" "}
-                                          {item.state}, {item.postalCode}
+                                          {item?.address}, {item?.town}, {item?.city},{" "}
+                                          {item?.state}, {item?.postalCode}
                                         </p>
                                         <p className="text-[#353535] font-normal mb-3">
-                                          Mobile No.- {item.mobileNumber}
+                                          Mobile No.- {item?.mobileNumber}
                                         </p>
                                         <div className="flex gap-2">
                                           <button
@@ -768,7 +770,7 @@ export default function CheckOut() {
                                           <button
                                             className="text-[#011F4B] font-medium text-xs border-2 border-[#011F4B] rounded-md px-6 py-1"
                                             onClick={() => {
-                                              setFormData(userDetails.address[i]);
+                                              setFormData(userDetails?.address[i]);
                                               setSelectedAddressIndex(i);
                                               setIsOpenAddress(true);
                                             }}

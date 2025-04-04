@@ -22,6 +22,7 @@ import ProductCarouselmd from "../productcarousel";
 import Loader from "../../components/loader";
 import { CiSearch } from "react-icons/ci";
 import CategorySlider from "../categoryslider";
+import ProductGrid from "../mobileviewproduct";
 
 
 const testimonials = [
@@ -277,7 +278,11 @@ export default function Home() {
               <div>
                 <Brandslider />
 
-                <ProductCarouselmd womenProducts={womenProducts} />
+                <section className=" hidden md:block">
+
+                <ProductCarouselmd  womenProducts={womenProducts} />
+                </section>
+                <ProductGrid womenProducts={womenProducts}  />
 
 
               </div>
@@ -333,7 +338,13 @@ export default function Home() {
               <div>
                 <Brandslider />
 
-                <ProductCarouselmd menProducts={menProducts} />
+                <section className=" hidden md:block">
+
+<ProductCarouselmd  menProducts={menProducts} />
+</section>
+<ProductGrid menProducts={menProducts}  />
+
+
 
 
               </div>
@@ -378,7 +389,15 @@ export default function Home() {
               <div>
                 <Brandslider />
 
-                <ProductCarouselmd kidsProducts={kidsProducts} />
+
+                <section className="  md:block">
+
+<ProductCarouselmd  kidsProducts={kidsProducts} />
+</section>
+<ProductGrid kidsProducts={kidsProducts}  />
+
+
+
 
               </div>
 

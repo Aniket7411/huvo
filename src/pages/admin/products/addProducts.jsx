@@ -8,8 +8,14 @@ import './products.css'
 import Select from "react-dropdown-select";
 import { MdArrowOutward } from "react-icons/md";
 import Loader from "../../../components/loader";
+import ReactModal from "react-modal";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 function ProductAddPage() {
+
+  const [verifyModal, setVerifyModal] = useState(true)
+
+  const [totalProductCost, setTotalProductCost] = useState(null)
   const options = [
     { id: 1, name: "Red", value: "red", colorCode: "#FF0000" },
     { id: 2, name: "Green", value: "green", colorCode: "#008000" },
@@ -25,7 +31,7 @@ function ProductAddPage() {
   ];
 
 
-  const [isLoading,setIsloading] = useState(false)
+  const [isLoading, setIsloading] = useState(false)
 
   const navigate = useNavigate();
   const {
@@ -40,7 +46,7 @@ function ProductAddPage() {
     },
   });
 
-  const [returnableDays,setReturnableDays] = useState()
+  const [returnableDays, setReturnableDays] = useState()
 
   const [bannerImage, setBannerImage] = useState("");
   const [productDetails, setProductDetails] = useState([""]);
@@ -77,9 +83,12 @@ function ProductAddPage() {
 
 
 
+
   const onSubmit = async (data) => {
     let platformCharge = 0;
     const shippingFee = 100
+
+    console.log("",data)
 
     // Calculate platform fee based on data.price
     if (data.price <= 500) {
@@ -89,6 +98,9 @@ function ProductAddPage() {
     } else if (data.price > 1000) {
       platformCharge = 20; // Rs. 20 for amount above 1000
     }
+
+
+
 
     try {
       setIsloading(true)
@@ -105,7 +117,7 @@ function ProductAddPage() {
 
       };
       const response = await HttpClient.post("/product", info);
-      console.log("response",response)
+      console.log("response", response)
       isLoading(false)
       toast.success("Product added successfully")
 
@@ -206,7 +218,7 @@ function ProductAddPage() {
     setColorWithImages(newColorWithImages);
     console.log(`Color changed for index ${i}: ${selectedColorCode}`); // Log the selected color code
   };
-  
+
 
   return (
     <div className="container  sm:mx-auto my-2">
@@ -634,6 +646,7 @@ function ProductAddPage() {
 
 
 
+
           <div className="mb-2">
             <label className="block text-md font-medium text-gray-700">
               Colors
@@ -650,16 +663,16 @@ function ProductAddPage() {
                     </label>
                     <div className="flex  p-3 gap-3 my-2">
 
-                    <select
-  value={item.colorCode} // Bind the current colorCode value
-  onChange={(e) => handleColorChange(e.target.value, i)} // Pass the selected value and index
->
-  {options.map((option) => (
-    <option key={option.id} value={option.colorCode}>
-      {option.name}
-    </option>
-  ))}
-</select>
+                      <select
+                        value={item.colorCode} // Bind the current colorCode value
+                        onChange={(e) => handleColorChange(e.target.value, i)} // Pass the selected value and index
+                      >
+                        {options.map((option) => (
+                          <option key={option.id} value={option.colorCode}>
+                            {option.name}
+                          </option>
+                        ))}
+                      </select>
 
 
 
@@ -799,20 +812,35 @@ function ProductAddPage() {
           </div>
 
           <div className="flex items-center gap-2">
-  <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
-    Returnable within
-  </label>
-  <input 
-    type="number" 
-    min="1"
-    max="30"
-    value={returnableDays}
-    onChange={(e) => {setReturnableDays(e.target.value)}}
-    className="w-16 px-2 py-1 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-    placeholder="Days"
-  />
-</div>
-          
+            <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+              Returnable within
+            </label>
+            <input
+              type="number"
+              min="1"
+              max="30"
+              value={returnableDays}
+              onChange={(e) => { setReturnableDays(e.target.value) }}
+              className="w-16 px-2 py-1 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Days"
+            />
+          </div>
+
+          <ReactModal
+            isOpen={verifyModal}
+            onRequestClose={() => setVerifyModal(false)}  // Allows closing on overlay click & Esc key
+            className="bg-white rounded-lg shadow-lg p-6 w-96 mx-auto mt-20 relative"
+            overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          >
+            {/* Modal Content */}
+            <h2 className="text-xl font-bold mb-4">Notifications</h2>
+            <button onClick={() => setVerifyModal(false)}>Close</button>
+
+
+            <h1>Product Image</h1>
+            <img src={bannerImage} alt="bannerImage" />
+            <p>Product Price </p>
+          </ReactModal>
 
 
           <div>

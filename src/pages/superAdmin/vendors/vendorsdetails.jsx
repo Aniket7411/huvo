@@ -23,7 +23,8 @@ export default function Vendorsdetail() {
   const [sellerStoreDetails, setSellerStoreDetails] = useState({})
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [actionModal, setActionModal] = useState(true);
-  const [vendorProductDetails, setVendorProductDetails] =useState()
+  const [vendorProductDetails, setVendorProductDetails] = useState()
+  const [sellerEmail, setSellerEmail] = useState("")
 
 
   const navigate = useNavigate();
@@ -39,6 +40,11 @@ export default function Vendorsdetail() {
 
     try {
       const response = await HttpClient.get(`/dashboard/vendors/${_id}`);
+      console.log("responseresponse",response?.vendorDetail?.email)
+      setSellerEmail(response?.vendorDetail?.email)
+
+
+      console.log("basics", response)
       setVendorDetails(response.vendorDetail);
       setVendorProductDetails(response)
       const formattedSellerDetails = response.vendorDetail.address.map((each) => ({
@@ -53,9 +59,9 @@ export default function Vendorsdetail() {
 
       }))
 
+
       setBasicSellerDetails(formattedSellerDetails[0])
 
-      console.log(sellerStoreDetails)
 
 
       const formattingStoreDetails = response.vendorDetail.storeDetails.map((eachDetail) => ({
@@ -64,6 +70,8 @@ export default function Vendorsdetail() {
         storeDescription: eachDetail.storeDescription,
         storeName: eachDetail.storeName
       }))
+
+      console.log("formattedSellerDetails", formattedSellerDetails)
       setSellerStoreDetails(formattingStoreDetails)
 
 
@@ -87,49 +95,7 @@ export default function Vendorsdetail() {
   };
 
 
-  const vendorActions = async (action, id) => {
-    console.log(action)
-    console.log(id)
-
-    if (action === "block") {
-      try {
-
-        const response = await HttpClient.put("/users/block", {
-          sellerId: id,
-          blockType: action
-        })
-        toast.success(response.message)
-      } catch (error) {
-        toast.error("Could't Suspend")
-      }
-
-    }
-    else if (action === "delete") {
-      try {
-        const response = await HttpClient.put("/users/delete", {
-          sellerId: id,
-
-        })
-        console.log(response)
-      } catch (error) {
-
-      }
-
-    }
-    else if (action === "approve") {
-      try {
-        const response = await HttpClient.put("/approval/verify", {
-          sellerId: id,
-
-        })
-        console.log(response)
-      } catch (error) {
-
-      }
-    }
-
-
-  }
+ 
 
   const handleModalClose = () => {
     setActionModal(false)
@@ -138,6 +104,8 @@ export default function Vendorsdetail() {
   const handleConfirmAction = () => {
     console.log("handleConfirmAction")
   }
+
+  console.log("basicSellerDetails", basicSellerDetails)
 
   return (
     <div className="flex h-screen">
@@ -169,7 +137,7 @@ export default function Vendorsdetail() {
         {/* Scrollable Content */}
         {vendorDetails ? (
           <div className="">
-            <div className="flex flex-wrap justify-between mx-2 py-16 items-center gap-4">
+            <div className="flex flex-wrap justify-between mx-2 py-5 items-center gap-4">
               <div className="flex gap-2 items-center">
                 <div className="h-[100px] w-[100px] bg-[#D9D9D9] rounded-full flex items-center justify-center">
                   {" "}
@@ -222,7 +190,7 @@ export default function Vendorsdetail() {
                     Email:
                   </h1>
                   <p className="font-poppins font-normal text-[16px] leading-[21px]">
-                    {basicSellerDetails?.email}
+                    {sellerEmail}
                   </p>
                 </div>
                 <div className="flex flex-col">
@@ -282,21 +250,21 @@ export default function Vendorsdetail() {
                   </div>
                 </div>
               </Modal>
-            )}         
+            )}
             <div className="mx-5 py-5">
 
-            <Link
-            state={vendorProductDetails}
-      to="/admin/vendors/product_details/"
-      aria-label="Go to home page"
-      className="block p-4 mb-2 bg-blue-50 hover:bg-blue-100 rounded-lg shadow-md transition-all duration-200"
-    >
-      <h1 className="font-poppins font-semibold text-xl text-blue-800">
-        Products added by Seller
-      </h1>
-    </Link>
+              <Link
+                state={vendorProductDetails}
+                to="/admin/vendors/product_details/"
+                aria-label="Go to home page"
+                className="block p-4 mb-2 bg-blue-50 hover:bg-blue-100 rounded-lg shadow-md transition-all duration-200"
+              >
+                <h1 className="font-poppins font-semibold text-xl text-blue-800">
+                  Products added by Seller
+                </h1>
+              </Link>
 
-    
+
               <h5 className="font-poppins font-medium text-[20px] leading-[21px] text-[#011F4B] ">
                 Performance Metrics
               </h5>
@@ -340,7 +308,7 @@ export default function Vendorsdetail() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-wrap py-10 gap-5">
+              {/* <div className="flex flex-wrap py-10 gap-5">
                 <Button
                   className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] border-[#8592A3] bg-[#F6FAFF] text-[#000000]"
                   onClick={() => {
@@ -359,7 +327,7 @@ export default function Vendorsdetail() {
                 <Button onClick={() => { vendorActions("approve", id) }} className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#18B348] border-[#007D27] text-[#FFFFFF]">
                   Approve
                 </Button>
-              </div>
+              </div> */}
 
 
 

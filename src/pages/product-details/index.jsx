@@ -44,6 +44,7 @@ export default function ProductDetails() {
   const [description, setDescription] = useState("")
   const [allReviews, setAllReviews] = useState([])
   const [reviewLoading, setReviewsLoading] = useState(false)
+  const [price,setPrice] = useState()
 
   const [recommendedProducts, setRecommendedProducts] = useState([])
 
@@ -67,8 +68,10 @@ export default function ProductDetails() {
     try {
       const data = { productId: id };
       const response = await HttpClient.get("/product/productId", data);
-      console.log("responseresponseresponse", response)
+      console.log("responseresponseresponse", response.product.price)
+      setPrice(response.product.price)
       setProductDetails(response.product)
+
       setProjectObjectId(response.product._id)
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -112,6 +115,9 @@ export default function ProductDetails() {
 
   const tokenIfLoggedIn = localStorage.getItem("accessToken")
 
+  console.log("tokenIfLoggedIntokenIfLoggedIn",tokenIfLoggedIn)
+
+
 
 
   const addToCart = async (productDetails, selectedSize) => {
@@ -120,29 +126,40 @@ export default function ProductDetails() {
       return;
     }
 
-    if (!isLoggedIn) {
+
+    console.log("isLoggedInisLoggedIn",isLoggedIn)
+
+
+    if (tokenIfLoggedIn === null) {
       addToCartContext(productDetails, selectedSize);
       toast.success("Product added to cart locally.");
       return;
+    } else {
+      const cartData = {
+        productId: productDetails?.productId,
+        color: productDetails?.colors?.[0]?.colorCode || "Default Color", // Handle missing color
+        size: selectedSize,
+        price
+      };
+
+      try {
+        const response = await HttpClient.post("/cart/", cartData);
+        setLoading(true)
+        
+
+
+        if (response?.success === true) {
+          setLoading(false)
+          toast.success("Product added to cart successfully.");
+        }
+      } catch (error) {
+        console.error("Error adding product to cart:", error);
+        toast.error("An error occurred while adding to the cart.");
+        setLoading(false)
+      }
     }
 
-    const cartData = {
-      productId: productDetails?.productId,
-      color: productDetails?.colors?.[0]?.colorCode || "Default Color", // Handle missing color
-      size: selectedSize,
-    };
 
-    try {
-      const response = await HttpClient.post("/cart/", cartData);
-
-      if (response?.status === 200) {
-        console.log("Cart Response:", response?.status);
-        toast.success("Product added to cart successfully.");
-        } 
-    } catch (error) {
-      console.error("Error adding product to cart:", error);
-      toast.error("An error occurred while adding to the cart.");
-    }
   };
 
 
@@ -187,8 +204,10 @@ export default function ProductDetails() {
         }
         try {
           const response = await HttpClient.post("/wishlist/", wishlistData)
+          getProductDetails()
         } catch (error) {
           toast.error(error.message)
+
         }
       }
 
@@ -312,7 +331,7 @@ export default function ProductDetails() {
                     {/* Discount Amount */}
                     <span className="text-sm mr-2 text-gray-500 ml-2 flex items-center"> -
                       (<PiCurrencyInr className="mr-1" />{productDetails?.discount})
-                    </span> 
+                    </span>
 
                     {/* Discounted Price */}
                     <span className="text-green-500 flex items-center text-xl font-bold">
@@ -320,7 +339,7 @@ export default function ProductDetails() {
                       {productDetails?.price - productDetails?.discount}
                     </span>
 
-                    
+
                   </p>
 
                   {/* Material & Care Section */}
@@ -457,7 +476,7 @@ export default function ProductDetails() {
                         onClick={() => removeFromCartContext(productDetails?.productId)}
 
                         className="px-3 py-1 bg-green-500 text-white font-semibold rounded-lg shadow-md">
-                        Added to Cart
+                        Remove from Cart
                       </button>
                     ) : (
                       <button

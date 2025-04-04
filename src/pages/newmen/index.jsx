@@ -8,6 +8,8 @@ import { CiDeliveryTruck, CiDiscount1, CiFilter } from "react-icons/ci";
 import ProductsCarousel from "../productcarousel";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { useParams } from "react-router-dom";
+import ProductGrid from "../mobileviewproduct";
+
 
 
 import Loader from "../../components/loader";
@@ -15,6 +17,7 @@ import Loader from "../../components/loader";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import Brandslider from "../brands";
+import CategorySlider from "../categoryslider";
 
 
 export default function WomenCollection() {
@@ -181,9 +184,9 @@ export default function WomenCollection() {
   }, []);
 
 
-  const womenProducts = allProducts.filter((item) => item.group === "women").splice(0, 8);
+  const menProducts = allProducts.filter((item) => item.group === "men").splice(0, 8);
 
-  console.log("menProductsmenProducts", womenProducts)
+  console.log("menProductsmenProducts", menProducts)
   console.log("searchGroupsearchGroupsearchGroup", searchGroup)
 
 
@@ -192,8 +195,13 @@ export default function WomenCollection() {
 
 
       <div class="text-center mt-3">
-        <h1 class="md:text-3xl text-lg  font-bold text-gray-800 mt-[60px] " >Men's Clothing</h1>
-        <p className="font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg text-[#2581eb] mt-2">
+      <h1 
+  className="text-lg md:text-3xl font-bold text-transparent bg-clip-text 
+             bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 
+             mt-[60px] text-center transition-all duration-300 hover:scale-105"
+>
+  Men's Clothing
+</h1>         <p className="font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg text-[#2581eb] mt-2">
           Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
 
         </p>
@@ -332,6 +340,7 @@ export default function WomenCollection() {
           {/* Desktop Grid Section */}
           <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
             <Brandslider />
+            <CategorySlider/>
 
 
             {searchTerm !== "" ? (
@@ -345,89 +354,17 @@ export default function WomenCollection() {
             )}
 
 
-            <div className="hidden md:grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4">
-              {womenProducts.map((eachProduct, i) => {
-                const finalPrice = eachProduct.price - eachProduct.discount;
-                return (
-                  <div
-                    key={i}
-                    className="bg-white flex flex-col rounded-xl p-3 shadow-md border border-gray-200 h-full"
-                  >
-                    {/* Product Image */}
-                    <div className="aspect-square w-full mb-2">
-                      <img
-                        src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
-                        alt={eachProduct?.name || "Product Image"}
-                        className="h-full w-full object-cover rounded-md"
-                        loading="lazy"
-                      />
-                    </div>
+            <ProductsCarousel menProducts={menProducts} />
 
-                    {/* Product Name */}
-                    <h1 className="text-black font-quicksand font-bold text-lg line-clamp-2">
-                      {eachProduct?.productName || "Product Name"}
-                    </h1>
-
-                    {/* Product Rating and Orders */}
-                    <div className="flex items-center gap-2 text-gray-700 mt-1 flex-wrap">
-                      <div className="flex items-center text-sm">
-                        <span className="text-yellow-500 mr-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                            width="16"
-                            height="16"
-                          >
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                          </svg>
-                        </span>
-                        4.5
-                      </div>
-                      <p className="text-xs text-gray-500">200+ orders</p>
-                    </div>
-
-                    {/* Pricing Details */}
-                    <div className="flex justify-between w-full items-center mt-2">
-                      {/* Original Price */}
-                      <div className="flex items-center gap-1">
-                        <PiCurrencyInr className="text-red-600 text-sm" />
-                        <p className="line-through text-red-600 text-sm font-semibold">
-                          {eachProduct?.price}
-                        </p>
-                      </div>
-
-                      {/* Discount Price */}
-                      <div className="flex items-center gap-1">
-                        <CiDiscount1 className="text-green-600 text-sm" />
-                        <PiCurrencyInr className="text-green-600 text-sm" />
-                        <p className="font-semibold text-green-600 text-sm">
-                          {eachProduct?.discount}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* View Product Button */}
-                    <Link
-                      to={`/product-details/${eachProduct?.productId}`}
-                      className="w-full mt-3"
-                    >
-                      <button className="w-full flex items-center justify-center bg-[#011F4B] text-white px-3 py-2 rounded-lg text-sm hover:bg-[#02386e] transition-colors duration-200">
-                        View Product
-                        <FaArrowRight className="ml-2" />
-                      </button>
-                    </Link>
-                  </div>
-                );
-              })}
+            <ProductGrid menProducts={menProducts} />
 
 
-            </div>
+
 
 
             {/* Mobile Grid Section */}
             <div className="md:hidden grid grid-cols-2 gap-3 p-3">
-              {womenProducts.map((each, index) => {
+              {menProducts.map((each, index) => {
                 const finalPrice = each.price - each.discount;
                 return (
                   <div

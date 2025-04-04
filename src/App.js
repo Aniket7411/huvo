@@ -667,7 +667,7 @@ function App() {
         </Routes>
         <Routes>
           <Route
-            path="admin/approval/slip/:id"
+            path="admin/approval/:id"
             element={
               <SuperAdminAuth>
                 <ApprovalSlip />

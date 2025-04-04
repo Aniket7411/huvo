@@ -87,7 +87,7 @@ export default function Footer() {
             <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
           </div>
           <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
-            Complete description of our privacy policy.
+            Description of our privacy policy.
           </p>
         </Link>
 
@@ -103,7 +103,7 @@ export default function Footer() {
             <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
           </div>
           <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
-            huvoofficial@gmail.com
+            contact@huvo.in
           </p>
         </a>
 
@@ -127,7 +127,7 @@ export default function Footer() {
             <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
           </div>
           <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
-            Complete description of our return policy.
+            Description of our return policy.
           </p>
         </Link>
 
@@ -149,7 +149,7 @@ export default function Footer() {
             <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
           </div>
           <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
-            Complete description of Shipping policies.
+            Description of Shipping policies.
           </p>
         </Link>
 

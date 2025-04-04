@@ -48,7 +48,7 @@ export default function Profile() {
   const [allOrders, setAllOrders] = useState([]);
   const [allInvoice, setAllInvoice] = useState([]);
   const [userInvoice, setUserInvoice] = useState([])
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [allCoupon, setAllCoupon] = useState([]);
   const [isOpenAddress, setIsOpenAddress] = useState(false);
@@ -97,7 +97,6 @@ export default function Profile() {
 
 
   const handleApproval = async () => {
-    debugger
 
     console.log(gst, gstUrl, pan)
 
@@ -118,7 +117,7 @@ export default function Profile() {
     }
     catch (error) {
       setLoading(false);
-     // console.error(error);
+      // console.error(error);
       toast.error(error?.response?.data?.message)
     }
   }
@@ -485,10 +484,8 @@ export default function Profile() {
     <>
       {isSeller && (
         <div
-          style={{
-            marginTop: "70px"
-          }}
-          className={`flex flex-col items-center  mx-2 ${verificationStatus
+
+          className={`flex  mt-[40px] flex-col items-center  mx-2 ${verificationStatus
             ? "bg-green-100 border border-green-500 text-green-800"
             : "bg-red-100 border border-red-500 text-red-800"
             } p-3 rounded-lg`}
@@ -1243,14 +1240,14 @@ export default function Profile() {
               </TabPanel>
               <TabPanel className="bg-[#F2F2F2] h-full">
                 <div className="p-5">
-                  <div className="px-5 md:px-12 border-b border-solid border-[#D6D6D6]">
+                  <div className="px-5 border-b border-solid border-[#D6D6D6]">
                     <p className="text-[#2F2F2F] font-semibold text-lg mb-2">
                       Business Verification Form
                     </p>
                   </div>
                   <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="px-5 md:px-12 my-4"
+                    className="px-5 md:px-5 my-4"
                   >
                     <div className="mb-5" >Business Information
                       <hr></hr>
@@ -1258,12 +1255,22 @@ export default function Profile() {
                     <div className=" grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
 
                       <div>
+
+                      <p 
+  className="text-black text-sm md:text-base font-medium bg-gray-100 p-2 mb-2 rounded-md border border-gray-300 shadow-sm"
+>
+  <span className="font-semibold">User Name:</span> Aniket7422 
+  <span className="text-gray-600 block md:inline">
+    (Your buyer can search you using this)
+  </span>
+</p>
+
                         <label className="text-[#626262] font-medium mb-2 ml-2">
-                          Business Name
+                          Store Name
                         </label>
                         <input
                           type="text"
-                          placeholder="Business Name"
+                          placeholder="Store Name"
                           className="w-full p-3 outline-none border border-solid border-[#CBCBCB] rounded-[12px] "
                           {...register("businessName", {
                             // required: "*First Name is required.",
@@ -1474,19 +1481,17 @@ export default function Profile() {
                       placeholder="Enter your Pan "
                       className="border border-gray-300 rounded-lg p-3 w-full"
                       value={pan}
-                      onChange={(e) => {
+                      onChange={(e) => setPan(e.target.value.toUpperCase())}
 
-                        setPan(e.target.value)
-                      }}
 
                     />
 
                     <label className="block text-[#626262] font-medium mb-2 ">
-                      Upload Gst document Image
+                      Upload GST document
                     </label>
                     <input
                       type="file"
-                      accept="image/*"
+                      accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx"
                       className="block text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
 
                       onChange={(e) => getPanImageUrl(e,)}
@@ -1517,9 +1522,7 @@ export default function Profile() {
                           <div className='flex flex-col space-y-2 '>
                             <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>First Name</h1>
                             <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                              {panInfo?.
-
-                                firstName
+                              {panInfo?.firstName
                               }
                             </p>
                           </div>
@@ -1590,7 +1593,7 @@ export default function Profile() {
 
                     <input
                       type="file"
-                      accept="image/*"
+                      accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx"
                       className="block  text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
 
                       onChange={(e) => getGstUrl(e,)}
@@ -1675,22 +1678,22 @@ export default function Profile() {
                     </div>)}
 
                   <div>
-                   {
-                   loading===false?
-                    <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-8 py-3 mx-auto block"
-                      onClick={handleApproval}
+                    {
+                      loading === false ?
+                        <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-8 py-3 mx-auto block"
+                          onClick={handleApproval}
 
-                    >Submit Docs</button>
-                    :
-                    <LoadSpinner/>
-                   }
+                        >Submit Docs</button>
+                        :
+                        <LoadSpinner />
+                    }
                   </div>
                 </div>
               </TabPanel>
 
 
 
-              
+
               <TabPanel className=" h-full">
                 <div className="font-inter text-[24px] font-medium leading-[29.05px] text-left">
                   One Time Platform Fees For Registration

@@ -41,11 +41,7 @@ function SuperAdminNav() {
 
           <img src="/assets/newlogo.png" alt="Logo" className="w-[100px] h-[100px]" />
         </div>
-        <div className="flex items-center px-8 py-5">
-
-          <p className="font-[Poppins] font-bold  text-[#000000] ">Huvo</p>
-
-        </div>
+      
         <hr className=' bg-gray-500 mx-10'></hr>
       </div>
       <div className="px-1 sidebarSubDiv overflow-y-auto">

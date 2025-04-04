@@ -8,24 +8,36 @@ import { CiSearch } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 import Loader from '../../../components/loader';
 import { MdOutlineArrowOutward } from 'react-icons/md';
+import { FaToggleOff, FaToggleOn } from 'react-icons/fa';
 
 export default function Vendors() {
   const [vendorList, setVendorList] = useState([]);
   const [loading, setloading] = useState(false);
-  const [allVenderList,setAllVenderList] = useState([])
-  const [venderToSearch,setVenderToSearch] = useState("")
-    
+  const [allVenderList, setAllVenderList] = useState([])
+  const [venderToSearch, setVenderToSearch] = useState("")
+
   const navigate = useNavigate();
+
+
+  const getUnverifiedVendors = async () => {
+    try {
+      const response = await HttpClient.get("/users/seller/unverified")
+      console.log("aaaa",response)
+
+    } catch (error) {
+
+    }
+  }
 
   const getVendorsList = async () => {
     setloading(true);
-   
+
     try {
       const response = await HttpClient.get("/dashboard/vendors/");
       console.log("Full Response:", response.vendors);
       setVendorList(response.vendors);
       setAllVenderList(response.vendors)
-      if(response){
+      if (response) {
         setloading(false)
       }
 
@@ -36,14 +48,15 @@ export default function Vendors() {
     //getVendorsList();
   };
 
-  
+
   const handleNavigate = (vendorId) => {
-    navigate(`/admin/vendors/details/${vendorId}`); 
+    navigate(`/admin/vendors/details/${vendorId}`);
     console.log(vendorId)
   };
 
   useEffect(() => {
     getVendorsList();
+    getUnverifiedVendors()
   }, []);
 
   const searchVender = (event) => {
@@ -52,7 +65,7 @@ export default function Vendors() {
     setVendorList(filteredList)
   }
 
-  
+
   return (
 
     <div className='flex'>
@@ -101,12 +114,13 @@ export default function Vendors() {
             <table className="w-full table-auto overflow-auto">
               <thead>
                 <tr className="">
-                  <th className="min-w-[150px] p-4 pl-8 font-poppins font-normal text-[14px] leading-[18px] text-[#6C757D]">
-                    Id
-                  </th>
                   <th className="min-w-[150px] p-4 pl-8 font-poppins font-normal text-[14px] leading-[18px]  text-[#6C757D]">
                     Name
                   </th>
+                  <th className="min-w-[150px] p-4 pl-8 font-poppins font-normal text-[14px] leading-[18px] text-[#6C757D]">
+                    Id
+                  </th>
+
                   <th className="min-w-[150px] p-4 pl-8 font-poppins font-normal text-[14px] leading-[18px]  text-[#6C757D]">
                     E-mail
                   </th>
@@ -121,48 +135,59 @@ export default function Vendors() {
               <tbody>
                 {vendorList.map((item, key) => (
                   <tr key={key}>
+
+                    <td className="p-4 pl-8">
+                      <h5 className="font-poppins font-normal text-[14px] leading-[21px] text-center">
+                        {item?.firstName}  {item?.lastName}
+                      </h5>
+                    </td>
                     <td className="p-4 pl-8">
                       <h5 className="font-poppins font-normal text-[14px] leading-[21px] text-center">
                         {/* <Link>
                         {item?.vendorId}
                         </Link> */}
-                      <button
-  onClick={() => handleNavigate(item?.vendorId)}
-  className="flex items-center gap-2 text-blue-500 hover:underline"
->
-  {item?.vendorId}
-  <MdOutlineArrowOutward className="text-lg" />
-</button>
+                        <button
+                          onClick={() => handleNavigate(item?.vendorId)}
+                          className="flex items-center gap-2 text-blue-500 hover:underline"
+                        >
+                          {item?.vendorId}
+                          <MdOutlineArrowOutward className="text-lg" />
+                        </button>
 
                       </h5>
                     </td>
-                    <td className="p-4 pl-8">
-                      <h5 className="font-poppins font-normal text-[14px] leading-[21px] text-center">
-                        {item?.firstName}
-                      </h5>
-                    </td>
+
                     <td className="p-4 pl-8">
                       <h5 className="font-poppins font-normal text-[14px] leading-[21px] text-center">
                         {item?.email}
                       </h5>
                     </td>
                     <td className="p-4 pl-8">
-                      <h5 className="font-poppins font-normal text-[14px] leading-[21px] text-center">
-                        <button
-                          className={`rounded-[20px] h-[29px] w-[64px] text-center font-poppins text-[#18B348] font-normal text-[14px] leading-[21px]  ${item.status ? 'bg-[#CCEED7]' : 'bg-[#FFD9DB]'
-                            }`}
-                        >
-                          {item.status ? 'Active' : 'Inactive'}
-                        </button>
-                      </h5>
+                      <button
+                        className={`rounded-full h-[34px] w-[90px] flex items-center justify-center gap-2 font-poppins font-medium text-[14px] leading-[21px] transition-all duration-300 ease-in-out ${item.status
+                          ? "bg-[#CCEED7] text-[#18B348] hover:bg-[#B8E6C0] scale-105"
+                          : "bg-[#FFD9DB] text-[#E40606] hover:bg-[#FFC3C7] scale-105"
+                          }`}
+                      >
+                        {item.status ? (
+                          <>
+                            <FaToggleOn className="text-[#18B348] text-lg" /> Active
+                          </>
+                        ) : (
+                          <>
+                            <FaToggleOff className="text-[#E40606] text-lg" /> Inactive
+                          </>
+                        )}
+                      </button>
                     </td>
-                    <td className="p-4 pl-8">
-                      
-                        <h5 className="font-poppins font-normal text-[14px] leading-[21px] text-center">
-                          {item?.totalProduct}
-                        </h5>
 
-                     
+                    <td className="p-4 pl-8">
+
+                      <h5 className="font-poppins font-normal text-[14px] leading-[21px] text-center">
+                        {item?.totalProduct}
+                      </h5>
+
+
                     </td>
 
 
@@ -172,15 +197,15 @@ export default function Vendors() {
             </table>
           ) : (
             <div
-            className="h-[62vh]"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {loading === true ? <Loader /> : "No Products Available"}
-          </div>
+              className="h-[62vh]"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {loading === true ? <Loader /> : "No Products Available"}
+            </div>
           )}
         </div>
 

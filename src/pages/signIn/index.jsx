@@ -25,13 +25,13 @@ export default function SignIn() {
   const onSubmit = async (data) => {
     console.log(data)
     setLoader(true);
-    let datanew = { ...data, role: path[2].toUpperCase()  };
+    let datanew = { ...data, role: path[2].toUpperCase() };
     console.log(datanew);
     try {
       const response = await HttpClient.post("/users/signup", datanew);
       if (response) {
         setLoader(false);
-       
+
         toast.success(response.message);
         console.log(response)
         reset();
@@ -43,54 +43,54 @@ export default function SignIn() {
       console.log(error?.response);
       setLoader(false);
       reset();
-     
+
     }
   };
-  
+
   const checkUsername = async (event) => {
     const username = event.target.value;
     if (!username) {
       setUserNameError("");
-      setIsError(false); 
+      setIsError(false);
       return;
     }
-  
+
     try {
-      const response = await HttpClient.post(`/users/username`,{username});
-    console.log(response)
-    console.log(response.status)
-    console.log(response.message)
+      const response = await HttpClient.post(`/users/username`, { username });
+      console.log(response)
+      console.log(response.status)
+      console.log(response.message)
       if (response.message === "Username is available") {
-        setUserNameError("Username is available"); 
-     
+        setUserNameError("Username is available");
+
         console.log("Username is available");
       }
       console.log("b")
     }
-     
-     catch (error) {
-        setIsError(true); 
-     
-        if (error.response && error.response.status === 400) {
-       console.log(error.response)
-       console.log(error.response.status)
-          if (error.response.data.message === "Username not available") {
-            setUserNameError("Username already exists. Please try another.");
-          } else if (error.response.data.message === "Invalid username. It must start with a letter and can only contain letters, numbers, and underscores.") {
-          
-            setUserNameError("Invalid entry: can only contain letters, numbers, and underscores");
-          } else {
-           
-            setUserNameError("An error occurred. Please try again.");
-          }
+
+    catch (error) {
+      setIsError(true);
+
+      if (error.response && error.response.status === 400) {
+        console.log(error.response)
+        console.log(error.response.status)
+        if (error.response.data.message === "Username not available") {
+          setUserNameError("Username already exists. Please try another.");
+        } else if (error.response.data.message === "Invalid username. It must start with a letter and can only contain letters, numbers, and underscores.") {
+
+          setUserNameError("Invalid entry: can only contain letters, numbers, and underscores");
         } else {
-          
-          setUserNameError("Something went wrong. Please try again later.");
+
+          setUserNameError("An error occurred. Please try again.");
         }
-      
-    
-    
-    } 
+      } else {
+
+        setUserNameError("Something went wrong. Please try again later.");
+      }
+
+
+
+    }
   };
   return (
     <>
@@ -109,8 +109,8 @@ export default function SignIn() {
             Register
           </p>
           {loader === false && (
-           
-                <form onSubmit={handleSubmit(onSubmit)}>
+
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-control mb-3">
                 <label className="block mb-1" htmlFor="firstName">
                   FIRST NAME
@@ -160,32 +160,39 @@ export default function SignIn() {
                 )}
               </div>
               {path[2].toUpperCase() === "SELLER" && (
-              <div className="form-control mb-3">
-                <label className="block mb-1" htmlFor="firstName">
-                USER NAME
-                </label>
-                <input
-                  className="text-[#5A5A5A] pl-2 font-medium text-lg  border-2 border-black border-solid bg-transparent outline-none w-full sm:w-3/4 "
-                  type="text"
-                  name="username"
-                  id="username"
-                  placeholder="Enter your username"
-                  {...register("username", {
-                    required: "*User Name is required.",
-                  
-                  })}
-                onKeyUp={checkUsername}
-                />
-                {errors.username && (
-                  <p className="errorMsg text-[#E40606]">
-                    {errors.username.message}
-                  </p>
-                )}
-                {userNameError && (
-                  <p className={`errorMsg ${isError ? "text-[#E40606]" : "text-[#28A745]"}`}>{userNameError}</p>
-                  
-                )}
-              </div>
+                <div className="form-control mb-3">
+                  <label className="block mb-1" htmlFor="firstName">
+                    USER NAME
+                  </label>
+                  <input
+                    className="text-[#5A5A5A] pl-2 font-medium text-lg  border-2 border-black border-solid bg-transparent outline-none w-full sm:w-3/4 "
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Enter your username"
+                    {...register("username", {
+                      required: "*User Name is required.",
+
+                    })}
+                    onKeyUp={checkUsername}
+                  />
+                  {errors.username && (
+                    <p className="errorMsg text-[#E40606]">
+                      {errors.username.message}
+                    </p>
+                  )}
+                  {userNameError && (
+                    <p
+                      className={`errorMsg ${userNameError === "Username is available"
+                          ? "text-[#28A745]" // Green for available
+                          : "text-[#E40606]" // Red for already exists
+                        }`}
+                    >
+                      {userNameError}
+                    </p>
+                  )}
+
+                </div>
               )}
               <div className="form-control mb-3">
                 <label className="block mb-1" htmlFor="email">
@@ -218,44 +225,44 @@ export default function SignIn() {
                 <div className="relative">
                   <div>
                     <div className=" flex justify-between">
-                    <div className="border-2 border-black border-solid  w-full sm:w-3/4 ">
-                    <input
-                    className="text-[#5A5A5A] pl-2 font-medium text-lg  bg-transparent outline-none w-full sm:w-3/4"
-                    type={isShow ? "text" : "password"}
-                    id="password"
-                    name="password"
-                    placeholder="Password of min 8 characters"
-                    {...register("password", {
-                      required: "*Password is required.",
-                      minLength: {
-                        value: 8,
-                        message: "*Password should be at-least 8 characters.",
-                      },
-                      pattern: {
-                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,14}$/,
-                        message: "*Password must contain one uppercase letter,one lowercase letter,one number,one special character",
-                      },
-                    })}
-                  />
+                      <div className="border-2 border-black border-solid  w-full sm:w-3/4 ">
+                        <input
+                          className="text-[#5A5A5A] pl-2 font-medium text-lg  bg-transparent outline-none w-full sm:w-3/4"
+                          type={isShow ? "text" : "password"}
+                          id="password"
+                          name="password"
+                          placeholder="Password of min 8 characters"
+                          {...register("password", {
+                            required: "*Password is required.",
+                            minLength: {
+                              value: 8,
+                              message: "*Password should be at-least 8 characters.",
+                            },
+                            pattern: {
+                              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,14}$/,
+                              message: "*Password must contain one uppercase letter,one lowercase letter,one number,one special character",
+                            },
+                          })}
+                        />
+                      </div>
+                      <div className="flex items-center">
+                        {isShow ? (
+                          <FaEyeSlash
+                            onClick={() => setisShow(false)}
+                            className={`absolute  right-[2%] md:right-[27%]`}
+                          />
+                        ) : (
+                          <FaEye
+                            onClick={() => setisShow(true)}
+                            // className="absolute bottom-[7px] right-[2%] md:right-[27%]"
+                            className={`absolute  right-[2%] md:right-[27%] `}
+                          />
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                     {isShow ? (
-                    <FaEyeSlash
-                      onClick={() => setisShow(false)}
-                      className={`absolute  right-[2%] md:right-[27%]`}
-                    />
-                  ) : (
-                    <FaEye
-                      onClick={() => setisShow(true)}
-                      // className="absolute bottom-[7px] right-[2%] md:right-[27%]"
-                      className={`absolute  right-[2%] md:right-[27%] `}
-                    />
-                  )}
-                  </div>
-                  </div>
-                  </div>
-                  
-               
+
+
                   {errors.password && (
                     <div className="errorMsg text-[#E40606] break-words w-[450px] ">
                       {errors.password.message}
@@ -263,7 +270,7 @@ export default function SignIn() {
                   )}
                 </div>
               </div>
-             
+
               <div className="w-full sm:w-3/4 text-center mb-4">
                 <input
                   className="font-normal text-[#5A5A5A] bg-[#B1B1B1]"
@@ -273,11 +280,11 @@ export default function SignIn() {
 
                 <span className="text-[#5A5A5A] font-[Poppins]">
                   YOU AGREE                 <Link to="/termsandconditions">
-                  <span className="text-[#011F4B]">THE TERMS</span>                 </Link>
+                    <span className="text-[#011F4B]">THE TERMS</span>                 </Link>
                   {" "}
                   SERVICES AND{" "}
-                  <Link  to="/privacy_policy">
-                  <span className="text-[#011F4B]">PRIVACY POLICIES</span>{" "}
+                  <Link to="/privacy_policy">
+                    <span className="text-[#011F4B]">PRIVACY POLICIES</span>{" "}
                   </Link>
                 </span>
               </div>
@@ -312,14 +319,14 @@ export default function SignIn() {
               </div>
             </div> */}
             </form>
-            
-          
+
+
           )}
           {loader === true && <Loader />}
         </div>
       </section>
 
-     
+
     </>
   );
 }
