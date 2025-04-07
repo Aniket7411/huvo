@@ -71,9 +71,7 @@ const BrandSlider = () => {
 
   return (
     <div className="bg-gradient-to-r from-gray-100 to-gray-200 py-2 px-4 sm:px-6 lg:px-8">
-      <h1 className="font-bold text-xl font-[Quicksand] text-gray-800 mb-2 text-center">
-        POPULAR BRANDS
-      </h1>
+
       <Slider {...settings}>
         {brands.map((brand) => (
           <Link to={`/brand_products/${brand.uniqueId}`} key={brand.uniqueId}>

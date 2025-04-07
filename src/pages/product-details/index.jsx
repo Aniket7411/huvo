@@ -153,8 +153,33 @@ export default function ProductDetails() {
   //   removeFromCartContext(productId)
   // };
 
-
-
+  const updateQuantity = async (productId, addRemove) => {
+    console.log("Product:", productId, "| Action:", addRemove);
+  
+    if (!productId || !addRemove) {
+      console.error("Invalid input");
+      return;
+    }
+  
+    if (isLoggedIn === null) {
+      // Guest user - update cart locally
+      updateCartItem(productId, addRemove);
+    } else {
+      // Logged-in user - update via API
+      try {
+        const response = await HttpClient.put(`/cart/update`, {
+          productId,
+          action: addRemove,
+        });
+  
+        console.log("Cart updated:", response?.data);
+        // Optional: show a toast or refresh cart
+      } catch (error) {
+        console.error("Error updating cart:", error);
+      }
+    }
+  };
+  
 
 
   const removeFromCart = async (productDetails) => {
@@ -430,8 +455,8 @@ export default function ProductDetails() {
 
                 <div key={productDetails?.productId} className="flex items-center gap-4 mt-2 rounded-xl">
                   <button
-                    onClick={() => updateCartItem(productDetails?.productId, "decrement")}
-                    className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
+onClick={() => updateQuantity(productDetails?.productId, "decrement")}
+className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
                   >
                     <CiSquareMinus />
                   </button>
@@ -440,9 +465,9 @@ export default function ProductDetails() {
                     Quantity : <span className="text-purple-600">{quantity}</span>
                   </p>
 
-                  <button
-                    onClick={() => updateCartItem(productDetails?.productId, "increament")}
-                    className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
+                  <button 
+onClick={() => updateQuantity(productDetails?.productId, "increament")}
+className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
                   >
                     <CiSquarePlus />
                   </button>

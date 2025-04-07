@@ -64,7 +64,8 @@ export default function Header(props) {
 
 
   useEffect(() => {
-    const loginStatus = localStorage?.getItem("accessToken");
+    loginStatus = localStorage?.getItem("accessToken");
+    console.log("loginStatus",loginStatus)
 
     getWishList()
   }, [])
@@ -171,6 +172,8 @@ export default function Header(props) {
     }
   };
 
+
+  console.log("loginStatusloginStatusloginStatus",loginStatus)
 
   const handleSearch = async (searchword) => {
     if (searchQuery.trim()) {
@@ -311,10 +314,13 @@ export default function Header(props) {
             </button>
 
 
+      
+
+
 
 
             {
-              loginStatus === null ?
+              loginStatus === undefined ?
 
                 <Link to="/login">
                   <p className="p-2   text-blue-600 cursor-pointer">Login</p>
@@ -337,14 +343,9 @@ export default function Header(props) {
                         <Link to="/profile">
                           <li className="p-2 hover:bg-gray-100 cursor-pointer">My Profile</li>
                         </Link>
-
-                        {
-                          loading === false ?
-                            <li className="p-2 hover:bg-gray-100 cursor-pointer" onClick={clickToLogout}
+                        <li className="p-2 hover:bg-gray-100 cursor-pointer" onClick={clickToLogout}
                             >Logout</li>
-                            :
-                            <Loader />
-                        }
+
                       </ul>
 
 
@@ -464,7 +465,7 @@ export default function Header(props) {
           </div>
 
 
-          <p className="font-caveate">Huvo</p>
+          <p className="text-[#fff] italic " style={{ fontFamily: "Caveat, cursive" } }>Huvo</p>
 
           <div className="flex gap-3 justify-between items-center cursor-pointer relative">
             {/* Wishlist Button */}

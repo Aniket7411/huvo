@@ -16,7 +16,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
 
 
 
-      <div className="flex flex-wrap gap-2 justify-between">
+      <div className="flex flex-wrap gap-1 justify-between">
         {
           products.map((product) => {
             const finalPrice = product.price - product.discount;
@@ -32,7 +32,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
 
                 </Link>
 
-                <h3 className="font-semibold text-lg mb-2 text-center line-clamp-2">{product.name}</h3>
+                <h3 className="font-semibold text-lg mb-1 text-center line-clamp-2">{product.name}</h3>
                 {/* Star Ratings */}
                 <div className="flex items-center mb-2">
                   <div className="flex text-yellow-400">{[...Array(5)].map((_, i) => <FaStar key={i} className="w-4 h-4" />)}</div>
@@ -41,7 +41,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
 
 
                 {/* Pricing Details */}
-                <div className="mb-2 w-full px-2">
+                {/* <div className="mb-2 w-full px-2">
                   <div className="flex items-center justify-between text-sm text-gray-600">
                     <PiCurrencyInr className="text-gray-600" />
                     <span className="line-through mr-2">{product.price}</span>
@@ -57,7 +57,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                       <span>Free Delivery</span>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 {/* View Details Button */}
                 <Link

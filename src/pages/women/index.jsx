@@ -211,7 +211,7 @@ export default function WomenCollection() {
 
 
       {/* Filter Button for Small Screens */}
-      <div className="top-0 left-0 w-full bg-white shadow-md z-10 p-2 flex justify-between lg:hidden border border-gray-300 rounded-lg ring-1 ring-blue-300">
+      <div className="top-0 left-0 w-full bg-white shadow-md z-10 px-2 flex justify-between lg:hidden border border-gray-300 rounded-lg ring-1 ring-blue-300">
         <h2 className="text-lg font-bold text-gray-800">Filter</h2>
 
         <button

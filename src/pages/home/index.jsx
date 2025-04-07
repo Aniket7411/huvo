@@ -206,7 +206,7 @@ export default function Home() {
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-yellow-400 rounded-full"></div>
             </div>
 
-            <div className="flex md:hidden items-center px-4 mt-2 bg-gray-100 p-2 rounded-lg shadow-md">
+            <div className="flex md:hidden items-center px-4 bg-gray-100 p-2 rounded-lg shadow-md">
               <CiSearch className="text-gray-500 text-lg mr-2" />
               <input
                 type="search"
@@ -280,9 +280,9 @@ export default function Home() {
 
                 <section className=" hidden md:block">
 
-                <ProductCarouselmd  womenProducts={womenProducts} />
+                  <ProductCarouselmd womenProducts={womenProducts} />
                 </section>
-                <ProductGrid womenProducts={womenProducts}  />
+                <ProductGrid womenProducts={womenProducts} />
 
 
               </div>
@@ -340,9 +340,9 @@ export default function Home() {
 
                 <section className=" hidden md:block">
 
-<ProductCarouselmd  menProducts={menProducts} />
-</section>
-<ProductGrid menProducts={menProducts}  />
+                  <ProductCarouselmd menProducts={menProducts} />
+                </section>
+                <ProductGrid menProducts={menProducts} />
 
 
 
@@ -392,9 +392,9 @@ export default function Home() {
 
                 <section className="  md:block">
 
-<ProductCarouselmd  kidsProducts={kidsProducts} />
-</section>
-<ProductGrid kidsProducts={kidsProducts}  />
+                  <ProductCarouselmd kidsProducts={kidsProducts} />
+                </section>
+                <ProductGrid kidsProducts={kidsProducts} />
 
 
 

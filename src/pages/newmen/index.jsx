@@ -195,13 +195,13 @@ export default function WomenCollection() {
 
 
       <div class="text-center mt-3">
-      <h1 
-  className="text-lg md:text-3xl font-bold text-transparent bg-clip-text 
+        <h1
+          className="text-lg md:text-3xl font-bold text-transparent bg-clip-text 
              bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 
              mt-[60px] text-center transition-all duration-300 hover:scale-105"
->
-  Men's Clothing
-</h1>         <p className="font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg text-[#2581eb] mt-2">
+        >
+          Men's Clothing
+        </h1>         <p className="font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg text-[#2581eb] mt-2">
           Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
 
         </p>
@@ -212,7 +212,7 @@ export default function WomenCollection() {
 
 
       {/* Filter Button for Small Screens */}
-      <div className="top-0 left-0 w-full bg-white shadow-md z-10 p-2 flex justify-between lg:hidden border border-gray-300 rounded-lg ring-1 ring-blue-300">
+      <div className="top-0 left-0 w-full bg-white shadow-md z-10 px-4 flex justify-between ite lg:hidden border border-gray-300 rounded-lg ring-1 ring-blue-300">
         <h2 className="text-lg font-bold text-gray-800">Filter</h2>
 
         <button
@@ -340,7 +340,7 @@ export default function WomenCollection() {
           {/* Desktop Grid Section */}
           <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
             <Brandslider />
-            <CategorySlider/>
+            <CategorySlider />
 
 
             {searchTerm !== "" ? (

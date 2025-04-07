@@ -4,6 +4,10 @@ import { HttpClient } from "../server/client/http";
 
 export const CartContext = createContext();
 
+
+const tokenIfLoggedIn = localStorage.getItem("accessToken")
+
+
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(() => {
     // Load cart from localStorage initially
@@ -48,26 +52,30 @@ export const CartProvider = ({ children }) => {
       return prevCart;
     });
   };
-
   const updateCartItem = (productId, addRemove) => {
-    console.log("Updating product", productId, "Action:", addRemove);
+    console.log("Updating product:", productId, "| Action:", addRemove);
 
     setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.productId === productId
-          ? {
-              ...item,
-              quantity:
-                addRemove === "increment"
-                  ? item.quantity + 1
-                  : item.quantity > 1
-                  ? item.quantity - 1
-                  : item.quantity,
-            }
-          : item
-      )
+      prevCart.map((item) => {
+        console.log("Checking item:", item.productId);
+
+        if (item.productId !== productId) return item;
+
+        let newQuantity = item.quantity;
+
+        if (addRemove === "increment") {
+          newQuantity += 1;
+        } else if (addRemove === "decrement" && newQuantity > 1) {
+          newQuantity -= 1;
+        }
+
+        console.log("Updated Quantity for", productId, ":", newQuantity);
+
+        return { ...item, quantity: newQuantity };
+      })
     );
   };
+
 
   const removeFromCartContext = (productId) => {
     setCart((prevCart) => {
@@ -96,7 +104,38 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+
+  const addToCart = async () => {
+
+
+
+    console.log("cartcart", cart)
+
+    const dataForCart = cart.map((item) => (
+      {
+        productId: item?.productId,
+        color: item?.colors?.[0]?.colorCode || "Default Color", // Handle missing color
+        size: item?.size,
+        price: item?.price,
+      }
+    ))
+
+    console.log("dataForCart", dataForCart)
+
+    if (tokenIfLoggedIn !== null) {
+      try {
+        const response = await HttpClient.post( )
+        console.log(response)
+      } catch (error) {
+
+      }
+    }
+    
+   
+  }
+
   useEffect(() => {
+    addToCart()
     getCartData();
     getWishList();
   }, []);
