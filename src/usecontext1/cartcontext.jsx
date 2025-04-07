@@ -109,7 +109,7 @@ export const CartProvider = ({ children }) => {
 
 
 
-    console.log("cartcart", cart)
+   // console.log("cartcart", cart)
 
     const dataForCart = cart.map((item) => (
       {
@@ -136,8 +136,10 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     addToCart()
-    getCartData();
-    getWishList();
+     if(tokenIfLoggedIn){
+      getCartData();
+      getWishList();
+     }
   }, []);
 
   const contextValue = {

@@ -44,6 +44,7 @@ export default function WishList() {
     try {
       const { message } = await HttpClient.delete(`/wishlist/${productId}`);
       toast.success(message);
+      window.location.reload();
       fetchWishlist();
     } catch (error) {
       console.error(error);

@@ -17,7 +17,7 @@ import { motion } from "framer-motion";
 
 
 
-let loginStatus;
+let loginStatus=0;
 
 
 
@@ -64,7 +64,9 @@ export default function Header(props) {
 
 
   useEffect(() => {
-    loginStatus = localStorage?.getItem("accessToken");
+    if(localStorage.getItem('accessToken')){
+      loginStatus = 1;
+    }
     console.log("loginStatus",loginStatus)
 
     getWishList()
@@ -320,7 +322,7 @@ export default function Header(props) {
 
 
             {
-              loginStatus === undefined ?
+              loginStatus === 0 ?
 
                 <Link to="/login">
                   <p className="p-2   text-blue-600 cursor-pointer">Login</p>
