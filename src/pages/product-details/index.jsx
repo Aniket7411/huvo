@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { FaShare } from "react-icons/fa";
 import { TbJewishStarFilled, TbStarFilled } from "react-icons/tb";
 import Modal from "react-modal";
-import { CiDeliveryTruck, CiStar } from "react-icons/ci";
+import { CiDeliveryTruck, CiSquareMinus, CiSquarePlus, CiStar } from "react-icons/ci";
 import SimilarProducts from "./similarcategoryproducts";
 import ProductImages from "../productimages";
 import { IoClose } from "react-icons/io5";
@@ -19,7 +19,7 @@ const isLoggedIn = localStorage.getItem("accessToken")
 export default function ProductDetails() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isSizeModal, setIsSizeModal] = useState(false)
-  const { addToCartContext, cart, wishList, removeFromCartContext } = useContext(CartContext)
+  const { addToCartContext, cart, wishList, removeFromCartContext, updateCartItem } = useContext(CartContext)
 
 
   const openPaymentModal = () => {
@@ -36,7 +36,7 @@ export default function ProductDetails() {
   const [productDetails, setProductDetails] = useState({});
   const [loading, setLoading] = useState(false);
   // const { cart, addToCartContext, removeFromCartContext } = useContext(CartContext);
-  const [quantity, setQuantity] = useState(1); // Track the quantity, default to 1
+  const [selectedQuantity, setQuantity] = useState(1); // Track the quantity, default to 1
   const [selectedSize, setSelectedSize] = useState(null); // Track selected size
   const [reviews, addReviews] = useState()
   const [projectObjectId, setProjectObjectId] = useState()
@@ -44,7 +44,7 @@ export default function ProductDetails() {
   const [description, setDescription] = useState("")
   const [allReviews, setAllReviews] = useState([])
   const [reviewLoading, setReviewsLoading] = useState(false)
-  const [price,setPrice] = useState()
+  const [price, setPrice] = useState()
 
   const [recommendedProducts, setRecommendedProducts] = useState([])
 
@@ -81,27 +81,6 @@ export default function ProductDetails() {
   };
 
 
-  const getReviews = async () => {
-    setReviewsLoading(true)
-    try {
-      const response = await HttpClient.get(`/review/${projectObjectId}`);
-      setAllReviews(response.reviews)
-      setReviewsLoading(false)
-      const formattedDataReview = response.reviews.map((eachReview) => ({
-        id: eachReview._id,
-        rating: eachReview.rating,
-        description: eachReview.description,
-        product: eachReview.product,
-        userName: eachReview.userName
-      }))
-
-      setAllReviews(formattedDataReview)
-
-
-    } catch (error) {
-
-    }
-  }
 
 
 
@@ -110,28 +89,35 @@ export default function ProductDetails() {
     getProductDetails(id);
   }, [id]);
 
-  const handleIncrement = () => setQuantity(quantity + 1);
-  const handleDecrement = () => setQuantity(Math.max(1, quantity - 1)); // Ensure quantity does not go below 1
 
   const tokenIfLoggedIn = localStorage.getItem("accessToken")
 
-  console.log("tokenIfLoggedIntokenIfLoggedIn",tokenIfLoggedIn)
+  console.log("tokenIfLoggedIntokenIfLoggedIn", tokenIfLoggedIn)
+
+  const currentCartItem = cart.find(
+    (item) => item.productId === productDetails?.productId
+  );
+
+  const quantity = currentCartItem?.quantity || 1;
+
+
+  console.log("currentCartItem", quantity)
 
 
 
 
-  const addToCart = async (productDetails, selectedSize) => {
+  const addToCart = async (productDetails, selectedSize, selectedQuantity) => {
     if (!selectedSize) {
       toast.warn("Please select a size");
       return;
     }
 
 
-    console.log("isLoggedInisLoggedIn",isLoggedIn)
+    console.log("isLoggedInisLoggedIn", isLoggedIn)
 
 
     if (tokenIfLoggedIn === null) {
-      addToCartContext(productDetails, selectedSize);
+      addToCartContext(productDetails, selectedSize, selectedQuantity);
       toast.success("Product added to cart locally.");
       return;
     } else {
@@ -145,7 +131,7 @@ export default function ProductDetails() {
       try {
         const response = await HttpClient.post("/cart/", cartData);
         setLoading(true)
-        
+
 
 
         if (response?.success === true) {
@@ -233,26 +219,13 @@ export default function ProductDetails() {
   };
 
 
-  const submitReview = async (productId) => {
 
-    try {
-      const response = await HttpClient.post(
-        `/review/${productId}`,
-        { rating, description }
-      );
-
-      if (response) {
-        toast.success("Review Added")
-        getReviews()
-        setRating(0)
-        setDescription("")
-      }
-    } catch (error) {
-
-    }
-  }
 
   // const isInCart = cart.some((item) => item.productId === productDetails?.productId);
+
+  const quantityInCart = () => {
+    toast.info("First select the size and add product in cart")
+  }
 
   return (
     <>
@@ -260,7 +233,7 @@ export default function ProductDetails() {
 
       {
         loading ? "aniket" :
-          <div className="px-3 mt-10 md:mt-5 md:p-10">
+          <div className="px-3 mt-5 md:mt-5 md:px-10">
             <div className="flex flex-wrap gap-2 md:gap-16">
               <div className="flex-1 min-w-[300px] max-w-[350px]">
                 <div className="p-1 rounded-md border border-gray-300 mt-5">
@@ -272,7 +245,7 @@ export default function ProductDetails() {
               <div className="flex-1">
                 <div className="flex items-center gap-2 ">
                   <h1 className="text-2xl  font-inter md:text-xl lg:text-2xl font-semibold text-[#2563eb] ">
-                    Product Name: {productDetails?.name}
+                    Product Name : {productDetails?.name}
                   </h1>
 
                 </div>
@@ -287,7 +260,6 @@ export default function ProductDetails() {
                       <button
                         onClick={() => {
                           scrollToReview();
-                          getReviews();
                         }}
                         className="text-[#717478] font-semibold text-sm hover:underline"
                       >
@@ -324,19 +296,19 @@ export default function ProductDetails() {
                   <p className="flex flex-wrap items-center text-lg font-semibold text-gray-800">
                     {/* Original Price */}
                     <span className="line-through text-gray-500  flex items-center">
-                      <PiCurrencyInr className="mr-1" /> {productDetails?.price}
+                      <PiCurrencyInr className="mr-1" /> {productDetails?.price * quantity}
                     </span>
 
 
                     {/* Discount Amount */}
                     <span className="text-sm mr-2 text-gray-500 ml-2 flex items-center"> -
-                      (<PiCurrencyInr className="mr-1" />{productDetails?.discount})
+                      (<PiCurrencyInr className="mr-1" />{productDetails?.discount * quantity})
                     </span>
 
                     {/* Discounted Price */}
                     <span className="text-green-500 flex items-center text-xl font-bold">
                       <PiCurrencyInr className="mr-1" />
-                      {productDetails?.price - productDetails?.discount}
+                      {productDetails?.price * quantity - productDetails?.discount * quantity}
                     </span>
 
 
@@ -455,6 +427,29 @@ export default function ProductDetails() {
                   </div>
                 </Modal>
 
+
+                <div key={productDetails?.productId} className="flex items-center gap-4 mt-2 rounded-xl">
+                  <button
+                    onClick={() => updateCartItem(productDetails?.productId, "decrement")}
+                    className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
+                  >
+                    <CiSquareMinus />
+                  </button>
+
+                  <p className="text-lg font-semibold text-gray-800">
+                    Quantity : <span className="text-purple-600">{quantity}</span>
+                  </p>
+
+                  <button
+                    onClick={() => updateCartItem(productDetails?.productId, "increament")}
+                    className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
+                  >
+                    <CiSquarePlus />
+                  </button>
+                </div>
+
+
+
                 {/* Buttons & Delivery Section */}
                 <div className="flex flex-col gap-3">
                   <div className="flex mt-2 flex-wrap items-center gap-2">
@@ -469,7 +464,6 @@ export default function ProductDetails() {
                       Add to Wishlist
                     </button>
 
-                    {/* Add to Cart Button */}
 
                     {cart.some((each) => each.productId === productDetails?.productId) ? (
                       <button
@@ -480,19 +474,14 @@ export default function ProductDetails() {
                       </button>
                     ) : (
                       <button
-                        onClick={() => addToCart(productDetails, selectedSize)}
+                        onClick={() => addToCart(productDetails, selectedSize, selectedQuantity)}
                         className="px-3 py-1 bg-[#011F4B] text-white font-semibold rounded-lg shadow-md hover:bg-[#022C6B] transition-all duration-200 transform hover:scale-105"
                       >
                         Add to Cart
                       </button>
                     )}
-
-
-
-
                   </div>
 
-                  {/* Free Delivery Info */}
                   <div className="flex items-center gap-2 mt-1 text-gray-800">
                     <CiDeliveryTruck size={30} className="text-gray-600" />
                     <p className="font-semibold">Free delivery</p>
@@ -540,142 +529,11 @@ export default function ProductDetails() {
 
 
 
-                <section
-                  id="review"
-                  className="h-auto p-4 md:p-4 bg-gray-100 rounded-lg shadow-sm"
-                  style={{ scrollMarginTop: '100px' }}
-                >
-                  <div>
-                    {/* Header Section */}
-                    <div className="flex justify-between items-center border-b pb-3 border-gray-300">
-                      <h2 className="text-lg md:text-2xl font-semibold text-gray-900">
-                        Ratings & Reviews
-                      </h2>
-                      <button
-                        onClick={openModal}
-                        className="bg-[#011F4B] px-3 py-2 text-sm md:text-lg font-semibold rounded-md text-white shadow-md 
-                   hover:bg-[#022C6B] transition-all duration-200 transform hover:scale-105"
-                      >
-                        Rate Product
-                      </button>
-                    </div>
-
-                    {/* Loading Indicator */}
-                    {reviewLoading ? (
-                      <div className="flex justify-center mt-6">
-                        <Oval height={50} width={50} color="#4A90E2" visible={true} />
-                      </div>
-                    ) : allReviews.length === 0 ? (
-                      <div className="text-center text-gray-500 mt-6">
-                        <p className="text-lg">No reviews added yet.</p>
-                      </div>
-                    ) : (
-                      <div className="mt-4">
-                        {allReviews.map((review) => (
-                          <div
-                            key={review.id}
-                            className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 mb-4"
-                          >
-                            {/* Reviewer Name */}
-                            <p className="font-bold text-gray-900">{review.userName}</p>
-
-                            {/* Rating Stars */}
-                            <div className="flex items-center mt-1">
-                              {Array.from({ length: 5 }, (_, index) => {
-                                const star = index + 1;
-                                return star <= review.rating ? (
-                                  <TbStarFilled key={index} className="text-yellow-400 text-lg" />
-                                ) : (
-                                  <CiStar key={index} className="text-gray-400 text-lg" />
-                                );
-                              })}
-                            </div>
-
-                            {/* Review Description */}
-                            <p className="mt-2 text-gray-700">{review.description}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </section>
-
-
-                <Modal
-                  isOpen={isModalOpen}
-                  onRequestClose={closeModal}
-                  contentLabel="Write and Share"
-                  style={{
-                    content: {
-                      width: "50%",
-                      margin: "auto",
-                      height: "300px",
-                      padding: "20px",
-                      borderRadius: "10px",
-                      backgroundColor: "#f9f9f9",
-                    },
-                  }}
-                >
-                  {/* Modal Header */}
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="font-semibold text-lg">Write and Share</h2>
-                    <button
-                      className="font-bold text-red-500 text-lg"
-                      onClick={closeModal}
-                    >
-                      X
-                    </button>
-                  </div>
-
-                  {/* Review Input */}
-                  <textarea
-                    placeholder="Write your review here..."
-                    className="p-2 rounded-md w-full mb-4 border border-gray-300"
-                    rows={4}
-                    style={{ resize: "none" }}
-                    value={description}
-                    onChange={(e) => {
-                      setDescription(e.target.value)
-                    }}
-                  />
-
-                  {/* Star Rating */}
-                  <div className="flex items-center gap-2">
-                    {[1, 2, 3, 4, 5].map((star, index) => (
-                      <button
-                        key={index}
-                        onClick={() => handleStarClick(star)}
-                        className="text-2xl"
-                      >
-                        {star <= rating ? (
-                          <TbStarFilled className="text-yellow-400" />
-                        ) : (
-                          <CiStar className="text-gray-400" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Submit Button */}
-                  <div className="mt-4">
-                    <button key={productDetails?._id}
-                      onClick={() => {
-                        submitReview(productDetails?._id);
-                        closeModal();
-                      }}
-                      className="p-2 bg-blue-500 text-white rounded-md w-full"
-                    >
-                      Submit Review
-                    </button>
-
-                  </div>
-                </Modal>
               </div>
 
 
 
             </div>
-            <hr className="my-2" />
 
           </div>
       }

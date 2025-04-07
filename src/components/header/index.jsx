@@ -17,11 +17,9 @@ import { motion } from "framer-motion";
 
 
 
+let loginStatus;
 
 
-const loginStatus = localStorage.getItem("role")
-
-console.log("loginStatus", loginStatus)
 
 
 export default function Header(props) {
@@ -55,17 +53,19 @@ export default function Header(props) {
     try {
       const response = await HttpClient.get("/wishlist/")
 
-      const wishListLength = Object.keys(response.data).length;
+      const wishListLength = Object?.keys(response?.data)?.length;
 
       setWishListItems(wishListLength)
 
     } catch (error) {
-      console.log(error.message)
+      console.log(error?.message)
     }
   }
 
 
   useEffect(() => {
+    const loginStatus = localStorage?.getItem("accessToken");
+
     getWishList()
   }, [])
 
@@ -303,7 +303,7 @@ export default function Header(props) {
 
 
               {/* Cart Item Count */}
-              {cart.length > 0 && (
+              {cart?.length > 0 && (
                 <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
                   {cart.length}
                 </span>
@@ -464,8 +464,7 @@ export default function Header(props) {
           </div>
 
 
-          <img src="/assets/newlogo.jpeg" alt="logo" className=" w-[110px] h-[22px] bg-[#fff] rounded-full" />
-
+          <p className="font-caveate">Huvo</p>
 
           <div className="flex gap-3 justify-between items-center cursor-pointer relative">
             {/* Wishlist Button */}

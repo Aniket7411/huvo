@@ -1,40 +1,84 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../usecontext1/cartcontext";
 import { PiCurrencyInr } from "react-icons/pi";
 import { CiDeliveryTruck, CiDiscount1, CiTrash } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { FaArrowRight, FaMinus, FaPlus } from "react-icons/fa";
-import Modal from "react-modal"
-import CartProvider from "../../usecontext1/cartcontext";
+import Modal from "react-modal";
 
 const CheckoutWithoutLogin = () => {
-  const { cart, updateCartItem, removeCartItem } = useContext(CartContext);
+  const { updateCartItem, removeCartItem } = useContext(CartContext);
+  const [cartItems, setCartItems] = useState([]);
 
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const formatted = storedCart.map((item) => ({
+      _id: item.productId, // Required for key
+      name: item.name || "Product", // Add fallback
+      bannerImage: item.bannerImage,
+      brand: item.brand?.name,
+      logo: item.brand?.logo,
+      color: item.color,
+      quantity: item.quantity,
+      size: item.size,
+      shippingFee: item.shippingFee,
+      price: item.price,
+      discount: item.discount,
+      productId: item.productId,
+    }));
+    setCartItems(formatted);
+  }, []);
 
   const handleQuantityChange = (productId, action) => {
-    updateCartItem(productId, action);
+    const updated = cartItems.map((item) => {
+      if (item.productId === productId) {
+        let newQty = item.quantity;
+        if (action === "increment") newQty += 1;
+        else if (action === "decrement" && item.quantity > 1) newQty -= 1;
+        return { ...item, quantity: newQty };
+      }
+      return item;
+    });
+    setCartItems(updated);
+    localStorage.setItem("cart", JSON.stringify(updated));
+  };
+
+  const handleRemove = (productId) => {
+    const updated = cartItems.filter(item => item.productId !== productId);
+    setCartItems(updated);
+    localStorage.setItem("cart", JSON.stringify(updated));
   };
 
   const calculateTotal = () => {
-    return cart.reduce((total, item) => {
+    return cartItems.reduce((total, item) => {
       return total + ((item.price - item.discount) * item.quantity);
     }, 0);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-5 mt-8 text-center">Your Shopping Cart</h1>
+    <div className="bg-gray-50 py-3 px-4 sm:px-6 lg:px-8">
+    
 
-        {cart.length === 0 ? (
-          <div className="text-center py-12">
-            <h2 className="text-xl font-medium text-gray-700">Your cart is empty</h2>
+        {cartItems.length === 0 ? (
+          <div className="text-center flex flex-col items-center justify-center py-2">
+            <h2 className="text-xl font-medium text-gray-700">Hey, it feels so light!
+            </h2>
+            <img
+                className="h-[200px] my-1"
+                src="../assets/empty-cart.png"
+                alt="wishlistEmpty"
+              />
+               <p className="mb-3">
+                There is nothing in your bag. Let's add some items.
+              </p>
             <Link
               to="/"
-              className="mt-4 inline-block px-6 py-2 bg-[#011F4B] text-white rounded-lg hover:bg-[#011F4B] transition-colors"
+              className="mt-4 inline-block px-3 py-2 bg-[#011F4B] text-white rounded-lg hover:bg-[#011F4B] transition-colors"
             >
               Continue Shopping
             </Link>
+
+            
           </div>
         ) : (
           <div className="flex flex-col lg:flex-row gap-8">
@@ -50,7 +94,7 @@ const CheckoutWithoutLogin = () => {
                     <div className="col-span-2 text-right">Subtotal</div>
                   </div>
 
-                  {cart.map((item) => {
+                  {cartItems.map((item) => {
                     const finalPrice = item.price - item.discount;
                     return (
                       <div key={item._id} className="grid grid-cols-12 items-center p-4 border-b border-gray-200">
@@ -62,7 +106,7 @@ const CheckoutWithoutLogin = () => {
                           />
                           <div>
                             <h3 className="font-medium text-gray-900">{item.name}</h3>
-                            <p className="text-sm text-gray-500">{item.brand.name}</p>
+                            <p className="text-sm text-gray-500">{item.brand}</p>
                           </div>
                         </div>
 
@@ -103,7 +147,7 @@ const CheckoutWithoutLogin = () => {
                             {(finalPrice * item.quantity).toFixed(2)}
                           </div>
                           <button
-                            onClick={() => removeCartItem(item.productId)}
+                            onClick={() => handleRemove(item.productId)}
                             className="text-red-500 hover:text-red-700 transition-colors"
                           >
                             <CiTrash className="text-lg" />
@@ -117,7 +161,7 @@ const CheckoutWithoutLogin = () => {
 
               {/* Mobile View */}
               <div className="md:hidden space-y-4">
-                {cart.map((item) => {
+                {cartItems.map((item) => {
                   const finalPrice = item.price - item.discount;
                   return (
                     <div key={item._id} className="bg-white rounded-lg shadow-sm p-4">
@@ -129,7 +173,7 @@ const CheckoutWithoutLogin = () => {
                         />
                         <div className="flex-1">
                           <h3 className="font-medium text-gray-900">{item.name}</h3>
-                          <p className="text-sm text-gray-500 mb-2">{item.brand.name}</p>
+                          <p className="text-sm text-gray-500 mb-2">{item.brand}</p>
 
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-1">
@@ -145,7 +189,7 @@ const CheckoutWithoutLogin = () => {
                             </div>
 
                             <button
-                              onClick={() => removeCartItem(item.productId)}
+                              onClick={() => handleRemove(item.productId)}
                               className="text-red-500"
                             >
                               <CiTrash className="text-lg" />
@@ -238,7 +282,6 @@ const CheckoutWithoutLogin = () => {
             </div>
           </div>
         )}
-      </div>
     </div>
   );
 };

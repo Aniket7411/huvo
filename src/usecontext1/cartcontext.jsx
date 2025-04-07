@@ -2,39 +2,50 @@ import React, { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { HttpClient } from "../server/client/http";
 
-// Create the Cart context
 export const CartContext = createContext();
 
-// CartProvider component to manage cart state and provide functions
 export const CartProvider = ({ children }) => {
-  // State to store cart items
-  const [cart, setCart] = useState([]);
-  const [wishList, setWishList] = useState([])
-  const [cartList,setCartList] = useState([])
+  const [cart, setCart] = useState(() => {
+    // Load cart from localStorage initially
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
 
-  console.log("cartcartca", cart)
+  const [wishList, setWishList] = useState([]);
+  const [cartList, setCartList] = useState([]);
 
+  console.log("cartcartca", cart);
 
+  // ✅ Save cart to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
+  const addToCartContext = (product, selectedSize, selectedQuantity) => {
+    console.log("product color code:", product?.colors[0]?.colorCode);
 
-  /**
-   * Add a product to the cart
-   * @param {Object} product - Product to be added to the cart
-   */
-  const addToCartContext = (product, selectedSize) => {
-
-
-    console.log("productpddroduct", product?.colors[0]?.colorCode)
     setCart((prevCart) => {
-      // Check if the product is already in the cart
-      const isProductInCart = prevCart.some((item) => item.productId === product.productId);
+      const isProductInCart = prevCart.some(
+        (item) =>
+          item.productId === product.productId &&
+          item.size === selectedSize &&
+          item.color === product?.colors[0]?.colorCode
+      );
 
       if (!isProductInCart) {
-        toast.success("Product added to cart",); // Notify only when added
-        return [...prevCart, product];
+        toast.success("Product added to cart");
+
+        const newCartItem = {
+          ...product,
+          size: selectedSize,
+          quantity: selectedQuantity,
+          color: product?.colors[0]?.colorCode,
+        };
+
+        return [...prevCart, newCartItem];
       }
 
-      return prevCart; // If already in the cart, return unchanged
+      return prevCart;
     });
   };
 
@@ -42,77 +53,62 @@ export const CartProvider = ({ children }) => {
     console.log("Updating product", productId, "Action:", addRemove);
 
     setCart((prevCart) =>
-
       prevCart.map((item) =>
         item.productId === productId
           ? {
-            ...item,
-            quantity:
-              addRemove === "increament"
-                ? item.quantity + 1
-                : item.quantity > 1
+              ...item,
+              quantity:
+                addRemove === "increment"
+                  ? item.quantity + 1
+                  : item.quantity > 1
                   ? item.quantity - 1
-                  : item.quantity, // Prevent quantity from going below 1
-          }
+                  : item.quantity,
+            }
           : item
       )
     );
   };
 
-
   const removeFromCartContext = (productId) => {
     setCart((prevCart) => {
       const updatedCart = prevCart.filter((item) => item.productId !== productId);
-
-      // Show a toast notification
       toast.info("Product removed from cart");
-
       return updatedCart;
     });
   };
 
-  // Context value containing the cart state and functions
-  const contextValue = { cart, addToCartContext, updateCartItem, removeFromCartContext };
-
-
-  
-    const getCartData = async () => {
-  
-      try {
-        const response = await HttpClient.get('/cart');
-  
-        console.log("aniketdd",response)
-
-  
-      } catch (err) {
-        toast.error(err.message);
-      }
+  const getCartData = async () => {
+    try {
+      const response = await HttpClient.get("/cart");
+      console.log("aniketdd", response);
+    } catch (err) {
+      toast.error(err.message);
     }
-
-
+  };
 
   const getWishList = async () => {
     try {
-      const response = await HttpClient.get("/wishlist"); // Await the response
+      const response = await HttpClient.get("/wishlist");
       console.log("aniket", response.data);
-      setWishList(wishList)
+      setWishList(response.data); // Fixing the bug: response should be used
     } catch (error) {
       console.log("Error fetching wishlist:", error);
     }
   };
-  
+
   useEffect(() => {
-    getCartData();  // Assuming this function updates the cart data in the UI
-
+    getCartData();
     getWishList();
-  }, []); // Empty dependency array ensures it runs only once on mount
-  
+  }, []);
 
-  return (
-    <CartContext.Provider value={contextValue}>
-      {children}
-    </CartContext.Provider>
-  );
+  const contextValue = {
+    cart,
+    addToCartContext,
+    updateCartItem,
+    removeFromCartContext,
+  };
+
+  return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;
 };
 
 export default CartProvider;
