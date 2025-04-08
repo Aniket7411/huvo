@@ -85,22 +85,41 @@ export default function CheckOut() {
 
   const fetchCartProducts = async () => {
     console.log("cartData")
-    try {
-      const response = await HttpClient.get("/cart");
-      console.log(response)
-<<<<<<< Updated upstream
-      const {data} = response
-      console.log("aniket cart data",data)
-=======
-      const { data } = response
-      console.log("aniket cart data", data)
->>>>>>> Stashed changes
-      setCartProducts(data);
-      console.log("this", cartProducts)
-    } catch (error) {
-      console.error(error);
-      toast.error(error?.response?.data?.message);
+
+    if(localStorage.getItem('accessToken')){
+      try {
+      
+        const response = await HttpClient.get("/cart");
+        console.log(response)
+        const {data} = response
+        console.log("aniket cart data",data)
+        setCartProducts(data);
+        console.log("this", cartProducts)
+      } catch (error) {
+        console.error(error);
+        toast.error(error?.response?.data?.message);
+      }
     }
+
+
+    setCartProducts(
+      {
+        
+          "zS1UpiGztHS#0000FF":{
+            bannerImage: "http://res.cloudinary.com/dgcghqfqv/image/upload/v1743419723/Cloudinary-React/ecqssuhcgu9syj4whykg.jpg",
+  color: "#0000FF",
+  name: "Jeans for girl",
+  price: 2000,
+  productId: "zS1UpiGztH",
+  quantity: 1,
+  size: "S",
+
+          }
+        
+      }
+    );
+
+   
   };
 
   const removeProductFromCart = async (productIdName) => {
@@ -165,7 +184,7 @@ export default function CheckOut() {
           (cartProducts[item]?.price || 1);
         totalMRP += itemTotal;
         totalDiscount +=
-          (cartProducts[item]?.discount / 100) * cartProducts[item]?.price;
+          (cartProducts[item]?.discount?cartProducts[item]?.discount:0 / 100) * cartProducts[item]?.price;
       });
     setTotalMRP(Math.round(totalMRP));
     setTotalDiscount(Math.round(totalDiscount));
@@ -175,7 +194,7 @@ export default function CheckOut() {
   const addAddress = async (data) => {
     try {
       setShippingAddress(data);
-      let address = userDetails?.address ? userDetails.address : [];
+      let address = userDetails?.address ? userDetails?.address : [];
       if (data.isDefault) {
         address.forEach((address) => (address.isDefault = false));
       }
@@ -195,7 +214,7 @@ export default function CheckOut() {
   const updateAddress = async (data) => {
     try {
       setShippingAddress(data);
-      let address = userDetails?.address ? userDetails.address : [];
+      let address = userDetails?.address ? userDetails?.address : [];
       if (data.isDefault) {
         address.forEach((address) => (address.isDefault = false));
       }
@@ -214,7 +233,7 @@ export default function CheckOut() {
 
   const removeAddress = async (index) => {
     try {
-      let address = userDetails?.address ? userDetails.address : [];
+      let address = userDetails?.address ? userDetails?.address : [];
       if (address[index].isDefault) {
         address.forEach((address) => (address.isDefault = false));
       }
@@ -262,6 +281,7 @@ export default function CheckOut() {
   };
 
   const getAllCoupons = async () => {
+   if(localStorage.getItem('accessToken')){
     try {
       const { coupons } = await HttpClient.get("/coupon/list");
       setAllCoupon(coupons);
@@ -270,27 +290,34 @@ export default function CheckOut() {
       console.error(error);
       toast.error(error?.response?.data?.message);
     }
+   }
+   return;
   };
 
   const getCouponDetails = async (data) => {
-    try {
-      setCouponCode(data?.couponCode);
-      const response = await HttpClient.get("/coupon", {
-        couponCode: data.couponCode,
-        totalAmount: totalMRP - totalDiscount,
-      });
-      couponReset();
-      if (response?.discountPrice) {
-        setCouponDiscount(response?.discountPrice);
-        setIsOpenCoupon(false);
+    if(localStorage.getItem('accessToken')){
+      try {
+        setCouponCode(data?.couponCode);
+        const response = await HttpClient.get("/coupon", {
+          couponCode: data.couponCode,
+          totalAmount: totalMRP - totalDiscount,
+        });
+        couponReset();
+        if (response?.discountPrice) {
+          setCouponDiscount(response?.discountPrice);
+          setIsOpenCoupon(false);
+        }
+        response?.message
+          ? toast.error(response?.message)
+          : toast.success("Coupon Applied!");
+      } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message);
       }
-      response?.message
-        ? toast.error(response?.message)
-        : toast.success("Coupon Applied!");
-    } catch (error) {
-      console.log(error);
-      toast.error(error?.response?.data?.message);
     }
+
+    return
+    
   };
 
   const onlinePayment = async () => {
@@ -439,7 +466,6 @@ export default function CheckOut() {
                                 </p>
                               )}
                               <div className="flex items-center gap-4">
-<<<<<<< Updated upstream
                               <h3>Product Name : Plazo</h3>
                               <p className="rounded-md px-1 " style={{
                                 outline:"1px solid gray"
@@ -452,20 +478,6 @@ export default function CheckOut() {
                                   </p>
                       
                      
-=======
-                                <h3>Product Name : Plazo</h3>
-                                <p className="rounded-md px-1 " style={{
-                                  outline: "1px solid gray"
-                                }}> <strong>Color :</strong>  {cartProducts[key].color}</p>
-                              </div>
-
-                              <div className="flex gap-2 mb-2 items-center">
-                                <p className="text-[#4D4D4D] font-medium">
-                                  Size : {cartProducts[key].size}
-                                </p>
-
-
->>>>>>> Stashed changes
                                 {cartProducts[key].quantity && (
                                   <p className="text-[#4D4D4D] text-md font-medium">
                                     Quantity: {cartProducts[key].quantity}
@@ -561,17 +573,19 @@ export default function CheckOut() {
                             {couponDiscount}
                           </p>
                         </div>
-                        <div className="flex justify-between mb-2">
+                        {/* <div className="flex justify-between mb-2">
                           <p>Platform Fee</p>
                           <p className="flex items-center">
-                            + <PiCurrencyInr />0
+                            + <PiCurrencyInr />{
+                             10
+                            }
                           </p>
-                        </div>
+                        </div> */}
                         <div className="flex justify-between mb-2">
                           <p>Shipping Fee</p>
                           <p className="flex items-center">
                             {" "}
-                            + <PiCurrencyInr />0
+                            + <PiCurrencyInr />100
                           </p>
                         </div>
                         <div className="border-[1px] border-dashed border-black border-bottom-1 my-4"></div>
@@ -579,7 +593,7 @@ export default function CheckOut() {
                           <p>Total amount</p>
                           <p className="flex items-center">
                             <PiCurrencyInr />
-                            {totalAmount}
+                            {totalAmount+100}
                           </p>
                         </div>
                       </div>
@@ -614,10 +628,10 @@ export default function CheckOut() {
                           +ADD NEW ADDRESS
                         </button>
                       </div>
-                      {userDetails.address.filter(
+                      {userDetails?.address.filter(
                         (item) => item.isDefault === true
                       ).length
-                        ? userDetails.address
+                        ? userDetails?.address
                           .filter((item) => item.isDefault === true)
                           .map((item, i) => {
                             return (
@@ -665,7 +679,7 @@ export default function CheckOut() {
                                         type="button"
                                         onClick={() =>
                                           removeAddress(
-                                            userDetails.address.findIndex(
+                                            userDetails?.address.findIndex(
                                               (data) =>
                                                 data.isDefault === true
                                             )
@@ -677,9 +691,9 @@ export default function CheckOut() {
                                       <button
                                         className="text-[#011F4B] font-medium text-xs border-2 border-[#011F4B] rounded-md px-6 py-1"
                                         onClick={() => {
-                                          setFormData(userDetails.address[i]);
+                                          setFormData(userDetails?.address[i]);
                                           setSelectedAddressIndex(
-                                            userDetails.address.findIndex(
+                                            userDetails?.address.findIndex(
                                               (data) =>
                                                 data.isDefault === true
                                             )
@@ -697,14 +711,14 @@ export default function CheckOut() {
                           })
                         : ""}
 
-                      {userDetails.address.filter(
+                      {userDetails?.address.filter(
                         (item) => item.isDefault === false
                       ).length ? (
                         <div>
                           <p className="font-normal text-[#282727] mb-2">
                             OTHER ADDRESS
                           </p>
-                          {userDetails.address
+                          {userDetails?.address
                             .filter((item) => item.isDefault === false)
                             .map((item, i) => {
                               return (
@@ -758,7 +772,7 @@ export default function CheckOut() {
                                       <button
                                         className="text-[#011F4B] font-medium text-xs border-2 border-[#011F4B] rounded-md px-6 py-1"
                                         onClick={() => {
-                                          setFormData(userDetails.address[i]);
+                                          setFormData(userDetails?.address[i]);
                                           setSelectedAddressIndex(i);
                                           setIsOpenAddress(true);
                                         }}
@@ -800,17 +814,17 @@ export default function CheckOut() {
                           {couponDiscount}
                         </p>
                       </div>
-                      <div className="flex justify-between mb-2">
+                      {/* <div className="flex justify-between mb-2">
                         <p>Platform Fee</p>
                         <p className="flex items-center">
                           +<PiCurrencyInr />0
                         </p>
-                      </div>
+                      </div> */}
                       <div className="flex justify-between mb-2">
                         <p>Shipping Fee</p>
                         <p className="flex items-center">
                           {" "}
-                          + <PiCurrencyInr /> 0
+                          + <PiCurrencyInr /> 100
                         </p>
                       </div>
                       <div className="border-[1px] border-dashed border-black border-bottom-1 my-4"></div>
@@ -818,7 +832,7 @@ export default function CheckOut() {
                         <p>Total amount</p>
                         <p className="flex items-center">
                           <PiCurrencyInr />
-                          {totalAmount}
+                          {totalAmount+100}
                         </p>
                       </div>
                       <button
@@ -909,17 +923,17 @@ export default function CheckOut() {
                           {couponDiscount}
                         </p>
                       </div>
-                      <div className="flex justify-between mb-2">
+                      {/* <div className="flex justify-between mb-2">
                         <p>Platform Fee</p>
                         <p className="flex items-center">
                           +<PiCurrencyInr />0
                         </p>
-                      </div>
+                      </div> */}
                       <div className="flex justify-between mb-2">
                         <p>Shipping Fee</p>
                         <p className="flex items-center">
                           {" "}
-                          + <PiCurrencyInr /> 0
+                          + <PiCurrencyInr /> 100
                         </p>
                       </div>
                       <div className="border-[1px] border-dashed border-black border-bottom-1 my-4"></div>
@@ -927,7 +941,7 @@ export default function CheckOut() {
                         <p>Total amount</p>
                         <p className="flex items-center">
                           <PiCurrencyInr />
-                          {totalAmount}
+                          {totalAmount+100}
                         </p>
                       </div>
                       <button
@@ -1457,13 +1471,8 @@ export default function CheckOut() {
                                     <button
                                       // className="text-base px-3 py-2 bg-[#14CDA8]"
                                       className={`text-base px-3 py-2 ${item.couponCode === couponCode
-<<<<<<< Updated upstream
                                           ? "bg-[#14CDA8]"
                                           : "bg-[#011F4B] text-white"
-=======
-                                        ? "bg-[#14CDA8]"
-                                        : "bg-[#011F4B] text-white"
->>>>>>> Stashed changes
                                         }`}
                                       onClick={() =>
                                         getCouponDetails({
