@@ -323,19 +323,19 @@ export default function ProductDetails() {
                   <p className="flex flex-wrap items-center text-lg font-semibold text-gray-800">
                     {/* Original Price */}
                     <span className="line-through text-gray-500  flex items-center">
-                      <PiCurrencyInr className="mr-1" /> {productDetails?.price * quantity}
+                      <PiCurrencyInr className="mr-1" /> {productDetails?.price * selectedQuantity}
                     </span>
 
 
                     {/* Discount Amount */}
                     <span className="text-sm mr-2 text-gray-500 ml-2 flex items-center"> -
-                      (<PiCurrencyInr className="mr-1" />{productDetails?.discount * quantity})
+                      (<PiCurrencyInr className="mr-1" />{productDetails?.discount * selectedQuantity})
                     </span>
 
                     {/* Discounted Price */}
                     <span className="text-green-500 flex items-center text-xl font-bold">
                       <PiCurrencyInr className="mr-1" />
-                      {productDetails?.price * quantity - productDetails?.discount * quantity}
+                      {productDetails?.price * selectedQuantity - productDetails?.discount * selectedQuantity}
                     </span>
 
 
@@ -453,27 +453,34 @@ export default function ProductDetails() {
                     </div>
                   </div>
                 </Modal>
+                <div
+  key={productDetails?.productId}
+  className="flex items-center gap-4 mt-2 rounded-xl"
+>
+  {/* Decrement Button */}
+  <button
+    onClick={() => setQuantity((prevQuantity) => Math.max(1, prevQuantity - 1))}
+    disabled={selectedQuantity === 1}
+    className={`text-2xl text-purple-700 hover:scale-110 transition-transform duration-200 
+                ${selectedQuantity === 1 ? "text-gray-400 cursor-not-allowed" : "hover:text-purple-900"}`}
+  >
+    <CiSquareMinus />
+  </button>
 
+  {/* Quantity Display */}
+  <p className="text-lg font-semibold text-gray-800">
+    Quantity: <span className="text-purple-600">{selectedQuantity}</span>
+  </p>
 
-                <div key={productDetails?.productId} className="flex items-center gap-4 mt-2 rounded-xl">
-                  <button
-onClick={() => updateQuantity(productDetails?.productId, "decrement")}
-className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
-                  >
-                    <CiSquareMinus />
-                  </button>
+  {/* Increment Button */}
+  <button
+    onClick={() => setQuantity(selectedQuantity + 1)}
+    className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
+  >
+    <CiSquarePlus />
+  </button>
+</div>
 
-                  <p className="text-lg font-semibold text-gray-800">
-                    Quantity : <span className="text-purple-600">{quantity}</span>
-                  </p>
-
-                  <button 
-onClick={() => updateQuantity(productDetails?.productId, "increament")}
-className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
-                  >
-                    <CiSquarePlus />
-                  </button>
-                </div>
 
 
 

@@ -23,6 +23,8 @@ import { FiEdit } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import { getUserData, setUserData } from "../../server/user";
 import IndiaTime from "../../components/getIndiaTime";
+import Loader from "../../components/loader";
+import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 
 export default function CheckOut() {
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ export default function CheckOut() {
   const [productSize, setProductSize] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenAddress, setIsOpenAddress] = useState(false);
+  const [isLoading, setIsLoading]  = useState(false)
   // const { products, addProduct } = useContext(ProductContext);
 
 
@@ -87,19 +90,19 @@ export default function CheckOut() {
     console.log("cartData")
     try {
       const response = await HttpClient.get("/cart");
+      setIsLoading(true)
+      
       console.log(response)
-<<<<<<< Updated upstream
       const {data} = response
       console.log("aniket cart data",data)
-=======
-      const { data } = response
-      console.log("aniket cart data", data)
->>>>>>> Stashed changes
       setCartProducts(data);
       console.log("this", cartProducts)
+      setIsLoading(false)
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
+      setIsLoading(false)
+
     }
   };
 
@@ -318,7 +321,10 @@ export default function CheckOut() {
   }, [reset, selectedSize, selectedQuantity]);
 
   return (
+
     <>
+    {
+      isLoading ? "ANiket" :  <div>
       <section className="px-10 py-7 font-[Quicksand]">
         {Object.keys(cartProducts).length ? (
           <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
@@ -439,7 +445,6 @@ export default function CheckOut() {
                                 </p>
                               )}
                               <div className="flex items-center gap-4">
-<<<<<<< Updated upstream
                               <h3>Product Name : Plazo</h3>
                               <p className="rounded-md px-1 " style={{
                                 outline:"1px solid gray"
@@ -452,25 +457,45 @@ export default function CheckOut() {
                                   </p>
                       
                      
-=======
-                                <h3>Product Name : Plazo</h3>
-                                <p className="rounded-md px-1 " style={{
-                                  outline: "1px solid gray"
-                                }}> <strong>Color :</strong>  {cartProducts[key].color}</p>
-                              </div>
+                                  {cartProducts[key].quantity && (
+  <div className="flex items-center gap-2 rounded-xl">
+    {/* Decrement Button */}
+    <button
+      onClick={() => 
+        setCartProducts((prevCart) => {
+          const updatedCart = { ...prevCart };
+          updatedCart[key].quantity = Math.max(1, updatedCart[key].quantity - 1);
+          return updatedCart;
+        })
+      }
+      disabled={cartProducts[key].quantity === 1}
+      className={`text-2xl text-purple-700 hover:scale-110 transition-transform duration-200 
+                  ${cartProducts[key].quantity === 1 ? "text-gray-400 cursor-not-allowed" : "hover:text-purple-900"}`}
+    >
+      <CiSquareMinus />
+    </button>
 
-                              <div className="flex gap-2 mb-2 items-center">
-                                <p className="text-[#4D4D4D] font-medium">
-                                  Size : {cartProducts[key].size}
-                                </p>
+    {/* Quantity Display */}
+    <p className="text-[#4D4D4D] text-md font-medium">
+      Quantity: {cartProducts[key].quantity}
+    </p>
 
+    {/* Increment Button */}
+    <button
+      onClick={() =>
+        setCartProducts((prevCart) => {
+          const updatedCart = { ...prevCart };
+          updatedCart[key].quantity += 1;
+          return updatedCart;
+        })
+      }
+      className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
+    >
+      <CiSquarePlus />
+    </button>
+  </div>
+)}
 
->>>>>>> Stashed changes
-                                {cartProducts[key].quantity && (
-                                  <p className="text-[#4D4D4D] text-md font-medium">
-                                    Quantity: {cartProducts[key].quantity}
-                                  </p>
-                                )}
                                 <button
                                   onClick={() => openDialogForProduct(key)}
                                 >
@@ -1457,13 +1482,8 @@ export default function CheckOut() {
                                     <button
                                       // className="text-base px-3 py-2 bg-[#14CDA8]"
                                       className={`text-base px-3 py-2 ${item.couponCode === couponCode
-<<<<<<< Updated upstream
                                           ? "bg-[#14CDA8]"
                                           : "bg-[#011F4B] text-white"
-=======
-                                        ? "bg-[#14CDA8]"
-                                        : "bg-[#011F4B] text-white"
->>>>>>> Stashed changes
                                         }`}
                                       onClick={() =>
                                         getCouponDetails({
@@ -1506,6 +1526,9 @@ export default function CheckOut() {
           </div>
         </Dialog>
       </Transition>
+    </div>
+    }
     </>
+   
   );
 }
