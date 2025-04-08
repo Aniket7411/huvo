@@ -125,8 +125,9 @@ export default function ProductDetails() {
         productId: productDetails?.productId,
         color: productDetails?.colors?.[0]?.colorCode || "Default Color", // Handle missing color
         size: selectedSize,
-        price,
-        quantity
+        price : selectedQuantity * productDetails?.price,
+        discount: selectedQuantity * productDetails?.price - selectedQuantity * productDetails?.discount,
+        quantity: selectedQuantity
       };
 
       try {
@@ -213,7 +214,7 @@ export default function ProductDetails() {
         const wishlistData = {
           productId: productId,
           size: selectedSize,
-          color: "red"
+          color: "red",
         }
         try {
           const response = await HttpClient.post("/wishlist/", wishlistData)
@@ -279,37 +280,58 @@ export default function ProductDetails() {
 
                 <div className="flex flex-col gap-2 mt-3">
                   <div className="flex flex-col sm:flex-row sm:gap-4 gap-2">
+                 
+
+                    
                     <div className="flex gap-2 items-center">
-                      <div className="bg-[#338E3C] text-white px-2 py-1 flex items-center rounded-md gap-1">
-                        <p className="text-sm font-bold">4.6</p>
-                        <TbJewishStarFilled className="text-sm" />
-                      </div>
-                      <button
-                        onClick={() => {
-                          scrollToReview();
-                        }}
-                        className="text-[#717478] font-semibold text-sm hover:underline"
-                      >
-                        Product Rating & Reviews
-                      </button>
-                    </div>
+  <div
+    className={`px-2 py-1 flex items-center rounded-md gap-1 text-white ${
+      4.5 >= 3.5
+        ? "bg-green-500"
+        : 4.5 >= 3
+        ? "bg-yellow-500"
+        : "bg-red-400"
+    }`}
+  >
+    <p className="text-sm font-bold">4.5</p>
+    <TbJewishStarFilled className="text-sm" />
+  </div>
+  <p className="text-[#717478] cursor-pointer font-semibold text-sm">Product Rating & Reviews</p>
+</div>
+
+                 
 
                     <div className="flex gap-2 items-center">
-                      <div className="bg-[#FF9800] text-white px-2 py-1 flex items-center rounded-md gap-1">
-                        <p className="text-sm font-bold">{productDetails?.brand?.rating || "4.5"}</p>
-                        <TbJewishStarFilled className="text-sm" />
-                      </div>
-                      <p className="text-[#717478] font-semibold text-sm">Brand Rating</p>
-                    </div>
+  <div
+    className={`px-2 py-1 flex items-center rounded-md gap-1 text-white ${
+      4.5 >= 3.5
+        ? "bg-green-500"
+        : 4.5 >= 3
+        ? "bg-yellow-500"
+        : "bg-red-400"
+    }`}
+  >
+    <p className="text-sm font-bold">4.5</p>
+    <TbJewishStarFilled className="text-sm" />
+  </div>
+
+  <Link to={`/products_by_brand/${productDetails?.brand?.name || "default"}`} >
+  <p className="text-[#717478] hover:underline hover:text-blue-500 font-semibold text-sm">Brand Rating</p>
+  </Link>
+</div>
+
                   </div>
 
                   <div>
+                  <Link to={`/products_by_brand/${productDetails?.brand?.name || "default"}`} >
+
                     <p className="text-lg font-medium text-gray-600">
                       Brand:{" "}
                       <span className="text-gray-800 font-semibold">
                         {productDetails?.brand?.name || "Unknown"}
                       </span>
                     </p>
+                    </Link>
                   </div>
                 </div>
 
@@ -323,19 +345,19 @@ export default function ProductDetails() {
                   <p className="flex flex-wrap items-center text-lg font-semibold text-gray-800">
                     {/* Original Price */}
                     <span className="line-through text-gray-500  flex items-center">
-                      <PiCurrencyInr className="mr-1" /> {productDetails?.price * quantity}
+                      <PiCurrencyInr className="mr-1" /> {productDetails?.price * selectedQuantity}
                     </span>
 
 
                     {/* Discount Amount */}
                     <span className="text-sm mr-2 text-gray-500 ml-2 flex items-center"> -
-                      (<PiCurrencyInr className="mr-1" />{productDetails?.discount * quantity})
+                      (<PiCurrencyInr className="mr-1" />{productDetails?.discount * selectedQuantity})
                     </span>
 
                     {/* Discounted Price */}
                     <span className="text-green-500 flex items-center text-xl font-bold">
                       <PiCurrencyInr className="mr-1" />
-                      {productDetails?.price * quantity - productDetails?.discount * quantity}
+                      {productDetails?.price * selectedQuantity - productDetails?.discount * selectedQuantity}
                     </span>
 
 
@@ -453,27 +475,34 @@ export default function ProductDetails() {
                     </div>
                   </div>
                 </Modal>
+                <div
+  key={productDetails?.productId}
+  className="flex items-center gap-4 mt-2 rounded-xl"
+>
+  {/* Decrement Button */}
+  <button
+    onClick={() => setQuantity((prevQuantity) => Math.max(1, prevQuantity - 1))}
+    disabled={selectedQuantity === 1}
+    className={`text-2xl text-purple-700 hover:scale-110 transition-transform duration-200 
+                ${selectedQuantity === 1 ? "text-gray-400 cursor-not-allowed" : "hover:text-purple-900"}`}
+  >
+    <CiSquareMinus />
+  </button>
 
+  {/* Quantity Display */}
+  <p className="text-lg font-semibold text-gray-800">
+    Quantity: <span className="text-purple-600">{selectedQuantity}</span>
+  </p>
 
-                <div key={productDetails?.productId} className="flex items-center gap-4 mt-2 rounded-xl">
-                  <button
-onClick={() => updateQuantity(productDetails?.productId, "decrement")}
-className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
-                  >
-                    <CiSquareMinus />
-                  </button>
+  {/* Increment Button */}
+  <button
+    onClick={() => setQuantity(selectedQuantity + 1)}
+    className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
+  >
+    <CiSquarePlus />
+  </button>
+</div>
 
-                  <p className="text-lg font-semibold text-gray-800">
-                    Quantity : <span className="text-purple-600">{quantity}</span>
-                  </p>
-
-                  <button 
-onClick={() => updateQuantity(productDetails?.productId, "increament")}
-className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
-                  >
-                    <CiSquarePlus />
-                  </button>
-                </div>
 
 
 

@@ -23,6 +23,8 @@ import { FiEdit } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import { getUserData, setUserData } from "../../server/user";
 import IndiaTime from "../../components/getIndiaTime";
+import Loader from "../../components/loader";
+import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 
 export default function CheckOut() {
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ export default function CheckOut() {
   const [productSize, setProductSize] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenAddress, setIsOpenAddress] = useState(false);
+  const [isLoading, setIsLoading]  = useState(false)
   // const { products, addProduct } = useContext(ProductContext);
 
 
@@ -345,7 +348,10 @@ export default function CheckOut() {
   }, [reset, selectedSize, selectedQuantity]);
 
   return (
+
     <>
+    {
+      isLoading ? "ANiket" :  <div>
       <section className="px-10 py-7 font-[Quicksand]">
         {Object.keys(cartProducts).length ? (
           <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
@@ -478,11 +484,45 @@ export default function CheckOut() {
                                   </p>
                       
                      
-                                {cartProducts[key].quantity && (
-                                  <p className="text-[#4D4D4D] text-md font-medium">
-                                    Quantity: {cartProducts[key].quantity}
-                                  </p>
-                                )}
+                                  {cartProducts[key].quantity && (
+  <div className="flex items-center gap-2 rounded-xl">
+    {/* Decrement Button */}
+    <button
+      onClick={() => 
+        setCartProducts((prevCart) => {
+          const updatedCart = { ...prevCart };
+          updatedCart[key].quantity = Math.max(1, updatedCart[key].quantity - 1);
+          return updatedCart;
+        })
+      }
+      disabled={cartProducts[key].quantity === 1}
+      className={`text-2xl text-purple-700 hover:scale-110 transition-transform duration-200 
+                  ${cartProducts[key].quantity === 1 ? "text-gray-400 cursor-not-allowed" : "hover:text-purple-900"}`}
+    >
+      <CiSquareMinus />
+    </button>
+
+    {/* Quantity Display */}
+    <p className="text-[#4D4D4D] text-md font-medium">
+      Quantity: {cartProducts[key].quantity}
+    </p>
+
+    {/* Increment Button */}
+    <button
+      onClick={() =>
+        setCartProducts((prevCart) => {
+          const updatedCart = { ...prevCart };
+          updatedCart[key].quantity += 1;
+          return updatedCart;
+        })
+      }
+      className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
+    >
+      <CiSquarePlus />
+    </button>
+  </div>
+)}
+
                                 <button
                                   onClick={() => openDialogForProduct(key)}
                                 >
@@ -1515,6 +1555,9 @@ export default function CheckOut() {
           </div>
         </Dialog>
       </Transition>
+    </div>
+    }
     </>
+   
   );
 }
