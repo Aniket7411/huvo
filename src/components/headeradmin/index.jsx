@@ -52,8 +52,8 @@ function AdminHeader() {
   const [date, setDate] = useState('')
   const [message, setMessage] = useState('')
   const [userDetails, setUserDetails] = useState(null);
-    const navigate = useNavigate();
-  
+  const navigate = useNavigate();
+
 
   let subtitle;
 
@@ -282,13 +282,13 @@ function AdminHeader() {
             <div>
               <div className="flex flex-grow w-auto justify-between">
 
-                <img src="/assets/newlogo.png" alt="Logo" className="w-[100px] h-[100px]" />
+                <img src="/assets/newlogo.jpeg" alt="Logo" className="w-[100px] h-[100px]" />
 
                 <button className="lg:text-black" onClick={() => closeSubmenu()}>
                   <RxCross2 />
                 </button>
               </div>
-              <div className="flex items-center px-8 py-5">
+              <div className="flex items-center px-3 py-5">
                 <div className="mr-4 flex items-center justify-center border border-white w-10 h-10 rounded-full bg-[#FFFFFF]">
                   <img
                     src="/assets/winter.png"

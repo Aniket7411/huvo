@@ -39,7 +39,7 @@ function SuperAdminNav() {
 
           {/* <img src="/assets/cart.png" alt="Cart" width="60px" height="60px" /> */}
 
-          <img src="/assets/newlogo.png" alt="Logo" className="w-[100px] h-[100px]" />
+          <img src="/assets/newlogo.jpeg" alt="Logo" className="w-[100px] h-[20px] mb-5" />
         </div>
       
         <hr className=' bg-gray-500 mx-10'></hr>

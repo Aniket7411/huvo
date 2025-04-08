@@ -120,6 +120,7 @@ function ProductAddPage() {
       console.log("response", response)
       isLoading(false)
       toast.success("Product added successfully")
+      
 
 
     } catch (error) {

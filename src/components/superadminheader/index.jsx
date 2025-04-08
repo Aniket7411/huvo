@@ -20,6 +20,7 @@ import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
 
 import { LogOut, setUserData } from "../../server/user";
+import { FaRegUserCircle } from "react-icons/fa";
 
 
 
@@ -196,22 +197,18 @@ export default function Superadminheader() {
               </Modal>
             </div>
             <li className="hidden md:block">
-              <div className="flex items-center px-4 py-5">
-                <div className="mr-4 flex items-center justify-center border border-white w-10 h-10 rounded-full bg-[#FFFFFF]">
-                  <img
-                    src="/assets/winter.png"
-                    alt="Cart"
-                    className="rounded-full w-full h-full object-cover"
-                  />
+              <div className="flex items-center px-3 py-3 ">
+                <div className="mr-4 flex items-center justify-center border border-white w-10 h-10 rounded-full bg-[#ffffff]">
+                <FaRegUserCircle className="text-[blue]" size={25} />
                 </div>
 
                 <p className="text-[#011F4B] font-[Poppins] font-bold">
 
-                  {getUserData()?.firstName.toLowerCase()}{" "}
-                  {getUserData()?.lastName.toLowerCase()}
+                  {getUserData()?.firstName.toUpperCase()}{" "}
+                  {getUserData()?.lastName.toUpperCase()}
                 </p>
 
-                <button type="button" className="bg-[blue] rounded-md px-2 ml-2 py-1 text-[#fff]" onClick={clickToLogout}>Logout</button>
+                <button type="button" className="bg-[#011F4B] rounded-md px-2 ml-2 py-1 text-[#fff]" onClick={clickToLogout}>Logout</button>
               </div>
             </li>
             <li className="responsive-div">
@@ -235,8 +232,8 @@ export default function Superadminheader() {
               <div className="flex justify-between items-center px-8 py-3">
                 <Link to="/">
                   {/* <img src="/assets/cart.png" alt="Cart" width="60px" height="60px" /> */}
-                  <p className="text-2xl my-2">Logo</p>
-                </Link>
+                  <img src="/assets/newlogo.jpeg" className="w-[30px]" alt="logo" />
+                  </Link>
                 <div onClick={() => setSidenav(false)}>
                   <RxCross2 h-14 w-14 />
                 </div>
@@ -246,21 +243,7 @@ export default function Superadminheader() {
                   Huvo
                 </p>
               </div>
-              <div className="flex items-center px-4 py-5">
-                <div className="mr-4 flex items-center justify-center border border-white w-10 h-10 rounded-full bg-[#FFFFFF]">
-                  <img
-                    src="/assets/winter.png"
-                    alt="Cart"
-                    className="rounded-full w-full h-full object-cover"
-                  />
-                </div>
-
-                <p className="text-[#011F4B] font-[Poppins] font-bold">
-
-                  {/* {getUserData()?.firstName.toLowerCase()}{" "}
-                  {getUserData()?.lastName.toLowerCase()} */}
-                </p>
-              </div>
+           
 
               <hr className=" bg-gray-500 mx-10 my-4"></hr>
             </div>
@@ -269,7 +252,7 @@ export default function Superadminheader() {
                 <li>
                   <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
                     <Link to="/admin" className="flex items-center gap-2">
-                      <button className="flex justify-center items-center gap-4 p-2">
+                      <button className="flex justify-center text-lg items-center gap-4 p-2">
                         <div className="p-2 iconDiv">
                           <MdSignalCellularAlt size={21} className="icon" />
                         </div>

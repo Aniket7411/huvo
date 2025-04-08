@@ -27,7 +27,7 @@ const Advertisement = () => {
         <Superadminheader />
 
         {/* Dropdown for Advertisement Type */}
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block text-lg font-medium mb-2">
             Select Advertisement Type
           </label>
@@ -44,12 +44,10 @@ const Advertisement = () => {
         </div>
 
         {/* Tab Content */}
-        <div className="tab-content bg-white p-4 shadow-md rounded-lg">
           {activeTab === "category" && <CategoryAdvertisement />}
           {activeTab === "brand" && <BrandAdvertisement />}
           {activeTab === "group" && <GroupAdvertisement />}
           {activeTab === "discounted" && <DiscountAdvertisment />}
-        </div>
       </div>
     </div>
   );

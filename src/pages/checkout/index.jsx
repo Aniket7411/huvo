@@ -88,8 +88,13 @@ export default function CheckOut() {
     try {
       const response = await HttpClient.get("/cart");
       console.log(response)
+<<<<<<< Updated upstream
       const {data} = response
       console.log("aniket cart data",data)
+=======
+      const { data } = response
+      console.log("aniket cart data", data)
+>>>>>>> Stashed changes
       setCartProducts(data);
       console.log("this", cartProducts)
     } catch (error) {
@@ -434,6 +439,7 @@ export default function CheckOut() {
                                 </p>
                               )}
                               <div className="flex items-center gap-4">
+<<<<<<< Updated upstream
                               <h3>Product Name : Plazo</h3>
                               <p className="rounded-md px-1 " style={{
                                 outline:"1px solid gray"
@@ -446,6 +452,20 @@ export default function CheckOut() {
                                   </p>
                       
                      
+=======
+                                <h3>Product Name : Plazo</h3>
+                                <p className="rounded-md px-1 " style={{
+                                  outline: "1px solid gray"
+                                }}> <strong>Color :</strong>  {cartProducts[key].color}</p>
+                              </div>
+
+                              <div className="flex gap-2 mb-2 items-center">
+                                <p className="text-[#4D4D4D] font-medium">
+                                  Size : {cartProducts[key].size}
+                                </p>
+
+
+>>>>>>> Stashed changes
                                 {cartProducts[key].quantity && (
                                   <p className="text-[#4D4D4D] text-md font-medium">
                                     Quantity: {cartProducts[key].quantity}
@@ -1437,8 +1457,13 @@ export default function CheckOut() {
                                     <button
                                       // className="text-base px-3 py-2 bg-[#14CDA8]"
                                       className={`text-base px-3 py-2 ${item.couponCode === couponCode
+<<<<<<< Updated upstream
                                           ? "bg-[#14CDA8]"
                                           : "bg-[#011F4B] text-white"
+=======
+                                        ? "bg-[#14CDA8]"
+                                        : "bg-[#011F4B] text-white"
+>>>>>>> Stashed changes
                                         }`}
                                       onClick={() =>
                                         getCouponDetails({

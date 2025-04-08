@@ -24,6 +24,7 @@ import { Switch } from "antd"
 import Modal from "react-modal";
 import uploadImageOnCloudinary from "../../server/client/imageUpload";
 import LoadSpinner from "../../components/LoadSpinner";
+import Loader from "../../components/loader";
 
 Modal.setAppElement('#root'); // Assuming your root element's ID is 'root'
 
@@ -42,6 +43,7 @@ export default function Profile() {
   const [panUrl, setPanUrl] = useState(null)
   const [gst, setGst] = useState('');
   const [gstUrl, setGstUrl] = useState(null);
+  const [documentUploading, setDocumentUploading] = useState(false)
 
   const [userDetails, setUserDetails] = useState(null);
   const [orderDetails, setOrderDetails] = useState(null);
@@ -109,16 +111,19 @@ export default function Profile() {
 
     try {
       //debugger;
-      setLoading(true)
+      setDocumentUploading(true)
       const response = await HttpClient.post(`/approval/submit`, verficationDetails);
-      setLoading(false)
       toast.success(response?.message);
+      setDocumentUploading(false)
+
 
     }
     catch (error) {
       setLoading(false);
       // console.error(error);
       toast.error(error?.response?.data?.message)
+      setDocumentUploading(false)
+
     }
   }
 
@@ -1256,14 +1261,14 @@ export default function Profile() {
 
                       <div>
 
-                      <p 
-  className="text-black text-sm md:text-base font-medium bg-gray-100 p-2 mb-2 rounded-md border border-gray-300 shadow-sm"
->
-  <span className="font-semibold">User Name:</span> Aniket7422 
-  <span className="text-gray-600 block md:inline">
-    (Your buyer can search you using this)
-  </span>
-</p>
+                        <p
+                          className="text-black text-sm md:text-base font-medium bg-gray-100 p-2 mb-2 rounded-md border border-gray-300 shadow-sm"
+                        >
+                          <span className="font-semibold">User Name:</span> Aniket7422 {}
+                          <span className="text-gray-600 block md:inline">
+                            (Your buyer can search you using this)
+                          </span>
+                        </p>
 
                         <label className="text-[#626262] font-medium mb-2 ml-2">
                           Store Name
@@ -1471,224 +1476,235 @@ export default function Profile() {
 
 
               <TabPanel className="bg-[#F2F2F2] h-full">
-                <div className=" grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div className=" py-5 px-10">
-                    <label className="block text-[#626262] font-medium mb-2 ml-2">
-                      PAN
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter your Pan "
-                      className="border border-gray-300 rounded-lg p-3 w-full"
-                      value={pan}
-                      onChange={(e) => setPan(e.target.value.toUpperCase())}
 
-
-                    />
-
-                    <label className="block text-[#626262] font-medium mb-2 ">
-                      Upload GST document
-                    </label>
-                    <input
-                      type="file"
-                      accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx"
-                      className="block text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
-
-                      onChange={(e) => getPanImageUrl(e,)}
-                    />
-
-
-                    {/* 
-
-                    <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-3 ml-auto"
-                      onClick={handlePanVerification}
-
-                    >Verify Pan </button> */}
-
-                  </div>
-                  {panInfo && (
-                    <div className='mx-2 mt-2' >
-
-                      <p className="font-poppins font-medium text-[20px] leading-[21px] py-4 mx-2">
-                        PAN Information
-                      </p>
-                      <div className='flex gap-10 mx-2 py-4 '>
-                        <div className='flex flex-col space-y-6 pr-2 w-1/3'>
-                          <div className='flex flex-col space-y-2 '>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>PAN Number</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.pan
-                            }</p>
-                          </div>
-                          <div className='flex flex-col space-y-2 '>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>First Name</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                              {panInfo?.firstName
-                              }
-                            </p>
-                          </div>
-                          <div className='flex flex-col  space-y-2'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Last Name</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'> {panInfo?.lastName}</p>
-                          </div>
-                          <div className='flex flex-col  space-y-2'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Gender</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'> {panInfo?.gender}</p>
-                          </div>
-                          <div className='flex flex-col  space-y-2'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Dob</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
-                              dob}</p>
-                          </div>
-                        </div>
-
-
-                        <div className='flex flex-col space-y-6 w-2/3'>
-
-
-                          <div className='flex flex-col space-y-2'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Aadhar Number</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
-                              maskedAadhaarNumber
-                            }</p>
-                          </div>
-
-                          <div className='flex flex-col space-y-2'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Address</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
-                              address
-                            }
-                            </p>
-                          </div>
-                          <div className='flex flex-col space-y-2'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Aadhar Link Status</h1>
-                            <p className={`font-poppins font-normal text-[16px] leading-[21px] ${panInfo?.aadhaarLinked ? 'text-green-600' : 'text-red-600'
-                              }`}>{panInfo?.aadhaarLinked ? "Already Linked" : "Aadhaar Not Linked"}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  <div className=" py-5 px-10">
-                    <label className="block text-[#626262] font-medium mb-2 ml-2">
-                      GSTN
-                    </label>
-                    <input
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        if (/^\d*$/.test(value) && value.length <= 15) {
-                          setGst(value);
-                        }
-                      }}
-                      value={gst}
-                      type="text"
-                      maxLength={15}
-                      placeholder="Enter your GST Number"
-                      className="border border-gray-300 rounded-lg p-3 w-full"
-                    />
-
-
-                    <label className="block text-[#626262] font-medium mb-2 mt-2">
-                      Upload PAN Image
-                    </label>
-
-                    <input
-                      type="file"
-                      accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx"
-                      className="block  text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
-
-                      onChange={(e) => getGstUrl(e,)}
-                    />
-                    {/* <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-6 ml-auto"
-                      onClick={handleGstVerification}
-
-                    >Verify Gstn</button> */}
-                  </div>
-                  {gstInfo && (
-                    <div className='mx-2 mt-2' >
-
-                      <p className="font-poppins font-medium text-[20px] leading-[21px] py-4 mx-2">
-                        Gstn Information
-                      </p>
-                      <div className='flex gap-10 mx-2 py-4 '>
-                        <div className='flex flex-col space-y-6 pr-2 w-1/3'>
-                          <div className='flex flex-col space-y-2 '>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>GST Number</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>{gstInfo?.gstin}</p>
-                          </div>
-                          <div className='flex flex-col space-y-2 '>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>GSTN Status</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                              {gstInfo?.gstinStatus}
-                            </p>
-                          </div>
-                          <div className='flex flex-col  space-y-2'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Center Jurisdiction</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>{gstInfo?.centreJurisdiction}
-                            </p>
-                          </div>
-                          <div className='flex flex-col  space-y-2 w-2/3'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Center Jurisdiction Code</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>{gstInfo?.centreJurisdictionCode}</p>
-                          </div>
-                          <div className='flex flex-col  space-y-2'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Legal Name Of Business</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                              {gstInfo?.legalNameOfBusiness
-                              }
-                            </p>
-                          </div>
-                        </div>
-
-
-                        <div className='flex flex-col space-y-6 '>
-
-                          <div className='flex flex-col space-y-2 w-2/3'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>State Jurisdiction</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                              {gstInfo?.stateJurisdiction
-
-                              }
-                            </p>
-                          </div>
-                          <div className='flex flex-col space-y-2'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>State Jurisdiction Code</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                              {gstInfo?.stateJurisdictionCode
-
-                              }
-                            </p>
-                          </div>
-                          <div className='flex flex-col space-y-2'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Tax Payer Type</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>  {gstInfo?.taxpayerType
-
-
-                            }</p>
-                          </div>
-                          <div className='flex flex-col space-y-2'>
-                            <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Reference Id</h1>
-                            <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                              {gstInfo?.
-                                referenceId
-                              }
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>)}
-
-                  <div>
-                    {
-                      loading === false ?
-                        <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-8 py-3 mx-auto block"
-                          onClick={handleApproval}
-
-                        >Submit Docs</button>
-                        :
-                        <LoadSpinner />
-                    }
+                {
+                  documentUploading ? <div className="h-screen w-full flex flex-col justify-center items-center bg-gray-50">
+                  <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center">
+                    <p className="text-lg font-semibold mb-4 text-gray-700">Uploading Documents...</p>
+                    <Loader />
                   </div>
                 </div>
+                 : <div className=" grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div className=" py-5 px-4">
+                      <label className="block text-[#626262] font-medium mb-2 ml-2">
+                        PAN
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Enter your Pan "
+                        className="border border-gray-300 rounded-lg p-3 w-full"
+                        value={pan}
+                        onChange={(e) => setPan(e.target.value.toUpperCase())}
+
+
+                      />
+
+                      <label className="block text-[#626262] font-medium mb-2 ">
+                        Upload PAN Image
+                      </label>
+                      <input
+                        type="file"
+                        accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx"
+                        className="block text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+
+                        onChange={(e) => getPanImageUrl(e,)}
+                      />
+
+
+                      {/* 
+
+    <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-3 ml-auto"
+      onClick={handlePanVerification}
+
+    >Verify Pan </button> */}
+
+                    </div>
+                    {panInfo && (
+                      <div className='mx-2 mt-2' >
+
+                        <p className="font-poppins font-medium text-[20px] leading-[21px] py-4 mx-2">
+                          PAN Information
+                        </p>
+                        <div className='flex gap-10 mx-2 py-4 '>
+                          <div className='flex flex-col space-y-6 pr-2 w-1/3'>
+                            <div className='flex flex-col space-y-2 '>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>PAN Number</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.pan
+                              }</p>
+                            </div>
+                            <div className='flex flex-col space-y-2 '>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>First Name</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>
+                                {panInfo?.firstName
+                                }
+                              </p>
+                            </div>
+                            <div className='flex flex-col  space-y-2'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Last Name</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'> {panInfo?.lastName}</p>
+                            </div>
+                            <div className='flex flex-col  space-y-2'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Gender</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'> {panInfo?.gender}</p>
+                            </div>
+                            <div className='flex flex-col  space-y-2'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Dob</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
+                                dob}</p>
+                            </div>
+                          </div>
+
+
+                          <div className='flex flex-col space-y-6 w-2/3'>
+
+
+                            <div className='flex flex-col space-y-2'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Aadhar Number</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
+                                maskedAadhaarNumber
+                              }</p>
+                            </div>
+
+                            <div className='flex flex-col space-y-2'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Address</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
+                                address
+                              }
+                              </p>
+                            </div>
+                            <div className='flex flex-col space-y-2'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Aadhar Link Status</h1>
+                              <p className={`font-poppins font-normal text-[16px] leading-[21px] ${panInfo?.aadhaarLinked ? 'text-green-600' : 'text-red-600'
+                                }`}>{panInfo?.aadhaarLinked ? "Already Linked" : "Aadhaar Not Linked"}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <div className=" py-5 px-4">
+                      <label className="block text-[#626262] font-medium mb-2 ml-2">
+                        GSTN
+                      </label>
+                      <input
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (/^\d*$/.test(value) && value.length <= 15) {
+                            setGst(value);
+                          }
+                        }}
+                        value={gst}
+                        type="text"
+                        maxLength={15}
+                        placeholder="Enter your GST Number"
+                        className="border border-gray-300 rounded-lg p-3 w-full"
+                      />
+
+
+                      <label className="block text-[#626262] font-medium mb-2 mt-2">
+                        Upload GST Image
+                      </label>
+
+                      <input
+                        type="file"
+                        accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx"
+                        className="block  text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+
+                        onChange={(e) => getGstUrl(e,)}
+                      />
+                      {/* <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-6 ml-auto"
+      onClick={handleGstVerification}
+
+    >Verify Gstn</button> */}
+                    </div>
+                    {gstInfo && (
+                      <div className='mx-2 mt-2' >
+
+                        <p className="font-poppins font-medium text-[20px] leading-[21px] py-4 mx-2">
+                          Gstn Information
+                        </p>
+                        <div className='flex gap-10 mx-2 py-4 '>
+                          <div className='flex flex-col space-y-6 pr-2 w-1/3'>
+                            <div className='flex flex-col space-y-2 '>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>GST Number</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{gstInfo?.gstin}</p>
+                            </div>
+                            <div className='flex flex-col space-y-2 '>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>GSTN Status</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>
+                                {gstInfo?.gstinStatus}
+                              </p>
+                            </div>
+                            <div className='flex flex-col  space-y-2'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Center Jurisdiction</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{gstInfo?.centreJurisdiction}
+                              </p>
+                            </div>
+                            <div className='flex flex-col  space-y-2 w-2/3'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Center Jurisdiction Code</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{gstInfo?.centreJurisdictionCode}</p>
+                            </div>
+                            <div className='flex flex-col  space-y-2'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Legal Name Of Business</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>
+                                {gstInfo?.legalNameOfBusiness
+                                }
+                              </p>
+                            </div>
+                          </div>
+
+
+                          <div className='flex flex-col space-y-6 '>
+
+                            <div className='flex flex-col space-y-2 w-2/3'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>State Jurisdiction</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>
+                                {gstInfo?.stateJurisdiction
+
+                                }
+                              </p>
+                            </div>
+                            <div className='flex flex-col space-y-2'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>State Jurisdiction Code</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>
+                                {gstInfo?.stateJurisdictionCode
+
+                                }
+                              </p>
+                            </div>
+                            <div className='flex flex-col space-y-2'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Tax Payer Type</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>  {gstInfo?.taxpayerType
+
+
+                              }</p>
+                            </div>
+                            <div className='flex flex-col space-y-2'>
+                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Reference Id</h1>
+                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>
+                                {gstInfo?.
+                                  referenceId
+                                }
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>)}
+
+                    <div>
+                      {
+                        loading === false ?
+                          <button className="bg-[#011F4B] text-sm text-[#FFFFFF] font-bold rounded-md px-3 py-2 mx-auto block"
+                            onClick={handleApproval}
+
+                          >Submit Docs</button>
+                          :
+                          <LoadSpinner />
+                      }
+                    </div>
+                  </div>
+                }
+
+
               </TabPanel>
 
 
@@ -1739,76 +1755,53 @@ export default function Profile() {
                     </div>
                     <hr className="bg-gray-500 mx-1 my-4"></hr>
                     <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-6 ml-auto"
-                      onClick={handleRegistration}
+                      onClick={() => alert("This feature will be available soon")}
+                    //  onClick={handleRegistration}
 
                     >PayNow</button>
 
                   </div>
                 </div>
               </TabPanel>
-              <TabPanel className=" h-full">
+              <TabPanel className="h-full p-4 bg-gray-50">
+  <h1 className="text-2xl font-bold text-gray-800 text-center mb-2">Subscription</h1>
 
+  <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+    {["Free", "Silver", "Gold", "Platinum"].map((plan) => (
+      <div
+        key={plan}
+        className="shadow-lg border border-gray-200 rounded-lg bg-white w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"
+      >
+        <Switch
+          onClick={() => alert("Feature will be available soon")}
+          className="m-2"
+        />
+        <div className="flex flex-col items-center">
+          <h2 className="text-lg font-semibold text-gray-700">{plan}</h2>
+          <img
+            src="https://s3-alpha-sig.figma.com/img/e0f6/ba85/9941adab5aa94e793b68a430fa3c454c?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YKERHzcIqP3i559PB8Q-f-3uqF5h94VrwYcSJs4rENPcTn9Gz4K6kcQMFIfVrYAUS4wYmRseXdeJGMtLTI9aZDDByj0THBXJNknZU4mSQYlMei5-5FpD-x5RpFegLD-ofhUGb2Q~ROvyrCzD2mh6el1nGSvajITdEGxUacMzEkUksjkyu3qYJBGG8KhNJtovNKdwLSf7z9Mo7W-mEYfC-yHEKJV5895Dsv1PJBTF2rMmnqWdaSGdZpHMh7JdibavI1xnClJtEqoLBUJEmLiqoxxnFnolSycfsU61lMY4rlq1~lJHUjME1XROAG2pNASjJqTJ7IzM~4bz6nP1i0smUQ__"
+            alt={`${plan} plan`}
+            className="w-12 h-12 my-4"
+          />
+          <hr className="border-t border-gray-300 w-4/5 my-2" />
+          <p className="text-center text-sm text-gray-600">
+            Pay fee in easy (interest-free) installments. Choose from monthly or
+            quarterly payment options.
+          </p>
+          <button
+            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            type="button"
+          >
+            {plan}
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</TabPanel>
 
-                <h1 className="text-xl font-semibold sm:pt-10 lg:pt-2">Subscription</h1>
-                <div className="flex sm:flex-col lg:flex-row flex-wrap mt-3 ">
-                  <div className="shadow-xl outline lg:w-1/5 sm:w-1/2 rounded m-2 ">
-                    <Switch className=" m-2" />
-                    <div className="flex flex-col justify-center items-center">
-                      <h1 >Free</h1>
-                      <img src="https://s3-alpha-sig.figma.com/img/e0f6/ba85/9941adab5aa94e793b68a430fa3c454c?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YKERHzcIqP3i559PB8Q-f-3uqF5h94VrwYcSJs4rENPcTn9Gz4K6kcQMFIfVrYAUS4wYmRseXdeJGMtLTI9aZDDByj0THBXJNknZU4mSQYlMei5-5FpD-x5RpFegLD-ofhUGb2Q~ROvyrCzD2mh6el1nGSvajITdEGxUacMzEkUksjkyu3qYJBGG8KhNJtovNKdwLSf7z9Mo7W-mEYfC-yHEKJV5895Dsv1PJBTF2rMmnqWdaSGdZpHMh7JdibavI1xnClJtEqoLBUJEmLiqoxxnFnolSycfsU61lMY4rlq1~lJHUjME1XROAG2pNASjJqTJ7IzM~4bz6nP1i0smUQ__" className="w-10 h-10 m-2" />
-                      <hr className="border-t border-gray-300 w-4/5 my-2" />
-                      <p className="text-center text-base">Pay fee in easy (interest free) instalments. You can choose
-                        from monthly / quarterly payment options.</p>
-                      <div className="m-3">
-                        <button className="mt-2 bg-blue-500 text-white px-2 py-1 rounded-md" type="button">Free</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="shadow-xl outline lg:w-1/5 sm:w-1/2 rounded  m-2 ">
-                    <Switch className=" m-2" />
-                    <div className="flex flex-col justify-center items-center">
-                      <h1 >Silver</h1>
-                      <img src="https://s3-alpha-sig.figma.com/img/e0f6/ba85/9941adab5aa94e793b68a430fa3c454c?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YKERHzcIqP3i559PB8Q-f-3uqF5h94VrwYcSJs4rENPcTn9Gz4K6kcQMFIfVrYAUS4wYmRseXdeJGMtLTI9aZDDByj0THBXJNknZU4mSQYlMei5-5FpD-x5RpFegLD-ofhUGb2Q~ROvyrCzD2mh6el1nGSvajITdEGxUacMzEkUksjkyu3qYJBGG8KhNJtovNKdwLSf7z9Mo7W-mEYfC-yHEKJV5895Dsv1PJBTF2rMmnqWdaSGdZpHMh7JdibavI1xnClJtEqoLBUJEmLiqoxxnFnolSycfsU61lMY4rlq1~lJHUjME1XROAG2pNASjJqTJ7IzM~4bz6nP1i0smUQ__" className="w-10 h-10 m-2" />
-                      <hr className="border-t border-gray-300 w-4/5 my-2" />
-                      <p className="text-center text-base">Pay fee in easy (interest free) instalments. You can choose
-                        from monthly / quarterly payment options.</p>
-                      <div className="m-3">
-                        <button className="mt-2 bg-blue-500 text-white px-2 py-1 rounded-md" type="button">Silver</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="shadow-xl outline lg:w-1/5 sm:w-1/2  rounded  m-2 ">
-                    <Switch className=" m-2" />
-                    <div className="flex flex-col justify-center items-center">
-                      <h1 >Gold</h1>
-                      <img src="https://s3-alpha-sig.figma.com/img/7041/0cdc/8db98d4e5a1966a3635c40a18dd3dffc?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=M8PtRdJEfyr-3VydNpt-p9TXTIS62MZ0ulEuOlrUUschE3gGKFQGahdq9362CTT8G921CCk4WPGiZR4AgZqFozIOt32ER6Gwwf44PEQYTunLMLC744-CsRCwlHd9ggY0l88eSWuCFHJIwm8GGpAbObljaHpidXcFpop1keQ8az3fqBN8TuDv7XoyeqGl6i30Qvri9d3mozteTOGplSpur6FkS21RmOVcpZHI6nmfVYMmZXWvfhqEH4wFOgJPQe1Iaoa17eYm8m~JZyC3h325JwQCUS7jOnPxfRJm-ry6UOI4eUc-UD03ACm4a9gbbvAhl~HwJJFco8cCzt9WH56IDQ__" className="w-10 h-10 m-2" />
-                      <hr className="border-t border-gray-300 w-4/5 my-2" />
-                      <p className="text-center text-base">Pay fee in easy (interest free) instalments. You can choose
-                        from monthly / quarterly payment options.</p>
-                      <div className="m-3">
-                        <button className="mt-2 bg-blue-500 text-white px-2 py-1 rounded-md" type="button">Gold</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="shadow-xl outline lg:w-1/5 sm:w-1/2  rounded m-2 ">
-                    <Switch className=" m-2" />
-                    <div className="flex flex-col justify-center items-center">
-                      <h1 >Platinum</h1>
-                      <img src="https://s3-alpha-sig.figma.com/img/0af0/8347/bec87743630eb6bff408545d4d4a9ccf?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ox5La6UMJqx23pXPseTqE7srdLyUbI4oYupm6Cr~ajnqspYoCis9-TmQ603zaWbScxB88qhpGnVNsWg7R2B30WsvJs7rYOkRppjGL5zP4oGdcPYDsAssmepNpbOPY7d6RSg3VW-TziEXbKDje~DJPGOEbf5-8oohlzztMZ1TZ5AMVaIL7AiIxz3yEpUOezdLgL3D~2q~s0pgtNPPre3Iua4rp1H80S8T0jMHxVmIrM-jhcGhGxzkzCMCeHvyTHbBQSjIv8f6gYTsNpMnpdvg4B-Q6HVMNTVnuZCWy3Z4hW1ZvDyOTQPUgpXvW4JpksJbtYR1hATtsgQh0H6usr5~ow__" className="w-10 h-10 m-2" />
-                      <hr className="border-t border-gray-300 w-4/5 my-2" />
-                      <p className="text-center text-base">Pay fee in easy (interest free) instalments. You can choose
-                        from monthly / quarterly payment options.</p>
-                      <div className="m-3">
-                        <button className="mt-2 bg-blue-500 text-white px-2 py-1 rounded-md" type="button">Platinum</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-              </TabPanel>
               <TabPanel className=" bg-[#F2F2F2]  h-full">
-                <h1 className="text-xl font-semibold sm:pt-10 lg:pt-2">Invoices</h1>
+                <h1 className="text-xl text-center font-semibold sm:pt-10 lg:pt-2">Past Order details and Invoices</h1>
                 <div className="overflow-x-auto">
                   <table className="min-w-full bg-white border border-gray-300">
                     <thead className="bg-gray-100">
@@ -1830,8 +1823,8 @@ export default function Profile() {
                           <td className="px-4 py-2">{invoice.orderSummary.totalProducts}</td>
                           <td className="px-4 py-2">${invoice.orderSummary.totalPrice}</td>
                           <td className="px-4 py-2">{invoice.customer.name}</td>
-                          <td className="px-4 py-2"> <button onClick={() => handleNavigate(invoice)}>
-                            <a>View Details</a>
+                          <td className="px-4 py-2 "> <button className="text-blue-700 hover:underline" onClick={() => handleNavigate(invoice)}>
+                            View Details
                           </button></td>
                         </tr>
                       ))}

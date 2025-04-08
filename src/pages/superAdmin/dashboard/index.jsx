@@ -94,9 +94,7 @@ export default function Dashboard() {
                   <div className="py-4 text-[#011F4B] font-medium text-2xl">
                     {dashboardData?.currentMonth?.orders}
                     <div className="w-[50px] rounded-[10px] bg-[#CEFFB3]">
-                      <div className="font-inter text-[12px] font-normal leading-[14.52px] text-center text-[#359700]">
-                        {dashboardData?.growth?.orderGrowth}
-                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -191,20 +189,20 @@ export default function Dashboard() {
                 Sales Previous Month
               </div>
               <div className="flex  items-center font-sans font-medium text-[24px] leading-[38px] text-[#22303E]/90 mx-2">
-              {dashboardData?.previousMonth?.totalSales}
+                {dashboardData?.previousMonth?.totalSales}
                 <span>
                   <MdOutlineCurrencyRupee className="rupeeIcon" />
                 </span>
               </div>
               <div className="flex   items-center ">
-              <div className="py-2 font-sans font-normal text-[15px] leading-[22px] text-[#22303E]/70 mx-2">Order Per day
-             </div>
-             <span className="font-sans font-medium text-[24px] leading-[38px] text-[#22303E]/90 mx-2">
-             { dashboardData?.previousMonth?.avgOrdersPerDay}
-             </span>
-           
+                <div className="py-2 font-sans font-normal text-[15px] leading-[22px] text-[#22303E]/70 mx-2">Order Per day
+                </div>
+                <span className="font-sans font-medium text-[24px] leading-[38px] text-[#22303E]/90 mx-2">
+                  {dashboardData?.previousMonth?.avgOrdersPerDay}
+                </span>
+
               </div>
-             
+
             </div>
           </div>
 

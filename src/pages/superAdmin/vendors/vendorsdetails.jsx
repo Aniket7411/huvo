@@ -12,6 +12,13 @@ import "./vendorsDetails.css";
 import Loader from "../../../components/loader";
 import { toast } from "react-toastify";
 
+const products = [
+  { id: 1, name: "Product A", price: "$10", status: "Approved" },
+  { id: 2, name: "Product B", price: "$15", status: "Pending" },
+  { id: 3, name: "Product C", price: "$20", status: "Rejected" },
+];
+
+
 export default function Vendorsdetail() {
   const { id } = useParams();
 
@@ -40,7 +47,7 @@ export default function Vendorsdetail() {
 
     try {
       const response = await HttpClient.get(`/dashboard/vendors/${_id}`);
-      console.log("responseresponse",response?.vendorDetail?.email)
+      console.log("responseresponse",response)
       setSellerEmail(response?.vendorDetail?.email)
 
 
@@ -105,7 +112,6 @@ export default function Vendorsdetail() {
     console.log("handleConfirmAction")
   }
 
-  console.log("basicSellerDetails", basicSellerDetails)
 
   return (
     <div className="flex h-screen">
@@ -139,7 +145,7 @@ export default function Vendorsdetail() {
           <div className="">
             <div className="flex flex-wrap justify-between mx-2 py-5 items-center gap-4">
               <div className="flex gap-2 items-center">
-                <div className="h-[100px] w-[100px] bg-[#D9D9D9] rounded-full flex items-center justify-center">
+                <div className="h-[50px] w-[50px] bg-[#D9D9D9] rounded-full flex items-center justify-center">
                   {" "}
                   image
                 </div>
@@ -183,7 +189,7 @@ export default function Vendorsdetail() {
               </div>
             </div>
 
-            <div className="flex mx-6 justify-around">
+            <div className="flex mx-6 ">
               <div className="flex flex-col space-y-4 pr-2">
                 <div className="flex flex-col ">
                   <h1 className="font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]">
@@ -259,75 +265,48 @@ export default function Vendorsdetail() {
                 aria-label="Go to home page"
                 className="block p-4 mb-2 bg-blue-50 hover:bg-blue-100 rounded-lg shadow-md transition-all duration-200"
               >
-                <h1 className="font-poppins font-semibold text-xl text-blue-800">
-                  Products added by Seller
-                </h1>
+              <div className="p-4">
+      <h1 className="font-poppins font-semibold text-xl text-blue-800">
+        Products added by Seller
+      </h1>
+      <div className="overflow-x-auto mt-4">
+        <table className="min-w-full border-collapse border border-gray-300">
+          <thead className="bg-blue-100">
+            <tr>
+              <th className="border border-gray-300 px-4 py-2 text-left font-medium text-gray-700">#</th>
+              <th className="border border-gray-300 px-4 py-2 text-left font-medium text-gray-700">Product Name</th>
+              <th className="border border-gray-300 px-4 py-2 text-left font-medium text-gray-700">Price</th>
+              <th className="border border-gray-300 px-4 py-2 text-left font-medium text-gray-700">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product, index) => (
+              <tr key={product.id} className="odd:bg-white even:bg-gray-50">
+                <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
+                <td className="border border-gray-300 px-4 py-2">{product.name}</td>
+                <td className="border border-gray-300 px-4 py-2">{product.price}</td>
+                <td
+                  className={`border border-gray-300 px-4 py-2 ${
+                    product.status === "Approved"
+                      ? "text-green-500"
+                      : product.status === "Pending"
+                      ? "text-yellow-500"
+                      : "text-red-500"
+                  }`}
+                >
+                  {product.status}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
               </Link>
 
 
-              <h5 className="font-poppins font-medium text-[20px] leading-[21px] text-[#011F4B] ">
-                Performance Metrics
-              </h5>
-              <div className="flex flex-wrap gap-10 py-6">
-                <div className="w-48 h-40 rounded overflow-hidden shadow-lg  py-6 px-4 matrixCards">
-                  <div className="mb-4">
-                    <div className="  font-sans font-normal text-[15px] leading-[22px] text-[#22303E]/70 mx-2">
-                      Sales
-                    </div>
-                    <div className="mx-2 py-2 font-['Public_Sans'] text-[24px] font-medium leading-[38px] text-left">
-                      {vendorDetails?.sales}
-                    </div>
-
-                    <div className="mx-2 py-2 font-[Public Sans] text-[16px] font-medium leading-[20px] text-left text-[#71DD37]">
-                      34.5 hike in sales
-                    </div>
-                  </div>
-                </div>
-                <div className="w-48 h-40 rounded overflow-hidden shadow-lg py-6 px-4 matrixCards">
-                  <div className="mb-4">
-                    <div className="  font-sans font-normal text-[15px] leading-[22px] text-[#22303E]/70 mx-2">
-                      Return Rate
-                    </div>
-
-                    <div className="font-['Public_Sans'] text-[24px] font-medium leading-[38px] text-left mx-2 py-2 text-[#22303EE5]/90">
-                      {vendorDetails?.returned}
-                    </div>
-                  </div>
-                </div>
-                <div className="w-48 h-40 rounded overflow-hidden shadow-lg py-6 px-4 matrixCards">
-                  <div className="mb-4">
-                    <div className="  font-sans font-normal text-[15px] leading-[22px] text-[#22303E]/70 mx-2">
-                      Customer Rating
-                    </div>
-
-                    <div className="mx-2">star rating</div>
-
-                    <div className="font-['Public_Sans'] text-[16px] font-normal leading-[22px] text-left mx-2 py-10">
-                      Based on 50 reviews
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <div className="flex flex-wrap py-10 gap-5">
-                <Button
-                  className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] border-[#8592A3] bg-[#F6FAFF] text-[#000000]"
-                  onClick={() => {
-                    window.location.href = "mailto:seller@example.com?subject=Message%20from%20Buyer&body=Hello%20Seller,";
-                  }}
-                >
-                  Send Message
-                </Button>
-
-                <Button onClick={() => { vendorActions("block", id) }} className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#FFFAF1] border-[#B9861F] text-[#B9861F]">
-                  Suspend
-                </Button>
-                <Button onClick={() => { vendorActions("delete", id) }} className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#FFEFEF] border-[#EB001B] text-[#EB001B]">
-                  Delete
-                </Button>
-                <Button onClick={() => { vendorActions("approve", id) }} className="w-[150px] h-[42px] px-[30px] py-[13px] gap-[10px] rounded-tl-[8px] bg-[#18B348] border-[#007D27] text-[#FFFFFF]">
-                  Approve
-                </Button>
-              </div> */}
+             
+         
 
 
 

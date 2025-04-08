@@ -38,7 +38,7 @@ function Sidenavbar() {
       <div className="px-8 py-3">
         <Link to="/">
           {/* <img src="/assets/cart.png" alt="Cart" width="60px" height="60px" /> */}
-          <img src="/assets/newlogo.png" alt="Logo" className="w-[100px] h-[100px]" />
+          <img src="/assets/newlogo.jpeg" alt="Logo" className="w-[100px] h-[100px]" />
         </Link>
       </div>
       <div className="flex items-center px-8 py-5">

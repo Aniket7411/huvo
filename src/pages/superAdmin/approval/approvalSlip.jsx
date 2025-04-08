@@ -41,7 +41,7 @@ export default function ApprovalSlip() {
       rel="noopener noreferrer"
       className="inline-block mt-2 text-blue-600 underline hover:text-blue-800"
     >
-      <img src={url} alt={altText} className="max-w-[200px] border rounded-md shadow" />
+      <img src={url} alt={altText} className="max-w-[200px] h-[150px] border rounded-md shadow" />
       <p className="text-sm mt-1">Click to View</p>
     </a>
   );
@@ -52,7 +52,7 @@ export default function ApprovalSlip() {
     const intervalId = setInterval(() => {
       const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 
-      if (panRegex.test(pan)) {
+      if (panRegex.test(pan.toUpperCase())) {
         toast.success("Valid PAN number ✅");
       } else {
         toast.error("Invalid PAN number ❌");
@@ -64,14 +64,38 @@ export default function ApprovalSlip() {
   };
 
   const approveSeller = async () => {
+
     try {
-      const response = await HttpClient.put("")
+      const response = await HttpClient.put("/users/block",{sellerId : id, blockType : "approve"} )
       console.log(response)
+      toast.success(response?.message)
+      window.location.reload();
+
 
     } catch (error) {
       toast.error("Couldn't verify")
+      window.location.reload();
+
     }
   }
+
+
+  const Suspend = async () => {
+    try {
+      const response = await HttpClient.put("/users/block",{sellerId : id, blockType : "suspend"} )
+      console.log(response)
+      toast.success(response?.message)
+      window.location.reload();
+
+
+    } catch (error) {
+      toast.error("Couldn't Suspend")
+      window.location.reload();
+
+    }
+  }
+
+
 
 
 
@@ -103,70 +127,81 @@ export default function ApprovalSlip() {
               {/* Personal Info */}
               <h2 className="text-lg font-semibold border-b pb-2">Personal Information</h2>
               <div className="py-2 space-y-3">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center flex-wrap gap-4">
                   <strong className="text-gray-600 w-40">Seller Name:</strong>
                   <p>{sellerDetails?.createdBy?.firstName} {sellerDetails?.createdBy?.lastName}</p>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center flex-wrap gap-4">
                   <strong className="text-gray-600 w-40">Seller ID:</strong>
                   <p>{sellerDetails?.createdBy?._id}</p>
                 </div>
 
-                <div className="flex items-center gap -4">
+                <div className="flex items-center  flex-wrap gap-4">
                   <strong className="text-gray-600 w-40">Email:</strong>
                   <p>{sellerDetails?.createdBy?.email}</p>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center flex-wrap gap-4">
                   <strong className="text-gray-600 w-40">Registered Date:</strong>
                   <p>{sellerDetails?.createdAt?.slice(0, 10)}</p>
+                </div>
+
+                <div className="flex items-center flex-wrap gap-4">
+                  <strong className="text-gray-600 w-40">Seller Status</strong>
+                  <p
+  className={`font-semibold ${
+    sellerDetails?.status === "approved" ? "text-green-500" : "text-red-500"
+  }`}
+>
+  {sellerDetails?.status === "approved" ? "Approved" : "Suspended / Hold"}
+</p>
                 </div>
               </div>
 
 
               {/* GST Info */}
-              <h2 className="text-lg font-semibold border-b pb-2 mt-6">GST Information</h2>
-              <div className="flex flex-wrap mt-4 gap-6">
-              <div className="flex items-center flex-wrap gap-4">
-  <strong className="text-gray-600">GST Number :</strong>
-  <p className="text-gray-800">{sellerDetails?.GSTIN}</p>
-  <button
-    onClick={() => {
-      navigator.clipboard.writeText(sellerDetails?.GSTIN || '');
-      toast.success("GSTIN copied to clipboard ✅");
-    }}
-    className="text-blue-600 text-sm hover:underline"
-  >
-    Copy GSTN
-  </button>
-  <a
-    href="https://services.gst.gov.in/services/searchtp"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-blue-600 text-sm hover:underline"
-  >
-    Visit GST Website
-  </a>
-</div>
+              <h2 className="text-lg font-semibold border-b pb-2 mt-2">GST Information</h2>
+              <div className="flex flex-wrap mt-4 gap-3">
+                <div className="flex items-center flex-wrap gap-4">
+                  <strong className="text-gray-600">GST Number :</strong>
+                  <p className="text-gray-800">{sellerDetails?.GSTIN}</p>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(sellerDetails?.GSTIN || '');
+                      toast.success("GSTIN copied to clipboard ✅");
+                    }}
+                    className="text-blue-600 text-sm hover:underline"
+                  >
+                    Copy GSTN
+                  </button>
+                  <a
+                    href="https://services.gst.gov.in/services/searchtp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 text-sm hover:underline"
+                  >
+                    Visit GST Website
+                  </a>
+                </div>
 
-           
 
-                <div className="w-full flex flex-c  ol md:flex-row md:items-center gap-4">
+
+                <div className="w-full flex flex-col md:flex-row md:items-center gap-4">
                   <div>
                     <strong className="text-gray-600">GST Document : </strong>
                     {renderDocumentPreview(sellerDetails?.gstDoc, "GST Document")}
                   </div>
-                  <button className="bg-[#011F4B] rounded-lg px-4 py-2 text-white self-start md:self-center">
+                  <button className="bg-[#011F4B] rounded-lg text-sm px-4 py-2 text-white self-start md:self-center">
                     Verify GST
                   </button>
-                
+
 
                 </div>
 
                 <div className="flex items-center gap-4">
                   <strong className="text-gray-600">PAN Number : </strong>
-                  <p>{sellerDetails?.PAN}</p>
+                  <p>{sellerDetails?.PAN.toUpperCase()}</p>
                 </div>
 
                 <div className="w-full flex flex-col md:flex-row md:items-center gap-4">
@@ -175,18 +210,18 @@ export default function ApprovalSlip() {
                     {renderDocumentPreview(sellerDetails?.panDoc, "PAN Document")}
                   </div>
                   <button onClick={() => startPanVerification(sellerDetails?.PAN)}
-                    className="bg-[#011F4B] rounded-lg px-4 py-2 text-white self-start md:self-center">
+                    className="bg-[#011F4B] text-sm rounded-lg px-4 py-2 text-white self-start md:self-center">
                     Verify PAN
                   </button>
                 </div>
                 <div className="flex gap-2">
 
-                  <button onClick={approveSeller} className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-lg transition duration-200">
+                  <button onClick={approveSeller} className="bg-green-700 hover:bg-green-800 text-sm text-white px-4 py-2 rounded-lg transition duration-200">
                     Approve Seller
                   </button>
 
 
-                  <button className="bg-red-700 hover:bg-red-800 text-white px-2 py-1 rounded-lg transition duration-200">
+                  <button onClick={Suspend} className="bg-red-700 hover:bg-red-800  text-sm text-white px-2 py-1 rounded-lg transition duration-200">
                     Suspend Seller
                   </button>
 

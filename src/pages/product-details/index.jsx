@@ -125,11 +125,13 @@ export default function ProductDetails() {
         productId: productDetails?.productId,
         color: productDetails?.colors?.[0]?.colorCode || "Default Color", // Handle missing color
         size: selectedSize,
-        price
+        price,
+        quantity
       };
 
       try {
         const response = await HttpClient.post("/cart/", cartData);
+        
         setLoading(true)
 
 
@@ -140,7 +142,7 @@ export default function ProductDetails() {
         }
       } catch (error) {
         console.error("Error adding product to cart:", error);
-        toast.error("An error occurred while adding to the cart.");
+        toast.error(error?.response?.data?.message || "An error occurred while adding to the cart.");
         setLoading(false)
       }
     }
