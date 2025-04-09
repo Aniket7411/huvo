@@ -17,7 +17,7 @@ import { motion } from "framer-motion";
 
 
 
-let loginStatus=0;
+let loginStatus = 0;
 
 
 
@@ -27,6 +27,8 @@ export default function Header(props) {
   const location = useLocation();
   const { cart, } = useContext(CartContext)
 
+  const cartLength = Object.keys(cart).length;
+  console.log("Cart length:", cartLength);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -64,10 +66,10 @@ export default function Header(props) {
 
 
   useEffect(() => {
-    if(localStorage.getItem('accessToken')){
+    if (localStorage.getItem('accessToken')) {
       loginStatus = 1;
     }
-    console.log("loginStatus",loginStatus)
+    console.log("loginStatus", loginStatus)
 
     getWishList()
   }, [])
@@ -175,7 +177,7 @@ export default function Header(props) {
   };
 
 
-  console.log("loginStatusloginStatusloginStatus",loginStatus)
+  console.log("loginStatusloginStatusloginStatus", loginStatus)
 
   const handleSearch = async (searchword) => {
     if (searchQuery.trim()) {
@@ -308,15 +310,15 @@ export default function Header(props) {
 
 
               {/* Cart Item Count */}
-              {cart?.length > 0 && (
+              {Object.keys(cart).length > 0 && (
                 <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
-                  {cart.length}
+                  {Object.keys(cart).length}
                 </span>
               )}
             </button>
 
 
-      
+
 
 
 
@@ -346,7 +348,7 @@ export default function Header(props) {
                           <li className="p-2 hover:bg-gray-100 cursor-pointer">My Profile</li>
                         </Link>
                         <li className="p-2 hover:bg-gray-100 cursor-pointer" onClick={clickToLogout}
-                            >Logout</li>
+                        >Logout</li>
 
                       </ul>
 
@@ -467,7 +469,7 @@ export default function Header(props) {
           </div>
 
 
-          <p className="text-[#fff] italic " style={{ fontFamily: "Caveat, cursive" } }>Huvo</p>
+          <p className="text-[#fff] italic " style={{ fontFamily: "Caveat, cursive" }}>Huvo</p>
 
           <div className="flex gap-3 justify-between items-center cursor-pointer relative">
             {/* Wishlist Button */}
@@ -495,9 +497,9 @@ export default function Header(props) {
               className="relative"
             >
               <HiOutlineShoppingBag className="text-2xl cursor-pointer" />
-              {cart.length > 0 && (
+              {Object.keys(cart).length > 0 && (
                 <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#7272e9] text-white text-xs font-bold rounded-full">
-                  {cart.length}
+                  {Object.keys(cart).length}
                 </span>
               )}
             </button>

@@ -94,14 +94,10 @@ export default function ProductDetails() {
 
   console.log("tokenIfLoggedIntokenIfLoggedIn", tokenIfLoggedIn)
 
-  const currentCartItem = cart.find(
-    (item) => item.productId === productDetails?.productId
-  );
-
-  const quantity = currentCartItem?.quantity || 1;
 
 
-  console.log("currentCartItem", quantity)
+
+
 
 
 
@@ -118,21 +114,20 @@ export default function ProductDetails() {
 
     if (tokenIfLoggedIn === null) {
       addToCartContext(productDetails, selectedSize, selectedQuantity);
-      toast.success("Product added to cart locally.");
       return;
     } else {
       const cartData = {
         productId: productDetails?.productId,
         color: productDetails?.colors?.[0]?.colorCode || "Default Color", // Handle missing color
         size: selectedSize,
-        price : selectedQuantity * productDetails?.price,
+        price: selectedQuantity * productDetails?.price,
         discount: selectedQuantity * productDetails?.price - selectedQuantity * productDetails?.discount,
         quantity: selectedQuantity
       };
 
       try {
         const response = await HttpClient.post("/cart/", cartData);
-        
+
         setLoading(true)
 
 
@@ -140,6 +135,8 @@ export default function ProductDetails() {
         if (response?.success === true) {
           setLoading(false)
           toast.success("Product added to cart successfully.");
+          window.location.reload();
+
         }
       } catch (error) {
         console.error("Error adding product to cart:", error);
@@ -158,12 +155,12 @@ export default function ProductDetails() {
 
   const updateQuantity = async (productId, addRemove) => {
     console.log("Product:", productId, "| Action:", addRemove);
-  
+
     if (!productId || !addRemove) {
       console.error("Invalid input");
       return;
     }
-  
+
     if (isLoggedIn === null) {
       // Guest user - update cart locally
       updateCartItem(productId, addRemove);
@@ -174,7 +171,7 @@ export default function ProductDetails() {
           productId,
           action: addRemove,
         });
-  
+
         console.log("Cart updated:", response?.data);
         // Optional: show a toast or refresh cart
       } catch (error) {
@@ -182,7 +179,7 @@ export default function ProductDetails() {
       }
     }
   };
-  
+
 
 
   const removeFromCart = async (productDetails) => {
@@ -249,7 +246,6 @@ export default function ProductDetails() {
 
 
 
-  // const isInCart = cart.some((item) => item.productId === productDetails?.productId);
 
   const quantityInCart = () => {
     toast.info("First select the size and add product in cart")
@@ -280,57 +276,55 @@ export default function ProductDetails() {
 
                 <div className="flex flex-col gap-2 mt-3">
                   <div className="flex flex-col sm:flex-row sm:gap-4 gap-2">
-                 
 
-                    
-                    <div className="flex gap-2 items-center">
-  <div
-    className={`px-2 py-1 flex items-center rounded-md gap-1 text-white ${
-      4.5 >= 3.5
-        ? "bg-green-500"
-        : 4.5 >= 3
-        ? "bg-yellow-500"
-        : "bg-red-400"
-    }`}
-  >
-    <p className="text-sm font-bold">4.5</p>
-    <TbJewishStarFilled className="text-sm" />
-  </div>
-  <p className="text-[#717478] cursor-pointer font-semibold text-sm">Product Rating & Reviews</p>
-</div>
 
-                 
 
                     <div className="flex gap-2 items-center">
-  <div
-    className={`px-2 py-1 flex items-center rounded-md gap-1 text-white ${
-      4.5 >= 3.5
-        ? "bg-green-500"
-        : 4.5 >= 3
-        ? "bg-yellow-500"
-        : "bg-red-400"
-    }`}
-  >
-    <p className="text-sm font-bold">4.5</p>
-    <TbJewishStarFilled className="text-sm" />
-  </div>
+                      <div
+                        className={`px-2 py-1 flex items-center rounded-md gap-1 text-white ${4.5 >= 3.5
+                          ? "bg-green-500"
+                          : 4.5 >= 3
+                            ? "bg-yellow-500"
+                            : "bg-red-400"
+                          }`}
+                      >
+                        <p className="text-sm font-bold">4.5</p>
+                        <TbJewishStarFilled className="text-sm" />
+                      </div>
+                      <p className="text-[#717478] cursor-pointer font-semibold text-sm">Product Rating & Reviews</p>
+                    </div>
 
-  <Link to={`/products_by_brand/${productDetails?.brand?.name || "default"}`} >
-  <p className="text-[#717478] hover:underline hover:text-blue-500 font-semibold text-sm">Brand Rating</p>
-  </Link>
-</div>
+
+
+                    <div className="flex gap-2 items-center">
+                      <div
+                        className={`px-2 py-1 flex items-center rounded-md gap-1 text-white ${4.5 >= 3.5
+                          ? "bg-green-500"
+                          : 4.5 >= 3
+                            ? "bg-yellow-500"
+                            : "bg-red-400"
+                          }`}
+                      >
+                        <p className="text-sm font-bold">4.5</p>
+                        <TbJewishStarFilled className="text-sm" />
+                      </div>
+
+                      <Link to={`/products_by_brand/${productDetails?.brand?.name || "default"}`} >
+                        <p className="text-[#717478] hover:underline hover:text-blue-500 font-semibold text-sm">Brand Rating</p>
+                      </Link>
+                    </div>
 
                   </div>
 
                   <div>
-                  <Link to={`/products_by_brand/${productDetails?.brand?.name || "default"}`} >
+                    <Link to={`/products_by_brand/${productDetails?.brand?.name || "default"}`} >
 
-                    <p className="text-lg font-medium text-gray-600">
-                      Brand:{" "}
-                      <span className="text-gray-800 font-semibold">
-                        {productDetails?.brand?.name || "Unknown"}
-                      </span>
-                    </p>
+                      <p className="text-lg font-medium text-gray-600">
+                        Brand:{" "}
+                        <span className="text-gray-800 font-semibold">
+                          {productDetails?.brand?.name || "Unknown"}
+                        </span>
+                      </p>
                     </Link>
                   </div>
                 </div>
@@ -476,32 +470,32 @@ export default function ProductDetails() {
                   </div>
                 </Modal>
                 <div
-  key={productDetails?.productId}
-  className="flex items-center gap-4 mt-2 rounded-xl"
->
-  {/* Decrement Button */}
-  <button
-    onClick={() => setQuantity((prevQuantity) => Math.max(1, prevQuantity - 1))}
-    disabled={selectedQuantity === 1}
-    className={`text-2xl text-purple-700 hover:scale-110 transition-transform duration-200 
+                  key={productDetails?.productId}
+                  className="flex items-center gap-4 mt-2 rounded-xl"
+                >
+                  {/* Decrement Button */}
+                  <button
+                    onClick={() => setQuantity((prevQuantity) => Math.max(1, prevQuantity - 1))}
+                    disabled={selectedQuantity === 1}
+                    className={`text-2xl text-purple-700 hover:scale-110 transition-transform duration-200 
                 ${selectedQuantity === 1 ? "text-gray-400 cursor-not-allowed" : "hover:text-purple-900"}`}
-  >
-    <CiSquareMinus />
-  </button>
+                  >
+                    <CiSquareMinus />
+                  </button>
 
-  {/* Quantity Display */}
-  <p className="text-lg font-semibold text-gray-800">
-    Quantity: <span className="text-purple-600">{selectedQuantity}</span>
-  </p>
+                  {/* Quantity Display */}
+                  <p className="text-lg font-semibold text-gray-800">
+                    Quantity: <span className="text-purple-600">{selectedQuantity}</span>
+                  </p>
 
-  {/* Increment Button */}
-  <button
-    onClick={() => setQuantity(selectedQuantity + 1)}
-    className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
-  >
-    <CiSquarePlus />
-  </button>
-</div>
+                  {/* Increment Button */}
+                  <button
+                    onClick={() => setQuantity(selectedQuantity + 1)}
+                    className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
+                  >
+                    <CiSquarePlus />
+                  </button>
+                </div>
 
 
 
@@ -519,23 +513,14 @@ export default function ProductDetails() {
                     >
                       Add to Wishlist
                     </button>
+                    <button
+                          onClick={() => addToCart(productDetails, selectedSize, selectedQuantity)}
+                          className="px-3 py-1 bg-[#011F4B] text-white font-semibold rounded-lg shadow-md hover:bg-[#022C6B] transition-transform duration-200 transform hover:scale-105"
+                        >
+                          Add to Cart
+                        </button>
 
 
-                    {cart.some((each) => each.productId === productDetails?.productId) ? (
-                      <button
-                        onClick={() => removeFromCartContext(productDetails?.productId)}
-
-                        className="px-3 py-1 bg-green-500 text-white font-semibold rounded-lg shadow-md">
-                        Remove from Cart
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => addToCart(productDetails, selectedSize, selectedQuantity)}
-                        className="px-3 py-1 bg-[#011F4B] text-white font-semibold rounded-lg shadow-md hover:bg-[#022C6B] transition-all duration-200 transform hover:scale-105"
-                      >
-                        Add to Cart
-                      </button>
-                    )}
                   </div>
 
                   <div className="flex items-center gap-2 mt-1 text-gray-800">

@@ -105,22 +105,6 @@ export default function CheckOut() {
     }
 
 
-    setCartProducts(
-      {
-        
-          "zS1UpiGztHS#0000FF":{
-            bannerImage: "http://res.cloudinary.com/dgcghqfqv/image/upload/v1743419723/Cloudinary-React/ecqssuhcgu9syj4whykg.jpg",
-  color: "#0000FF",
-  name: "Jeans for girl",
-  price: 2000,
-  productId: "zS1UpiGztH",
-  quantity: 1,
-  size: "S",
-
-          }
-        
-      }
-    );
 
    
   };
@@ -347,11 +331,15 @@ export default function CheckOut() {
     });
   }, [reset, selectedSize, selectedQuantity]);
 
+  
+  const totalCost = Object.values(cartProducts).reduce((total, product) => total + product.price * product.quantity, 0);
+  const allDiscount = Object.values(cartProducts).reduce((total, product) => total + product.discount * product.quantity, 0);
+
   return (
 
     <>
     {
-      isLoading ? "ANiket" :  <div>
+      isLoading ? <Loader/> :  <div>
       <section className="px-10 py-7 font-[Quicksand]">
         {Object.keys(cartProducts).length ? (
           <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
@@ -460,7 +448,7 @@ export default function CheckOut() {
                                 {cartProducts[key].name}
                                 {cartProducts[key].discount ? (
                                   <span className="text-sm text-[#011F4B]">
-                                    ({cartProducts[key].discount}% off)
+                                    ({cartProducts[key].discount})
                                   </span>
                                 ) : (
                                   ""
@@ -530,18 +518,14 @@ export default function CheckOut() {
                                 </button>
                               </div>
                               <p className="flex items-center font-medium mb-2">
-                                <span></span>
                                 <PiCurrencyInr />
                                 <span>
-                                  {cartProducts[key].price -
-                                    Math.floor(
-                                      (cartProducts[key].discount / 100) *
-                                      cartProducts[key].price
-                                    )}
+                                {cartProducts[key].price}
+
                                 </span>
                                 {cartProducts[key].discount ? (
                                   <span className="ml-2 line-through text-xs flex items-center">
-                                    <PiCurrencyInr /> {cartProducts[key].price}
+                                    <PiCurrencyInr /> {cartProducts[key].discount}
                                   </span>
                                 ) : (
                                   ""
@@ -596,14 +580,14 @@ export default function CheckOut() {
                           <p>Total MRP</p>
                           <p className="flex items-center">
                             <PiCurrencyInr />
-                            {totalMRP}
+                            {totalCost}
                           </p>
                         </div>
                         <div className="flex justify-between mb-2">
                           <p>Disount on MRP</p>
                           <p className="flex items-center text-[#2ABF12]">
                             - <PiCurrencyInr />
-                            {totalDiscount}
+                            {allDiscount}
                           </p>
                         </div>
                         <div className="flex justify-between mb-2">
@@ -633,7 +617,7 @@ export default function CheckOut() {
                           <p>Total amount</p>
                           <p className="flex items-center">
                             <PiCurrencyInr />
-                            {totalAmount+100}
+                            {totalCost - allDiscount + 100}
                           </p>
                         </div>
                       </div>
@@ -644,7 +628,7 @@ export default function CheckOut() {
                           Object.keys(cartProducts).length ? false : true
                         }
                       >
-                        PLACE ORDER
+                        CONTINUE
                       </button>
                     </div>
                   </div>
@@ -837,14 +821,14 @@ export default function CheckOut() {
                         <p>Total MRP</p>
                         <p className="flex items-center">
                           <PiCurrencyInr />
-                          {totalMRP}
+                          {totalCost}
                         </p>
                       </div>
                       <div className="flex justify-between mb-2">
                         <p>Disount on MRP</p>
                         <p className="flex items-center text-[#2ABF12]">
                           -<PiCurrencyInr />
-                          {totalDiscount}
+                          {allDiscount}
                         </p>
                       </div>
                       <div className="flex justify-between mb-2">
@@ -872,7 +856,7 @@ export default function CheckOut() {
                         <p>Total amount</p>
                         <p className="flex items-center">
                           <PiCurrencyInr />
-                          {totalAmount+100}
+                          {totalCost - allDiscount + 100}
                         </p>
                       </div>
                       <button
@@ -946,14 +930,14 @@ export default function CheckOut() {
                         <p>Total MRP</p>
                         <p className="flex items-center">
                           <PiCurrencyInr />
-                          {totalMRP}
+                          {totalCost}
                         </p>
                       </div>
                       <div className="flex justify-between mb-2">
                         <p>Disount on MRP</p>
                         <p className="flex items-center text-[#2ABF12]">
                           -<PiCurrencyInr />
-                          {totalDiscount}
+                          {allDiscount}
                         </p>
                       </div>
                       <div className="flex justify-between mb-2">
@@ -981,7 +965,7 @@ export default function CheckOut() {
                         <p>Total amount</p>
                         <p className="flex items-center">
                           <PiCurrencyInr />
-                          {totalAmount+100}
+                          {totalCost - allDiscount + 100}
                         </p>
                       </div>
                       <button

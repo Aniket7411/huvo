@@ -65,6 +65,7 @@ import OrderAndReturn from "./pages/orderandreturn/index.jsx";
 import CategorySlider from "./pages/categoryslider/index.jsx";
 import NewMenCollection from "./pages/newmen/index.jsx";
 import ShippingInfo from "./pages/shippingpolicies/index.jsx";
+import CheckOutWithoutLogin from "./pages/checkoutwithoutlogin/index.jsx";
 
 function App() {
   return (
@@ -105,7 +106,7 @@ function App() {
         </Routes>
         <Routes>
           <Route
-            path="/store_products/:id"
+            path="/store_products"
             element={
               <Layout>
                 <StoreAndProducts />
@@ -313,6 +314,16 @@ function App() {
             element={
               <Layout changeHeaderColor="true">
                 <CheckOut />
+              </Layout>
+            }
+          />
+        </Routes>
+        <Routes>
+          <Route
+            path="checkout/cart/not_login"
+            element={
+              <Layout changeHeaderColor="true">
+                <CheckOutWithoutLogin  />
               </Layout>
             }
           />
