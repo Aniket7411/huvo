@@ -89,39 +89,18 @@ export default function CheckOut() {
   const fetchCartProducts = async () => {
     console.log("cartData")
 
-    if(localStorage.getItem('accessToken')){
-      try {
+    try {
       
-        const response = await HttpClient.get("/cart");
-        console.log(response)
-        const {data} = response
-        console.log("aniket cart data",data)
-        setCartProducts(data);
-        console.log("this", cartProducts)
-      } catch (error) {
-        console.error(error);
-        toast.error(error?.response?.data?.message);
-      }
+      const response = await HttpClient.get("/cart");
+      console.log(response)
+      const {data} = response
+      console.log("aniket cart data",data)
+      setCartProducts(data);
+      console.log("this", cartProducts)
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.response?.data?.message);
     }
-
-
-    setCartProducts(
-      {
-        
-          "zS1UpiGztHS#0000FF":{
-            bannerImage: "http://res.cloudinary.com/dgcghqfqv/image/upload/v1743419723/Cloudinary-React/ecqssuhcgu9syj4whykg.jpg",
-  color: "#0000FF",
-  name: "Jeans for girl",
-  price: 2000,
-  productId: "zS1UpiGztH",
-  quantity: 1,
-  size: "S",
-
-          }
-        
-      }
-    );
-
    
   };
 
@@ -254,7 +233,8 @@ export default function CheckOut() {
   const orderPlace = async () => {
 
     try {
-      const { message } = await HttpClient.post("/order", {
+      //debugger;
+      const response = await HttpClient.post("/order", {
         totalAmount,
         totalProduct: Object.keys(cartProducts).length,
         products: cartProducts,
@@ -262,10 +242,14 @@ export default function CheckOut() {
         shippingDetails: shippingAddress,
         couponCode,
       });
-      toast.success(message || "Order Place Successfully!");
-      navigate("/");
-      fetchProfileData();
-      console.log("Cart>>>>>>>: ", cartProducts)
+
+      if(response?.success===true){
+        window.location.href=response?.payment_url;
+      }
+     // toast.success(response?.message || "Order Place Successfully!");
+      
+      //fetchProfileData();
+      //console.log("Cart>>>>>>>: ", cartProducts)
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -990,9 +974,10 @@ export default function CheckOut() {
                           (!paymentType ? " opacity-80" : "")
                         }
                         onClick={() =>
-                          paymentType === "cashOnDelivery"
-                            ? orderPlace()
-                            : onlinePayment()
+                          // paymentType === "cashOnDelivery"
+                          //   ? orderPlace()
+                          //   : onlinePayment()
+                          orderPlace()
                         }
                         disabled={paymentType ? false : true}
                       >

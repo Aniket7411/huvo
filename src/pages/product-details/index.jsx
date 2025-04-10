@@ -315,7 +315,7 @@ export default function ProductDetails() {
     <TbJewishStarFilled className="text-sm" />
   </div>
 
-  <Link to={`/products_by_brand/${productDetails?.brand?.name || "default"}`} >
+  <Link to={`/store_products/${productDetails?.seller}`} >
   <p className="text-[#717478] hover:underline hover:text-blue-500 font-semibold text-sm">Brand Rating</p>
   </Link>
 </div>
