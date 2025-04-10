@@ -128,11 +128,10 @@ export default function WishList() {
                     </span>
                     Rating: 4.5 / 5
                   </p>
-                  <p className="text-sm text-gray-500">200 Ordered last week</p>
                 </div>
 
                 {/* Price Details */}
-                <div className="flex justify-between w-full items-center mb-2">
+                <div className="flex justify-between w-full items-center mb-1">
                   {/* Original Price */}
                   <div className="flex items-center gap-1">
                     <PiCurrencyInr className="text-red-600" />
