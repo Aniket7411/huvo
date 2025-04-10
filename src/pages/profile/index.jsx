@@ -25,6 +25,7 @@ import Modal from "react-modal";
 import uploadImageOnCloudinary from "../../server/client/imageUpload";
 import LoadSpinner from "../../components/LoadSpinner";
 import Loader from "../../components/loader";
+import Orders from "./orders";
 
 Modal.setAppElement('#root'); // Assuming your root element's ID is 'root'
 
@@ -71,7 +72,6 @@ export default function Profile() {
     defaultValues: formData,
   });
   const [showCancelModal, setShowCancelModal] = useState(false)
-  const [showReturnModal, setShowReturnModal] = useState(false)
 
   const [cancelReason, setCancelReason] = useState("")
   const [cancelOrderId, setcancelOrderId] = useState("")
@@ -359,93 +359,14 @@ export default function Profile() {
 
 
 
-  const returnOrder = () => {
-    // console.log("return order")
-  }
-
-  const setSelectedReason = (e) => {
-    setCancelReason(e.target.value)
-  }
-
-  const cancelTheOrder = async () => {
-    // console.log(`orderId: ${cancelOrderId}`);
-    let orderId = cancelOrderId
-    // console.log(`cancelReason: ${cancelReason}`);
-    // console.log(`cancelProductId: ${cancelProductId}`);
-
-    if (cancelReason !== "") {
-      try {
-        const response = await HttpClient.post(`/order/cancel/${cancelOrderId}`, {
-          cancellationReason: cancelReason, // Reason for cancellation
-          productId: cancelProductId,       // Product ID
-        });
-        console.log(response)
-        if (response?.cancelStatus === "approved") {
-          toast("Order successfully cancelled!");
-
-        }
-        else {
-          toast("Failed to cancel the order. Please try again.");
-        }
-
-      } catch (error) {
-        console.error("Error cancelling the order:", error);
-        alert("An error occurred while trying to cancel the order.");
-      }
-    }
-  }
-
-  const handleCancel = () => {
-    cancelTheOrder()
-    setShowCancelModal(false)
-    setcancelOrderId("")
-    setCancelReason("")
-  }
-  const selectReason = (event) => {
-    setCancelReason(event.target.value)
-  }
-
-  const getOrderId = (orderId, productId) => {
-    setcancelOrderId(orderId); // Set the orderId directly as the cancelOrderId
-    setCancelProductId(productId)
-  };
-
-  const getReturnOrderId = (orderId) => {
-    setReturnOrderId(orderId)
-    console.log(orderId);
-  };
-
-  const getReturnProductId = (productId) => {
-    setReturnProductId(productId)
-  }
 
 
-  const onCloseCancelModal = () => {
-    setShowCancelModal(false)
-  }
+ 
 
-  const selectReurnReason = (e) => {
-    setReturnReason(e.target.value)
-  }
+ 
 
-  const confirmReturn = async () => {
-    try {
-      const response = await HttpClient.post(`/return/create`, {
-        productId: returnProductId,
-        orderId: returnOrderId,
-        reason: returnReason,
-        comment: comment,
 
-      });
-
-      toast.success(response?.status);
-
-    }
-    catch (error) {
-      console.error(error);
-    }
-
-  }
+ 
   const handleCommentChange = (e) => {
     setComment(e.target.value); // Save the comment in state
   }
@@ -714,355 +635,12 @@ export default function Profile() {
                 </div>
               </TabPanel>
               <TabPanel className="bg-[#F2F2F2] p-2 h-full">
-                <div className="px-5 md:px-12 border-b border-solid overflow border-[#D6D6D6]">
-                  <p className="text-[#2F2F2F] font-medium text-lg mb-2">
-                    ORDERS & RETURNS
-                  </p>
-                </div>
-                <div className="px-5 h-auto overflow-auto  md:px-12 my-4">
-                  {allOrders
-                    .filter(
-                      (order) =>
-                        order.orderStatus[order.orderStatus.length - 1]
-                          .status === "Pending" ||
-                        order.orderStatus[order.orderStatus.length - 1]
-                          .status === "Confirmed"
-                    )
-                    .reverse()
-                    .map((order, i) => {
-                      return (
 
-                        <div className="p-5 mb-10 bg-white" orderId={order?.orderId} key={i}>
-                          <div className="flex justify-between">
-                            <p className="text-[#474747] font-medium text-lg mb-2">
-                              Order Date {" : "}
-                              <IndiaTime
-                                data={order?.orderStatus[order?.orderStatus?.length - 1].date}
-                              />
-                            </p>
-                          </div>
-                          <div className="flex gap-2 flex-wrap justify-between">
-                            <div className="flex flex-wrap">
-                              <img
-                                className="aspect-square object-contain rounded w-[150px]"
-                                src={order.product.bannerImage}
-                                alt={order.product.name}
-                              />
-                              <div className="p-1">
-                                <button
-                                  className="cursor-pointer capitalize text-[#595555] font-semibold"
-                                  onClick={() => {
-                                    setOrderDetails(order);
-                                    setIsOpenOrderDetails(true);
-                                  }}
-                                >
-                                  {order.product.name}
-                                </button>
-
-
-                                <p className="text-[#8A8A8A] font-medium">
-                                  Size : <span>{order.product.size}</span>
-                                </p>
-                                <p className="text-[#8A8A8A] font-medium flex flex-wrap items-center gap-2">
-                                  Price : <br />
-                                  <span className="flex items-center text-[#EF939D]">
-                                    <PiCurrencyInr />
-                                    {order.product.discountedPrice}
-                                  </span>
-                                  <span className="line-through text-xs flex items-center">
-                                    <PiCurrencyInr /> {order.product.price}
-                                  </span>
-                                </p>
-                                <p className="text-[#8A8A8A] font-medium">
-                                  Quantity : <span>{order.product.quantity}</span>
-                                </p>
-                                <p className="text-[#878787] font-medium">Rate us</p>
-                                <div className="text-[#FFD233] flex gap-2 ">
-                                  <CiStar /> <CiStar /> <CiStar /> <CiStar /> <CiStar />
-                                </div>
-                              </div>
-                            </div>
-                            <Modal
-                              ariaHideApp={false} // This disables the screen reader hiding
-                              isOpen={showCancelModal}
-                              className="modal-content bg-white outline rounded-lg p-6 w-11/12 sm:w-96 mx-auto mt-10"
-                              style={{
-                                overlay: {
-                                  backgroundColor: 'transparent', // This removes any background overlay
-                                },
-                              }}
-                            >
-                              <h2 className="text-xl font-semibold mb-4">Cancel Order</h2>
-                              <p className="mb-3">Please select a reason for cancelling your order:</p>
-                              <select
-                                onChange={selectReason}
-                                className="w-full p-2 border rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                              >
-                                <option value="">-- Select Reason --</option>
-                                <option value="Ordered by mistake">Ordered by mistake</option>
-                                <option value="Better price available">Better price available</option>
-                                <option value="Need to change the order">Need to change the order</option>
-                                <option value="Found a different product">Found a different product</option>
-                                <option value="Other">Other</option>
-                              </select>
-                              <div className="flex justify-end gap-2">
-                                <button
-                                  className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600"
-                                  onClick={onCloseCancelModal}
-                                >
-                                  Close
-                                </button>
-                                <button
-                                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-                                  onClick={handleCancel}
-                                >
-                                  Confirm
-                                </button>
-                              </div>
-                            </Modal>
-
-
-
-                            <div >
-                              <button
-                                value={order.orderId}
-                                onClick
-
-
-
-                                ={() => {
-                                  setShowCancelModal(true); // Open the cancel modal
-                                  getOrderId(order.orderId, order.product.productId);; // Pass orderId directly to the function
-                                }}
-                                className="font-[Quicksand] sm:w-auto p-2 text-[#FF0000] bg-[#F2F2F2] hover:bg-red-50 rounded-md border-[1px] border-solid border-red-600 font-medium transition duration-200 ease-in-out"
-                              >
-                                CANCEL ORDER
-                              </button>
-                              <div>
-                                <button
-                                  value={order.orderId}
-                                  onClick={() => {
-                                    console.log("Order ID:", order.Id); // 
-                                    fetchUserInvoices(order.orderId); // Call the function with the order ID
-                                  }}
-
-                                >
-                                  Show Invoice
-                                </button>
-                              </div>
-                            </div>
-
-
-                          </div>
-
-                          <div className="w-full bg-[#959595] my-4 h-[1px] text-[#959595]"></div>
-
-                          <div className="hidden sm:block">
-                            <ol className="flex items-center w-full mb-5 p-2">
-                              {[
-                                "Pending",
-                                "Confirmed",
-                                "Shipped",
-                                "Out for delivery",
-                                "Delivered",
-                              ].map((item, i) => {
-                                const found = order.orderStatus.find(
-                                  (val) => val.status === item
-                                );
-                                return (
-                                  <li
-                                    className={`w-full${i === 0 ? "" : " text-center"} ${i === 4 ? " text-end" : ""}`}
-                                    key={i}
-                                  >
-                                    <p>{item}</p>
-                                    <p
-                                      className={`mt-3 flex w-full items-center text-blue-600 dark:text-blue-500 ${i !== 4
-                                        ? `after:content-[''] after:w-full after:h-1 ${found ? "after:bg-[#011F4B]" : "after:bg-[#F2F2F2]"}`
-                                        : ""} ${i !== 0
-                                          ? `before:content-[''] before:w-full before:h-1 ${found ? "before:bg-[#011F4B]" : "before:bg-[#F2F2F2]"}`
-                                          : ""}`}
-                                    >
-                                      <span
-                                        className={`flex items-center justify-center w-7 h-7 rounded-full lg:w-10 lg:h-10 shrink-0 ${found
-                                          ? "bg-[#011F4B]"
-                                          : "bg-[#F2F2F2]"}`}
-                                      ></span>
-                                    </p>
-                                  </li>
-                                );
-                              })}
-                            </ol>
-                          </div>
-
-                          <div className="block sm:hidden my-2">
-                            <ol className="relative text-gray-500 border-s border-gray-200 dark:border-gray-700">
-                              <li className="mb-10 ms-6">
-                                <span className="absolute flex items-center justify-center w-8 h-8 bg-[#011F4B] rounded-full -start-4 "></span>
-                                <h3 className="font-medium leading-tight">Ordered</h3>
-                              </li>
-                              <li className="mb-10 ms-6">
-                                <span className="absolute flex items-center justify-center w-8 h-8 bg-[#F2F2F2] rounded-full -start-4 "></span>
-                                <h3 className="font-medium leading-tight">Shipped</h3>
-                              </li>
-                              <li className="mb-10 ms-6">
-                                <span className="absolute flex items-center justify-center w-8 h-8 bg-[#F2F2F2] rounded-full -start-4   "></span>
-                                <h3 className="font-medium leading-tight">Out for delivery</h3>
-                              </li>
-                              <li className="ms-6">
-                                <span className="absolute flex items-center justify-center w-8 h-8 bg-[#F2F2F2] rounded-full -start-4   "></span>
-                                <h3 className="font-medium leading-tight">Delivered</h3>
-                              </li>
-                            </ol>
-                          </div>
-                        </div>
-
-                      );
-                    })}
-                </div>
-
-                {allOrders.map((order, i,) => {
-                  return (
-                    (order.orderStatus[order.orderStatus.length - 1].status ===
-                      "Delivered" ||
-                      order.orderStatus[order.orderStatus.length - 1].status ===
-                      "Returned") &&
-                    order.product.some(product => product.isReturnable) && (
-                      <div className="px-10 py-5 bg-white mb-3" orderId={order.orderId} key={i}>
-                        <div className="mb-3">
-                          <p className="text-[#39AC25] font-medium ">
-                            {
-                              order.orderStatus[order.orderStatus.length - 1]
-                                .status
-                            }
-                          </p>
-                          <p className="text-[#8A8A8A] font-medium text-sm mb-3">
-                            On
-                            <IndiaTime
-                              data={
-                                order.orderStatus[order.orderStatus.length - 1]
-                                  .date
-                              }
-                            />
-
-                          </p>
-
-                          <div className="bg-[#F2F2F2] rounded-md py-2 px-5 flex justify-between flex-wrap">
-                            <div className="flex flex-wrap">
-                              <button
-                                className="cursor-pointer"
-                                onClick={() => {
-                                  setOrderDetails(order);
-                                  setIsOpenOrderDetails(true);
-                                }}
-                              >
-                                <img
-                                  className="rounded object-contain h-[100px] mr-2"
-                                  src={order.product.bannerImage}
-                                  alt={order.product.name}
-                                />
-                              </button>
-                              <div>
-                                <button
-                                  className="cursor-pointer capitalize text-[#595555] font-semibold"
-                                  onClick={() => {
-                                    setOrderDetails(order);
-                                    setIsOpenOrderDetails(true);
-                                  }}
-                                >
-                                  {order.product.name}
-                                </button>
-                                <p className="text-[#8A8A8A] font-medium">
-                                  Size : <span>{order.product.size}</span>
-                                </p>
-                                <p className="text-[#8A8A8A] font-medium flex items-center gap-2">
-                                  Price :
-                                  <span className="flex items-center text-[#EF939D]">
-                                    <PiCurrencyInr />
-                                    {order.product.discountedPrice}
-                                  </span>
-                                  <span className="line-through text-xs flex items-center">
-                                    <PiCurrencyInr /> {order.product.price}
-                                  </span>
-                                </p>
-                                <p className="text-[#8A8A8A] font-medium">
-                                  Quantity : <span>{order.product.quantity}</span>
-                                </p>
-                              </div>
-                            </div>
-
-                            <Modal
-                              isOpen={showReturnModal} // Change to show the return modal
-                              className="modal-content bg-white outline rounded-lg p-6 w-11/12 sm:w-96 mx-auto mt-10"
-                              style={{
-                                overlay: {
-                                  backgroundColor: 'transparent', // This removes any background overlay
-                                },
-                              }}
-                            >
-                              <h2 className="text-xl font-semibold mb-4">Return Order</h2>
-                              <p className="mb-3">Please select a reason for returning your order:</p>
-
-                              {/* Dropdown to select the return reason */}
-                              <select
-                                onChange={selectReurnReason} // Capture the selected reason for return
-                                className="w-full p-2 border rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                              >
-                                <option value="">-- Select Reason --</option>
-                                <option value="Defective">Defective</option>
-                                <option value="Item not as Described">Item not as Described</option>
-                                <option value="Wrong Item Delivered">Wrong Item Delivered</option>
-                                <option value="Changed My Mind">
-                                  Changed My Mind
-                                </option>
-                                <option value="Other">Other</option>
-                              </select>
-                              <div>
-                                <textarea
-                                  placeholder="Please provide additional details about your return (optional)..."
-                                  rows="4"
-                                  onChange={handleCommentChange}
-                                  className="w-full p-2 border rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                ></textarea>
-                              </div>
-
-                              <div className="flex justify-end gap-2">
-                                <button
-                                  className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600" onClick={() => {
-                                    setShowReturnModal(false); // Close the modal
-                                  }}
-                                >
-                                  Close
-                                </button>
-                                <button
-                                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" onClick={confirmReturn}
-                                >
-                                  Confirm
-                                </button>
-                              </div>
-                            </Modal>
-
-
-                            <div className="sm:mt-2">
-                              <button
-                                value={order.orderId}  // Assuming order.orderId is available from your data
-                                onClick={() => {
-                                  setShowReturnModal(true);
-                                  getReturnOrderId(order.orderId)
-                                  getReturnProductId(order?.product?.productId)
-                                }}
-                                className="font-[Quicksand] sm:w-auto p-2 text-[#FF0000] bg-[#F2F2F2] hover:bg-red-50 rounded-md border-[1px] border-solid border-red-600 font-medium transition duration-200 ease-in-out"
-                              >
-                                RETURN ORDER
-                              </button>
-
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  );
-                })}
+                <Orders />
+              
               </TabPanel>
+
+
               <TabPanel className="bg-[#F2F2F2] h-full">
                 <h4 className="text-white font-medium text-base bg-[#011F4B] p-5 mb-3">
                   All COUPONS
@@ -1264,7 +842,7 @@ export default function Profile() {
                         <p
                           className="text-black text-sm md:text-base font-medium bg-gray-100 p-2 mb-2 rounded-md border border-gray-300 shadow-sm"
                         >
-                          <span className="font-semibold">User Name:</span> Aniket7422 {}
+                          <span className="font-semibold">User Name:</span> Aniket7422 { }
                           <span className="text-gray-600 block md:inline">
                             (Your buyer can search you using this)
                           </span>
@@ -1479,229 +1057,229 @@ export default function Profile() {
 
                 {
                   documentUploading ? <div className="h-screen w-full flex flex-col justify-center items-center bg-gray-50">
-                  <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center">
-                    <p className="text-lg font-semibold mb-4 text-gray-700">Uploading Documents...</p>
-                    <Loader />
+                    <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center">
+                      <p className="text-lg font-semibold mb-4 text-gray-700">Uploading Documents...</p>
+                      <Loader />
+                    </div>
                   </div>
-                </div>
-                 : <div className=" grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div className=" py-5 px-4">
-                      <label className="block text-[#626262] font-medium mb-2 ml-2">
-                        PAN
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Enter your Pan "
-                        className="border border-gray-300 rounded-lg p-3 w-full"
-                        value={pan}
-                        onChange={(e) => setPan(e.target.value.toUpperCase())}
+                    : <div className=" grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div className=" py-5 px-4">
+                        <label className="block text-[#626262] font-medium mb-2 ml-2">
+                          PAN
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Enter your Pan "
+                          className="border border-gray-300 rounded-lg p-3 w-full"
+                          value={pan}
+                          onChange={(e) => setPan(e.target.value.toUpperCase())}
 
 
-                      />
+                        />
 
-                      <label className="block text-[#626262] font-medium mb-2 ">
-                        Upload PAN Image
-                      </label>
-                      <input
-                        type="file"
-                        accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx"
-                        className="block text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+                        <label className="block text-[#626262] font-medium mb-2 ">
+                          Upload PAN Image
+                        </label>
+                        <input
+                          type="file"
+                          accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx"
+                          className="block text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
 
-                        onChange={(e) => getPanImageUrl(e,)}
-                      />
+                          onChange={(e) => getPanImageUrl(e,)}
+                        />
 
 
-                      {/* 
+                        {/* 
 
     <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-3 ml-auto"
       onClick={handlePanVerification}
 
     >Verify Pan </button> */}
 
-                    </div>
-                    {panInfo && (
-                      <div className='mx-2 mt-2' >
+                      </div>
+                      {panInfo && (
+                        <div className='mx-2 mt-2' >
 
-                        <p className="font-poppins font-medium text-[20px] leading-[21px] py-4 mx-2">
-                          PAN Information
-                        </p>
-                        <div className='flex gap-10 mx-2 py-4 '>
-                          <div className='flex flex-col space-y-6 pr-2 w-1/3'>
-                            <div className='flex flex-col space-y-2 '>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>PAN Number</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.pan
-                              }</p>
+                          <p className="font-poppins font-medium text-[20px] leading-[21px] py-4 mx-2">
+                            PAN Information
+                          </p>
+                          <div className='flex gap-10 mx-2 py-4 '>
+                            <div className='flex flex-col space-y-6 pr-2 w-1/3'>
+                              <div className='flex flex-col space-y-2 '>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>PAN Number</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.pan
+                                }</p>
+                              </div>
+                              <div className='flex flex-col space-y-2 '>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>First Name</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>
+                                  {panInfo?.firstName
+                                  }
+                                </p>
+                              </div>
+                              <div className='flex flex-col  space-y-2'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Last Name</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'> {panInfo?.lastName}</p>
+                              </div>
+                              <div className='flex flex-col  space-y-2'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Gender</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'> {panInfo?.gender}</p>
+                              </div>
+                              <div className='flex flex-col  space-y-2'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Dob</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
+                                  dob}</p>
+                              </div>
                             </div>
-                            <div className='flex flex-col space-y-2 '>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>First Name</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                                {panInfo?.firstName
+
+
+                            <div className='flex flex-col space-y-6 w-2/3'>
+
+
+                              <div className='flex flex-col space-y-2'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Aadhar Number</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
+                                  maskedAadhaarNumber
+                                }</p>
+                              </div>
+
+                              <div className='flex flex-col space-y-2'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Address</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
+                                  address
                                 }
-                              </p>
-                            </div>
-                            <div className='flex flex-col  space-y-2'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Last Name</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'> {panInfo?.lastName}</p>
-                            </div>
-                            <div className='flex flex-col  space-y-2'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Gender</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'> {panInfo?.gender}</p>
-                            </div>
-                            <div className='flex flex-col  space-y-2'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Dob</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
-                                dob}</p>
-                            </div>
-                          </div>
-
-
-                          <div className='flex flex-col space-y-6 w-2/3'>
-
-
-                            <div className='flex flex-col space-y-2'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Aadhar Number</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
-                                maskedAadhaarNumber
-                              }</p>
-                            </div>
-
-                            <div className='flex flex-col space-y-2'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Address</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{panInfo?.
-                                address
-                              }
-                              </p>
-                            </div>
-                            <div className='flex flex-col space-y-2'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Aadhar Link Status</h1>
-                              <p className={`font-poppins font-normal text-[16px] leading-[21px] ${panInfo?.aadhaarLinked ? 'text-green-600' : 'text-red-600'
-                                }`}>{panInfo?.aadhaarLinked ? "Already Linked" : "Aadhaar Not Linked"}</p>
+                                </p>
+                              </div>
+                              <div className='flex flex-col space-y-2'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Aadhar Link Status</h1>
+                                <p className={`font-poppins font-normal text-[16px] leading-[21px] ${panInfo?.aadhaarLinked ? 'text-green-600' : 'text-red-600'
+                                  }`}>{panInfo?.aadhaarLinked ? "Already Linked" : "Aadhaar Not Linked"}</p>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                    <div className=" py-5 px-4">
-                      <label className="block text-[#626262] font-medium mb-2 ml-2">
-                        GSTN
-                      </label>
-                      <input
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (/^\d*$/.test(value) && value.length <= 15) {
-                            setGst(value);
-                          }
-                        }}
-                        value={gst}
-                        type="text"
-                        maxLength={15}
-                        placeholder="Enter your GST Number"
-                        className="border border-gray-300 rounded-lg p-3 w-full"
-                      />
+                      )}
+                      <div className=" py-5 px-4">
+                        <label className="block text-[#626262] font-medium mb-2 ml-2">
+                          GSTN
+                        </label>
+                        <input
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (/^\d*$/.test(value) && value.length <= 15) {
+                              setGst(value);
+                            }
+                          }}
+                          value={gst}
+                          type="text"
+                          maxLength={15}
+                          placeholder="Enter your GST Number"
+                          className="border border-gray-300 rounded-lg p-3 w-full"
+                        />
 
 
-                      <label className="block text-[#626262] font-medium mb-2 mt-2">
-                        Upload GST Image
-                      </label>
+                        <label className="block text-[#626262] font-medium mb-2 mt-2">
+                          Upload GST Image
+                        </label>
 
-                      <input
-                        type="file"
-                        accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx"
-                        className="block  text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+                        <input
+                          type="file"
+                          accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx"
+                          className="block  text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
 
-                        onChange={(e) => getGstUrl(e,)}
-                      />
-                      {/* <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-6 ml-auto"
+                          onChange={(e) => getGstUrl(e,)}
+                        />
+                        {/* <button className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-4 py-1 mx-auto  my-6 ml-auto"
       onClick={handleGstVerification}
 
     >Verify Gstn</button> */}
-                    </div>
-                    {gstInfo && (
-                      <div className='mx-2 mt-2' >
+                      </div>
+                      {gstInfo && (
+                        <div className='mx-2 mt-2' >
 
-                        <p className="font-poppins font-medium text-[20px] leading-[21px] py-4 mx-2">
-                          Gstn Information
-                        </p>
-                        <div className='flex gap-10 mx-2 py-4 '>
-                          <div className='flex flex-col space-y-6 pr-2 w-1/3'>
-                            <div className='flex flex-col space-y-2 '>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>GST Number</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{gstInfo?.gstin}</p>
+                          <p className="font-poppins font-medium text-[20px] leading-[21px] py-4 mx-2">
+                            Gstn Information
+                          </p>
+                          <div className='flex gap-10 mx-2 py-4 '>
+                            <div className='flex flex-col space-y-6 pr-2 w-1/3'>
+                              <div className='flex flex-col space-y-2 '>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>GST Number</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>{gstInfo?.gstin}</p>
+                              </div>
+                              <div className='flex flex-col space-y-2 '>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>GSTN Status</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>
+                                  {gstInfo?.gstinStatus}
+                                </p>
+                              </div>
+                              <div className='flex flex-col  space-y-2'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Center Jurisdiction</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>{gstInfo?.centreJurisdiction}
+                                </p>
+                              </div>
+                              <div className='flex flex-col  space-y-2 w-2/3'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Center Jurisdiction Code</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>{gstInfo?.centreJurisdictionCode}</p>
+                              </div>
+                              <div className='flex flex-col  space-y-2'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Legal Name Of Business</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>
+                                  {gstInfo?.legalNameOfBusiness
+                                  }
+                                </p>
+                              </div>
                             </div>
-                            <div className='flex flex-col space-y-2 '>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>GSTN Status</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                                {gstInfo?.gstinStatus}
-                              </p>
-                            </div>
-                            <div className='flex flex-col  space-y-2'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Center Jurisdiction</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{gstInfo?.centreJurisdiction}
-                              </p>
-                            </div>
-                            <div className='flex flex-col  space-y-2 w-2/3'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Center Jurisdiction Code</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>{gstInfo?.centreJurisdictionCode}</p>
-                            </div>
-                            <div className='flex flex-col  space-y-2'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Legal Name Of Business</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                                {gstInfo?.legalNameOfBusiness
-                                }
-                              </p>
+
+
+                            <div className='flex flex-col space-y-6 '>
+
+                              <div className='flex flex-col space-y-2 w-2/3'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>State Jurisdiction</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>
+                                  {gstInfo?.stateJurisdiction
+
+                                  }
+                                </p>
+                              </div>
+                              <div className='flex flex-col space-y-2'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>State Jurisdiction Code</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>
+                                  {gstInfo?.stateJurisdictionCode
+
+                                  }
+                                </p>
+                              </div>
+                              <div className='flex flex-col space-y-2'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Tax Payer Type</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>  {gstInfo?.taxpayerType
+
+
+                                }</p>
+                              </div>
+                              <div className='flex flex-col space-y-2'>
+                                <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Reference Id</h1>
+                                <p className='font-poppins font-normal text-[16px] leading-[21px]'>
+                                  {gstInfo?.
+                                    referenceId
+                                  }
+                                </p>
+                              </div>
                             </div>
                           </div>
+                        </div>)}
 
+                      <div>
+                        {
+                          loading === false ?
+                            <button className="bg-[#011F4B] text-sm text-[#FFFFFF] font-bold rounded-md px-3 py-2 mx-auto block"
+                              onClick={handleApproval}
 
-                          <div className='flex flex-col space-y-6 '>
-
-                            <div className='flex flex-col space-y-2 w-2/3'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>State Jurisdiction</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                                {gstInfo?.stateJurisdiction
-
-                                }
-                              </p>
-                            </div>
-                            <div className='flex flex-col space-y-2'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>State Jurisdiction Code</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                                {gstInfo?.stateJurisdictionCode
-
-                                }
-                              </p>
-                            </div>
-                            <div className='flex flex-col space-y-2'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Tax Payer Type</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>  {gstInfo?.taxpayerType
-
-
-                              }</p>
-                            </div>
-                            <div className='flex flex-col space-y-2'>
-                              <h1 className='font-poppins font-medium text-[14px] leading-[21px] text-[#6B6B6B]'>Reference Id</h1>
-                              <p className='font-poppins font-normal text-[16px] leading-[21px]'>
-                                {gstInfo?.
-                                  referenceId
-                                }
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>)}
-
-                    <div>
-                      {
-                        loading === false ?
-                          <button className="bg-[#011F4B] text-sm text-[#FFFFFF] font-bold rounded-md px-3 py-2 mx-auto block"
-                            onClick={handleApproval}
-
-                          >Submit Docs</button>
-                          :
-                          <LoadSpinner />
-                      }
+                            >Submit Docs</button>
+                            :
+                            <LoadSpinner />
+                        }
+                      </div>
                     </div>
-                  </div>
                 }
 
 
@@ -1764,41 +1342,41 @@ export default function Profile() {
                 </div>
               </TabPanel>
               <TabPanel className="h-full p-4 bg-gray-50">
-  <h1 className="text-2xl font-bold text-gray-800 text-center mb-2">Subscription</h1>
+                <h1 className="text-2xl font-bold text-gray-800 text-center mb-2">Subscription</h1>
 
-  <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-    {["Free", "Silver", "Gold", "Platinum"].map((plan) => (
-      <div
-        key={plan}
-        className="shadow-lg border border-gray-200 rounded-lg bg-white w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"
-      >
-        <Switch
-          onClick={() => alert("Feature will be available soon")}
-          className="m-2"
-        />
-        <div className="flex flex-col items-center">
-          <h2 className="text-lg font-semibold text-gray-700">{plan}</h2>
-          <img
-            src="https://s3-alpha-sig.figma.com/img/e0f6/ba85/9941adab5aa94e793b68a430fa3c454c?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YKERHzcIqP3i559PB8Q-f-3uqF5h94VrwYcSJs4rENPcTn9Gz4K6kcQMFIfVrYAUS4wYmRseXdeJGMtLTI9aZDDByj0THBXJNknZU4mSQYlMei5-5FpD-x5RpFegLD-ofhUGb2Q~ROvyrCzD2mh6el1nGSvajITdEGxUacMzEkUksjkyu3qYJBGG8KhNJtovNKdwLSf7z9Mo7W-mEYfC-yHEKJV5895Dsv1PJBTF2rMmnqWdaSGdZpHMh7JdibavI1xnClJtEqoLBUJEmLiqoxxnFnolSycfsU61lMY4rlq1~lJHUjME1XROAG2pNASjJqTJ7IzM~4bz6nP1i0smUQ__"
-            alt={`${plan} plan`}
-            className="w-12 h-12 my-4"
-          />
-          <hr className="border-t border-gray-300 w-4/5 my-2" />
-          <p className="text-center text-sm text-gray-600">
-            Pay fee in easy (interest-free) installments. Choose from monthly or
-            quarterly payment options.
-          </p>
-          <button
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-            type="button"
-          >
-            {plan}
-          </button>
-        </div>
-      </div>
-    ))}
-  </div>
-</TabPanel>
+                <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                  {["Free", "Silver", "Gold", "Platinum"].map((plan) => (
+                    <div
+                      key={plan}
+                      className="shadow-lg border border-gray-200 rounded-lg bg-white w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"
+                    >
+                      <Switch
+                        onClick={() => alert("Feature will be available soon")}
+                        className="m-2"
+                      />
+                      <div className="flex flex-col items-center">
+                        <h2 className="text-lg font-semibold text-gray-700">{plan}</h2>
+                        <img
+                          src="https://s3-alpha-sig.figma.com/img/e0f6/ba85/9941adab5aa94e793b68a430fa3c454c?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YKERHzcIqP3i559PB8Q-f-3uqF5h94VrwYcSJs4rENPcTn9Gz4K6kcQMFIfVrYAUS4wYmRseXdeJGMtLTI9aZDDByj0THBXJNknZU4mSQYlMei5-5FpD-x5RpFegLD-ofhUGb2Q~ROvyrCzD2mh6el1nGSvajITdEGxUacMzEkUksjkyu3qYJBGG8KhNJtovNKdwLSf7z9Mo7W-mEYfC-yHEKJV5895Dsv1PJBTF2rMmnqWdaSGdZpHMh7JdibavI1xnClJtEqoLBUJEmLiqoxxnFnolSycfsU61lMY4rlq1~lJHUjME1XROAG2pNASjJqTJ7IzM~4bz6nP1i0smUQ__"
+                          alt={`${plan} plan`}
+                          className="w-12 h-12 my-4"
+                        />
+                        <hr className="border-t border-gray-300 w-4/5 my-2" />
+                        <p className="text-center text-sm text-gray-600">
+                          Pay fee in easy (interest-free) installments. Choose from monthly or
+                          quarterly payment options.
+                        </p>
+                        <button
+                          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                          type="button"
+                        >
+                          {plan}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </TabPanel>
 
               <TabPanel className=" bg-[#F2F2F2]  h-full">
                 <h1 className="text-xl text-center font-semibold sm:pt-10 lg:pt-2">Past Order details and Invoices</h1>

@@ -15,37 +15,16 @@ export const CartProvider = ({ children }) => {
 
   const [wishList, setWishList] = useState([]);
 
-  // Persist cart in localStorage
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+  console.log("cartcartcartcart", cart)
 
-  // Sync cart with the server on login or local storage changes
-  const syncCartWithServer = async () => {
-    if (!tokenIfLoggedIn) return;
+  if (localStorage.getItem("accessToken") === null || localStorage.getItem("accessToken") === undefined) {
+    localStorage.setItem("cart", JSON.stringify(cart))
+  }
 
-    const dataForCart = Object.values(cart).map((item) => ({
-      productId: item.productId,
-      color: item.color || "Default Color",
-      size: item.size,
-      price: item.price,
-      quantity: item.quantity,
-    }));
 
-    try {
-      await HttpClient.post("/cart", { data: dataForCart });
-    } catch (error) {
-      toast.error("Failed to sync cart with server.");
-    }
-  };
 
-  useEffect(() => {
-    if (tokenIfLoggedIn) {
-      syncCartWithServer();
-    }
-  }, [cart, tokenIfLoggedIn]);
 
-  // Fetch cart and wishlist data from server on login
+
   const fetchServerData = async () => {
     if (!tokenIfLoggedIn) return;
 
@@ -53,10 +32,7 @@ export const CartProvider = ({ children }) => {
       const cartResponse = await HttpClient.get("/cart");
       setCart(cartResponse.data);
 
-      const wishlistResponse = await HttpClient.get("/wishlist");
-      setWishList(wishlistResponse.data);
     } catch (error) {
-      toast.error("Failed to fetch data from server.");
     }
   };
 
