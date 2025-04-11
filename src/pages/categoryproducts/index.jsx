@@ -46,7 +46,7 @@ export default function ProductByCategory() {
 
   const handleSearch = () => {
     // Add your search logic here
-    console.log("Search Term:", searchTerm);
+    console.log("Search Term", searchTerm);
     console.log("Sort Option:", sortOption);
     console.log("Rating Filter:", ratingFilter);
     console.log("Selected Colors:", selectedColors);
