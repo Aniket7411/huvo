@@ -16,12 +16,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 
 
-export default function MenCollection() {
+export default function CategorySearh() {
   const [allCategories, setAllCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const { category, id } = useParams(); // Extract route params
 
-  console.log("categorycategory", category)
   console.log("idididid", id)
 
 
@@ -179,8 +178,11 @@ export default function MenCollection() {
     getAllBrands();
   }, []);
 
+  console.log("aahha",allProducts)
 
-  const menProducts = allProducts.filter((item) => item.group === "men").splice(0, 8);
+  const menProducts = allProducts.filter((item) => item?.category?._id === id).splice(0, 8);
+
+  console.log("aahha",menProducts)
 
   console.log("menProductsmenProducts", menProducts)
   console.log("searchGroupsearchGroupsearchGroup", searchGroup)
