@@ -50,8 +50,12 @@ export default function Header(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const hideTimeoutRef = useRef(null);
   const [wishListItems, setWishListItems] = useState()
+  const [category, setCategory] = useState("category_search")
 
 
+
+
+  console.log("categorycategorycategory", category)
 
   const getWishList = async () => {
     try {
@@ -138,12 +142,15 @@ export default function Header(props) {
 
 
   const fetchSuggestions = async (searchword) => {
-    try {
-      const response = await HttpClient.get(`/search/?q=${searchword}`)
-        ;
 
-      setSearchResult(response.results);
-      console.log(response.results)
+    //debugger
+    try {
+      const response = await HttpClient.get("/search/final", { search: searchword, searchType: category });
+      console.log("final", response)
+      if (response.success) {
+        setSearchResult(response.data);
+
+      }
     } catch (error) {
       console.error('Error fetching suggestions:', error);
     }
@@ -163,33 +170,16 @@ export default function Header(props) {
 
 
   console.log("numberOfCartItemsnumberOfCartItems", localCount)
-
-
-
-  
-
   console.log(localStorage.getItem("accessToken"))
 
 
 
 
 
-  // const debouncedFetchSuggestions = debounce((query) => {
-  //   if (query.trim()) {
-  //     fetchSuggestions(query);
-  //   } else {
-  //     setSearchResult([]);
-  //   }
-  // }, 300);
-
-
   const handleInputChange = (e) => {
-    console.log("testing")
     const query = e.target.value;
     setSearchQuery(query);
-    console.log("Search Query:", query);
-    // debouncedFetchSuggestions(query); // Trigger search suggestion
-    console.log("testing 2")
+
     if (query.trim()) {
       fetchSuggestions(query);
     } else {
@@ -199,8 +189,11 @@ export default function Header(props) {
 
 
 
-  const handleSearch = async (searchword) => {
+  const handleSearch = async (searchword, id) => {
+
+    console.log("dididididididdi",id)
     if (searchQuery.trim()) {
+      
 
       try {
 
@@ -211,7 +204,7 @@ export default function Header(props) {
         console.log(productId)
         if (productId) {
 
-          navigate(`/product-details/${productId}`);
+          navigate(`/${category}/${id}`);
         } else {
           console.error('Product ID not found in response');
         }
@@ -222,19 +215,14 @@ export default function Header(props) {
   };
 
 
-  const handleKeyInput = (e) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
 
 
-  const handleSuggestionClick = async (suggestion) => {
+  const handleSuggestionClick = async (suggestion, id) => {
     const suggestionName = suggestion;
-    setSearchQuery(suggestion);
+    setSearchQuery(suggestion, id);
     setSearchResult([]);
 
-    await handleSearch(suggestionName);
+    await handleSearch(suggestionName, id);
 
   }
 
@@ -271,37 +259,62 @@ export default function Header(props) {
             </Link>
           </ul>
 
+
           <div className="flex items-center gap-3">
-            <div className=" flex items-center justify-between rounded-full  bg-[#E7EFFA]  px-2 py-3  searchBtn">
+            <div className="relative flex items-center justify-between rounded-full bg-[#E7EFFA] px-4 py-2 shadow-lg">
+              {/* Search Icon Button */}
               <button
-                className="mr-5"
+                className="text-gray-600 hover:text-gray-800 transition-colors mr-3"
                 onClick={handleSearch}
+                aria-label="Search"
               >
-                <CiSearch className="text-[#000000]" />
+                <CiSearch className="text-xl" />
               </button>
+
+              {/* Search Input */}
               <input
-                placeholder="Search"
-                className="border-0 w-full gap-10 outline-none  bg-[#E7EFFA]"
+                type="text"
+                placeholder="Search for categories, products, or brands"
+                className="flex-1 text-sm placeholder-gray-500 text-gray-800 bg-transparent focus:outline-none"
                 value={searchQuery}
                 onChange={handleInputChange}
-                onKeyUp={handleKeyInput}
+              // onKeyUp={handleKeyInput}
+              />
 
+              {/* Dropdown Menu */}
+              <select
+                className="ml-3 text-sm bg-transparent text-gray-700 border-0 focus:ring-2 focus:ring-blue-500"
+                defaultValue="category"
+                onChange={(e) => setCategory(e.target.value)}
               >
-              </input>
-              {searchResult.length > 0 && (
-                <ul className="absolute top-20 left-100 w-40 bg-white border rounded-lg mt-2 z-50 max-h-48 overflow-auto shadow-lg">
-                  {searchResult.map((suggestion) => (
-                    <li
-                      key={suggestion.id}
-                      className="p-2 hover:bg-gray-200 cursor-pointer"
-                      onClick={() => handleSuggestionClick(suggestion)}
-                    >
-                      {suggestion}
-                    </li>
+                <option disabled>Search by</option>
+                <option value="category_search">Category</option>
+                <option value="product_search">Product</option>
+                <option value="store_product">Brand</option>
+                <option value="store_product">Store</option>
+
+              </select>
+
+              {/* Search Suggestions */}
+              {searchResult?.length > 0 && (
+                <ul className="absolute top-full left-0 mt-2 w-full bg-white border rounded-lg shadow-lg max-h-48 overflow-auto z-50">
+                  {searchResult?.map((suggestion) => (
+                      <li
+                        key={suggestion?._id}
+                        className="p-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => handleSuggestionClick(suggestion, suggestion?._id)}
+                      >
+                        {category === "userName" ? suggestion.username : suggestion.name}
+                      </li>
+
                   ))}
                 </ul>
               )}
             </div>
+
+
+
+
             <button
               onClick={() =>
                 isLoggedIn()
@@ -338,16 +351,16 @@ export default function Header(props) {
 
               {
                 loginStatus === 0 ? <>
-                {Object.keys(localCount).length > 0 && (
-               <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
-                 {Object.keys(localCount).length}
-               </span>
-             )}</> : <>
-                 {Object.keys(cart).length > 0 && (
-                <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
-                  {Object.keys(cart).length}
-                </span>
-              )}</>
+                  {Object.keys(localCount).length > 0 && (
+                    <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
+                      {Object.keys(localCount).length}
+                    </span>
+                  )}</> : <>
+                  {Object.keys(cart).length > 0 && (
+                    <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
+                      {Object.keys(cart).length}
+                    </span>
+                  )}</>
               }
 
 
@@ -409,27 +422,7 @@ export default function Header(props) {
 
 
         <div className="relative " onClick={toggleNav}>
-          {/* Hamburger Icon */}
-
-
-          {/* <img
-  src={`${process.env.PUBLIC_URL}/favicon.svg`}
-  alt="Menu Icon"
-  onClick={() => openSubmenu()}
-  style={{
-    position: "fixed",
-    top: "16px",
-    left: "16px",
-    zIndex: 50,
-    padding: "8px",
-    borderRadius: "8px",
-    cursor: "pointer",
-    width: "32px", // Adjust size as needed
-    height: "32px",
-  }}
-/> */}
-
-
+        
 
 
 
