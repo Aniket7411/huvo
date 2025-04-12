@@ -10,25 +10,10 @@
   display: none;
 } */
  
-.headerMain{
-    position: fixed;
-    top: 0;
-    width: 83%;
-    left: 17%;
-} 
-
   .sidenav::-webkit-scrollbar {
     display: none;
   }
 
-@media (max-width: 1024px) {
-    .headerMain{
-      position: fixed;
-      top: 0;
-      width: 100%;
-      left: 0;
-  }
-}
 
 @media (min-width: 1024px) {
   .mainDashboard {

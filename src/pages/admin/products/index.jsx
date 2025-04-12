@@ -379,7 +379,7 @@ function ProductList() {
           {
             keyfilteredproducts.length ?
               <div className="w-2/3">
-                <div className="relative h-[70vh] overflow-auto shadow-md sm:rounded-lg ">
+                <div className="relative overflow-auto shadow-md sm:rounded-lg ">
                   <table className="w-full table-auto sticky-banner">
                     <thead className="sticky top-[-2px] bg-gray-2 dark:bg-meta-4 shadow fixed z-10 bg-white">
                       <tr className="bg-gray-2 text-left dark:bg-meta-4">

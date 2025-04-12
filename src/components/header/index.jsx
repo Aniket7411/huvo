@@ -136,9 +136,6 @@ export default function Header(props) {
       console.error(error);
     }
   };
-  const className =
-    (!pathInclude ? "bg-[#011f4b] text-white" : "bg-transparent absolute") +
-    " w-full font-semibold text-[#515151]  z-10";
 
 
   const fetchSuggestions = async (searchword) => {
@@ -228,7 +225,7 @@ export default function Header(props) {
 
   return (
     <>
-      <header className={className}>
+      <header>
         <div className="hidden md:flex items-center bg-[#fff] text-[#2563AB] px-8 py-2 justify-between">
           <Link to="/" >
             <img src="/assets/newlogo.jpeg" alt="Logo" className="h-[30px]  hidden md:block rounded-xl" />
@@ -416,6 +413,8 @@ export default function Header(props) {
 
 
           </div>
+
+          
         </div>
 
 
@@ -568,7 +567,8 @@ export default function Header(props) {
             </div>
             <ul className="text-[#56B6E6] font-semibold">
               <li onClick={closeSubmenu} className="cursor-pointer mb-2">
-                <Link to="/">Home</Link>
+                <Link to="/">
+                </Link>
               </li>
 
               {["men", "women", "kids"].map((type) => (

@@ -35,29 +35,34 @@ function Sidenavbar() {
 
   return (
     <div className="sidebar"  >
-      <div className="px-8 py-3">
-        <Link to="/">
-          {/* <img src="/assets/cart.png" alt="Cart" width="60px" height="60px" /> */}
-          <img src="/assets/newlogo.jpeg" alt="Logo" className="w-[100px] h-[100px]" />
-        </Link>
-      </div>
+      
       <div className="flex items-center px-8 py-5">
-        <div className="mr-4 flex items-center justify-center border border-white w-10 h-10 rounded-full bg-[#FFFFFF]">
-          <img
-            src="/assets/winter.png"
-            alt="Cart"
-            className="rounded-full w-full h-full object-cover"
-          />
-        </div>
+       
 
         <p className="text-[#011F4B] font-[Poppins] font-bold">
-          {getUserData()?.storeDetails?.storeName?.toLowerCase()}{" "}
+          {getUserData()?.storeDetails?.storeName?.toUpperCase()}{" "}
 
         </p>
       </div>
 
       <div className="px-1">
         <ul className="px-5 font-[Poppins] text-[#000000] font-normal hover:text-#FFFFFF">
+
+
+        <li>
+            <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
+              <Link to="/" className="flex items-center gap-2">
+                <button className="flex justify-center items-center gap-4 p-2">
+                  <div className="p-2 iconDiv">
+                    <MdSignalCellularAlt size={21} className="icon" />
+                  </div>
+                  Home
+                </button>
+                <IoIosArrowRoundForward className="opacity-60" />
+              </Link>
+            </div>
+          </li>
+
           <li>
             <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
               <Link to="/seller" className="flex items-center gap-2">

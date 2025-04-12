@@ -148,14 +148,14 @@ function AdminHeader() {
 
   return (
     <>
-      <header className="bg-[#E7EFFA] text-white px-3 py-3 mb-5 w-[100%] shadow-bottom">
+      <header className="bg-[#E7EFFA] text-white px-3 py-3  shadow-bottom">
         <div className="flex items-center justify-between">
 
           <ul>
             <div className="flex lg:hidden justify-between items-center">
               <IoReorderThree
                 onClick={() => openSubmenu()}
-                className="text-3xl cursor-pointer"
+                className="text-3xl text-blue-700 cursor-pointer"
               />
             </div>
             <li className="text-[#011F4B]  px-1 py-3 font-[Poppins] font-medium text-2xl leading-9 ">
@@ -164,19 +164,6 @@ function AdminHeader() {
           </ul>
           <div className="">
             <ul className="flex items-center gap-5">
-              {/* <li className="flex-grow">
-              <div className=" flex items-center justify-between p-1 bg-[#FFFFFF] rounded-lg top-[-12px]">
-                <button className="mr-5"
-                 onClick={handleClick}
-                 >
-                  <CiSearch className="text-[#000000]" />
-                </button>
-                <input
-                  placeholder="search" 
-                  className="border-0 text-[red] w-full gap-10 outline-none"
-                ></input>
-              </div>
-            </li> */}
 
 
               <li >
@@ -224,17 +211,14 @@ function AdminHeader() {
                           key={index}
                           className="border border-gray-300 rounded-lg shadow-sm bg-gray-50 p-4 my-4 overflow-auto hover:shadow-md transition-shadow"
                         >
-                          {/* Product Name */}
                           <p className="text-lg font-semibold text-gray-800 mb-2">
                             Product Name: <span className="text-blue-600">{item.productName || "N/A"}</span>
                           </p>
 
-                          {/* Order Details */}
                           <p className="text-base font-medium text-gray-700 mb-2">
                             Order Details: <span className="text-green-600">{item.message || "N/A"}</span>
                           </p>
 
-                          {/* Ordered Date */}
                           <p className="text-base font-medium text-gray-700">
                             Ordered Date: <span className="text-gray-500">{formattedDate(item.createdAt) || "N/A"}</span>
                           </p>
@@ -251,18 +235,7 @@ function AdminHeader() {
                   )}
                 </Modal>
               </div>
-              {/* <li className=" flex items-center">
-              <Link to="">
-                <div className="relative">
-                  <BsCart2 className="h-7 w-7 text-[#000000]" />
-                  <div className="absolute top-[-12px] right-[-6px]">
-                    <div className="rounded-full p-[3px] h-5 w-5 bg-[#011F4B] flex items-center justify-center text-white">
-                      2
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </li> */}
+
 
             </ul>
           </div>
@@ -270,41 +243,37 @@ function AdminHeader() {
       </header>
       {isSubmenu && (
         <section>
-          <div className="block lg:hidden z-10 fixed sm:w-[50%] w-[100%] p-5 top-0 h-full left-0 bg-[#a0aec0]">
-            {/* <div className="flex justify-between items-center">
-              <div className="mb-5"> 
-                <p className="text-2xl my-2">Logo</p>
-              </div>
-              <button className="text-black " onClick={() => closeSubmenu()}>
-                <RxCross2 />
-              </button>
-            </div> */}
+          <div className="block lg:hidden z-10 fixed w-[70%]  p-2 top-0 h-full left-0 bg-[#fff]">
+
             <div>
-              <div className="flex flex-grow w-auto justify-between">
 
-                <img src="/assets/newlogo.jpeg" alt="Logo" className="w-[100px] h-[100px]" />
+              <div className="flex items-center justify-between px-3 py-5">
 
+
+                <p className="text-[#011F4B] font-[Poppins] font-bold">
+                  {getUserData()?.firstName.toUpperCase()}{" "}
+
+                </p>
                 <button className="lg:text-black" onClick={() => closeSubmenu()}>
                   <RxCross2 />
                 </button>
               </div>
-              <div className="flex items-center px-3 py-5">
-                <div className="mr-4 flex items-center justify-center border border-white w-10 h-10 rounded-full bg-[#FFFFFF]">
-                  <img
-                    src="/assets/winter.png"
-                    alt="Cart"
-                    className="rounded-full w-full h-full object-cover"
-                  />
-                </div>
-
-                <p className="text-[#011F4B] font-[Poppins] font-bold">
-                  {getUserData()?.firstName.toLowerCase()}{" "}
-
-                </p>
-              </div>
 
               <div className="px-1">
-                <ul className="px-5 font-[Poppins] text-[#000000] font-normal hover:text-#FFFFFF">
+                <ul className="px-3 font-[Poppins] text-[#000000] font-normal hover:text-#FFFFFF">
+
+                  <li>
+                    <div className="hover:bg-[#011F4B]border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
+                      <Link to="/">
+                        <button className="flex justify-center items-center gap-4   p-2">
+                          <div className="p-2 iconDiv">
+                            <MdSignalCellularAlt size={21} className="icon" />
+                          </div>
+                          Home
+                        </button>
+                      </Link>
+                    </div>
+                  </li>
                   <li>
                     <div className="hover:bg-[#011F4B]border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
                       <Link to="/seller">
@@ -325,7 +294,7 @@ function AdminHeader() {
                       >
                         <button className="flex justify-center items-center gap-4  p-2">
                           <div className="p-2 iconDiv">
-                            <BsReceipt size={21} className="icon" />
+                            <FiTruck size={21} className="icon" />
                           </div>
                           Orders
                         </button>
@@ -341,7 +310,7 @@ function AdminHeader() {
                       >
                         <button className="flex justify-center items-center gap-4  p-2">
                           <div className="p-2 iconDiv">
-                            <FiTruck size={21} className="icon" />
+                            < BsReceipt size={21} className="icon" />
                           </div>
                           Products
                         </button>
@@ -412,18 +381,6 @@ function AdminHeader() {
                         <IoIosArrowRoundForward className="opacity-60" />
                       </Link>
                     </div>
-                  </li>
-                  <li className="mx-2 block md:hidden mt-2 w-[50%]">
-                    <Link
-                      to="/"
-                      className="bg-[#011F4B] border border-[#011F4B] rounded-md px-2 py-1 flex justify-center items-center gap-2 text-white"
-                    >
-                      {/* <IoAddCircleOutline /> */}
-                      Website
-                    </Link>
-                    <button className="sm:text-black mt-6" onClick={() => closeSubmenu()}>
-                      <RxCross2 />
-                    </button>
                   </li>
 
                 </ul>

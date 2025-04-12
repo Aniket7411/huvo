@@ -17,20 +17,24 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 function Admin() {
 
   const [dashboardData, setDashboardData] = useState([]);
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [checkDocModal,setCheckDocModal]=useState(false)
+  const [sellerDetails, setSellerDetails] = useState()
+
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate();
 
-  let subtitle;
 
   const getdashboardData = async () => {
     setIsLoading(true)
     try {
       const response = await HttpClient.get("/dashboard")
-      const data = response
-      setDashboardData(data);
-      setCheckDocModal(!(data?.sellerDetails?.verificationStatus));
+
+console.log("response",response?.sellerDetails)
+setSellerDetails(response?.sellerDetails)
+
+console.log(sellerDetails)
+
+
+
       setIsLoading(false)
 
     } catch (error) {
@@ -39,308 +43,81 @@ function Admin() {
     }
   };
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function afterOpenModal() {
-
-    subtitle.style.color = '#f00';
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-
-
-
-
   useEffect(() => {
     getdashboardData();
   }, []);
   return (
 
     <>
-
-    {
-      isLoading ? <div className="h-screen">  <Loader /> </div>:  <div className="container-fluid" style={{ overflowY: "auto" }}>
-      <div className="flex flex-wrap mt-6 p-2 h-[100vh]" style={{ overflowY: "auto" }}>
-        <div className="sm:w-full shadow-bottom rounded-md lg:w-1/2  sm:mb-2 lg:mb-0">
-          <SalesChart />
-          {/* {dashboardData} */}
-        </div>
-        <div className="sm:w-full shadow-bottom rounded-md lg:w-1/2 " style={{ overflowY: "y" }}>
-          <SalesDonutChart />
-          {/* {dashboardData} */}
-        </div>
-
-        <div className="w-full md:w-1/3 mt-2 cardsMain shadow-bottom">
-
-
-          <div className="max-w-sm rounded overflow-hidden">
-            <div className="shadow p-3">
-              <img src="/assets/orders.svg" alt="orders" className="mb-3" />
-              <h5 className="text-xl mb-2 pb-0 cardHeading">Orders</h5>
-              <h5 className="numbersSpan mb-2 pb-0">{dashboardData?.report?.totalOrders}</h5>
-              <div className="flex align-center">
-                <span className="text-base raiseFallSpan">
-                  Over last month 1.4%
-                </span>
-                <span className="flex align-center">
-                  <img src="/assets/riseFall.svg" alt="" />
-                </span>
-              </div>
-            </div>
-
+    {isLoading ? (
+      <Loader />
+    ) : (
+      <div className="p-6 bg-gray-100 rounded-lg shadow-md mx-auto max-w-5xl">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">Seller Details</h1>
+  
+        {/* Personal and Store Details */}
+        <div className="flex flex-wrap gap-6">
+          {/* Personal Information */}
+          <div className="flex-1 bg-white p-4 rounded-lg shadow-sm">
+            <h2 className="text-lg font-semibold text-gray-700 mb-4">Personal Information</h2>
+            <p><span className="font-medium">First Name:</span> {sellerDetails?.firstName}</p>
+            <p><span className="font-medium">Last Name:</span> {sellerDetails?.lastName}</p>
+            <p><span className="font-medium">Email:</span> {sellerDetails?.email}</p>
+            <p><span className="font-medium">Username:</span> {sellerDetails?.username}</p>
+            <p><span className="font-medium">Role:</span> {sellerDetails?.role}</p>
+            <p><span className="font-medium">Verification Status:</span> {sellerDetails?.verificationStatus ? 'Verified' : 'Not Verified'}</p>
+            <p><span className="font-medium">Active Status:</span> {sellerDetails?.isActive ? 'Active' : 'Inactive'}</p>
+          </div>
+  
+          {/* Store Details */}
+          <div className="flex-1 bg-white p-4 rounded-lg shadow-sm">
+            <h2 className="text-lg font-semibold text-gray-700 mb-4">Store Details</h2>
+            <p><span className="font-medium">Registered:</span> {sellerDetails?.registered ? 'Yes' : 'No'}</p>
+            <p><span className="font-medium">Products:</span> {sellerDetails?.storeDetails?.products?.length || 0}</p>
           </div>
         </div>
-        <div className="w-full md:w-1/3 mt-2 cardsMain shadow-bottom">
-          <div className="max-w-sm rounded overflow-hidden">
-            <div className="m-2 p-2">
-              <img src="/assets/sales.svg" alt="orders" className="mb-3" />
-              <h5 className="text-xl mb-2 pb-0 cardHeading">Sales</h5>
-              <h5 className="flex items-center numbersSpan mb-2 pb-0">{dashboardData?.report?.sales}
-                <MdOutlineCurrencyRupee className="rupeeIcon" />
-              </h5>
-              <div className="flex align-center">
-                <span className="text-base raiseFallSpan">
-                  Over last month 1.4%
-                </span>
-                <span className="flex align-center">
-                  <img src="/assets/riseFall.svg" alt="" />
-                </span>
-              </div>
-            </div>
-          </div>
-
-
+  
+        {/* Address Section */}
+        <div className="mt-6 bg-white p-4 rounded-lg shadow-sm">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">Address</h2>
+          {sellerDetails?.address?.length > 0 ? (
+            <ul className="list-disc pl-5 text-gray-700">
+              {sellerDetails?.address?.map((addr, index) => (
+                <li key={index}>{addr}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-500">No address provided.</p>
+          )}
         </div>
-        <div className="w-full mt-2 md:w-1/3 cardsMain">
-          <div className="shadow-bottom rounded-md cardSub">
-            <div className="max-w-sm rounded overflow-hidden">
-              <div className="px-3 py-4">
-                <div className="flex justify-between">
-                  <div className="text-xl mb-2 pb-0 cardHeading">
-                    Recent Reviews
-                  </div>
-                  <div className="text-sm viewLink">
-                    <button onClick={openModal}>  View All
-                    </button>
-                    <div>
-                      <Modal
-                        isOpen={modalIsOpen}
-                        ariaHideApp={false}
-                        onAfterOpen={afterOpenModal}
-                        onRequestClose={closeModal}
-                        // style={customStyles}
-                        contentLabel="Example Modal"
-                        className="custom-modal-content-review "
-                        overlayClassName="custom-modal-overlay-review"
-                      >
-                        <h2 ref={(_subtitle) => (subtitle = _subtitle)}></h2>
-                        <div className="flex justify-end">
-                          <button onClick={closeModal}>
-                            <IoCloseCircleOutline className="h-6 w-6" />
-                          </button>
-                        </div>
-                        <div>
-                          {dashboardData?.report?.reviews?.map((review, index) => (
-                            <div className="flex mb-2" key="index">
-                              <div className="flex justify-center items-center">
-                                <div style={{
-                                  fontSize: '20px',
-                                  fontWeight: '600',
-                                  backgroundColor: '#8C4CF5'
-                                }} className="w-12 h-12 mr-2 rounded-full overflow-hidden flex justify-center items-center">
-                                </div>
-                              </div>
-                              <div>
-                                <div className="mb-2 pb-0 reviewName" >
-                                  {review
-                                    .name}
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  {Array.from({ length: 5 }, (_, i) => (
-                                    <span key={i}>
-                                      {i < Math.floor(review.rating) ? (
-                                        <FaStar style={{ color: '#FFD700' }} />
-                                      ) : i < review.rating ? (
-                                        <FaStarHalfAlt style={{ color: '#FFD700' }} />
-                                      ) : (
-                                        <FaRegStar style={{ color: '#FFD700' }} />
-                                      )}
-                                    </span>
-
-                                  ))}
-                                  <span>({review.rating})</span>
-                                </div>
-                                <div className="pb-0">
-                                  <div className="flex align-center">
-                                    <span className="text-base reviewSpan">
-                                      {review
-                                        .desc}
-                                    </span>
-                                    <span className="flex align-center">
-                                      <img src="/assets/riseFall.svg" alt="" />
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-
-                      </Modal>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex mb-2">
-                  <div className="flex justify-center items-center">
-                    <div style={{
-                      fontSize: '20px',
-                      fontWeight: '600',
-                      backgroundColor: '#8C4CF5'
-                    }} className="w-12 h-12 mr-2 rounded-full overflow-hidden flex justify-center items-center">
-                      {/* <img
-                      src="/assets/orders.svg"
-                      alt="orders"
-                      className="w-full h-full object-cover"
-                    /> */}
-
-                    </div>
-                  </div>
-                  <div>
-                    {/* <div className="mb-2 pb-0 reviewName" >
-                    {dashboardData?.report?.
-                      recentReview
-                      .name}
-                  </div> */}
-                    <div className="pb-0">
-
-                    </div>
-                    {/* <div className="flex items-center gap-2">
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <span key={i}>
-                        {i < Math.floor(dashboardData?.report?.
-                          recentReview
-                          .rating) ? (
-                          <FaStar style={{ color: '#FFD700' }} />
-                        ) : i < dashboardData?.report?.
-                          recentReview
-                          .rating ? (
-                          <FaStarHalfAlt style={{ color: '#FFD700' }} />
-                        ) : (
-                          <FaRegStar style={{ color: '#FFD700' }} />
-                        )}
-                      </span>
-                    ))}
-                    <span className="
-                    ">({dashboardData?.report?.
-                          recentReview
-                          .rating})</span>
-                  </div> */}
-                  </div>
-
-                </div>
-
-                <div className="flex align-center">
-                  {/* <span className="text-base reviewSpan">
-                  {dashboardData?.report?.
-                    recentReview
-                    .desc}
-                </span> */}
-                  <span className="flex align-center">
-                    <img src="/assets/riseFall.svg" alt="" />
-                  </span>
-                </div>
-              </div>
-            </div>
+  
+        {/* Coupons Section */}
+        <div className="mt-6 bg-white p-4 rounded-lg shadow-sm flex gap-4">
+          <div className="flex-1">
+            <h2 className="text-lg font-semibold text-gray-700 mb-4">Coupons</h2>
+            <p><span className="font-medium">Used:</span> {sellerDetails?.couponUsed?.length}</p>
+          </div>
+          <div className="flex-1">
+            <p><span className="font-medium">Expired:</span> {sellerDetails?.couponExpired?.length}</p>
           </div>
         </div>
-
-
-        <div className="w-full md:w-1/3 cardsMain shadow-bottom">
-          <div className="max-w-sm rounded overflow-hidden">
-            <div className="p-3 activityOverview shadow">
-              <h5 className="text-xl mb-4 pb-0 cardHeading">Activity Overview</h5>
-
-              <div className="flex justify-between mb-4 px-4">
-                <div className="flex flex-col justify-center items-center text-center">
-                  <img src="/assets/delivered.svg" alt="orders" className="" height={35} width={35} />
-                  <h5>Dispatched</h5>
-                  {/* <p>{dashboardData?.report?.dispatched}</p> */}
-                </div>
-                <div className="flex flex-col justify-center items-center text-center">
-                  <img src="/assets/ordered.svg" alt="orders" className="" height={35} width={35} />
-                  <h5>Confirm</h5>
-                  {/* <p>{dashboardData?.report?.confirm}</p> */}
-                </div>
-              </div>
-              <div className="flex justify-between px-4">
-                <div className="flex flex-col justify-center items-center text-center">
-                  <img src="/assets/reported.svg" alt="orders" className="" height={35} width={35} />
-                  <h5>Pending</h5>
-                  {/* <p>{dashboardData?.report?.pending}</p> */}
-                </div>
-                <div className="flex flex-col justify-center items-center text-center">
-                  <img src="/assets/arrived.svg" alt="orders" className="" height={35} width={35} />
-                  <h5>Delivered</h5>
-                  {/* <p>{dashboardData?.report?.delivered}</p> */}
-                </div>
-              </div>
-            </div>
-          </div>
+  
+        {/* Account Info Section */}
+        <div className="mt-6 bg-white p-4 rounded-lg shadow-sm">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">Account Info</h2>
+          <p><span className="font-medium">Created At:</span> {new Date(sellerDetails?.createdAt).toLocaleString()}</p>
+          <p><span className="font-medium">Updated At:</span> {new Date(sellerDetails?.updatedAt).toLocaleString()}</p>
+          <p><span className="font-medium">ID:</span> {sellerDetails?._id}</p>
         </div>
-
-        {/* Button to trigger the condition check */}
-
-
-        {/* Modal */}
-        <Modal
-          isOpen={checkDocModal}
-          contentLabel="Upload Document Prompt"
-          className="bg-white p-6 w-[400px] mx-auto rounded-lg shadow-lg"
-          overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-        >
-          <h2 className="text-xl font-bold mb-4">Document Upload Required</h2>
-          <p className="text-gray-700 mb-6">
-            A document upload is required to proceed. Do you want to upload it now?
-            If already uploaded , ignore this message
-          </p>
-         
-            <button
-                  onClick={() => navigate("/seller/profile")}
-
-              className="px-4 py-2 bg-green-500 text-white rounded-md"
-            >
-              Upload Document
-            </button>
-            <button
-                  onClick={() =>setCheckDocModal(false)}
-
-              className="px-4 py-2 mx-2 bg-red-500 text-white rounded-md"
-            >
-              Close
-            </button>
-        </Modal>
-
-      </div>
-      <div className="w-full md:w-2/3 ">
-        <div className="shadow-bottom rounded-md mb-2" style={{
-          height: '270px',
-          overflowY: 'auto',
-        }}>
+  
+        {/* Stocks Table */}
+        <div className="mt-8">
           <StocksTable />
         </div>
       </div>
-
-    </div>
-    }
-
-
-     
-    </>
+    )}
+  </>
+  
 
 
   );

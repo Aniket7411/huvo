@@ -13,7 +13,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 
 function ProductAddPage() {
 
-  const [verifyModal, setVerifyModal] = useState(true)
+  const [verifyModal, setVerifyModal] = useState(false)
 
   const [totalProductCost, setTotalProductCost] = useState(null)
   const options = [
@@ -88,7 +88,7 @@ function ProductAddPage() {
     let platformCharge = 0;
     const shippingFee = 100
 
-    console.log("",data)
+    console.log("", data)
 
     // Calculate platform fee based on data.price
     if (data.price <= 500) {
@@ -120,7 +120,7 @@ function ProductAddPage() {
       console.log("response", response)
       isLoading(false)
       toast.success("Product added successfully")
-      
+
 
 
     } catch (error) {
@@ -235,7 +235,7 @@ function ProductAddPage() {
         </Link>
 
       </div>
-      <div className="relative h-[70vh] overflow-auto shadow-md sm:rounded-lg">
+      <div className="relative  overflow-auto shadow-md sm:rounded-lg">
         <form onSubmit={handleSubmit(onSubmit)} className="p-4 ">
           <div className="mb-3">
             <label

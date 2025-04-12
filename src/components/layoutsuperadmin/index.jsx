@@ -25,9 +25,7 @@ function Superadminlayout({ children }) {
             <Superadminnavbar />
           </nav>
           <div class="flex-1 flex flex-col">
-            {/* <div class="z-10 headerMain">
-              <Headeradmin />
-            </div> */}
+        =
             <main role="main" class="mt-16 flex-1 mainDashboard"
             
             style={{overflowY:'auto'}}

@@ -66,7 +66,6 @@ import CategorySlider from "./pages/categoryslider/index.jsx";
 import NewMenCollection from "./pages/newmen/index.jsx";
 import ShippingInfo from "./pages/shippingpolicies/index.jsx";
 import CheckOutWithoutLogin from "./pages/checkoutwithoutlogin/index.jsx";
-import ProductByCategory from "./pages/categoryproducts/index.jsx";
 
 function App() {
   return (
@@ -202,6 +201,26 @@ function App() {
         </Routes>
         <Routes>
           <Route
+            path="men-collection/:id"
+            element={
+              <Layout>
+                <NewMenCollection />
+              </Layout>
+            }
+          />
+        </Routes>
+        <Routes>
+          <Route
+            path="women-collection"
+            element={
+              <Layout>
+                <WomenCollection />
+              </Layout>
+            }
+          />
+        </Routes>
+        <Routes>
+          <Route
             path="women-collection"
             element={
               <Layout>
@@ -223,17 +242,7 @@ function App() {
 
         <Routes>
           <Route
-            path="/category_search/:id"
-            element={
-              <Layout>
-                <CategoryPage />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="/category_search/:id/:id"
+            path="/category_search/:category/:id"
             element={
               <Layout>
                 <CategoryPage />
@@ -299,17 +308,7 @@ function App() {
 
         <Routes>
           <Route
-            path="/product_search/:id"
-            element={
-              <Layout changeHeaderColor="true">
-                <ProductByCategory />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="/product_search/:id/:id"
+            path="/products_category"
             element={
               <Layout changeHeaderColor="true">
                 <ProductsByCategory />
@@ -344,7 +343,7 @@ function App() {
             path="checkout/cart/not_login"
             element={
               <Layout changeHeaderColor="true">
-                <CheckOutWithoutLogin />
+                <CheckOutWithoutLogin  />
               </Layout>
             }
           />
@@ -426,7 +425,7 @@ function App() {
         </Routes>
         <Routes>
           <Route
-            path="seller"
+            path="/seller"
             element={
               <AdminAuth>
                 <Layoutadmin>

@@ -9,7 +9,7 @@ import ProductsCarousel from "../productcarousel";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { useParams } from "react-router-dom";
 import ProductGrid from "../mobileviewproduct";
-  
+
 
 
 import Loader from "../../components/loader";
@@ -50,6 +50,7 @@ export default function KidsCollection() {
 
   const handleSearch = () => {
     // Add your search logic here
+    setFiltersVisible(false)
     console.log("Search Term:", searchTerm);
     console.log("Sort Option:", sortOption);
     console.log("Rating Filter:", ratingFilter);
@@ -89,8 +90,6 @@ export default function KidsCollection() {
           category: "jeans",
         },
       );
-
-
       console.log("jeansjeansjeans", response)
       setProducts();
     } catch (error) {
@@ -193,15 +192,15 @@ export default function KidsCollection() {
     <div className="h-auto">
 
 
-      <div class="text-center mt-3">
+      <div class="text-center m">
 
-        <h1 
-  className="text-lg md:text-3xl font-bold text-transparent bg-clip-text 
+        <h1
+          className="text-lg md:text-3xl font-bold text-transparent bg-clip-text 
              bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 
-             mt-[60px] text-center transition-all duration-300 hover:scale-105"
->
-  Kids' Clothing
-</h1>
+              text-center transition-all duration-300 hover:scale-105"
+        >
+          Kids' Clothing
+        </h1>
 
         <p className="font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg text-[#2581eb] mt-2">
           Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
@@ -213,17 +212,7 @@ export default function KidsCollection() {
 
 
 
-      {/* Filter Button for Small Screens */}
-      <div className="top-0 left-0 w-full bg-white shadow-md z-10 px-2 flex justify-between lg:hidden border border-gray-300 rounded-lg ring-1 ring-blue-300">
-        <h2 className="text-lg font-bold text-gray-800">Filter</h2>
 
-        <button
-          onClick={() => setFiltersVisible(!filtersVisible)}
-          className="text-blue-600 font-semibold focus:outline-none px-3 py-2 border border-blue-600 rounded-lg hover:bg-blue-100 transition-colors duration-200"
-        >
-          {filtersVisible ? <FaFilterCircleXmark size={25} /> : <CiFilter size={25} />}
-        </button>
-      </div>
 
 
       {/* Filter Sidebar */}
@@ -265,7 +254,7 @@ export default function KidsCollection() {
           </div>
 
           {/* Group Filter */}
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <select
               value={searchGroup}
               onChange={(e) => setSearchGroup(e.target.value)}
@@ -276,7 +265,7 @@ export default function KidsCollection() {
               <option value="Female">Female</option>
               <option value="Kids">Kids</option>
             </select>
-          </div>
+          </div> */}
 
           {/* Color Filter */}
           <div className="mb-4">
@@ -344,15 +333,22 @@ export default function KidsCollection() {
             <Brandslider />
 
 
-            {searchTerm !== "" ? (
-              <h1 className="font-bold font-inter px-3 py-1">
-                Search Results for '{searchTerm}'
+            <div className="flex items-center gap-3 p-3 border rounded-lg shadow-sm bg-white">
+              {/* Conditional Heading */}
+              <h1 className={`font-bold font-inter px-3 py-1 ${searchTerm !== "" ? "text-gray-800" : "text-gray-500"}`}>
+                {searchTerm !== "" ? `Search Results for '${searchTerm}'` : "Exploring Products You'll Love!"}
               </h1>
-            ) : (
-              <h1 className="font-bold font-inter px-3 py-1 text-gray-500">
-                Exploring Products You'll Love!
-              </h1>
-            )}
+
+              {/* Filter Button */}
+              <button
+                onClick={() => setFiltersVisible(!filtersVisible)}
+                className="flex items-center justify-center gap-2 text-blue-600 font-semibold px-3 py-2 border border-blue-600 rounded-lg hover:bg-blue-100 hover:shadow-md transition-all duration-200"
+                aria-label={filtersVisible ? "Close Filters" : "Open Filters"}
+              >
+                {filtersVisible ? <FaFilterCircleXmark size={20} /> : <CiFilter size={20} />}
+                <span>{filtersVisible ? "Close Filters" : "Filters"}</span>
+              </button>
+            </div>
 
             <ProductsCarousel kidsProducts={kidsProducts} />
 

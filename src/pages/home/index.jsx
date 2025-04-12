@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import "./index.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { HttpClient } from "../../server/client/http";
@@ -69,6 +69,38 @@ export default function Home() {
 
     } catch (error) {
       toast.error(error?.response?.data?.message);
+    }
+  };
+
+  const [searchQuery, setSearchQuery] = useState("")
+  const [searchResult, setSearchResult] = useState("")
+  const [category, setCategory] = useState("category_search")
+  const navigate = useNavigate();
+
+
+
+  const handleSearch = async (searchword, id) => {
+
+    console.log("dididididididdi", id)
+    if (searchQuery.trim()) {
+
+
+      try {
+
+        const response = await HttpClient.get(`/search/result?q=${searchword}`);
+        console.log('API Response:', response);
+        const productId = response?.product?.productId
+          ;
+        console.log(productId)
+        if (productId) {
+
+          navigate(`/${category}/${id}`);
+        } else {
+          console.error('Product ID not found in response');
+        }
+      } catch (error) {
+        console.error('Error fetching search result:', error);
+      }
     }
   };
 
@@ -160,7 +192,40 @@ export default function Home() {
   }, []);
 
 
+    const fetchSuggestions = async (searchword) => {
+  
+      //debugger
+      try {
+        const response = await HttpClient.get("/search/final", { search: searchword, searchType: category });
+        console.log("final", response)
+        if (response.success) {
+          setSearchResult(response.data);
+  
+        }
+      } catch (error) {
+        console.error('Error fetching suggestions:', error);
+      }
+    };
 
+  const handleSuggestionClick = async (suggestion, id) => {
+    const suggestionName = suggestion;
+    setSearchQuery(suggestion, id);
+    setSearchResult([]);
+
+    await handleSearch(suggestionName, id);
+
+  }
+
+  const handleInputChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query.trim()) {
+      fetchSuggestions(query);
+    } else {
+      setSearchResult([]);
+    }
+  };
 
 
 
@@ -181,7 +246,7 @@ export default function Home() {
 
             <div
               className="bg-gradient-to-r  from-blue-500 via-blue-600 to-blue-700 text-white text-center py-2 md:py-6 shadow-lg"
-              style={{ marginTop: "45px", position: "relative" }}
+           
             >
               <div className="flex justify-center items-center mt-2 h-[100px] px-2  md:h-[250px]  space-x-3 animate-pulse">
                 <svg
@@ -206,13 +271,57 @@ export default function Home() {
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-yellow-400 rounded-full"></div>
             </div>
 
-            <div className="flex md:hidden items-center px-4 bg-gray-100 p-2 rounded-lg shadow-md">
-              <CiSearch className="text-gray-500 text-lg mr-2" />
+        
+
+            <div className="relative md:hidden flex items-center justify-between rounded-full bg-[#E7EFFA] px-4 py-2 shadow-lg">
+              {/* Search Icon Button */}
+              <button
+                className="text-gray-600 hover:text-gray-800 transition-colors mr-3"
+                onClick={handleSearch}
+                aria-label="Search"
+              >
+                <CiSearch className="text-xl" />
+              </button>
+
+              {/* Search Input */}
               <input
-                type="search"
-                placeholder="Search..."
-                className="flex-grow bg-transparent focus:outline-none text-gray-700 placeholder-gray-500"
+                type="text"
+                placeholder="Search for categories, products, or brands"
+                className="flex-1 text-sm placeholder-gray-500 text-gray-800 bg-transparent focus:outline-none"
+                value={searchQuery}
+                onChange={handleInputChange}
+              // onKeyUp={handleKeyInput}
               />
+
+              {/* Dropdown Menu */}
+              <select
+                className="ml-3 text-sm bg-transparent text-gray-700 border-0 focus:ring-2 focus:ring-blue-500"
+                defaultValue="category"
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option disabled>Search by</option>
+                <option value="category_search">Category</option>
+                <option value="product_search">Product</option>
+                <option value="store_product">Brand</option>
+                <option value="store_product">Store</option>
+
+              </select>
+
+              {/* Search Suggestions */}
+              {searchResult?.length > 0 && (
+                <ul className="absolute top-full left-0 mt-2 w-full bg-white border rounded-lg shadow-lg max-h-48 overflow-auto z-50">
+                  {searchResult?.map((suggestion) => (
+                    <li
+                      key={suggestion?._id}
+                      className="p-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleSuggestionClick(suggestion, suggestion?._id)}
+                    >
+                      {category === "userName" ? suggestion.username : suggestion.name}
+                    </li>
+
+                  ))}
+                </ul>
+              )}
             </div>
 
 
