@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HttpClient } from "../../server/client/http";
 import {
   Tab,
@@ -361,12 +361,12 @@ export default function Profile() {
 
 
 
- 
-
- 
 
 
- 
+
+
+
+
   const handleCommentChange = (e) => {
     setComment(e.target.value); // Save the comment in state
   }
@@ -437,6 +437,7 @@ export default function Profile() {
       )}
 
       <section className="px-2 font-[Quicksand]">
+     
         <TabGroup className="mt-2">
           <div className="sm:flex gap-6" >
             <div className="w-full sm:w-1/5">
@@ -447,46 +448,50 @@ export default function Profile() {
                 <p className="text-[#717171] font-normal">{userData.email}</p>
               </div> */}
               <div>
-              <TabList className="flex flex-wrap sm:flex-col gap-2 px-4">
-  {/* Tabs for user actions */}
-  <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-    Profile
-  </Tab>
-  <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-    Orders
-  </Tab>
-  <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-    Coupons
-  </Tab>
-  <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-    Addresses
-  </Tab>
+                <TabList className="flex flex-wrap sm:flex-col gap-2 px-4">
+                  {/* Tabs for user actions */}
+                  <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
+                    Profile
+                  </Tab>
 
-  {/* Conditional Tabs for specific user types */}
-  {userType !== "USER" && (
-    <>
-      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-        Business Details
-      </Tab>
-      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-        Verification Details
-      </Tab>
-      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-        Registration
-      </Tab>
-      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-        Subscription Plan
-      </Tab>
-    </>
-  )}
+                  <Link to="/seller" className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
+          Product Dashboard
+        </Link>
+                  <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
+                    Orders
+                  </Tab>
+                  <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
+                    Coupons
+                  </Tab>
+                  <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
+                    Addresses
+                  </Tab>
 
-  {/* Conditional Tab for seller-specific action */}
-  {isSeller && (
-    <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-      Invoices
-    </Tab>
-  )}
-</TabList>
+                  {/* Conditional Tabs for specific user types */}
+                  {userType !== "USER" && (
+                    <>
+                      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
+                        Business Details
+                      </Tab>
+                      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
+                        Verification Details
+                      </Tab>
+                      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
+                        Registration
+                      </Tab>
+                      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
+                        Subscription Plan
+                      </Tab>
+                    </>
+                  )}
+
+                  {/* Conditional Tab for seller-specific action */}
+                  {isSeller && (
+                    <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
+                      Invoices
+                    </Tab>
+                  )}
+                </TabList>
 
               </div>
             </div>
@@ -634,7 +639,7 @@ export default function Profile() {
               <TabPanel className="bg-[#F2F2F2] p-2 h-full">
 
                 <Orders />
-              
+
               </TabPanel>
 
 

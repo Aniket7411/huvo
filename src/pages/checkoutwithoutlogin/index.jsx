@@ -96,7 +96,7 @@ export default function CheckOutWithoutLogin() {
   const fetchCartProducts = async () => {
 
 
-    const localCartItems = JSON.parse(localStorage.getItem("cart"))
+    const localCartItems = JSON.parse(localStorage?.getItem("cart"))
     console.log("localCartItems",localCartItems)
     setCartProducts(localCartItems)
 
@@ -131,7 +131,7 @@ export default function CheckOutWithoutLogin() {
         const { message } = await HttpClient.put("/cart/update", {
           productIdName: selectedProduct,
           size: selectedSize,
-          quantity: data.quantity,
+          quantity: data?.quantity,
         });
         setIsOpen(false);
         toast.success(message);
@@ -146,12 +146,12 @@ export default function CheckOutWithoutLogin() {
     const openDialogForProduct = async (productIdName) => {
       try {
         const { product } = await HttpClient.get(
-          `/product/${cartProducts[productIdName].productId}`
+          `/product/${cartProducts[productIdName]?.productId}`
         );
         setProductSize(product?.sizes);
         setStock(
-          product?.sizes.filter(
-            (item) => item.size === cartProducts[productIdName]?.size
+          product?.sizes?.filter(
+            (item) => item?.size === cartProducts[productIdName]?.size
           )[0]?.stock
         );
         setSelectedProduct(productIdName);
@@ -170,10 +170,10 @@ export default function CheckOutWithoutLogin() {
       try {
         setShippingAddress(data);
         let address = userDetails?.address ? userDetails?.address : [];
-        if (data.isDefault) {
-          address.forEach((address) => (address.isDefault = false));
+        if (data?.isDefault) {
+          address?.forEach((address) => (address.isDefault = false));
         }
-        address.push(data);
+        address?.push(data);
         setUserDetails((prev) => ({ ...prev, address }));
         const { userData } = await HttpClient.put("/users/update", userDetails);
         setFormData({});

@@ -226,13 +226,13 @@ export default function Header(props) {
   return (
     <>
       <header>
-        <div className="hidden md:flex items-center bg-[#fff] text-[#2563AB] px-8 py-2 justify-between">
-          <Link to="/" >
+      <div className="hidden md:flex font-semibold items-center bg-gradient-to-r from-blue-500 to-white  px-8 py-2 justify-between">
+      <Link to="/" >
             <img src="/assets/newlogo.jpeg" alt="Logo" className="h-[30px]  hidden md:block rounded-xl" />
           </Link>
 
 
-          <ul className="flex gap-5 text-[#2563AB]">
+          <ul className="flex gap-5  text-[#fff]">
             <Link to="/">
               <li className="font-[Poppins] cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
                 Home
@@ -525,12 +525,15 @@ export default function Header(props) {
             {/* Cart Button */}
             <button
               aria-label="Cart"
-              onClick={() =>
-                isLoggedIn() ? navigate("/checkout/cart") : toast.error("Please Login First")
-              }
               className="relative"
             >
-              <HiOutlineShoppingBag className="text-2xl cursor-pointer" />
+              <HiOutlineShoppingBag onClick={() => {
+                if (loginStatus === 0) {
+                  navigate("/checkout/cart/not_login");
+                } else {
+                  navigate("/checkout/cart");
+                }
+              }} className="text-2xl cursor-pointer" />
               {Object.keys(cart).length > 0 && (
                 <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#7272e9] text-white text-xs font-bold rounded-full">
                   {Object.keys(cart).length}

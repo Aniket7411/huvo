@@ -55,17 +55,17 @@ export default function CheckOut() {
   const [totalDiscount, setTotalDiscount] = useState(0);
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [shippingAddress, setShippingAddress] = useState(
-    getUserData()?.address.filter((item) => item.isDefault === true).length !==
+    getUserData()?.address?.filter((item) => item?.isDefault === true).length !==
       0
       ? {
         ...getUserData()?.address.filter(
-          (item) => item.isDefault === true
+          (item) => item?.isDefault === true
         )[0],
       }
       : null
   );
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(
-    getUserData()?.address.findIndex((item) => item.isDefault === true)
+    getUserData()?.address?.findIndex((item) => item?.isDefault === true)
   );
   const [formData, setFormData] = useState({});
   const {
@@ -87,14 +87,11 @@ export default function CheckOut() {
   });
 
   const fetchCartProducts = async () => {
-    console.log("cartData")
 
     try {
 
       const response = await HttpClient.get("/cart");
-      console.log("aniket cart data", response)
       const { data } = response
-      console.log("aniket cart data", data)
       setCartProducts(data);
       console.log("this", cartProducts)
     } catch (error) {
@@ -127,7 +124,7 @@ export default function CheckOut() {
       const { message } = await HttpClient.put("/cart/update", {
         productIdName: selectedProduct,
         size: selectedSize,
-        quantity: data.quantity,
+        quantity: data?.quantity,
       });
       setIsOpen(false);
       toast.success(message);
@@ -142,7 +139,7 @@ export default function CheckOut() {
   const openDialogForProduct = async (productIdName) => {
     try {
       const { product } = await HttpClient.get(
-        `/product/${cartProducts[productIdName].productId}`
+        `/product/${cartProducts[productIdName]?.productId}`
       );
       setProductSize(product?.sizes);
       setStock(
@@ -164,8 +161,8 @@ export default function CheckOut() {
     let totalMRP = 0;
     let totalDiscount = 0;
     cartProducts &&
-      Object.keys(cartProducts).length &&
-      Object.keys(cartProducts).forEach((item) => {
+      Object.keys(cartProducts)?.length &&
+      Object.keys(cartProducts)?.forEach((item) => {
         const itemTotal =
           (cartProducts[item]?.quantity || 1) *
           (cartProducts[item]?.price || 1);
@@ -240,7 +237,7 @@ export default function CheckOut() {
     try {
       const { message } = await HttpClient.post("/order", {
         totalAmount,
-        totalProduct: Object.keys(cartProducts).length,
+        totalProduct: Object.keys(cartProducts)?.length,
         products: cartProducts,
         paymentType,
         shippingDetails: shippingAddress,

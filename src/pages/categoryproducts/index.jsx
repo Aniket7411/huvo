@@ -223,7 +223,7 @@ export default function ProductByCategory() {
             } lg:translate-x-0 fixed lg:static top-14 left-0 lg:w-1/4 bg-white shadow-md p-4 z-20 transition-transform duration-300`}
         >
           {/* Search Input */}
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <input
               type="text"
               placeholder="Search for products..."
@@ -232,7 +232,7 @@ export default function ProductByCategory() {
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               aria-label="Search products"
             />
-          </div>
+          </div> */}
 
           {/* Sorting Dropdown */}
           <div className="mb-4">

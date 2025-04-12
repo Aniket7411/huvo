@@ -71,30 +71,6 @@ export default function CategorySearh() {
     );
   };
 
-  // Function to fetch products from the API
-  const fetchProducts = async () => {
-    setLoading(true);
-    try {
-
-
-      console.log("abbabbab", searchTerm, sortOption, ratingFilter)
-
-      const response = await HttpClient.get("/product",
-        {
-          group: "men",
-          category: "jeans",
-        },
-      );
-
-
-      console.log("jeansjeansjeans", response)
-      setProducts();
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
 
 
@@ -180,7 +156,7 @@ export default function CategorySearh() {
 
   console.log("aahha",allProducts)
 
-  const menProducts = allProducts.filter((item) => item?.category?._id === id).splice(0, 8);
+  const menProducts = allProducts.filter((item) => item?.group === "men").splice(0, 8);
 
   console.log("aahha",menProducts)
 
@@ -223,7 +199,7 @@ export default function CategorySearh() {
             } lg:translate-x-0 fixed lg:static top-14 left-0 lg:w-1/4 bg-white shadow-md p-4 z-20 transition-transform duration-300`}
         >
           {/* Search Input */}
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <input
               type="text"
               placeholder="Search for products..."
@@ -232,7 +208,7 @@ export default function CategorySearh() {
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               aria-label="Search products"
             />
-          </div>
+          </div> */}
 
           {/* Sorting Dropdown */}
           <div className="mb-4">

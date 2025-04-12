@@ -239,6 +239,16 @@ function App() {
             }
           />
         </Routes>
+        <Routes>
+          <Route
+            path="/category_search/:id"
+            element={
+              <Layout>
+                <CategoryPage />
+              </Layout>
+            }
+          />
+        </Routes>
 
         <Routes>
           <Route
@@ -449,7 +459,7 @@ function App() {
         </Routes>
         <Routes>
           <Route
-            path="seller/products/add"
+            path="seller/products/"add
 
 
             element={

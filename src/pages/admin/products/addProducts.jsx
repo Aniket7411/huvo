@@ -73,6 +73,8 @@ function ProductAddPage() {
 
   const handleFormSubmission = (formData) => {
     console.log("Submitted Data:", formData);
+
+
   };
 
   const toggleCategorySelection = () => {
@@ -83,14 +85,12 @@ function ProductAddPage() {
 
 
 
-
   const onSubmit = async (data) => {
     let platformCharge = 0;
-    const shippingFee = 100
+    const shippingFee = 100; // Constant shipping fee
+    console.log("Form Data:", data);
 
-    console.log("", data)
-
-    // Calculate platform fee based on data.price
+    // Calculate platform fee based on price
     if (data.price <= 500) {
       platformCharge = 10; // Rs. 10 for amount up to 500
     } else if (data.price > 500 && data.price <= 1000) {
@@ -99,34 +99,53 @@ function ProductAddPage() {
       platformCharge = 20; // Rs. 20 for amount above 1000
     }
 
-
-
-
-    try {
-      setIsloading(true)
-      const info = {
-        ...data,
-        bannerImage,
-        isReturnable: data?.isReturnable === "true",
-        sizes: sizeWithStock,
-        colors: colorWithImages,
-        productDetails,
-        platformCharge,
-        shippingFee,
-        returnableDays
-
-      };
-      const response = await HttpClient.post("/product", info);
-      console.log("response", response)
-      isLoading(false)
-      toast.success("Product added successfully")
-
-
-
-    } catch (error) {
-      toast.error(error?.response?.data?.message);
+    // Validation checks for price
+    if (parseInt(data?.price) < 0) {
+      toast.info("Price can't be less than zero.");
+      return; // Exit if validation fails
     }
+
+    else if (parseInt(data?.price) < parseInt(data?.discount)) {
+      toast.info("Price can't be less than the discount.");
+      return; // Exit if validation fails
+    } else {
+      try {
+        setIsloading(true); // Indicate loading state
+
+        // Construct product info object
+        const productInfo = {
+          ...data,
+          bannerImage,
+          isReturnable: data?.isReturnable === "true",
+          sizes: sizeWithStock,
+          colors: colorWithImages,
+          productDetails,
+          platformCharge,
+          shippingFee,
+          returnableDays,
+        };
+
+        // Send API request
+        const response = await HttpClient.post("/product", productInfo);
+        console.log("API Response:", response);
+
+        // Handle success
+        setIsloading(false); // Reset loading state
+        toast.success("Product added successfully");
+      } catch (error) {
+        // Handle error
+        setIsloading(false); // Reset loading state
+        toast.error(error?.response?.data?.message || "Something went wrong");
+      }
+    }
+
+
+
+
   };
+
+
+
   const handleRemoveColorWithImages = (colorIndex) => {
     const newColorWithImages = [...colorWithImages];
     newColorWithImages.splice(colorIndex, 1);
@@ -559,6 +578,7 @@ function ProductAddPage() {
               id="price"
               type="text"
               name="price"
+              placeholder="Price in Rupees"
               className="mt-1 p-2 w-full border border-gray-300 rounded-md outline-none"
               {...register("price", {
                 required: "*Price is required.",
@@ -600,6 +620,8 @@ function ProductAddPage() {
               id="discount"
               type="number"
               name="discount"
+              placeholder="Discount in Rupees"
+
               className="mt-1 p-2 w-full border border-gray-300 rounded-md outline-none"
               {...register("discount", {
                 required: "*Discount is required.",
@@ -779,53 +801,49 @@ function ProductAddPage() {
               </label>
             </div>
           </div>
-          <div className="mb-3">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Returnability
-            </label>
-            <div className="flex gap-4">
-              <div className="flex items-center gap-2">
-                <input
-                  id="returnable-true"
-                  type="radio"
-                  name="isReturnable"
-                  value={true}
-                  {...register("isReturnable", { valueAsBoolean: true })}
-                />
-                <label htmlFor="available-true">Returnable</label>
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Returnability
+              </label>
+              <div className="flex gap-4">
+                <div className="flex items-center gap-2">
+                  <input
+                    id="returnable-true"
+                    type="radio"
+                    name="isReturnable"
+                    value={true}
+                    {...register("isReturnable", { valueAsBoolean: true })}
+                  />
+                  <label htmlFor="returnable-true">Returnable</label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    id="returnable-false"
+                    type="radio"
+                    name="isReturnable"
+                    value={false}
+                    {...register("isReturnable", { valueAsBoolean: true })}
+                  />
+                  <label htmlFor="returnable-false">Non-Returnable</label>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <input
-                  id="returnable-false"
-                  type="radio"
-                  name="isReturnable"
-                  value={false}
-                  {...register("isReturnable", { valueAsBoolean: true })}
-                />
-                <label htmlFor="available-false">Non Returnable</label>
-              </div>
+              {errors.isReturnable && (
+                <span className="text-red-500">{errors.isReturnable.message}</span>
+              )}
             </div>
-            {errors.isReturnable && (
-              <span className="text-red-500">{errors.isReturnable.message}</span>
-            )}
 
+              <label
+                htmlFor="returnable"
+                className="text-sm bg-gray-50 p-3 gap-2 rounded-lg shadow-sm font-medium text-gray-700"
+              >
+                Returnable within 7 days after delivery
+              </label>
 
           </div>
 
-          <div className="flex items-center gap-2">
-            <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
-              Returnable within
-            </label>
-            <input
-              type="number"
-              min="1"
-              max="30"
-              value={returnableDays}
-              onChange={(e) => { setReturnableDays(e.target.value) }}
-              className="w-16 px-2 py-1 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Days"
-            />
-          </div>
+
+
 
           <ReactModal
             isOpen={verifyModal}
@@ -847,7 +865,7 @@ function ProductAddPage() {
           <div>
             <button
               type="submit"
-              className="bg-blue-500 text-white px-2 py-1 rounded-md"
+              className="bg-blue-500 text-white mt-2 px-2 py-1 rounded-md"
             >
               Add Product
             </button>
