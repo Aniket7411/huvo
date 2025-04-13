@@ -252,7 +252,7 @@ function App() {
 
         <Routes>
           <Route
-            path="/category_search/:category/:id"
+            path="/category_search/:id/:category"
             element={
               <Layout>
                 <CategoryPage />

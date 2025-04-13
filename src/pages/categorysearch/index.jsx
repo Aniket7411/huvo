@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
 import { FaArrowRight, FaFilter, FaStar } from "react-icons/fa";
@@ -17,11 +17,12 @@ import { FaFilterCircleXmark } from "react-icons/fa6";
 
 
 export default function CategorySearh() {
+  const location=useLocation();
   const [allCategories, setAllCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const { category, id } = useParams(); // Extract route params
 
-  console.log("idididid", id)
+  //console.log("idididid", id)
 
 
   const [products, setProducts] = useState([]);
@@ -76,10 +77,17 @@ export default function CategorySearh() {
 
 
 
-
+  //if location param length 4 , fetch category based , otherwise other thing
   const fetchAllProducts = async () => {
     try {
-      const response = await HttpClient.get("/product");
+      let locationLength=location.pathname.split('/').length;
+
+      if(locationLength===3){
+        //do something
+        const response = await HttpClient.get("/product",{
+          searchApplied:true,
+          category:location.pathname.split('/')[2]
+        });
       setAllProducts(response.products);
 
       console.log("trending products", response.products)
@@ -104,6 +112,36 @@ export default function CategorySearh() {
         productName: eachProduct.name
       }))
       setAllProducts(formattedData)
+      }
+      else{
+        //do other thing
+        const response = await HttpClient.get("/product");
+      setAllProducts(response.products);
+
+      console.log("trending products", response.products)
+
+      const formattedData = response.products.map((eachProduct) => ({
+        objectId: eachProduct._id,
+        bannerImage: eachProduct.bannerImage,
+        productName: eachProduct.name,
+        brandName: eachProduct.brand.name,
+        brandImage: eachProduct.brand.image,
+        onGoingOffer: eachProduct.brand.onGoingOffer,
+        brandId: eachProduct.brand.brandId,
+        categoryId: eachProduct.category.categoryId,
+        categoryDescription: eachProduct.category.description,
+        productDescription: eachProduct.description,
+        productDetails: eachProduct.productDetails[0],
+        group: eachProduct.group,
+        isReturnable: eachProduct.isReturnable,
+        discount: eachProduct.discount,
+        price: eachProduct.price,
+        productId: eachProduct.productId,
+        productName: eachProduct.name
+      }))
+      setAllProducts(formattedData)
+      }
+      
 
     } catch (error) {
       console.error(error);
