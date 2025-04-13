@@ -25,13 +25,14 @@ function Admin() {
 
   const getdashboardData = async () => {
     setIsLoading(true)
+    debugger
     try {
       const response = await HttpClient.get("/dashboard")
 
 console.log("response",response?.sellerDetails)
 setSellerDetails(response?.sellerDetails)
 
-console.log(sellerDetails)
+console.log("response",sellerDetails)
 
 
 
@@ -70,25 +71,20 @@ console.log(sellerDetails)
           </div>
   
           {/* Store Details */}
-          <div className="flex-1 bg-white p-4 rounded-lg shadow-sm">
+          {/* <div className="flex-1 bg-white p-4 rounded-lg shadow-sm">
             <h2 className="text-lg font-semibold text-gray-700 mb-4">Store Details</h2>
             <p><span className="font-medium">Registered:</span> {sellerDetails?.registered ? 'Yes' : 'No'}</p>
             <p><span className="font-medium">Products:</span> {sellerDetails?.storeDetails?.products?.length || 0}</p>
-          </div>
+          </div> */}
         </div>
   
         {/* Address Section */}
         <div className="mt-6 bg-white p-4 rounded-lg shadow-sm">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">Address</h2>
-          {sellerDetails?.address?.length > 0 ? (
             <ul className="list-disc pl-5 text-gray-700">
-              {sellerDetails?.address?.map((addr, index) => (
-                <li key={index}>{addr}</li>
-              ))}
+              {sellerDetails?.storeDetails?.storeAddress}
             </ul>
-          ) : (
-            <p className="text-gray-500">No address provided.</p>
-          )}
+         
         </div>
   
         {/* Coupons Section */}

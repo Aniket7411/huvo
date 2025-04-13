@@ -477,6 +477,9 @@ export default function Profile() {
                         Verification Details
                       </Tab>
                       <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
+                        Bank Details
+                      </Tab>
+                      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
                         Registration
                       </Tab>
                       <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">

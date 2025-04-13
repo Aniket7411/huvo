@@ -168,7 +168,7 @@ export default function CategorySearh() {
     <div className="h-auto">
 
       <div class="px-4 ">
-        <h1 class="md:text-3xl text-lg  font-bold text-gray-800 mt-[60px] " >Search Results for :  {searchGroup}</h1>
+        <h1 class="md:text-3xl text-lg  font-bold text-gray-800n " >Search Results for :  {searchGroup}</h1>
 
       </div>
 
