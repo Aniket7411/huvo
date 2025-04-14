@@ -18,6 +18,8 @@ const Orders = () => {
   const fetchAllOrders = async () => {
     try {
       const { data } = await HttpClient.get("/order");
+
+      console.log("dataa",data)
       const formattedData = data.map((order) => ({
         createdAt: order?.createdAt,
         orderId: order?.orderId,
@@ -165,9 +167,9 @@ const Orders = () => {
 
                 {/* Action Buttons */}
                 <div className="p-4 flex flex-col justify-center space-y-3 md:w-48">
-                  <button className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all shadow-md">
+                  {/* <button className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all shadow-md">
                     Track Order
-                  </button>
+                  </button> */}
                   <button 
                     onClick={() => showCancelModal(item)}
                     className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-lg hover:from-red-600 hover:to-red-800 transition-all shadow-md"

@@ -137,7 +137,6 @@ export default function CategorySearh() {
         discount: eachProduct.discount,
         price: eachProduct.price,
         productId: eachProduct.productId,
-        productName: eachProduct.name
       }))
       setAllProducts(formattedData)
       }

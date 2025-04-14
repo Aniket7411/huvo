@@ -454,9 +454,13 @@ export default function Profile() {
                     Profile
                   </Tab>
 
-                  <Link to="/seller" className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-          Product Dashboard
-        </Link>
+                  {
+                    userType === "seller" ?  <Link to="/seller" className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
+                    Product Dashboard
+                  </Link> : ""
+                  }
+
+                 
                   <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
                     Orders
                   </Tab>
