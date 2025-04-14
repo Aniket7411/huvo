@@ -343,6 +343,7 @@ function ProductList() {
         </button>
         <input
           onChange={handleKeywordSearch}
+          type="search"
           placeholder="Search"
           className="border-0 w-full text-gray-800 text-sm px-1 outline-none placeholder-gray-400"
         />
@@ -358,7 +359,7 @@ function ProductList() {
       <div className="flex items-center gap-2">
   <Link
     to="/seller/products/add"
-    className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+    className="flex items-center gap-2 bg-[#011F4B] text-white px-4 py-2 rounded-md  transition"
   >
     <IoAddCircleOutline className="text-xl" />
     <span className="text-sm font-medium">Add Product</span>
@@ -378,7 +379,7 @@ function ProductList() {
 
           {
             keyfilteredproducts.length ?
-              <div className="w-2/3">
+              <div className="w-auto">
                 <div className="relative overflow-auto shadow-md sm:rounded-lg ">
                   <table className="w-full table-auto sticky-banner">
                     <thead className="sticky top-[-2px] bg-gray-2 dark:bg-meta-4 shadow fixed z-10 bg-white">
@@ -420,7 +421,7 @@ function ProductList() {
 
                             <td className="border-y border-[#eee] p-4  dark:border-strokedark">
                               <h5 className="font-medium text-black">
-                                {item?.group}
+                                {item?.group.toUpperCase()}
                               </h5>
                             </td>
                             <td className="border-y border-[#eee] p-4  dark:border-strokedark">
@@ -538,17 +539,18 @@ function ProductList() {
                 </p>
                 <RiArrowDownSLine className="w-10" />
               </div>
-              <div className="flex item-center p-2 mr-2 ml-4 border border-[#CED4DA] rounded-md mt-3 ">
-                <input
-                  placeholder="Phone, Headphones"
-                  className="w-full border-none focus:ring-0 focus:outline-none"
-                  onChange={handleKeywordSearch}
-                  value={KeywordSearch}
-                />
-                <button>
-                  <CiSearch className=" text-[#000000]" />
-                </button>
-              </div>
+              <div className="flex items-center p-2 mr-2 ml-4 border border-[#CED4DA] rounded-md mt-3">
+  <CiSearch className="text-[#000000] mr-2" />
+  <input
+    type="search"
+    placeholder="Search product"
+    className="w-full border-none focus:ring-0 focus:outline-none"
+    onChange={handleKeywordSearch}
+    value={KeywordSearch}
+  />
+
+</div>
+
             </div>
             <div className="border rounded-md shadow-lg py-5 mb-3">
               <div className="flex justify-between">
@@ -608,7 +610,7 @@ function ProductList() {
                 </div>
               </div>
             </div>
-            <div className="border rounded-md shadow-lg py-5 mb-3">
+            {/* <div className="border rounded-md shadow-lg py-5 mb-3">
               <div className="flex justify-between">
                 <p className="px-5 py-1 font-[Poppins] text-[000000] leading-5">
 
@@ -632,8 +634,8 @@ function ProductList() {
                 />
 
               </div>
-            </div>
-            <div className="border rounded-md shadow-lg py-5 mb-3">
+            </div> */}
+            {/* <div className="border rounded-md shadow-lg py-5 mb-3">
               <div className="flex justify-between">
                 <p className="px-5 py-1 font-[Poppins] text-[000000] font-normal leading-5">
                   Colour
@@ -666,7 +668,7 @@ function ProductList() {
 
               </div>
 
-            </div>
+            </div> */}
             <div className="border rounded-md shadow-lg py-5 mb-3">
               <div className="flex justify-between">
                 <p className="px-5 py-1 font-[Poppins] text-[000000] font-normal leading-5">

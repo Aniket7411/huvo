@@ -78,39 +78,38 @@ const Orders = () => {
     setIsOpenOrderDetails(false);
   };
 
-  const showCancelModal = (order) => {
-    setCurrentOrder(order);
+  const showCancelModal = (productId) => {
+    console.log(productId)
+    setCurrentOrder(productId);
     setIsCancelModalOpen(true);
   };
 
   const handleCancel = () => {
     // Add your cancel logic here
-    toast.success(`Order #${currentOrder?.orderId} cancellation requested`);
+    toast.success(`Order #${currentOrder} cancellation requested`);
+    toast.info(cancelReason)
+
     setIsCancelModalOpen(false);
     setCancelReason("");
   };
 
-  const showReturnModal = (order) => {
-    setCurrentOrder(order);
+  const showReturnModal = (productId) => {
+    setCurrentOrder(productId);
     setIsReturnModalOpen(true);
   };
 
   const handleReturn = () => {
     // Add your return logic here
-    toast.success(`Return requested for order #${currentOrder?.orderId}`);
+    toast.success(`Return requested for order #${currentOrder}`);
+    toast.info(returnReason)
     setIsReturnModalOpen(false);
     setReturnReason("");
   };
 
   return (
-
-
-
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white p-4 md:p-8">
-
       {
         isLoading ? <div className="flex justify-center items-center">
-
           <Loader />
         </div> : <>  <div className="max-w-7xl mx-auto">
           <div className="border-b border-blue-200 pb-4 mb-8">
@@ -119,7 +118,6 @@ const Orders = () => {
 
           <div className="space-y-6">
             {allOrders?.map((item, index) => {
-
 
               return (
                 <div
@@ -188,8 +186,8 @@ const Orders = () => {
                               </div>
                               {/* Status Date */}
                               <p className="text-xs text-gray-600 mt-1">
-  {statusObj ? new Date(statusObj.date).toLocaleDateString('en-GB') : '—'}
-</p>
+                                {statusObj ? new Date(statusObj.date).toLocaleDateString('en-GB') : '—'}
+                              </p>
                               {/* Status Label */}
                               <p className={`text-xs font-medium mt-1 text-center 
             ${isCompleted ? 'text-blue-900' : 'text-gray-500'}`}>
@@ -210,13 +208,13 @@ const Orders = () => {
                     Track Order
                   </button> */}
                     <button
-                      onClick={() => showCancelModal(item)}
+                      onClick={() => showCancelModal(item?.productId)}
                       className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-lg hover:from-red-600 hover:to-red-800 transition-all shadow-md"
                     >
                       Cancel
                     </button>
                     <button
-                      onClick={() => showReturnModal(item)}
+                      onClick={() => showReturnModal(item?.productId)}
                       className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-700 text-white rounded-lg hover:from-amber-600 hover:to-amber-800 transition-all shadow-md"
                     >
                       Return
@@ -239,7 +237,7 @@ const Orders = () => {
             cancelButtonProps={{ className: "hover:bg-gray-100" }}
           >
             <div className="my-4">
-              <p className="mb-2">Are you sure you want to cancel order #{currentOrder?.orderId}?</p>
+              <p className="mb-2">Are you sure you want to cancel order #{currentOrder}?</p>
               <p className="mb-4 text-gray-600">This action cannot be undone.</p>
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2">Reason for cancellation:</label>
@@ -265,7 +263,7 @@ const Orders = () => {
             cancelButtonProps={{ className: "hover:bg-gray-100" }}
           >
             <div className="my-4">
-              <p className="mb-2">Requesting return for order #{currentOrder?.orderId}</p>
+              <p className="mb-2">Requesting return for order #{currentOrder}</p>
               <p className="mb-4 text-gray-600">Please provide details about your return request.</p>
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2">Reason for return:</label>

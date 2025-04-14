@@ -26,6 +26,7 @@ import uploadImageOnCloudinary from "../../server/client/imageUpload";
 import LoadSpinner from "../../components/LoadSpinner";
 import Loader from "../../components/loader";
 import Orders from "./orders";
+import SellerBankForm from "../sellerbankdetails";
 
 Modal.setAppElement('#root'); // Assuming your root element's ID is 'root'
 
@@ -1298,7 +1299,8 @@ export default function Profile() {
 
 
               <TabPanel className=" h-full">
-                <div className="font-inter text-[24px] font-medium leading-[29.05px] text-left">
+                <SellerBankForm className ="leading-[29.05px]"/>
+                {/* <div className="font-inter text-[24px] font-medium leading-[29.05px] text-left">
                   One Time Platform Fees For Registration
                 </div>
                 <hr className="bg-gray-500 mx-1 my-4"></hr>
@@ -1348,7 +1350,7 @@ export default function Profile() {
                     >PayNow</button>
 
                   </div>
-                </div>
+                </div> */}
               </TabPanel>
               <TabPanel className="h-full p-4 bg-gray-50">
                 <h1 className="text-2xl font-bold text-gray-800 text-center mb-2">Subscription</h1>
