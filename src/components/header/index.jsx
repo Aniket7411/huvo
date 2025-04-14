@@ -189,26 +189,31 @@ export default function Header(props) {
   const handleSearch = async (searchword, id) => {
 
     console.log("dididididididdi",id)
-    if (searchQuery.trim()) {
-      
 
-      try {
+    try {
 
-        const response = await HttpClient.get(`/search/result?q=${searchword}`);
-        console.log('API Response:', response);
-        const productId = response?.product?.productId
-          ;
-        console.log(productId)
-        if (productId) {
+      const response = await HttpClient.get(`/search/result?q=${searchword}`);
+      console.log('API Response:', response);
+      const productId = response?.product?.productId
+        ;
+      console.log(productId)
+      if (productId) {
 
-          navigate(`/${category}/${id}`);
+        if (category === "product_search" ) {
+          navigate(`/products_category/${id}`);
+
         } else {
-          console.error('Product ID not found in response');
+          navigate(`/${category}/${id}`);
+
         }
-      } catch (error) {
-        console.error('Error fetching search result:', error);
+
+      } else  {
+        console.error('Product ID not found in response');
       }
+    } catch (error) {
+      console.error('Error fetching search result:', error);
     }
+    
   };
 
 
@@ -216,7 +221,7 @@ export default function Header(props) {
 
   const handleSuggestionClick = async (suggestion, id) => {
     const suggestionName = suggestion;
-    setSearchQuery(suggestion, id);
+    // setSearchQuery(suggestion, id);
     setSearchResult([]);
 
     await handleSearch(suggestionName, id);

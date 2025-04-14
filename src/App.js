@@ -219,16 +219,7 @@ function App() {
             }
           />
         </Routes>
-        <Routes>
-          <Route
-            path="women-collection"
-            element={
-              <Layout>
-                <WomenCollection />
-              </Layout>
-            }
-          />
-        </Routes>
+
         <Routes>
           <Route
             path="kids-collection"
@@ -295,10 +286,10 @@ function App() {
 
         <Routes>
           <Route
-            path="products_by_brand"
+            path="products_by_brand&seller"
             element={
-              <Layout changeHeaderColor="true">
-                <ProductsByBrands />
+              <Layout >
+                <StoreAndProducts />
               </Layout>
             }
           />
@@ -318,7 +309,7 @@ function App() {
 
         <Routes>
           <Route
-            path="/products_category"
+            path="/products_category/:id"
             element={
               <Layout changeHeaderColor="true">
                 <ProductsByCategory />
@@ -353,7 +344,7 @@ function App() {
             path="checkout/cart/not_login"
             element={
               <Layout changeHeaderColor="true">
-                <CheckOutWithoutLogin  />
+                <CheckOutWithoutLogin />
               </Layout>
             }
           />
@@ -459,9 +450,7 @@ function App() {
         </Routes>
         <Routes>
           <Route
-            path="seller/products/"add
-
-
+            path="seller/products/add"
             element={
               <AdminAuth>
                 <Layoutadmin>

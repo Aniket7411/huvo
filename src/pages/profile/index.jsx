@@ -438,7 +438,7 @@ export default function Profile() {
 
       <section className="px-2 font-[Quicksand]">
      
-        <TabGroup className="mt-2">
+        <TabGroup >
           <div className="sm:flex gap-6" >
             <div className="w-full sm:w-1/5">
               {/* <div className="bg-[#EFEFEF] border border-solid border-[#D6D6D6] p-5 mb-8">
@@ -448,7 +448,7 @@ export default function Profile() {
                 <p className="text-[#717171] font-normal">{userData.email}</p>
               </div> */}
               <div>
-                <TabList className="flex flex-wrap sm:flex-col gap-2 px-4">
+                <TabList className="flex flex-wrap sm:flex-col gap-2 mt-3 px-4">
                   {/* Tabs for user actions */}
                   <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
                     Profile

@@ -14,6 +14,7 @@ import Loader from "../../components/loader";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FaFilterCircleXmark } from "react-icons/fa6";
+import CategorySlider from "../categoryslider";
 
 
 export default function ProductByCategory() {
@@ -141,7 +142,6 @@ export default function ProductByCategory() {
       const { categories } = await HttpClient.get("/category?group=men");
       setAllCategories(categories);
 
-      console.log("categoriescategories", categories)
     } catch (error) {
       toast.error(
         error?.response?.data?.message || error?.response?.data?.error
@@ -163,7 +163,6 @@ export default function ProductByCategory() {
       }))
       setAllBrands(formattedBrands)
 
-      console.log("formattedBrands", formattedBrands)
 
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -178,14 +177,10 @@ export default function ProductByCategory() {
     getAllBrands();
   }, []);
 
-  console.log("aahha",allProducts)
 
   const menProducts = allProducts.filter((item) => item?.category?._id === id).splice(0, 8);
 
-  console.log("aahha",menProducts)
 
-  console.log("menProductsmenProducts", menProducts)
-  console.log("searchGroupsearchGroupsearchGroup", searchGroup)
 
 
   return (
@@ -317,6 +312,7 @@ export default function ProductByCategory() {
         </div>
 
         <div className="lg:w-3/4 w-full mx-auto">
+        <CategorySlider/>
 
 
 

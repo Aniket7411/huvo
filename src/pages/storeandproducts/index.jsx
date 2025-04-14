@@ -124,6 +124,19 @@ const StoreAndProducts = () => {
 
         {/* Filters */}
         <div className="flex flex-col md:flex-row items-start md:items-center gap-4 bg-white shadow-md p-4 rounded-lg w-full md:w-2/3">
+          
+           {/* Search Bar */}
+           <div className="w-full md:w-1/3">
+            <label className="block font-semibold text-gray-700 text-sm mb-2">Search Products</label>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearch}
+              placeholder="Search by name or brand"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          
           {/* Gender Category */}
           <div className="w-full md:w-1/3">
             <label className="block font-semibold text-gray-700 text-sm mb-2">Select Gender Category</label>
@@ -151,17 +164,7 @@ const StoreAndProducts = () => {
             </select>
           </div>
 
-          {/* Search Bar */}
-          <div className="w-full md:w-1/3">
-            <label className="block font-semibold text-gray-700 text-sm mb-2">Search Products</label>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={handleSearch}
-              placeholder="Search by name or brand"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+         
         </div>
       </div>
 
