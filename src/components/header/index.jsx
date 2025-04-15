@@ -140,7 +140,6 @@ export default function Header(props) {
 
   const fetchSuggestions = async (searchword) => {
 
-    //debugger
     try {
       const response = await HttpClient.get("/search/final", { search: searchword, searchType: category });
       console.log("final", response)
@@ -166,6 +165,8 @@ export default function Header(props) {
   const localCount = Object.keys(parsedCart).length;
 
 
+
+
   console.log("numberOfCartItemsnumberOfCartItems", localCount)
   console.log(localStorage.getItem("accessToken"))
 
@@ -188,7 +189,7 @@ export default function Header(props) {
 
   const handleSearch = async (searchword, id) => {
 
-    console.log("dididididididdi",id)
+    console.log("dididididididdi", id)
 
     try {
 
@@ -199,21 +200,21 @@ export default function Header(props) {
       console.log(productId)
       if (productId) {
 
-        if (category === "product_search" ) {
-          navigate(`/products_category/${id}`);
+        if (category === "product_search") {
+          navigate(`/products_category/${searchQuery}`);
 
         } else {
           navigate(`/${category}/${id}`);
 
         }
 
-      } else  {
+      } else {
         console.error('Product ID not found in response');
       }
     } catch (error) {
       console.error('Error fetching search result:', error);
     }
-    
+
   };
 
 
@@ -231,8 +232,8 @@ export default function Header(props) {
   return (
     <>
       <header>
-      <div className="hidden md:flex font-semibold items-center bg-gradient-to-r from-blue-500 to-white  px-8 py-2 justify-between">
-      <Link to="/" >
+        <div className="hidden md:flex font-semibold items-center bg-gradient-to-r from-blue-500 to-white  px-8 py-2 justify-between">
+          <Link to="/" >
             <img src="/assets/newlogo.jpeg" alt="Logo" className="h-[30px]  hidden md:block rounded-xl" />
           </Link>
 
@@ -292,8 +293,7 @@ export default function Header(props) {
                 <option disabled>Search by</option>
                 <option value="category_search">Category</option>
                 <option value="product_search">Product</option>
-                <option value="store_product">Brand</option>
-                <option value="store_product">Store</option>
+                <option value="store_product">Brand/User</option>
 
               </select>
 
@@ -301,13 +301,13 @@ export default function Header(props) {
               {searchResult?.length > 0 && (
                 <ul className="absolute top-full left-0 mt-2 w-full bg-white border rounded-lg shadow-lg max-h-48 overflow-auto z-50">
                   {searchResult?.map((suggestion) => (
-                      <li
-                        key={suggestion?._id}
-                        className="p-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => handleSuggestionClick(suggestion, suggestion?._id)}
-                      >
-                        {category === "userName" ? suggestion.username : suggestion.name}
-                      </li>
+                    <li
+                      key={suggestion?._id}
+                      className="p-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleSuggestionClick(suggestion, suggestion?._id)}
+                    >
+                      {category === "userName" ? suggestion.username : suggestion.name}
+                    </li>
 
                   ))}
                 </ul>
@@ -400,9 +400,15 @@ export default function Header(props) {
                         }`}
                     >
 
-                      <ul className="text-[#000] ">
+                      <ul className="text-[#000] text-md ">
                         <Link to="/profile">
                           <li className="p-2 hover:bg-gray-100 cursor-pointer">My Profile</li>
+                        </Link>
+                        <Link to="/seller">
+                          {
+                            localStorage.getItem("role") === "SELLER" && <li className="p-2  hover:bg-gray-100 cursor-pointer">Product Dashboard</li>
+
+                          }
                         </Link>
                         <li className="p-2 hover:bg-gray-100 cursor-pointer" onClick={clickToLogout}
                         >Logout</li>
@@ -419,14 +425,14 @@ export default function Header(props) {
 
           </div>
 
-          
+
         </div>
 
 
 
 
         <div className="relative " onClick={toggleNav}>
-        
+
 
 
 

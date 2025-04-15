@@ -106,7 +106,7 @@ function App() {
         </Routes>
         <Routes>
           <Route
-            path="/store_products/:id"
+            path="/store_product/:id"
             element={
               <Layout>
                 <StoreAndProducts />

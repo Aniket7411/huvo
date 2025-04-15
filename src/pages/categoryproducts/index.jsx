@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
 import { FaArrowRight, FaFilter, FaStar } from "react-icons/fa";
@@ -20,9 +20,12 @@ import CategorySlider from "../categoryslider";
 export default function ProductByCategory() {
   const [allCategories, setAllCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-  const { category, id } = useParams(); // Extract route params
+  const location = useLocation(); // Extract route params
 
-  console.log("idididid", id)
+
+
+
+
 
 
   const [products, setProducts] = useState([]);
@@ -35,7 +38,7 @@ export default function ProductByCategory() {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [discountRange, setDiscountRange] = useState("");
   const [filtersVisible, setFiltersVisible] = useState(false);
-  const [searchGroup, setSearchGroup] = useState(category)
+  const [searchGroup, setSearchGroup] = useState()
 
   const [allBrands, setAllBrands] = useState([])
 
@@ -80,13 +83,13 @@ export default function ProductByCategory() {
 
       console.log("abbabbab", searchTerm, sortOption, ratingFilter)
 
-      const response = await HttpClient.get("/product",
+      const response = await HttpClient.get("/product/productBySeach",
         {
-          group: "men",
-          category: "jeans",
+          searchTerm: location.pathname.split("/")[2]
         },
       );
 
+      setAllProducts(response?.data)
 
       console.log("jeansjeansjeans", response)
       setProducts();
@@ -101,40 +104,6 @@ export default function ProductByCategory() {
 
 
 
-
-  const fetchAllProducts = async () => {
-    try {
-      const response = await HttpClient.get("/product");
-      setAllProducts(response.products);
-
-      console.log("trending products", response.products)
-
-      const formattedData = response.products.map((eachProduct) => ({
-        objectId: eachProduct._id,
-        bannerImage: eachProduct.bannerImage,
-        productName: eachProduct.name,
-        brandName: eachProduct.brand.name,
-        brandImage: eachProduct.brand.image,
-        onGoingOffer: eachProduct.brand.onGoingOffer,
-        brandId: eachProduct.brand.brandId,
-        categoryId: eachProduct.category.categoryId,
-        categoryDescription: eachProduct.category.description,
-        productDescription: eachProduct.description,
-        productDetails: eachProduct.productDetails[0],
-        group: eachProduct.group,
-        isReturnable: eachProduct.isReturnable,
-        discount: eachProduct.discount,
-        price: eachProduct.price,
-        productId: eachProduct.productId,
-        productName: eachProduct.name
-      }))
-      setAllProducts(formattedData)
-
-    } catch (error) {
-      console.error(error);
-      toast.error(error?.response?.data?.message);
-    }
-  };
 
 
   const getAllCategories = async () => {
@@ -172,13 +141,12 @@ export default function ProductByCategory() {
 
   useEffect(() => {
     getAllCategories();
-    fetchAllProducts();
+    fetchProducts();
 
     getAllBrands();
   }, []);
 
 
-  const menProducts = allProducts.filter((item) => item?.category?._id === id).splice(0, 8);
 
 
 
@@ -312,7 +280,7 @@ export default function ProductByCategory() {
         </div>
 
         <div className="lg:w-3/4 w-full mx-auto">
-        <CategorySlider/>
+          <CategorySlider />
 
 
 
@@ -333,8 +301,8 @@ export default function ProductByCategory() {
             )}
 
 
-            <div className="p-4 grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {menProducts.map((eachProduct, i) => {
+            <div className="p-4  gap-6 hidden md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {allProducts.map((eachProduct, i) => {
                 const finalPrice = eachProduct.price - eachProduct.discount;
                 return (
                   <div
@@ -353,7 +321,7 @@ export default function ProductByCategory() {
 
                     {/* Product Details */}
                     <h1 className="text-black font-semibold text-lg line-clamp-2 mb-2">
-                      {eachProduct?.productName || "Product Name"}
+                      {eachProduct?.name || "Product Name"}
                     </h1>
 
                     {/* Product Rating */}
@@ -363,7 +331,7 @@ export default function ProductByCategory() {
                           <FaStar key={index} className="w-4 h-4" />
                         ))}
                       </div>
-                      <span className="text-xs text-gray-500">(200+ orders)</span>
+                      <span className="text-xs text-gray-500">(New)</span>
                     </div>
 
                     {/* Pricing Details */}
@@ -402,7 +370,7 @@ export default function ProductByCategory() {
 
             {/* Mobile Grid Section */}
             <div className="md:hidden grid grid-cols-2 gap-3 p-3">
-              {menProducts.map((each, index) => {
+              {allProducts.map((each, index) => {
                 const finalPrice = each.price - each.discount;
                 return (
                   <div
@@ -420,7 +388,7 @@ export default function ProductByCategory() {
                       </div>
 
                       <h2 className="font-semibold text-gray-800 text-sm line-clamp-2">
-                        {each?.productName || "Product Name"}
+                        {each?.name || "Product Name"}
                       </h2>
 
                       <div className="flex justify-between mt-1">

@@ -148,40 +148,36 @@ function AdminHeader() {
 
   return (
     <>
-      <header className="bg-[#E7EFFA] text-white px-3 py-3  shadow-bottom">
+      <header className="bg-[#E7EFFA] text-white px-3 py-3 shadow-bottom">
         <div className="flex items-center justify-between">
 
-          <ul>
-            <div className="flex lg:hidden justify-between items-center">
-              <IoReorderThree
-                onClick={() => openSubmenu()}
-                className="text-3xl text-blue-700 cursor-pointer"
-              />
-            </div>
-            <li className="text-[#011F4B]  px-1 py-3 font-[Poppins] font-medium text-2xl leading-9 ">
+          <div className="flex  justify-between items-center">
+            <IoReorderThree
+              onClick={() => openSubmenu()}
+              className="text-3xl lg:hidden  text-blue-700 cursor-pointer"
+            />
+            <p className="text-[#011F4B]  px-1 py-3 font-[Poppins] font-medium text-2xl leading-9 ">
               {getPageTitle()}
-            </li>
-          </ul>
-          <div className="">
+            </p>
+          </div>
+
+          <div className="flex justify-between w-[100%] ">
+            <p>{" "}</p>
+            <div>
             <ul className="flex items-center gap-5">
 
 
-              <li >
 
-                <div className="relative">
-
-                  <IoIosNotificationsOutline className="h-10 w-10 text-[#000000]"
-                    onClick={openModal} />
-
-
-                  <div className="absolute top-[-10px] right-[-4px]">
-                    <div className="rounded-full p-[4px] h-7 w-7 bg-[#011F4B] flex items-center justify-center text-white">
-                      {notificationCount}
-                    </div>
+              <div className="relative">
+                <IoIosNotificationsOutline className="h-10 w-10 text-[#000000]"
+                  onClick={openModal} />
+                <div className="absolute top-[-10px] right-[-4px]">
+                  <div className="rounded-full p-[4px] h-7 w-7 bg-[#011F4B] flex items-center justify-center text-white">
+                    {notificationCount}
                   </div>
                 </div>
+              </div>
 
-              </li>
 
               <li>
 
@@ -238,6 +234,9 @@ function AdminHeader() {
 
 
             </ul>
+            </div>
+
+
           </div>
         </div>
       </header>
@@ -312,7 +311,7 @@ function AdminHeader() {
                           <div className="p-2 iconDiv">
                             < BsReceipt size={21} className="icon" />
                           </div>
-                          Products
+                          Orderd Products
                         </button>
                         <IoIosArrowRoundForward className="opacity-60" />
                       </Link>

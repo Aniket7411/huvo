@@ -192,24 +192,23 @@ export default function Home() {
   }, []);
 
 
-    const fetchSuggestions = async (searchword) => {
-  
-      //debugger
-      try {
-        const response = await HttpClient.get("/search/final", { search: searchword, searchType: category });
-        console.log("final", response)
-        if (response.success) {
-          setSearchResult(response.data);
-  
-        }
-      } catch (error) {
-        console.error('Error fetching suggestions:', error);
+  const fetchSuggestions = async (searchword) => {
+
+    //
+    try {
+      const response = await HttpClient.get("/search/final", { search: searchword, searchType: category });
+      console.log("final", response)
+      if (response.success) {
+        setSearchResult(response.data);
+
       }
-    };
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+    }
+  };
 
   const handleSuggestionClick = async (suggestion, id) => {
     const suggestionName = suggestion;
-    setSearchQuery(suggestion, id);
     setSearchResult([]);
 
     await handleSearch(suggestionName, id);
@@ -246,7 +245,7 @@ export default function Home() {
 
             <div
               className="bg-gradient-to-r  from-blue-500 via-blue-600 to-blue-700 text-white text-center py-2 md:py-6 shadow-lg"
-           
+
             >
               <div className="flex justify-center items-center mt-2 h-[100px] px-2  md:h-[250px]  space-x-3 animate-pulse">
                 <svg
@@ -271,7 +270,7 @@ export default function Home() {
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-yellow-400 rounded-full"></div>
             </div>
 
-        
+
 
             <div className="relative md:hidden flex items-center justify-between rounded-full bg-[#E7EFFA] px-4 py-2 shadow-lg">
               {/* Search Icon Button */}

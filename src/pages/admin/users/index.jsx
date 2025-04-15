@@ -20,6 +20,8 @@ function UserList() {
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
+      setLoader(false)
+
     }
   };
 
@@ -64,7 +66,7 @@ function UserList() {
   }, []);
 
   return (
-    <div className="px-6 mx-auto my-8">
+    <div className="px-6 mx-auto my-4">
       <h1 className="text-4xl font-bold mb-4 text-center capitalize">
         <Link to="/seller" className="text-2xl font-bold mb-4 hover:underline">
           {getUserData()?.role.toLowerCase()} Dashboard

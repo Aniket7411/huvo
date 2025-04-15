@@ -111,7 +111,6 @@ export default function Profile() {
     }
 
     try {
-      //debugger;
       setDocumentUploading(true)
       const response = await HttpClient.post(`/approval/submit`, verficationDetails);
       toast.success(response?.message);
@@ -317,7 +316,7 @@ export default function Profile() {
     }
   };
   const fetchAllInvoices = async () => {
-    // debugger
+    // 
 
     try {
       const response = await HttpClient.get("/invoice/");
@@ -382,7 +381,6 @@ export default function Profile() {
   };
   //fetchall invoices for the user customer
   const fetchUserInvoices = async (orderId) => {
-    // debugger
 
     try {
       const response = await HttpClient.get(`/invoice/user/${orderId}`);
@@ -412,7 +410,7 @@ export default function Profile() {
       {isSeller && (
         <div
 
-          className={`flex  mt-[20px] flex-col items-center  mx-2 ${verificationStatus
+          className={`flex  flex-col items-center  mx-2 ${verificationStatus
             ? "bg-green-100 border border-green-500 text-green-800"
             : "bg-red-100 border border-red-500 text-red-800"
             } p-3 rounded-lg`}
@@ -438,9 +436,9 @@ export default function Profile() {
       )}
 
       <section className="px-2 font-[Quicksand]">
-     
+
         <TabGroup >
-          <div className="sm:flex gap-6" >
+          <div className="sm:flex gap-2" >
             <div className="w-full sm:w-1/5">
               {/* <div className="bg-[#EFEFEF] border border-solid border-[#D6D6D6] p-5 mb-8">
                 <p className="text-[#2F2F2F] font-bold text-lg">
@@ -449,57 +447,95 @@ export default function Profile() {
                 <p className="text-[#717171] font-normal">{userData.email}</p>
               </div> */}
               <div>
-                <TabList className="flex flex-wrap sm:flex-col gap-2 mt-3 px-4">
-                  {/* Tabs for user actions */}
-                  <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-                    Profile
-                  </Tab>
+              <TabList className="flex flex-wrap gap-2 mt-4 px-2 sm:px-0 sm:flex-col sm:gap-1">
+  {/* Common Tabs */}
+  <Tab className="flex-1 sm:flex-none outline-none">
+    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+      <span className="hidden sm:inline-block mr-2">👤</span>
+      Profile
+    </div>
+  </Tab>
 
-                  {
-                    userType === "seller" ?  <Link to="/seller" className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-                    Product Dashboard
-                  </Link> : ""
-                  }
+  {userType === "seller" && (
+    <Link to="/seller" className="flex-1 sm:flex-none outline-none">
+      <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+        <span className="hidden sm:inline-block mr-2">📊</span>
+        Product Dashboard
+      </div>
+    </Link>
+  )}
 
-                 
-                  <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-                    Orders
-                  </Tab>
-                  <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-                    Coupons
-                  </Tab>
-                  <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-                    Addresses
-                  </Tab>
+  <Tab className="flex-1 sm:flex-none outline-none">
+    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+      <span className="hidden sm:inline-block mr-2">📦</span>
+      Orders
+    </div>
+  </Tab>
 
-                  {/* Conditional Tabs for specific user types */}
-                  {userType !== "USER" && (
-                    <>
-                      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-                        Business Details
-                      </Tab>
-                      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-                        Verification Details
-                      </Tab>
-                      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-                        Bank Details
-                      </Tab>
-                      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-                        Registration
-                      </Tab>
-                      <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-                        Subscription Plan
-                      </Tab>
-                    </>
-                  )}
+  <Tab className="flex-1 sm:flex-none outline-none">
+    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+      <span className="hidden sm:inline-block mr-2">🎟️</span>
+      Coupons
+    </div>
+  </Tab>
 
-                  {/* Conditional Tab for seller-specific action */}
-                  {isSeller && (
-                    <Tab className="flex-1 sm:flex-none outline-none border border-gray-300 rounded-md text-gray-700 font-semibold px-4 py-2 text-center hover:bg-gray-100 hover:text-gray-900 transition">
-                      Invoices
-                    </Tab>
-                  )}
-                </TabList>
+  <Tab className="flex-1 sm:flex-none outline-none">
+    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+      <span className="hidden sm:inline-block mr-2">🏠</span>
+      Addresses
+    </div>
+  </Tab>
+
+  {/* Business Tabs */}
+  {userType !== "USER" && (
+    <>
+      <Tab className="flex-1 sm:flex-none outline-none">
+        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+          <span className="hidden sm:inline-block mr-2">🏢</span>
+          Business Details
+        </div>
+      </Tab>
+
+      <Tab className="flex-1 sm:flex-none outline-none">
+        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+          <span className="hidden sm:inline-block mr-2">✅</span>
+          Verification
+        </div>
+      </Tab>
+
+      <Tab className="flex-1 sm:flex-none outline-none">
+        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+          <span className="hidden sm:inline-block mr-2">💳</span>
+          Bank Details
+        </div>
+      </Tab>
+
+      <Tab className="flex-1 sm:flex-none outline-none">
+        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+          <span className="hidden sm:inline-block mr-2">📅</span>
+          Subscription
+        </div>
+      </Tab>
+
+      <Tab className="flex-1 sm:flex-none outline-none">
+        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+          <span className="hidden sm:inline-block mr-2">🧾</span>
+          Invoices
+        </div>
+      </Tab>
+    </>
+  )}
+
+  {/* Seller-specific Tab */}
+  {/* {isSeller && (
+    <Tab className="flex-1 sm:flex-none outline-none">
+      <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+        <span className="hidden sm:inline-block mr-2">📅</span>
+        Subscription
+      </div>
+    </Tab>
+  )} */}
+</TabList>
 
               </div>
             </div>
@@ -1299,7 +1335,7 @@ export default function Profile() {
 
 
               <TabPanel className=" h-full">
-                <SellerBankForm className ="leading-[29.05px]"/>
+                <SellerBankForm className="leading-[29.05px]" />
                 {/* <div className="font-inter text-[24px] font-medium leading-[29.05px] text-left">
                   One Time Platform Fees For Registration
                 </div>
@@ -1353,7 +1389,7 @@ export default function Profile() {
                 </div> */}
               </TabPanel>
               <TabPanel className="h-full p-4 bg-gray-50">
-                <h1 className="text-2xl font-bold text-gray-800 text-center mb-2">Subscription</h1>
+                <h1 className="text-2xl font-bold text-gray-800 mb-2">Subscription</h1>
 
                 <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
                   {["Free", "Silver", "Gold", "Platinum"].map((plan) => (

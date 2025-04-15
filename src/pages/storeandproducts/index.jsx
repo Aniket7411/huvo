@@ -24,10 +24,10 @@ const StoreAndProducts = () => {
 
 
 
-  const fetchAllProducts = async (page = 1) => {
+  const fetchAllProducts = async () => {
     setIsLoading(true);
     try {
-      const response = await HttpClient.get(`/product/storeproducts`, {productId: id,genderCategory,sortOrder });
+      const response = await HttpClient.get(`/product/productByStore`, {sellerId: id });
       console.log("storeproducts",response.data)
       
       const formattedData = response.data.map((eachProduct) => ({
@@ -49,7 +49,7 @@ const StoreAndProducts = () => {
         productId: eachProduct?.productId
       }));
 
-      console.log(formattedData)
+      console.log("formattedDataformattedData",formattedData)
       setAllProducts(formattedData);
       setFilteredProducts(formattedData);
       setTotalPages(response.totalPages || 1);
@@ -62,8 +62,8 @@ const StoreAndProducts = () => {
   };
 
   useEffect(() => {
-    fetchAllProducts(currentPage);
-  }, [currentPage,genderCategory,sortOrder]);
+    fetchAllProducts();
+  }, []);
 
   const handleGenderChange = (e) => setGenderCategory(e.target.value);
   const handleSortChange = (e) => setSortOrder(e.target.value);

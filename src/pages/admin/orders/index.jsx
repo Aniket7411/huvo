@@ -11,20 +11,22 @@ import { CiSearch } from "react-icons/ci";
 function OrderList() {
   const navigate = useNavigate();
   const [allOrders, setAllOrders] = useState([]);
-  const [notification,setNotification] =useState([])
+  const [filteredOrders, setFilteredOrders] = useState([]);
+  const [notification, setNotification] = useState([]);
   const [loader, setLoader] = useState(false);
-  const [productId,setProductId] =useState()
-  
-  const getNotifications = async () =>{
-    try{
- 
-      const {message} = await HttpClient.get("/notification")
-       setNotification(message);
-    } catch (error){
+  const [productId, setProductId] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+
+  const getNotifications = async () => {
+    try {
+      const { message } = await HttpClient.get("/notification");
+      setNotification(message);
+    } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
     }
-  }
+  };
 
   const getAllOrders = async () => {
     try {
@@ -34,8 +36,8 @@ function OrderList() {
         setLoader(false);
       }
       setAllOrders(data);
-      setProductId(data?.product?.productId)
-      console.log(productId)
+      setFilteredOrders(data);
+      setProductId(data?.product?.productId);
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
@@ -52,23 +54,49 @@ function OrderList() {
       toast.error(error?.response?.data?.message);
     }
   };
-  
-console.log(productId)
-  const changeStatus = async (status, orderId,productId) => {
+
+  const changeStatus = async (status, orderId, productId) => {
     try {
       const { message } = await HttpClient.put(`/order/${orderId}`, {
         status,
-      productId,
+        productId,
       });
-      console.log("productid",productId)
       toast.success(message);
-      //getAllUsers();
+      getAllOrders();
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
     }
-    console.log(status);
   };
+
+  const handleSearch = () => {
+    const term = searchTerm.toLowerCase();
+    let filtered = allOrders;
+
+    // Apply status filter first
+    if (statusFilter !== "All") {
+      filtered = filtered.filter((order) => {
+        const lastStatus = order?.orderStatus[order?.orderStatus.length - 1]?.status;
+        return lastStatus?.toLowerCase() === statusFilter.toLowerCase();
+      });
+    }
+
+    // Then apply search term filter
+    if (term) {
+      filtered = filtered.filter((order) => {
+        return (
+          order?.orderId?.toLowerCase().includes(term) ||
+          order?.shippingDetails?.name?.toLowerCase().includes(term)
+        );
+      });
+    }
+
+    setFilteredOrders(filtered);
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchTerm, statusFilter, allOrders]);
 
   useEffect(() => {
     getAllOrders();
@@ -77,6 +105,7 @@ console.log(productId)
   useEffect(() => {
     getNotifications();
   }, []);
+
   return (
     <div className="px-6 mx-auto">
       <h1 className="text-4xl font-bold text-center capitalize">
@@ -101,19 +130,34 @@ console.log(productId)
         </Link>
       </div>
 
-      <div className="flex items-center w-[100%] mb-2 md:w-[50%] bg-white rounded-lg shadow-md p-2">
-  <button className="p-2 hover:bg-gray-100 rounded-full transition">
-    <CiSearch className="text-gray-600 text-xl" />
-  </button>
-  <input
-    placeholder="Search"
-    className="border-0  text-gray-800 text-sm px-2 outline-none placeholder-gray-400"
-  />
-</div>
+      <div className="flex flex-col md:flex-row gap-4 mb-4">
+        <div className="flex items-center w-full md:w-[50%] bg-white rounded-lg shadow-md p-2">
+          <button className="p-2 hover:bg-gray-100 rounded-full transition">
+            <CiSearch className="text-gray-600 text-xl" />
+          </button>
+          <input
+            placeholder="Search by Order ID or Name"
+            className="border-0 text-gray-800 text-sm px-2 outline-none placeholder-gray-400 flex-grow"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
 
-      
-     
-      {allOrders.length ? (
+        <select
+          className="py-2 px-3 border border-gray-300 rounded-md outline-none bg-white shadow-md"
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
+          <option value="All">All Statuses</option>
+          {["Delivered", "Pending", "On the Way", "Dispatched"].map((status, i) => (
+            <option value={status} key={i}>
+              {status}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {filteredOrders.length ? (
         <div className="relative h-[62vh] -shadow-md sm:rounded-lg">
           <table className="w-full table-auto">
             <thead>
@@ -139,7 +183,7 @@ console.log(productId)
               </tr>
             </thead>
             <tbody>
-              {allOrders.map((item, key) => (
+              {filteredOrders.map((item, key) => (
                 <tr key={key}>
                   <td className="border-y border-[#eee] p-4 pl-8 dark:border-strokedark hidden lg:block">
                     <h5 className="font-medium text-black">{item?.orderId}</h5>
@@ -168,10 +212,12 @@ console.log(productId)
                         <select
                           className="py-2 px-3 border border-gray-300 rounded-md outline-none "
                           defaultValue="Change Role"
-                          onChange={(e) =>{
-                            console.log("Product ID:", item?.product[0].productId);
-                            console.log("order ID:",item?.orderId,);
-                            changeStatus(e.target.value, item?.orderId,item?.product[0].productId)
+                          onChange={(e) => {
+                            changeStatus(
+                              e.target.value,
+                              item?.orderId,
+                              item?.product[0].productId
+                            );
                           }}
                         >
                           <option value={"Change Status"} disabled>
@@ -244,9 +290,8 @@ console.log(productId)
         </div>
       ) : (
         <div
-        className="h-[62vh]"
+          className="h-[62vh]"
           style={{
-             
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
