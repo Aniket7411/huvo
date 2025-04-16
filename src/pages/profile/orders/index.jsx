@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import LoadSpinner from "../../../components/LoadSpinner";
 import Loader from "../../../components/loader";
+import ProductReview from "../../newproduct";
 
 const Orders = () => {
   const [allOrders, setAllOrders] = useState([]);
@@ -16,6 +17,7 @@ const Orders = () => {
   const [currentOrder, setCurrentOrder] = useState(null);
   const [cancelReason, setCancelReason] = useState("");
   const [returnReason, setReturnReason] = useState("");
+
 
   const timelineStages = ['Pending', 'Confirmed', 'Dispatched', 'Out for delivery', 'Delivered'];
 
@@ -78,48 +80,61 @@ const Orders = () => {
     setIsOpenOrderDetails(false);
   };
 
-  const showCancelModal = (order) => {
-    setCurrentOrder(order);
+  const showCancelModal = (orderId) => {
+    console.log(orderId)
+    setCurrentOrder(orderId);
     setIsCancelModalOpen(true);
   };
 
-  const handleCancel = () => {
-    // Add your cancel logic here
-    toast.success(`Order #${currentOrder?.orderId} cancellation requested`);
+  const handleCancel = async () => {
+    if (cancelReason === "") {
+      toast.info("Please select Reason")
+    }
+    else {
+      try {
+        const response = await HttpClient.post(
+          `order/cancel/${currentOrder}`,
+          { cancellationReason: cancelReason }
+        );
+        toast.success(response?.message)
+      } catch (error) {
+        toast.error(error?.message)
+
+
+      }
+    }
+    toast.success(`Order #${currentOrder} cancellation requested`);
+    toast.info(cancelReason)
+
     setIsCancelModalOpen(false);
     setCancelReason("");
   };
 
-  const showReturnModal = (order) => {
-    setCurrentOrder(order);
+  const showReturnModal = (productId) => {
+    setCurrentOrder(productId);
     setIsReturnModalOpen(true);
   };
 
   const handleReturn = () => {
     // Add your return logic here
-    toast.success(`Return requested for order #${currentOrder?.orderId}`);
+    toast.success(`Return requested for order #${currentOrder}`);
+    toast.info(returnReason)
     setIsReturnModalOpen(false);
     setReturnReason("");
   };
 
   return (
-
-
-
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white p-4 md:p-8">
-
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white md:p-8">
       {
-        isLoading ? <div className="flex justify-center items-center">
-
+        isLoading ? <div className="flex justify-center h-screen items-center">
           <Loader />
-        </div> : <>  <div className="max-w-7xl mx-auto">
-          <div className="border-b border-blue-200 pb-4 mb-8">
+        </div> : <>  <div className="mx-auto">
+          <div className="border-b border-blue-200 pb-4 mb-2">
             <h1 className="text-2xl md:text-3xl font-bold text-blue-800">Orders & Returns</h1>
           </div>
 
           <div className="space-y-6">
             {allOrders?.map((item, index) => {
-
 
               return (
                 <div
@@ -188,8 +203,8 @@ const Orders = () => {
                               </div>
                               {/* Status Date */}
                               <p className="text-xs text-gray-600 mt-1">
-  {statusObj ? new Date(statusObj.date).toLocaleDateString('en-GB') : '—'}
-</p>
+                                {statusObj ? new Date(statusObj.date).toLocaleDateString('en-GB') : '—'}
+                              </p>
                               {/* Status Label */}
                               <p className={`text-xs font-medium mt-1 text-center 
             ${isCompleted ? 'text-blue-900' : 'text-gray-500'}`}>
@@ -210,17 +225,18 @@ const Orders = () => {
                     Track Order
                   </button> */}
                     <button
-                      onClick={() => showCancelModal(item)}
+                      onClick={() => showCancelModal(item?.orderId)}
                       className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-lg hover:from-red-600 hover:to-red-800 transition-all shadow-md"
                     >
                       Cancel
                     </button>
                     <button
-                      onClick={() => showReturnModal(item)}
+                      onClick={() => showReturnModal(item?.orderId)}
                       className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-700 text-white rounded-lg hover:from-amber-600 hover:to-amber-800 transition-all shadow-md"
                     >
                       Return
                     </button>
+
                   </div>
                 </div>
               );
@@ -239,17 +255,25 @@ const Orders = () => {
             cancelButtonProps={{ className: "hover:bg-gray-100" }}
           >
             <div className="my-4">
-              <p className="mb-2">Are you sure you want to cancel order #{currentOrder?.orderId}?</p>
+              <p className="mb-2">Are you sure you want to cancel order #{currentOrder}?</p>
               <p className="mb-4 text-gray-600">This action cannot be undone.</p>
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2">Reason for cancellation:</label>
-                <textarea
+                <select
                   className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  rows={3}
                   value={cancelReason}
                   onChange={(e) => setCancelReason(e.target.value)}
-                  placeholder="Please specify the reason for cancellation"
-                />
+                >
+                  <option value="" disabled>
+                    Please select a reason for cancellation
+                  </option>
+                  <option value="Changed my mind">Changed my mind</option>
+                  <option value="Found a better price elsewhere">Found a better price elsewhere</option>
+                  <option value="Order placed by mistake">Order placed by mistake</option>
+                  <option value="Item won't arrive on time">Item won't arrive on time</option>
+                  <option value="Other">Other</option>
+                </select>
+
               </div>
             </div>
           </Modal>
@@ -265,7 +289,7 @@ const Orders = () => {
             cancelButtonProps={{ className: "hover:bg-gray-100" }}
           >
             <div className="my-4">
-              <p className="mb-2">Requesting return for order #{currentOrder?.orderId}</p>
+              <p className="mb-2">Requesting return for order #{currentOrder}</p>
               <p className="mb-4 text-gray-600">Please provide details about your return request.</p>
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2">Reason for return:</label>
@@ -340,6 +364,8 @@ const Orders = () => {
               </div>
             )}
           </Modal>
+
+
 
         </>
       }

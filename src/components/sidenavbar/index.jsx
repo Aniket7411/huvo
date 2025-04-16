@@ -10,7 +10,6 @@ import { BsWallet2 } from "react-icons/bs";
 import { BsReceipt } from "react-icons/bs";
 import { BsPerson } from "react-icons/bs";
 import { IoIosArrowRoundForward, IoIosLogOut } from "react-icons/io";
-import "./sidenavbar.css";
 import { getUserData } from "../../server/user";
 import { LogOut } from "../../server/user";
 import { HttpClient } from "../../server/client/http";
@@ -34,10 +33,13 @@ function Sidenavbar() {
   };
 
   return (
-    <div className="sidebar"  >
-      
-      <div className="flex items-center px-8 py-5">
-       
+    < >
+
+      <div className="flex items-center flex-col text-center py-5">
+
+        <Link to="/">
+          <img src="/assets/favicon.svg" alt="logo" className="w-[25px] mb-4 h-[25px]" />
+        </Link>
 
         <p className="text-[#011F4B] font-[Poppins] font-bold">
           {getUserData()?.storeDetails?.storeName?.toUpperCase()}{" "}
@@ -47,21 +49,6 @@ function Sidenavbar() {
 
       <div className="px-1">
         <ul className="px-5 font-[Poppins] text-[#000000] font-normal hover:text-#FFFFFF">
-
-
-        <li>
-            <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
-              <Link to="/" className="flex items-center gap-2">
-                <button className="flex justify-center items-center gap-4 p-2">
-                  <div className="p-2 iconDiv">
-                    <MdSignalCellularAlt size={21} className="icon" />
-                  </div>
-                  Home
-                </button>
-                <IoIosArrowRoundForward className="opacity-60" />
-              </Link>
-            </div>
-          </li>
 
           <li>
             <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
@@ -128,6 +115,24 @@ function Sidenavbar() {
               </Link>
             </div>
           </li>
+
+          <li>
+            <div className="hover:bg-[#011F4B] border-[#011F4B] text-sm rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
+              <Link
+                to="/cancelled_orders"
+                className="flex items-center gap-2"
+              >
+                <button className="flex justify-center items-center gap-4  p-2">
+                  <div className="p-2 iconDiv">
+                    <FiTruck size={21} className="icon" />
+                  </div>
+                  Cancelled Orders
+                </button>
+                <IoIosArrowRoundForward className="opacity-60" />
+              </Link>
+            </div>
+          </li>
+
           <li>
             <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
               <Link to="/seller/brands" className="flex items-center gap-2">
@@ -200,7 +205,7 @@ function Sidenavbar() {
 
         </ul>
       </div>
-    </div>
+    </>
   );
 }
 

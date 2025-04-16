@@ -19,7 +19,6 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
       <div className="flex flex-wrap gap-1 justify-between">
         {
           products.map((product) => {
-            const finalPrice = product.price - product.discount;
             return (
               <div key={product.id} className="rounded-md  p-2 flex flex-col items-center w-[48%]" style={{
                 outline: "1px solid blue"
@@ -32,11 +31,11 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
 
                 </Link>
 
-                <h3 className="font-semibold text-lg mb-1 text-center line-clamp-2">{product.name}</h3>
+                <h3 className="font-semibold text-lg mb-1 text-center line-clamp-2">{product?.name?.slice(0, 25) || "Product Name"}</h3>
                 {/* Star Ratings */}
                 <div className="flex items-center mb-2">
                   <div className="flex text-yellow-400">{[...Array(5)].map((_, i) => <FaStar key={i} className="w-4 h-4" />)}</div>
-                  <span className="text-xs text-gray-500 ml-1">(24)</span>
+                  <span className="text-xs text-gray-500 ml-1">(New)</span>
                 </div>
 
 
@@ -65,7 +64,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                   className="w-full"
                 >
                   <button
-                    className="w-full  rounded-lg bg-[#011F4B] hover:bg-[#022B63] text-white text-center py-2 px-4 transition-all text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full  rounded-lg bg-blue-600 hover:bg-blue-600 text-white text-center py-2 px-4 transition-all text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
                     aria-label={`View details for ${product.name}`}
                   >
                     View

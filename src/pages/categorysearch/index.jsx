@@ -12,7 +12,6 @@ import { useParams } from "react-router-dom";
 
 import Loader from "../../components/loader";
 
-import { Swiper, SwiperSlide } from "swiper/react";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 
 
@@ -90,7 +89,7 @@ export default function CategorySearh() {
         });
       setAllProducts(response.products);
 
-      console.log("trending products", response.products)
+      console.log("trending products", response)
 
       const formattedData = response.products.map((eachProduct) => ({
         objectId: eachProduct._id,
@@ -109,7 +108,7 @@ export default function CategorySearh() {
         discount: eachProduct.discount,
         price: eachProduct.price,
         productId: eachProduct.productId,
-        productName: eachProduct.name
+        actualPrice: eachProduct.actualPrice
       }))
       setAllProducts(formattedData)
       }
@@ -118,7 +117,6 @@ export default function CategorySearh() {
         const response = await HttpClient.get("/product");
       setAllProducts(response.products);
 
-      console.log("trending products", response.products)
 
       const formattedData = response.products.map((eachProduct) => ({
         objectId: eachProduct._id,
@@ -154,7 +152,6 @@ export default function CategorySearh() {
       const { categories } = await HttpClient.get("/category?group=men");
       setAllCategories(categories);
 
-      console.log("categoriescategories", categories)
     } catch (error) {
       toast.error(
         error?.response?.data?.message || error?.response?.data?.error
@@ -175,9 +172,6 @@ export default function CategorySearh() {
         brandName: eachBrand.name,
       }))
       setAllBrands(formattedBrands)
-
-      console.log("formattedBrands", formattedBrands)
-
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
@@ -191,15 +185,8 @@ export default function CategorySearh() {
     getAllBrands();
   }, []);
 
-  console.log("aahha",allProducts)
 
   const menProducts = allProducts.filter((item) => item?.group === "men").splice(0, 8);
-
-  console.log("aahha",menProducts)
-
-  console.log("menProductsmenProducts", menProducts)
-  console.log("searchGroupsearchGroupsearchGroup", searchGroup)
-
 
   return (
     <div className="h-auto">
@@ -350,6 +337,7 @@ export default function CategorySearh() {
             )}
 
 
+            <section className="hidden md:block">
             <div className="p-4 grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {menProducts.map((eachProduct, i) => {
                 const finalPrice = eachProduct.price - eachProduct.discount;
@@ -415,7 +403,7 @@ export default function CategorySearh() {
                 );
               })}
             </div>
-
+            </section>
 
             {/* Mobile Grid Section */}
             <div className="md:hidden grid grid-cols-2 gap-3 p-3">

@@ -38,7 +38,7 @@ export default function Vendorsdetail() {
 
   //console.log("Extracted ID from Params:", id);
   const getVendorsDetails = async (_id) => {
-    // debugger
+    // 
     if (!_id) {
       console.error("id", _id);
       return;
@@ -47,7 +47,7 @@ export default function Vendorsdetail() {
 
     try {
       const response = await HttpClient.get(`/dashboard/vendors/${_id}`);
-      console.log("responseresponse",response)
+      console.log("responseresponse", response)
       setSellerEmail(response?.vendorDetail?.email)
 
 
@@ -102,7 +102,7 @@ export default function Vendorsdetail() {
   };
 
 
- 
+
 
   const handleModalClose = () => {
     setActionModal(false)
@@ -265,48 +265,47 @@ export default function Vendorsdetail() {
                 aria-label="Go to home page"
                 className="block p-4 mb-2 bg-blue-50 hover:bg-blue-100 rounded-lg shadow-md transition-all duration-200"
               >
-              <div className="p-4">
-      <h1 className="font-poppins font-semibold text-xl text-blue-800">
-        Products added by Seller
-      </h1>
-      <div className="overflow-x-auto mt-4">
-        <table className="min-w-full border-collapse border border-gray-300">
-          <thead className="bg-blue-100">
-            <tr>
-              <th className="border border-gray-300 px-4 py-2 text-left font-medium text-gray-700">#</th>
-              <th className="border border-gray-300 px-4 py-2 text-left font-medium text-gray-700">Product Name</th>
-              <th className="border border-gray-300 px-4 py-2 text-left font-medium text-gray-700">Price</th>
-              <th className="border border-gray-300 px-4 py-2 text-left font-medium text-gray-700">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product, index) => (
-              <tr key={product.id} className="odd:bg-white even:bg-gray-50">
-                <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
-                <td className="border border-gray-300 px-4 py-2">{product.name}</td>
-                <td className="border border-gray-300 px-4 py-2">{product.price}</td>
-                <td
-                  className={`border border-gray-300 px-4 py-2 ${
-                    product.status === "Approved"
-                      ? "text-green-500"
-                      : product.status === "Pending"
-                      ? "text-yellow-500"
-                      : "text-red-500"
-                  }`}
-                >
-                  {product.status}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+                <div className="p-4">
+                  <h1 className="font-poppins font-semibold text-xl text-blue-800">
+                    Products added by Seller
+                  </h1>
+                  <div className="overflow-x-auto mt-4">
+                    <table className="min-w-full border-collapse border border-gray-300">
+                      <thead className="bg-blue-100">
+                        <tr>
+                          <th className="border border-gray-300 px-4 py-2 text-left font-medium text-gray-700">#</th>
+                          <th className="border border-gray-300 px-4 py-2 text-left font-medium text-gray-700">Product Name</th>
+                          <th className="border border-gray-300 px-4 py-2 text-left font-medium text-gray-700">Price</th>
+                          <th className="border border-gray-300 px-4 py-2 text-left font-medium text-gray-700">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {products.map((product, index) => (
+                          <tr key={product.id} className="odd:bg-white even:bg-gray-50">
+                            <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
+                            <td className="border border-gray-300 px-4 py-2">{product.name}</td>
+                            <td className="border border-gray-300 px-4 py-2">{product.price}</td>
+                            <td
+                              className={`border border-gray-300 px-4 py-2 ${product.status === "Approved"
+                                  ? "text-green-500"
+                                  : product.status === "Pending"
+                                    ? "text-yellow-500"
+                                    : "text-red-500"
+                                }`}
+                            >
+                              {product.status}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </Link>
 
 
-             
-         
+
+
 
 
 

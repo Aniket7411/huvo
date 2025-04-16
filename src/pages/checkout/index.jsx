@@ -87,22 +87,19 @@ export default function CheckOut() {
   });
 
   const fetchCartProducts = async () => {
-
+    setIsLoading(true)
     try {
-
       const response = await HttpClient.get("/cart");
+      console.log(response)
       const { data } = response
       setCartProducts(data);
-      console.log("this", cartProducts)
+      setIsLoading(false)
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
+      setIsLoading(false)
+
     }
-
-
-
-
-
 
   };
 
@@ -137,6 +134,7 @@ export default function CheckOut() {
   };
 
   const openDialogForProduct = async (productIdName) => {
+
     try {
       const { product } = await HttpClient.get(
         `/product/${cartProducts[productIdName]?.productId}`
@@ -337,7 +335,9 @@ export default function CheckOut() {
 
     <>
       {
-        isLoading ? <Loader /> : <div>
+        isLoading ? <div className="h-screen flex justify-center items-center">
+          <Loader />
+        </div> : <div>
           <section className="px-10 py-7 font-[Quicksand]">
             {Object.keys(cartProducts).length ? (
               <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
@@ -1002,7 +1002,7 @@ export default function CheckOut() {
               </div>
             )}
           </section>
-      
+
           <Transition appear show={isOpen}>
             <Dialog
               as="div"

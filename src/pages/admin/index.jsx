@@ -25,7 +25,6 @@ function Admin() {
 
   const getdashboardData = async () => {
     setIsLoading(true)
-    debugger
     try {
       const response = await HttpClient.get("/dashboard")
 
@@ -51,10 +50,13 @@ console.log("response",sellerDetails)
 
     <>
     {isLoading ? (
+      <div className="h-screen flex justify-center items-center">
       <Loader />
+
+      </div>
     ) : (
-      <div className="p-6 bg-gray-100 rounded-lg shadow-md mx-auto max-w-5xl">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">Seller Details</h1>
+      <div className="p-6 bg-gray-100 rounded-lg shadow-md mx-auto">
+        <h1 className="text-2xl font-bold text-gray-800 mb-3 text-center">Seller Details</h1>
   
         {/* Personal and Store Details */}
         <div className="flex flex-wrap gap-6">
@@ -79,8 +81,8 @@ console.log("response",sellerDetails)
         </div>
   
         {/* Address Section */}
-        <div className="mt-6 bg-white p-4 rounded-lg shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">Address</h2>
+        <div className="mt-2 bg-white p-4 rounded-lg shadow-sm">
+          <h2 className="text-lg font-semibold text-gray-700 mb-2">Address</h2>
             <ul className="list-disc pl-5 text-gray-700">
               {sellerDetails?.storeDetails?.storeAddress}
             </ul>
@@ -88,9 +90,9 @@ console.log("response",sellerDetails)
         </div>
   
         {/* Coupons Section */}
-        <div className="mt-6 bg-white p-4 rounded-lg shadow-sm flex gap-4">
+        <div className="mt-2 bg-white p-4 rounded-lg shadow-sm flex gap-4">
           <div className="flex-1">
-            <h2 className="text-lg font-semibold text-gray-700 mb-4">Coupons</h2>
+            <h2 className="text-lg font-semibold text-gray-700 mb-2">Coupons</h2>
             <p><span className="font-medium">Used:</span> {sellerDetails?.couponUsed?.length}</p>
           </div>
           <div className="flex-1">
@@ -99,7 +101,7 @@ console.log("response",sellerDetails)
         </div>
   
         {/* Account Info Section */}
-        <div className="mt-6 bg-white p-4 rounded-lg shadow-sm">
+        <div className="mt-2 bg-white p-4 rounded-lg shadow-sm">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">Account Info</h2>
           <p><span className="font-medium">Created At:</span> {new Date(sellerDetails?.createdAt).toLocaleString()}</p>
           <p><span className="font-medium">Updated At:</span> {new Date(sellerDetails?.updatedAt).toLocaleString()}</p>

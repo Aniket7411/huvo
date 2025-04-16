@@ -131,7 +131,26 @@ function ProductAddPage() {
 
         // Handle success
         setIsloading(false); // Reset loading state
-        toast.success("Product added successfully");
+
+        setReturnableDays("");
+setBannerImage("");
+setProductDetails([""]);
+setActiveCategoryId("");
+setSizeWithStock([]);
+setColorWithImages([
+  {
+    colorCode: "#000000",
+    images: [],
+  },
+]);
+
+
+toggleShoeSelection(false);
+
+toast.success("Product added successfully");
+
+
+        
       } catch (error) {
         // Handle error
         setIsloading(false); // Reset loading state
@@ -753,6 +772,7 @@ function ProductAddPage() {
                 );
               })}
             </div>
+
             <button
               type="button"
               className="bg-blue-500 text-white px-2 py-1 rounded-md"

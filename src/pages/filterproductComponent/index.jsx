@@ -1,25 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { HttpClient } from "../../server/client/http";
-import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import { FaArrowRight, FaFilter, FaStar } from "react-icons/fa";
 import { PiCurrencyInr } from "react-icons/pi";
-import { CiDeliveryTruck, CiDiscount1, CiFilter } from "react-icons/ci";
-import ProductsCarousel from "../productcarousel";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { useParams } from "react-router-dom";
-import Loader from "../../components/loader";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FaFilterCircleXmark } from "react-icons/fa6";
+import { CiDiscount1 } from "react-icons/ci";
 import CategorySlider from "../categoryslider";
-import BrandSlider from "../brands";
+import Loader from "../../components/loader";
+import { FaFilterCircleXmark } from "react-icons/fa6";
 
-export default function ProductByCategory() {
-  const [allProducts, setAllProducts] = useState([]);
+const ProductsShowingComponent = (props) => {
+  const { allProducts } = props;
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const location = useLocation();
   const [isLoading, setLoading] = useState(false);
-  const searchWord = location.pathname.split("/")[2];
 
   // Filter states
   const [searchQuery, setSearchQuery] = useState("");
@@ -27,42 +18,10 @@ export default function ProductByCategory() {
   const [sortOrder, setSortOrder] = useState("default");
   const [showFilters, setShowFilters] = useState(false);
 
-  // Function to fetch products from the API
-  const fetchProducts = async () => {
-    setLoading(true);
-    try {
-      const response = await HttpClient.get("/product/productBySeach", {
-        searchTerm: searchWord
-      });
-
-      const formattedData = response.data.map((eachProduct) => ({
-        objectId: eachProduct._id,
-        bannerImage: eachProduct.bannerImage,
-        productName: eachProduct.name,
-        brandName: eachProduct.brand?.name || "Unknown Brand",
-        brandImage: eachProduct.brand?.image,
-        onGoingOffer: eachProduct.brand?.onGoingOffer,
-        brandId: eachProduct.brand?.brandId,
-        categoryId: eachProduct.category?.categoryId,
-        categoryDescription: eachProduct.category?.description,
-        productDescription: eachProduct.description,
-        productDetails: eachProduct.productDetails?.[0] || "No details available",
-        group: eachProduct.group?.toLowerCase() || "unisex",
-        isReturnable: eachProduct.isReturnable,
-        discount: eachProduct.discount,
-        price: eachProduct.price,
-        productId: eachProduct.productId,
-        actualPrice: eachProduct.actualPrice
-      }));
-
-      setAllProducts(formattedData);
-      setFilteredProducts(formattedData);
-    } catch (error) {
-      toast.error("Failed to fetch products");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Initialize filtered products with all products
+  useEffect(() => {
+    setFilteredProducts(allProducts);
+  }, [allProducts]);
 
   // Apply filters
   const applyFilters = () => {
@@ -71,8 +30,8 @@ export default function ProductByCategory() {
     // Search filter
     if (searchQuery) {
       filtered = filtered.filter((product) =>
-        (product.productName &&
-          product.productName.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (product.name &&
+          product.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (product.brandName &&
           product.brandName.toLowerCase().includes(searchQuery.toLowerCase()))
       );
@@ -118,30 +77,18 @@ export default function ProductByCategory() {
   // Apply filters when any filter state changes
   useEffect(() => {
     applyFilters();
-  }, [searchQuery, genderCategory, sortOrder]);
-
-  // Fetch products when search word changes
-  useEffect(() => {
-    fetchProducts();
-  }, [searchWord]);
+  }, [searchQuery, genderCategory, sortOrder, allProducts]);
 
   return (
     <div className="h-auto">
       <section className="filter-section bg-white py-4 px-4">
-        {/* Title and Main Filter Container */}
         <div className="flex flex-col space-y-4">
-         
-
-          {/* Filter Container */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            {/* Filter Header - Flex Row */}
-            <div className="flex flex-row justify-between items-center mb-2">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-3">
+            <div className="flex flex-row justify-between items-center mb-1">
               <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
                 <FaFilter className="text-blue-500" />
                 Filters
               </h2>
-
-              {/* Toggle Button */}
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
@@ -164,10 +111,8 @@ export default function ProductByCategory() {
               </button>
             </div>
 
-            {/* Filter Options - Flex Column on mobile, Row on desktop */}
             {showFilters && (
               <div className="flex flex-col md:flex-row gap-4 pt-4 border-t border-gray-200">
-                {/* Search Products - Flex Item */}
                 <div className="flex-1 min-w-[200px]">
                   <label className="block font-medium text-gray-700 text-sm mb-2">
                     Search Products
@@ -188,7 +133,6 @@ export default function ProductByCategory() {
                   </div>
                 </div>
 
-                {/* Gender Category - Flex Item */}
                 <div className="flex-1 min-w-[200px]">
                   <label className="block font-medium text-gray-700 text-sm mb-2">
                     Gender Category
@@ -205,7 +149,6 @@ export default function ProductByCategory() {
                   </select>
                 </div>
 
-                {/* Sorting - Flex Item */}
                 <div className="flex-1 min-w-[200px]">
                   <label className="block font-medium text-gray-700 text-sm mb-2">
                     Sort By
@@ -221,7 +164,6 @@ export default function ProductByCategory() {
                   </select>
                 </div>
 
-                {/* Reset Button - Flex Item with alignment */}
                 <div className="flex-1 flex items-end min-w-[200px]">
                   <button
                     onClick={resetFilters}
@@ -236,7 +178,6 @@ export default function ProductByCategory() {
           </div>
         </div>
       </section>
-
 
       <div className="lg:w-full mx-auto">
         <CategorySlider />
@@ -254,7 +195,7 @@ export default function ProductByCategory() {
 
           {isLoading ? (
             <Loader />
-          ) : filteredProducts.length === 0 ? (
+          ) : filteredProducts && filteredProducts.length === 0 ? (
             <div className="p-8 text-center">
               <p className="text-gray-500 text-lg">No products found matching your filters.</p>
               <button
@@ -266,32 +207,28 @@ export default function ProductByCategory() {
             </div>
           ) : (
             <div className="p-4 gap-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {filteredProducts.map((eachProduct, i) => (
+              {filteredProducts && filteredProducts.map((eachProduct, i) => (
                 <div
                   key={i}
                   className="bg-white flex flex-col rounded-xl p-3 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300"
                 >
-                  {/* Product Image */}
                   <div className="w-full aspect-square mb-3 overflow-hidden rounded-md">
                     <img
                       src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
-                      alt={eachProduct?.productName || "Product Image"}
+                      alt={eachProduct?.name || "Product Image"}
                       className="h-52 w-full object-cover"
                       loading="lazy"
                     />
                   </div>
 
-                  {/* Product Details */}
                   <h1 className="text-black font-semibold text-lg line-clamp-2 mb-2">
-                    {eachProduct?.productName || "Product Name"}
+                    {eachProduct?.name || "Product Name"}
                   </h1>
 
-                  {/* Brand Name */}
                   <p className="text-gray-600 text-sm mb-1">
                     {eachProduct?.brandName || "Unknown Brand"}
                   </p>
 
-                  {/* Product Rating */}
                   <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
                     <div className="flex text-yellow-500">
                       {[...Array(5)].map((_, index) => (
@@ -301,7 +238,6 @@ export default function ProductByCategory() {
                     <span className="text-xs text-gray-500">(New)</span>
                   </div>
 
-                  {/* Pricing Details */}
                   <div className="flex justify-between items-center text-sm mb-2">
                     <div className="flex items-center gap-1 text-red-600">
                       <PiCurrencyInr />
@@ -318,7 +254,6 @@ export default function ProductByCategory() {
                     </div>
                   </div>
 
-                  {/* Final Price */}
                   <div className="flex justify-between items-center text-lg font-bold text-gray-800 mb-3">
                     <div className="flex items-center">
                       <PiCurrencyInr />
@@ -327,7 +262,6 @@ export default function ProductByCategory() {
                     <span className="text-green-500 text-sm">Free Delivery</span>
                   </div>
 
-                  {/* View Product Button */}
                   <Link to={`/product-details/${eachProduct?.productId}`} className="w-full">
                     <button className="w-full flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-all">
                       View Product <FaArrowRight className="ml-2" />
@@ -341,4 +275,6 @@ export default function ProductByCategory() {
       </div>
     </div>
   );
-}
+};
+
+export default ProductsShowingComponent;
