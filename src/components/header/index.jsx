@@ -542,7 +542,7 @@ export default function Header(props) {
                 if (loginStatus === 0) {
                   navigate("/checkout/cart/not_login");
                 } else {
-                  navigate("/checkout/cart");
+                  navigate("/checkout/cart")
                 }
               }} className="text-2xl cursor-pointer" />
               {Object.keys(cart).length > 0 && (
