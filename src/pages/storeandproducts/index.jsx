@@ -27,7 +27,7 @@ const StoreAndProducts = () => {
   const fetchAllProducts = async () => {
     setIsLoading(true);
     try {
-      const response = await HttpClient.get(`/product/productByStore`, {sellerId: id });
+      const response = await HttpClient.get(`/product/storeproducts`, {sellerId: id,genderCategory,sortOrder });
       console.log("storeproducts",response.data)
       
       const formattedData = response.data.map((eachProduct) => ({

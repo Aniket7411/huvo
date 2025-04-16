@@ -89,20 +89,17 @@ export default function CheckOut() {
   const fetchCartProducts = async () => {
 
     try {
-
+      
       const response = await HttpClient.get("/cart");
-      const { data } = response
+      console.log(response)
+      const {data} = response
+      console.log("aniket cart data",data)
       setCartProducts(data);
       console.log("this", cartProducts)
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
     }
-
-
-
-
-
 
   };
 
@@ -233,9 +230,8 @@ export default function CheckOut() {
   };
   //console.log("card product", products)
   const orderPlace = async () => {
-
     try {
-      const { message } = await HttpClient.post("/order", {
+      const response  = await HttpClient.post("/order", {
         totalAmount,
         totalProduct: Object.keys(cartProducts)?.length,
         products: cartProducts,
@@ -243,8 +239,8 @@ export default function CheckOut() {
         shippingDetails: shippingAddress,
         couponCode,
       });
-      toast.success(message || "Order Place Successfully!");
-      navigate("/");
+      toast.success( "Order Place Successfully!");
+      window.location.href = response?.payment_url;
       fetchProfileData();
       console.log("Cart>>>>>>>: ", cartProducts)
     } catch (error) {
@@ -964,11 +960,9 @@ export default function CheckOut() {
                               "font-[Quicksand] text-white bg-[#011F4B] font-medium text-lg rounded-md py-3 px-5 my-2 w-full" +
                               (!paymentType ? " opacity-80" : "")
                             }
-                            onClick={() =>
-                              paymentType === "cashOnDelivery"
-                                ? orderPlace()
-                                : onlinePayment()
-                            }
+
+                            onClick = {()=> orderPlace()}
+                           
                             disabled={paymentType ? false : true}
                           >
                             PLACE ORDER
@@ -1001,7 +995,7 @@ export default function CheckOut() {
               </div>
             )}
           </section>
-      
+
           <Transition appear show={isOpen}>
             <Dialog
               as="div"
