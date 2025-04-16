@@ -232,13 +232,13 @@ export default function Header(props) {
   return (
     <>
       <header>
-        <div className="hidden md:flex font-semibold items-center bg-gradient-to-r from-blue-500 to-white  px-8 py-2 justify-between">
+        <div className="hidden md:flex font-semibold items-center bg-gradient-to-l from-blue-500 to-white  px-8 py-2 justify-between">
           <Link to="/" >
-            <img src="/assets/newlogo.jpeg" alt="Logo" className="h-[30px]  hidden md:block rounded-xl" />
+            <img src="/assets/newlogo.jpeg" alt="Logo" className="h-[30px] w-[130px]  hidden md:block rounded-xl" />
           </Link>
 
 
-          <ul className="flex gap-5  text-[#fff]">
+          <ul className="flex gap-5 text-md text-[#fff]">
             <Link to="/">
               <li className="font-[Poppins] cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
                 Home
@@ -293,7 +293,7 @@ export default function Header(props) {
                 <option disabled>Search by</option>
                 <option value="category_search">Category</option>
                 <option value="product_search">Product</option>
-                <option value="store_product">Brand/User</option>
+                <option value="store_product">Store</option>
 
               </select>
 

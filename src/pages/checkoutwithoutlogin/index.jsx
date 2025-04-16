@@ -97,7 +97,7 @@ export default function CheckOutWithoutLogin() {
 
 
     const localCartItems = JSON.parse(localStorage?.getItem("cart"))
-    console.log("localCartItems",localCartItems)
+    console.log("localCartItems", localCartItems)
     setCartProducts(localCartItems)
 
   }
