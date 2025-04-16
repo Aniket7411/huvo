@@ -80,8 +80,28 @@ function AdminHeader() {
     subtitle.style.color = '#f00';
   }
 
-  function closeModal() {
+  async function closeModal() {
     setIsOpen(false);
+    try {
+
+      const response = await HttpClient.put("/notification");
+      console.log(response)
+      const data = response
+      setNotification(data);
+
+      setNotificationCount(data.filter(item=>item.isRead===false).length)
+      const createdDate = data?.map((notification) => notification.createdAt)
+
+      setDate(createdDate)
+
+
+      console.log(data)
+      console.log(data?.length)
+      console.log(createdDate)
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message);
+    } 
   }
 
   const getNotifications = async () => {
@@ -91,7 +111,8 @@ function AdminHeader() {
       console.log(response)
       const data = response
       setNotification(data);
-      setNotificationCount(data?.length)
+
+      setNotificationCount(data.filter(item=>item.isRead===false).length)
       const createdDate = data?.map((notification) => notification.createdAt)
 
       setDate(createdDate)
@@ -216,11 +237,14 @@ function AdminHeader() {
                           </p>
 
                           <p className="text-base font-medium text-gray-700 mb-2">
-                            Order Details: <span className="text-green-600">{item.message || "N/A"}</span>
+                            Order Status: <span className="text-green-600">{item.message || "N/A"}</span> 
                           </p>
 
                           <p className="text-base font-medium text-gray-700">
                             Ordered Date: <span className="text-gray-500">{formattedDate(item.createdAt) || "N/A"}</span>
+                          </p>
+                          <p className="text-base font-medium text-gray-700">
+                            Order Id: <span className="text-gray-500">{item.OrderId} </span>
                           </p>
                         </div>
                       ))}

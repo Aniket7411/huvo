@@ -233,9 +233,8 @@ export default function CheckOut() {
   };
   //console.log("card product", products)
   const orderPlace = async () => {
-
     try {
-      const { message } = await HttpClient.post("/order", {
+      const response  = await HttpClient.post("/order", {
         totalAmount,
         totalProduct: Object.keys(cartProducts)?.length,
         products: cartProducts,
@@ -243,8 +242,10 @@ export default function CheckOut() {
         shippingDetails: shippingAddress,
         couponCode,
       });
-      toast.success(message || "Order Place Successfully!");
-      navigate("/");
+
+      if(response?.success)
+      toast.success( "Order Place Successfully!");
+      window.location.href = response?.payment_url;
       fetchProfileData();
       console.log("Cart>>>>>>>: ", cartProducts)
     } catch (error) {
@@ -965,10 +966,10 @@ export default function CheckOut() {
                               (!paymentType ? " opacity-80" : "")
                             }
                             onClick={() =>
-                              paymentType === "cashOnDelivery"
-                                ? orderPlace()
-                                : onlinePayment()
+                             
+                                 orderPlace()
                             }
+                            
                             disabled={paymentType ? false : true}
                           >
                             PLACE ORDER
