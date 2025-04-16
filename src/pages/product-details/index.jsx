@@ -339,7 +339,7 @@ export default function ProductDetails() {
                   <p className="flex flex-wrap items-center text-lg font-semibold text-gray-800">
                     {/* Original Price */}
                     <span className="line-through text-gray-500  flex items-center">
-                      <PiCurrencyInr className="mr-1" /> {productDetails?.price * selectedQuantity}
+                      <PiCurrencyInr className="mr-1" /> {productDetails?.actualPrice  * selectedQuantity}
                     </span>
 
 
@@ -351,7 +351,7 @@ export default function ProductDetails() {
                     {/* Discounted Price */}
                     <span className="text-green-500 flex items-center text-xl font-bold">
                       <PiCurrencyInr className="mr-1" />
-                      {productDetails?.price * selectedQuantity - productDetails?.discount * selectedQuantity}
+                      {productDetails?.actualPrice * selectedQuantity - productDetails?.discount * selectedQuantity}
                     </span>
 
 
