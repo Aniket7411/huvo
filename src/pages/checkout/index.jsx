@@ -87,18 +87,18 @@ export default function CheckOut() {
   });
 
   const fetchCartProducts = async () => {
-
+    setIsLoading(true)
     try {
-      
       const response = await HttpClient.get("/cart");
       console.log(response)
-      const {data} = response
-      console.log("aniket cart data",data)
+      const { data } = response
       setCartProducts(data);
-      console.log("this", cartProducts)
+      setIsLoading(false)
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
+      setIsLoading(false)
+
     }
 
   };
@@ -134,6 +134,7 @@ export default function CheckOut() {
   };
 
   const openDialogForProduct = async (productIdName) => {
+
     try {
       const { product } = await HttpClient.get(
         `/product/${cartProducts[productIdName]?.productId}`
@@ -231,7 +232,7 @@ export default function CheckOut() {
   //console.log("card product", products)
   const orderPlace = async () => {
     try {
-      const response  = await HttpClient.post("/order", {
+      const response = await HttpClient.post("/order", {
         totalAmount,
         totalProduct: Object.keys(cartProducts)?.length,
         products: cartProducts,
@@ -239,7 +240,7 @@ export default function CheckOut() {
         shippingDetails: shippingAddress,
         couponCode,
       });
-      toast.success( "Order Place Successfully!");
+      toast.success("Order Place Successfully!");
       window.location.href = response?.payment_url;
       fetchProfileData();
       console.log("Cart>>>>>>>: ", cartProducts)
@@ -332,7 +333,9 @@ export default function CheckOut() {
 
     <>
       {
-        isLoading ? <Loader /> : <div>
+        isLoading ? <div className="h-screen flex justify-center items-center">
+          <Loader />
+        </div> : <div>
           <section className="px-10 py-7 font-[Quicksand]">
             {Object.keys(cartProducts).length ? (
               <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
@@ -961,8 +964,8 @@ export default function CheckOut() {
                               (!paymentType ? " opacity-80" : "")
                             }
 
-                            onClick = {()=> orderPlace()}
-                           
+                            onClick={() => orderPlace()}
+
                             disabled={paymentType ? false : true}
                           >
                             PLACE ORDER

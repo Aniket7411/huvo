@@ -66,6 +66,7 @@ import CategorySlider from "./pages/categoryslider/index.jsx";
 import NewMenCollection from "./pages/newmen/index.jsx";
 import ShippingInfo from "./pages/shippingpolicies/index.jsx";
 import CheckOutWithoutLogin from "./pages/checkoutwithoutlogin/index.jsx";
+import CancellationManagementPage from "./pages/returnedorders/index.jsx";
 
 function App() {
   return (
@@ -479,6 +480,19 @@ function App() {
               <AdminAuth>
                 <Layoutadmin>
                   <BrandList />
+                </Layoutadmin>
+              </AdminAuth>
+            }
+          />
+        </Routes>
+
+        <Routes>
+          <Route
+            path="cancelled_orders"
+            element={
+              <AdminAuth>
+                <Layoutadmin>
+                  <CancellationManagementPage />
                 </Layoutadmin>
               </AdminAuth>
             }

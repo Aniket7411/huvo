@@ -164,76 +164,76 @@ function AdminHeader() {
           <div className="flex justify-between w-[100%] ">
             <p>{" "}</p>
             <div>
-            <ul className="flex items-center gap-5">
+              <ul className="flex items-center gap-5">
 
 
 
-              <div className="relative">
-                <IoIosNotificationsOutline className="h-10 w-10 text-[#000000]"
-                  onClick={openModal} />
-                <div className="absolute top-[-10px] right-[-4px]">
-                  <div className="rounded-full p-[4px] h-7 w-7 bg-[#011F4B] flex items-center justify-center text-white">
-                    {notificationCount}
+                <div className="relative">
+                  <IoIosNotificationsOutline className="h-10 w-10 text-[#000000]"
+                    onClick={openModal} />
+                  <div className="absolute top-[-10px] right-[-4px]">
+                    <div className="rounded-full p-[4px] h-7 w-7 bg-[#011F4B] flex items-center justify-center text-white">
+                      {notificationCount}
+                    </div>
                   </div>
                 </div>
-              </div>
 
 
-              <li>
+                <li>
 
-                <button onClick={clickToLogout} type="button" className="bg-[#011F4B] text-[#fff] rounded-md px-2 py-1">Logout</button>
-              </li>
-              <div>
-                <Modal
-                  isOpen={modalIsOpen}
-                  ariaHideApp={false}
-                  onAfterOpen={afterOpenModal}
-                  onRequestClose={closeModal}
-                  // style={customStyles}
-                  contentLabel="Example Modal"
-                  className="custom-modal-content"
-                  overlayClassName="custom-modal-overlay"
-                >
-                  <h2 ref={(_subtitle) => (subtitle = _subtitle)}></h2>
-                  <div className="flex justify-end ]">
-                    <button onClick={closeModal}>
-                      <IoCloseCircleOutline className="h-6 w-6" />
-                    </button>
-                  </div>
-                  {notification?.length > 0 ? (
-                    <div>
-                      {notification?.map((item, index) => (
-                        <div
-                          key={index}
-                          className="border border-gray-300 rounded-lg shadow-sm bg-gray-50 p-4 my-4 overflow-auto hover:shadow-md transition-shadow"
-                        >
-                          <p className="text-lg font-semibold text-gray-800 mb-2">
-                            Product Name: <span className="text-blue-600">{item.productName || "N/A"}</span>
-                          </p>
-
-                          <p className="text-base font-medium text-gray-700 mb-2">
-                            Order Details: <span className="text-green-600">{item.message || "N/A"}</span>
-                          </p>
-
-                          <p className="text-base font-medium text-gray-700">
-                            Ordered Date: <span className="text-gray-500">{formattedDate(item.createdAt) || "N/A"}</span>
-                          </p>
-                        </div>
-                      ))}
-
-
-
-
-
+                  <button onClick={clickToLogout} type="button" className="bg-[#011F4B] text-[#fff] rounded-md px-2 py-1">Logout</button>
+                </li>
+                <div>
+                  <Modal
+                    isOpen={modalIsOpen}
+                    ariaHideApp={false}
+                    onAfterOpen={afterOpenModal}
+                    onRequestClose={closeModal}
+                    // style={customStyles}
+                    contentLabel="Example Modal"
+                    className="custom-modal-content"
+                    overlayClassName="custom-modal-overlay"
+                  >
+                    <h2 ref={(_subtitle) => (subtitle = _subtitle)}></h2>
+                    <div className="flex justify-end ]">
+                      <button onClick={closeModal}>
+                        <IoCloseCircleOutline className="h-6 w-6" />
+                      </button>
                     </div>
-                  ) : (
-                    <div>No Notifications Available</div>
-                  )}
-                </Modal>
-              </div>
+                    {notification?.length > 0 ? (
+                      <div>
+                        {notification?.map((item, index) => (
+                          <div
+                            key={index}
+                            className="border border-gray-300 rounded-lg shadow-sm bg-gray-50 p-4 my-4 overflow-auto hover:shadow-md transition-shadow"
+                          >
+                            <p className="text-lg font-semibold text-gray-800 mb-2">
+                              Product Name: <span className="text-blue-600">{item.productName || "N/A"}</span>
+                            </p>
+
+                            <p className="text-base font-medium text-gray-700 mb-2">
+                              Order Details: <span className="text-green-600">{item.message || "N/A"}</span>
+                            </p>
+
+                            <p className="text-base font-medium text-gray-700">
+                              Ordered Date: <span className="text-gray-500">{formattedDate(item.createdAt) || "N/A"}</span>
+                            </p>
+                          </div>
+                        ))}
 
 
-            </ul>
+
+
+
+                      </div>
+                    ) : (
+                      <div>No Notifications Available</div>
+                    )}
+                  </Modal>
+                </div>
+
+
+              </ul>
             </div>
 
 
@@ -261,27 +261,39 @@ function AdminHeader() {
               <div className="px-1">
                 <ul className="px-3 font-[Poppins] text-[#000000] font-normal hover:text-#FFFFFF">
 
+                  
+
                   <li>
                     <div className="hover:bg-[#011F4B]border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
-                      <Link to="/">
-                        <button className="flex justify-center items-center gap-4   p-2">
+                      
+                      <Link
+                        to="/"
+                        className="flex items-center gap-2"
+                      >
+                        <button className="flex justify-center items-center gap-4  p-2">
                           <div className="p-2 iconDiv">
                             <MdSignalCellularAlt size={21} className="icon" />
                           </div>
                           Home
                         </button>
+                        <IoIosArrowRoundForward className="opacity-60" />
                       </Link>
                     </div>
                   </li>
                   <li>
                     <div className="hover:bg-[#011F4B]border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
-                      <Link to="/seller">
-                        <button className="flex justify-center items-center gap-4   p-2">
+                      
+                      <Link
+                        to="/seller"
+                        className="flex items-center gap-2"
+                      >
+                        <button className="flex justify-center items-center gap-4  p-2">
                           <div className="p-2 iconDiv">
                             <MdSignalCellularAlt size={21} className="icon" />
                           </div>
                           Dashboard
                         </button>
+                        <IoIosArrowRoundForward className="opacity-60" />
                       </Link>
                     </div>
                   </li>
@@ -301,6 +313,9 @@ function AdminHeader() {
                       </Link>
                     </div>
                   </li>
+
+
+                  
                   <li>
                     <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
                       <Link
@@ -311,7 +326,7 @@ function AdminHeader() {
                           <div className="p-2 iconDiv">
                             < BsReceipt size={21} className="icon" />
                           </div>
-                          Orderd Products
+                          Products
                         </button>
                         <IoIosArrowRoundForward className="opacity-60" />
                       </Link>

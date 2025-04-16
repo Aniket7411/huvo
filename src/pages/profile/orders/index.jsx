@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import LoadSpinner from "../../../components/LoadSpinner";
 import Loader from "../../../components/loader";
+import ProductReview from "../../newproduct";
 
 const Orders = () => {
   const [allOrders, setAllOrders] = useState([]);
@@ -16,6 +17,7 @@ const Orders = () => {
   const [currentOrder, setCurrentOrder] = useState(null);
   const [cancelReason, setCancelReason] = useState("");
   const [returnReason, setReturnReason] = useState("");
+
 
   const timelineStages = ['Pending', 'Confirmed', 'Dispatched', 'Out for delivery', 'Delivered'];
 
@@ -87,20 +89,20 @@ const Orders = () => {
   const handleCancel = async () => {
     if (cancelReason === "") {
       toast.info("Please select Reason")
-    } 
-      else {
-        try {
-          const response = await HttpClient.post(
-            `order/cancel/${currentOrder}`,
-            { cancellationReason: cancelReason }
-          );      
-          toast.success(response?.message)
-        } catch (error) {
-          toast.error(error?.message)
+    }
+    else {
+      try {
+        const response = await HttpClient.post(
+          `order/cancel/${currentOrder}`,
+          { cancellationReason: cancelReason }
+        );
+        toast.success(response?.message)
+      } catch (error) {
+        toast.error(error?.message)
 
-          
-        }
+
       }
+    }
     toast.success(`Order #${currentOrder} cancellation requested`);
     toast.info(cancelReason)
 
@@ -229,11 +231,12 @@ const Orders = () => {
                       Cancel
                     </button>
                     <button
-                      onClick={() => showReturnModal(item?.productId)}
+                      onClick={() => showReturnModal(item?.orderId)}
                       className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-700 text-white rounded-lg hover:from-amber-600 hover:to-amber-800 transition-all shadow-md"
                     >
                       Return
                     </button>
+
                   </div>
                 </div>
               );
@@ -257,19 +260,19 @@ const Orders = () => {
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2">Reason for cancellation:</label>
                 <select
-  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-  value={cancelReason}
-  onChange={(e) => setCancelReason(e.target.value)}
->
-  <option value="" disabled>
-    Please select a reason for cancellation
-  </option>
-  <option value="Changed my mind">Changed my mind</option>
-  <option value="Found a better price elsewhere">Found a better price elsewhere</option>
-  <option value="Order placed by mistake">Order placed by mistake</option>
-  <option value="Item won't arrive on time">Item won't arrive on time</option>
-  <option value="Other">Other</option>
-</select>
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value={cancelReason}
+                  onChange={(e) => setCancelReason(e.target.value)}
+                >
+                  <option value="" disabled>
+                    Please select a reason for cancellation
+                  </option>
+                  <option value="Changed my mind">Changed my mind</option>
+                  <option value="Found a better price elsewhere">Found a better price elsewhere</option>
+                  <option value="Order placed by mistake">Order placed by mistake</option>
+                  <option value="Item won't arrive on time">Item won't arrive on time</option>
+                  <option value="Other">Other</option>
+                </select>
 
               </div>
             </div>
@@ -361,6 +364,8 @@ const Orders = () => {
               </div>
             )}
           </Modal>
+
+
 
         </>
       }

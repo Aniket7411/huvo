@@ -159,6 +159,7 @@ export default function Home() {
         discount: eachProduct.discount,
         price: eachProduct.price,
         productId: eachProduct.productId,
+        actualPrice: eachProduct.actualPrice
       }))
       setTrendingProducts(formattedData)
       setIsLoading(false)
@@ -285,7 +286,7 @@ export default function Home() {
               {/* Search Input */}
               <input
                 type="text"
-                placeholder="Search for categories, products, or brands"
+                placeholder="Search by products, categories, or brands"
                 className="flex-1 text-sm placeholder-gray-500 text-gray-800 bg-transparent focus:outline-none"
                 value={searchQuery}
                 onChange={handleInputChange}

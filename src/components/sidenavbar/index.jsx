@@ -37,8 +37,8 @@ function Sidenavbar() {
 
       <div className="flex items-center flex-col text-center py-5">
 
-      <Link to="/">
-        <img src="/assets/favicon.svg" alt="logo" className="w-[25px] mb-4 h-[25px]" />
+        <Link to="/">
+          <img src="/assets/favicon.svg" alt="logo" className="w-[25px] mb-4 h-[25px]" />
         </Link>
 
         <p className="text-[#011F4B] font-[Poppins] font-bold">
@@ -115,6 +115,24 @@ function Sidenavbar() {
               </Link>
             </div>
           </li>
+
+          <li>
+            <div className="hover:bg-[#011F4B] border-[#011F4B] text-sm rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
+              <Link
+                to="/cancelled_orders"
+                className="flex items-center gap-2"
+              >
+                <button className="flex justify-center items-center gap-4  p-2">
+                  <div className="p-2 iconDiv">
+                    <FiTruck size={21} className="icon" />
+                  </div>
+                  Cancelled Orders
+                </button>
+                <IoIosArrowRoundForward className="opacity-60" />
+              </Link>
+            </div>
+          </li>
+
           <li>
             <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
               <Link to="/seller/brands" className="flex items-center gap-2">

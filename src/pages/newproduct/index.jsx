@@ -12,7 +12,7 @@ const ProductReview = () => {
 
     const [reviewLoading, setReviewsLoading] = useState(false)
     const [allReviews, setAllReviews] = useState([])
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(true);
 
     const handleStarClick = (value) => {
         setRating(value); // Set the rating when a star is clicked
@@ -77,7 +77,7 @@ const ProductReview = () => {
 
             <section
                 id="review"
-                className="h-auto p-4 md:p-4 bg-gray-100 rounded-lg shadow-sm"
+                className="h-auto p-4 md:p-4  bg-gray-100 rounded-lg shadow-sm"
                 style={{ scrollMarginTop: '100px' }}
             >
                 <div>
@@ -136,7 +136,7 @@ const ProductReview = () => {
             </section>
 
 
-            <Modal
+            <Modal className="z-10"
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
                 contentLabel="Write and Share"

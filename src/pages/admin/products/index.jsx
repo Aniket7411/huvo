@@ -383,7 +383,7 @@ function ProductList() {
               <div className="w-auto">
                 <div className="relative overflow-auto shadow-md sm:rounded-lg ">
                   <table className="w-full table-auto sticky-banner">
-                    <thead className="sticky top-[-2px] bg-gray-2 dark:bg-meta-4 shadow fixed z-10 bg-white">
+                    <thead className="sticky top-[-2px] bg-gray-2 dark:bg-meta-4 shadow fixed  bg-white">
                       <tr className="bg-gray-2 text-left dark:bg-meta-4">
                         <th className="min-w-[35px] p-4  font-medium text-black border-y border-[#eee]">
                           Name
