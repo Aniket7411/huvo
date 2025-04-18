@@ -66,6 +66,7 @@ export default function ProductDetails() {
   const getProductDetails = async () => {
     setLoading(true);
     try {
+      debugger;
       const data = { productId: id };
       const response = await HttpClient.get("/product/productId", data);
       console.log("responseresponseresponse", response.product.price)
@@ -288,7 +289,10 @@ export default function ProductDetails() {
                             : "bg-red-400"
                           }`}
                       >
-                        <p className="text-sm font-bold">4.5</p>
+                       {
+                        productDetails?.totalRating>=50?
+                        productDetails?.avgRating:"New"
+                       }
                         <TbJewishStarFilled className="text-sm" />
                       </div>
                       <p className="text-[#717478] cursor-pointer font-semibold text-sm">Product Rating & Reviews</p>
@@ -305,11 +309,23 @@ export default function ProductDetails() {
                             : "bg-red-400"
                           }`}
                       >
-                        <p className="text-sm font-bold">4.5</p>
-                        <TbJewishStarFilled className="text-sm" />
+                        <p className="text-sm font-bold">
+                           {
+                        productDetails?.totalRating>=50?
+                        productDetails?.avgRating:"New"
+                       }
+                          </p>
+                        {productDetails?.totalRating >= 50 && (
+                          <div className="flex">
+                            {[...Array(productDetails?.avgRating || 0)].map((_, index) => (
+                              <TbJewishStarFilled key={index} className="text-sm text-yellow-400" />
+                            ))}
+                          </div>
+                        )}
+
                       </div>
 
-  <Link to={`/store_products/${productDetails?.seller}`} >
+  <Link to={`/store_product/${productDetails?.seller}`} >
   <p className="text-[#717478] hover:underline hover:text-blue-500 font-semibold text-sm">Brand Rating</p>
   </Link>
 </div>

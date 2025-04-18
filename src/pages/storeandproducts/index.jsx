@@ -20,9 +20,10 @@ const StoreAndProducts = () => {
   const { id } = useParams();
 
   const fetchAllProducts = async () => {
+   // debugger
     setIsLoading(true);
     try {
-      const response = await HttpClient.get(`/product/storeproducts`, { sellerId: id });
+      const response = await HttpClient.get(`/product/storeProducts`, { sellerId: id });
 
       console.log("filteredProductss", response)
 
