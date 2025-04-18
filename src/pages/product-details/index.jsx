@@ -540,7 +540,7 @@ export default function ProductDetails() {
 
                   <div className="flex items-center gap-2 mt-1 text-gray-800">
                     <CiDeliveryTruck size={30} className="text-gray-600" />
-                    <p className="font-semibold">Free delivery</p>
+                    {/* <p className="font-semibold">Free delivery</p> */}
                   </div>
                 </div>
 

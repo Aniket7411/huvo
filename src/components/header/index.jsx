@@ -229,7 +229,6 @@ export default function Header(props) {
           <img src="/assets/newlogo.jpeg" alt="Logo" className="h-[30px] w-[130px]  hidden md:block rounded-xl" />
         </Link>
 
-
         <ul className="flex gap-5 text-xl text-blue-700 " style={{ fontFamily: "Caveat, cursive" }}>
           <Link to="/">
             <li className="cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
@@ -426,11 +425,6 @@ export default function Header(props) {
 
 
       <div className="relative " onClick={toggleNav}>
-
-
-
-
-
       </div>
       {dropdownContent && (
         <ul className="bg-white w-[180px] p-5 absolute top-15 right-9 rounded-md">
@@ -491,17 +485,17 @@ export default function Header(props) {
 
 
 
-      <div className="flex md:hidden  py-2 px-4 mb-auto text-[#000] justify-between items-center" style={{
+      <div className="flex md:hidden  py-4 px-5 mb-auto text-[#000] justify-between items-center" style={{
         backgroundImage: "linear-gradient(to right, #007bff, #fff)",
       }} >
 
 
         <div className="flex items-center gap-1">
 
-          <IoReorderThree className="text-3xl cursor-pointer" onClick={() => openSubmenu()}
+          <IoReorderThree  size={30} className="text-3xl cursor-pointer" onClick={() => openSubmenu()}
           />
 
-          <img src="/assets/favicon.svg" alt="logo" className="w-[20px] bg-[#fff] rounded-full" />
+          <img src="/assets/favicon.svg" alt="logo" className="w-[25px] bg-[#fff] rounded-full" />
 
 
 
@@ -519,7 +513,7 @@ export default function Header(props) {
             }
             className="relative"
           >
-            <FiHeart className="text-xl cursor-pointer" />
+            <FiHeart size={30} className="text-xl cursor-pointer" />
             {wishListItems > 0 && (
               <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
                 {wishListItems}
@@ -532,7 +526,7 @@ export default function Header(props) {
             aria-label="Cart"
             className="relative"
           >
-            <HiOutlineShoppingBag onClick={() => {
+            <HiOutlineShoppingBag  size={30} onClick={() => {
               if (loginStatus === 0) {
                 navigate("/checkout/cart/not_login");
               } else {
@@ -553,7 +547,7 @@ export default function Header(props) {
               isLoggedIn() ? navigate("/profile") : SetdropdownContent(!dropdownContent)
             }
           >
-            <FaRegUser className="text-lg cursor-pointer" />
+            <FaRegUser  size={30} className="text-lg cursor-pointer" />
           </button>
         </div>
 

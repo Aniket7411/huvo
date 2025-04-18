@@ -325,7 +325,7 @@ const ProductsShowingComponent = (props) => {
                         <PiCurrencyInr />
                         <span>{eachProduct?.price || "N/A"}</span>
                       </div>
-                      <span className="text-green-500 text-sm">Free Delivery</span>
+                      {/* <span className="text-green-500 text-sm">Free Delivery</span> */}
                     </div>
 
                     {/* Button */}

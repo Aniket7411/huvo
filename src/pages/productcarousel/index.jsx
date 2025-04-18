@@ -93,7 +93,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                                     <PiCurrencyInr />
                                     <span>{product?.price || "N/A"}</span>
                                   </div>
-                                  <span className="text-green-500 text-sm">Free Delivery</span>
+                                  {/* <span className="text-green-500 text-sm">Free Delivery</span> */}
                                 </div>
               
                                 <Link to={`/product-details/${product?.productId}`} className="w-full">

@@ -281,7 +281,7 @@ export default function CategorySearh() {
                         <PiCurrencyInr />
                         <span>{finalPrice}</span>
                       </div>
-                      <span className="text-green-500 text-sm">Free Delivery</span>
+                      {/* <span className="text-green-500 text-sm">Free Delivery</span> */}
                     </div>
 
                     {/* View Product Button */}

@@ -161,7 +161,7 @@ export default function WishList() {
 
                   <div className="flex items-center gap-2">
                     <CiDeliveryTruck />
-                    <p className="font-semibold items-end">Free delivery</p>
+                    {/* <p className="font-semibold items-end">Free delivery</p> */}
                   </div>
                 </div>
 

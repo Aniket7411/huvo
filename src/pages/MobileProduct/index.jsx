@@ -78,7 +78,7 @@ const MobileProductCarousel = ({ womenProducts }) => {
                 {/* Delivery Info */}
                 <div className="flex items-center mt-1 text-xs text-gray-500">
                   <CiDeliveryTruck className="mr-1" />
-                  <span>Free Delivery</span>
+                  {/* <span>Free Delivery</span> */}
                 </div>
               </div>
 
