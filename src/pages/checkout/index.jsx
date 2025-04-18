@@ -25,6 +25,7 @@ import { getUserData, setUserData } from "../../server/user";
 import IndiaTime from "../../components/getIndiaTime";
 import Loader from "../../components/loader";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
+import { FormItemPrefixContext } from "antd/es/form/context";
 
 export default function CheckOut() {
   const navigate = useNavigate();
@@ -39,7 +40,9 @@ export default function CheckOut() {
   const [isOpenAddress, setIsOpenAddress] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   // const { products, addProduct } = useContext(ProductContext);
-
+  const [cgst, setCgst] = useState()
+  const [sgst, setSgst] = useState()
+  const [totalAmount, setTotalAmount] = useState()
 
   const [isOpenCoupon, setIsOpenCoupon] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -50,7 +53,6 @@ export default function CheckOut() {
       quantity: selectedQuantity,
     },
   });
-  const [totalAmount, setTotalAmount] = useState(0);
   const [totalMRP, setTotalMRP] = useState(0);
   const [totalDiscount, setTotalDiscount] = useState(0);
   const [couponDiscount, setCouponDiscount] = useState(0);
@@ -93,6 +95,11 @@ export default function CheckOut() {
       console.log(response)
       const { data } = response
       setCartProducts(data);
+      setSgst(response?.cgst)
+      setCgst(response?.sgst)
+      setTotalAmount(response?.totalAmount)
+
+
       setIsLoading(false)
     } catch (error) {
       console.error(error);
@@ -155,23 +162,7 @@ export default function CheckOut() {
     }
   };
 
-  const calculateTotalAmount = () => {
-    let totalMRP = 0;
-    let totalDiscount = 0;
-    cartProducts &&
-      Object.keys(cartProducts)?.length &&
-      Object.keys(cartProducts)?.forEach((item) => {
-        const itemTotal =
-          (cartProducts[item]?.quantity || 1) *
-          (cartProducts[item]?.price || 1);
-        totalMRP += itemTotal;
-        totalDiscount +=
-          (cartProducts[item]?.discount ? cartProducts[item]?.discount : 0 / 100) * cartProducts[item]?.price;
-      });
-    setTotalMRP(Math.round(totalMRP));
-    setTotalDiscount(Math.round(totalDiscount));
-    setTotalAmount(Math.round(totalMRP - totalDiscount - couponDiscount));
-  };
+
 
   const addAddress = async (data) => {
     try {
@@ -231,9 +222,15 @@ export default function CheckOut() {
   };
   //console.log("card product", products)
   const orderPlace = async () => {
+
+    console.log(totalAmount)
+
+
+
+
     try {
-      const response  = await HttpClient.post("/order", {
-        totalAmount,
+      const response = await HttpClient.post("/order", {
+        totalAmount: totalAmount + cgst + sgst,
         totalProduct: Object.keys(cartProducts)?.length,
         products: cartProducts,
         paymentType,
@@ -241,8 +238,8 @@ export default function CheckOut() {
         couponCode,
       });
 
-      if(response?.success)
-      toast.success( "Order Place Successfully!");
+      if (response?.success)
+        toast.success("Order Place Successfully!");
       window.location.href = response?.payment_url;
       fetchProfileData();
       console.log("Cart>>>>>>>: ", cartProducts)
@@ -312,9 +309,7 @@ export default function CheckOut() {
     getAllCoupons();
   }, []);
 
-  useEffect(() => {
-    calculateTotalAmount();
-  }, [couponDiscount, cartProducts]);
+
 
   useEffect(() => {
     addressReset(formData);
@@ -400,7 +395,7 @@ export default function CheckOut() {
                             )}
                           </div>
                         </div>
-                        <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-6 font-[Poppins]">
+                        {/* <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-6 font-[Poppins]">
                           <details>
                             <summary className="text-[#011F4B] font-medium text-lg cursor-pointer inline-flex items-center gap-2 justify-center">
                               <span>
@@ -412,7 +407,7 @@ export default function CheckOut() {
                               7% Discount with Shopping Cart
                             </p>
                           </details>
-                        </div>
+                        </div> */}
                         {/* <div className="flex justify-between mb-2 flex-wrap sm:flex-nowrap gap-1 ">
                           <p className="text-[#535353] font-medium sm:text-lg">
                             1/1 Item Selected
@@ -468,12 +463,18 @@ export default function CheckOut() {
                                       <div className="flex items-center gap-2 rounded-xl">
                                         {/* Decrement Button */}
                                         <button
-                                          onClick={() =>
+                                          onClick={() => {
                                             setCartProducts((prevCart) => {
                                               const updatedCart = { ...prevCart };
                                               updatedCart[key].quantity = Math.max(1, updatedCart[key].quantity - 1);
                                               return updatedCart;
                                             })
+                                            setTotalAmount((pre) => pre - cartProducts[key].price);
+                                            setCgst((pre) => pre - cartProducts[key].cgst);
+                                            setSgst((pre) => pre - cartProducts[key].sgst);
+                                          }
+
+
                                           }
                                           disabled={cartProducts[key].quantity === 1}
                                           className={`text-2xl text-purple-700 hover:scale-110 transition-transform duration-200 
@@ -490,11 +491,18 @@ export default function CheckOut() {
                                         {/* Increment Button */}
                                         <button
                                           onClick={() =>
+                                          {
                                             setCartProducts((prevCart) => {
                                               const updatedCart = { ...prevCart };
                                               updatedCart[key].quantity += 1;
                                               return updatedCart;
                                             })
+                                            setTotalAmount((pre) => FormItemPrefixContext+cartProducts[key].price);
+                                            setCgst((pre) => pre +cartProducts[key].cgst);
+                                            setSgst((pre) => pre + cartProducts[key].sgst);
+                                          }
+
+                                           
                                           }
                                           className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
                                         >
@@ -517,7 +525,7 @@ export default function CheckOut() {
                                     </span>
                                     {cartProducts[key].discount ? (
                                       <span className="ml-2 line-through text-xs flex items-center">
-                                        <PiCurrencyInr /> {cartProducts[key].discount}
+                                        <PiCurrencyInr /> {cartProducts[key].actualPrice}
                                       </span>
                                     ) : (
                                       ""
@@ -572,21 +580,21 @@ export default function CheckOut() {
                               <p>Total MRP</p>
                               <p className="flex items-center">
                                 <PiCurrencyInr />
-                                {totalCost}
+                                {totalAmount}
                               </p>
                             </div>
                             <div className="flex justify-between mb-2">
-                              <p>Disount on MRP</p>
+                              <p>SGST</p>
                               <p className="flex items-center text-[#2ABF12]">
-                                - <PiCurrencyInr />
-                                {allDiscount}
+                                + <PiCurrencyInr />
+                                {sgst}
                               </p>
                             </div>
                             <div className="flex justify-between mb-2">
-                              <p>Coupon Discount</p>
+                              <p>CGST</p>
                               <p className="flex items-center">
-                                - <PiCurrencyInr />
-                                {couponDiscount}
+                                + <PiCurrencyInr />
+                                {cgst}
                               </p>
                             </div>
                             {/* <div className="flex justify-between mb-2">
@@ -597,19 +605,19 @@ export default function CheckOut() {
                             }
                           </p>
                         </div> */}
-                            <div className="flex justify-between mb-2">
+                            {/* <div className="flex justify-between mb-2">
                               <p>Shipping Fee</p>
                               <p className="flex items-center">
                                 {" "}
                                 + <PiCurrencyInr />100
                               </p>
-                            </div>
+                            </div> */}
                             <div className="border-[1px] border-dashed border-black border-bottom-1 my-4"></div>
                             <div className="flex justify-between mb-2">
                               <p>Total amount</p>
                               <p className="flex items-center">
                                 <PiCurrencyInr />
-                                {totalCost - allDiscount + 100}
+                                {totalAmount + sgst + cgst}
                               </p>
                             </div>
                           </div>
@@ -657,7 +665,7 @@ export default function CheckOut() {
                                     </p>
                                     <label
                                       htmlFor={`defaultAddres${i}`}
-                                      className="flex gap-2 items-start cursor-pointer border-2 border-[#D6CBCB] font-white shadow-[#0000001F]-500 py-5 px-12 rounded-md shadow-lg mb-4"
+                                      className="flex gap-2 items-start cursor-pointer border-2 border-[#D6CBCB] font-white shadow-[#0000001F]-500 py-5 px-4 rounded-md shadow-lg mb-4"
                                     >
                                       <input
                                         type="radio"
@@ -742,7 +750,7 @@ export default function CheckOut() {
                                       key={i}
                                       htmlFor={`otherAddres${i}`}
                                       // className={`flex gap-2 items-start cursor-pointer border-2 border-[#D6CBCB] font-white shadow-[#0000001F]-500 py-5 px-12 rounded-md shadow-lg mb-4` + (item.isDefault === true ? ' hidden' : '') }
-                                      className="flex gap-2 items-start cursor-pointer border-2 border-[#D6CBCB] font-white shadow-[#0000001F]-500 py-5 px-12 rounded-md shadow-lg mb-4"
+                                      className="flex gap-2 items-start cursor-pointer border-2 border-[#D6CBCB] font-white shadow-[#0000001F]-500 py-5 px-4 rounded-md shadow-lg mb-4"
                                     >
                                       <input
                                         type="radio"
@@ -813,21 +821,21 @@ export default function CheckOut() {
                             <p>Total MRP</p>
                             <p className="flex items-center">
                               <PiCurrencyInr />
-                              {totalCost}
+                              {totalAmount}
                             </p>
                           </div>
                           <div className="flex justify-between mb-2">
-                            <p>Disount on MRP</p>
+                            <p>SGST</p>
                             <p className="flex items-center text-[#2ABF12]">
-                              -<PiCurrencyInr />
-                              {allDiscount}
+                              +<PiCurrencyInr />
+                              {sgst}
                             </p>
                           </div>
                           <div className="flex justify-between mb-2">
-                            <p>Coupon Discount</p>
+                            <p>CGST</p>
                             <p className="flex items-center">
-                              -<PiCurrencyInr />
-                              {couponDiscount}
+                              +<PiCurrencyInr />
+                              {cgst}
                             </p>
                           </div>
                           {/* <div className="flex justify-between mb-2">
@@ -836,19 +844,19 @@ export default function CheckOut() {
                           +<PiCurrencyInr />0
                         </p>
                       </div> */}
-                          <div className="flex justify-between mb-2">
+                          {/* <div className="flex justify-between mb-2">
                             <p>Shipping Fee</p>
                             <p className="flex items-center">
                               {" "}
                               + <PiCurrencyInr /> 100
                             </p>
-                          </div>
+                          </div> */}
                           <div className="border-[1px] border-dashed border-black border-bottom-1 my-4"></div>
                           <div className="flex justify-between mb-2">
                             <p>Total amount</p>
                             <p className="flex items-center">
                               <PiCurrencyInr />
-                              {totalCost - allDiscount + 100}
+                              {totalAmount + sgst + cgst}
                             </p>
                           </div>
                           <button
@@ -922,21 +930,21 @@ export default function CheckOut() {
                             <p>Total MRP</p>
                             <p className="flex items-center">
                               <PiCurrencyInr />
-                              {totalCost}
+                              {totalAmount}
                             </p>
                           </div>
                           <div className="flex justify-between mb-2">
-                            <p>Disount on MRP</p>
+                            <p>SGST</p>
                             <p className="flex items-center text-[#2ABF12]">
-                              -<PiCurrencyInr />
-                              {allDiscount}
+                              +<PiCurrencyInr />
+                              {sgst}
                             </p>
                           </div>
                           <div className="flex justify-between mb-2">
-                            <p>Coupon Discount</p>
+                            <p>CGST</p>
                             <p className="flex items-center">
-                              -<PiCurrencyInr />
-                              {couponDiscount}
+                              +<PiCurrencyInr />
+                              {cgst}
                             </p>
                           </div>
                           {/* <div className="flex justify-between mb-2">
@@ -945,19 +953,19 @@ export default function CheckOut() {
                           +<PiCurrencyInr />0
                         </p>
                       </div> */}
-                          <div className="flex justify-between mb-2">
+                          {/* <div className="flex justify-between mb-2">
                             <p>Shipping Fee</p>
                             <p className="flex items-center">
                               {" "}
                               + <PiCurrencyInr /> 100
                             </p>
-                          </div>
+                          </div> */}
                           <div className="border-[1px] border-dashed border-black border-bottom-1 my-4"></div>
                           <div className="flex justify-between mb-2">
                             <p>Total amount</p>
                             <p className="flex items-center">
                               <PiCurrencyInr />
-                              {totalCost - allDiscount + 100}
+                              {totalAmount + sgst + cgst}
                             </p>
                           </div>
                           <button
@@ -966,10 +974,10 @@ export default function CheckOut() {
                               (!paymentType ? " opacity-80" : "")
                             }
                             onClick={() =>
-                             
-                                 orderPlace()
+
+                              orderPlace()
                             }
-                            
+
                             disabled={paymentType ? false : true}
                           >
                             PLACE ORDER

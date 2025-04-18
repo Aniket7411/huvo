@@ -57,7 +57,7 @@ console.log(tableData)
       <table className="w-full table-auto border-0 relative">
         <thead className="border-0  z-10">
           <tr className="bg-gray-2 text-left sticky dark:bg-meta-4 border-0">
-            <th className="min-w-[100px] p-2 font-medium text-black">PHOTO</th>
+            <th className="min-w-[100px] p-2 font-medium text-black">IMAGE</th>
             <th className="min-w-[150px] p-2 font-medium text-black">NAME</th>
             <th className="min-w-[120px] p-2 font-medium text-black">STOCK</th>
             <th className="p-2 font-medium text-black">PRICE</th>

@@ -7,12 +7,12 @@ export default function Layout({ children }) {
       <div className="relative">
         {/* Fixed Header */}
         <div className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-300 shadow-sm">
-          <Header />
+          <Header  />
         </div>
 
 
         {/* Content with padding to accommodate the fixed header */}
-        <div className="pt-14">
+        <div className="pt-14 mt-[30px] md:mt-[15px]">
           {children}
         </div>
 

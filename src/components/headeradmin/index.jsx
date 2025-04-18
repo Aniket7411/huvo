@@ -66,10 +66,7 @@ function AdminHeader() {
     SetisSubmenu(true);
     document.body.style.overflow = "hidden";
   };
-  const handleClick = () => {
 
-
-  }
 
   function openModal() {
     setIsOpen(true);
@@ -89,19 +86,17 @@ function AdminHeader() {
       const data = response
       setNotification(data);
 
-      setNotificationCount(data.filter(item=>item.isRead===false).length)
+      setNotificationCount(data.filter(item => item.isRead === false).length)
       const createdDate = data?.map((notification) => notification.createdAt)
 
       setDate(createdDate)
 
 
-      console.log(data)
-      console.log(data?.length)
-      console.log(createdDate)
+    
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
-    } 
+    }
   }
 
   const getNotifications = async () => {
@@ -112,7 +107,7 @@ function AdminHeader() {
       const data = response
       setNotification(data);
 
-      setNotificationCount(data.filter(item=>item.isRead===false).length)
+      setNotificationCount(data.filter(item => item.isRead === false).length)
       const createdDate = data?.map((notification) => notification.createdAt)
 
       setDate(createdDate)
@@ -204,58 +199,117 @@ function AdminHeader() {
 
                   <button onClick={clickToLogout} type="button" className="bg-[#011F4B] text-[#fff] rounded-md px-2 py-1">Logout</button>
                 </li>
+
                 <div>
                   <Modal
                     isOpen={modalIsOpen}
                     ariaHideApp={false}
-                    onAfterOpen={afterOpenModal}
                     onRequestClose={closeModal}
-                    // style={customStyles}
-                    contentLabel="Example Modal"
-                    className="custom-modal-content"
-                    overlayClassName="custom-modal-overlay"
+                    style={{
+                      overlay: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        zIndex: 1000,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: '1rem'
+                      },
+                      content: {
+                        position: 'relative',
+                        top: 'auto',
+                        left: 'auto',
+                        right: 'auto',
+                        bottom: 'auto',
+                        border: 'none',
+                        borderRadius: '0.5rem',
+                        padding: '1.5rem',
+                        width: '100%',
+                        maxWidth: '600px',
+                        maxHeight: '80vh',
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                      }
+                    }}
+                    contentLabel="Notifications Modal"
                   >
-                    <h2 ref={(_subtitle) => (subtitle = _subtitle)}></h2>
-                    <div className="flex justify-end ]">
-                      <button onClick={closeModal}>
+                    {/* Header with close button */}
+                    <div className="flex justify-between items-center mb-4">
+                      <h2 className="text-xl font-bold text-gray-800">Order Notifications</h2>
+                      <button
+                        onClick={closeModal}
+                        className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                        style={{ transition: 'color 0.2s ease' }}
+                      >
                         <IoCloseCircleOutline className="h-6 w-6" />
                       </button>
                     </div>
+
+                    {/* Notification content */}
                     {notification?.length > 0 ? (
-                      <div>
-                        {notification?.map((item, index) => (
+                      <div
+                        className="space-y-3 overflow-y-auto"
+                      >
+                        {notification.map((item, index) => (
                           <div
                             key={index}
-                            className="border border-gray-300 rounded-lg shadow-sm bg-gray-50 p-4 my-4 overflow-auto hover:shadow-md transition-shadow"
+                            className="border border-gray-200 rounded-lg bg-white p-4 hover:shadow-md transition-all"
+
                           >
-                            <p className="text-lg font-semibold text-gray-800 mb-2">
-                              Product Name: <span className="text-blue-600">{item.productName || "N/A"}</span>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
+                              <p className="font-medium text-gray-800">
+                                Product:
+                                {Array.isArray(item.productName) ? (
+                                  <span className="text-blue-600 font-medium ml-1">
+                                    {item.productName.map((name, idx) => (
+                                      <span key={idx}>
+                                        {name}
+                                        {idx < item.productName.length - 1 && ", "}
+                                      </span>
+                                    ))}
+                                  </span>
+                                ) : (
+                                  <span className="text-blue-600 font-medium ml-1">
+                                    {item.productName || "N/A"}
+                                  </span>
+                                )}
+                              </p>
+                              <p className="text-sm sm:text-base font-semibold text-gray-800">
+                                Order ID: <span className="text-gray-600 font-normal">{item.OrderId || "N/A"}</span>
+                              </p>
+                            </div>
+
+                            <p className="text-sm sm:text-base font-medium text-gray-700 mb-1">
+                              Status: <span className="text-green-600">{item.message || "N/A"}</span>
                             </p>
 
-                          <p className="text-base font-medium text-gray-700 mb-2">
-                            Order Status: <span className="text-green-600">{item.message || "N/A"}</span> 
-                          </p>
-
-                          <p className="text-base font-medium text-gray-700">
-                            Ordered Date: <span className="text-gray-500">{formattedDate(item.createdAt) || "N/A"}</span>
-                          </p>
-                          <p className="text-base font-medium text-gray-700">
-                            Order Id: <span className="text-gray-500">{item.OrderId} </span>
-                          </p>
-                        </div>
-                      ))}
-
-
-
-
-
+                            <p className="text-xs sm:text-sm text-gray-500">
+                              Date: {formattedDate(item.createdAt) || "N/A"}
+                            </p>
+                          </div>
+                        ))}
                       </div>
                     ) : (
-                      <div>No Notifications Available</div>
+                      <div className="flex flex-col items-center justify-center py-8">
+                        <div className="text-gray-400 mb-2">
+                          <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                          </svg>
+                        </div>
+                        <p className="text-gray-500 text-lg">No notifications available</p>
+                      </div>
                     )}
+
+                    {/* Footer (optional) */}
+                    <div className="mt-4 pt-3 border-t border-gray-100 text-right">
+                      <button
+                        onClick={closeModal}
+                        className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none"
+                        style={{ transition: 'background-color 0.2s ease' }}
+                      >
+                        Close
+                      </button>
+                    </div>
                   </Modal>
                 </div>
-
 
               </ul>
             </div>
@@ -285,11 +339,11 @@ function AdminHeader() {
               <div className="px-1">
                 <ul className="px-3 font-[Poppins] text-[#000000] font-normal hover:text-#FFFFFF">
 
-                  
+
 
                   <li>
                     <div className="hover:bg-[#011F4B]border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
-                      
+
                       <Link
                         to="/"
                         className="flex items-center gap-2"
@@ -306,7 +360,7 @@ function AdminHeader() {
                   </li>
                   <li>
                     <div className="hover:bg-[#011F4B]border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
-                      
+
                       <Link
                         to="/seller"
                         className="flex items-center gap-2"
@@ -339,7 +393,7 @@ function AdminHeader() {
                   </li>
 
 
-                  
+
                   <li>
                     <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
                       <Link

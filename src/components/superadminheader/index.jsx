@@ -134,20 +134,7 @@ export default function Superadminheader() {
       <header className="text-white px-3 py-3 w-[100%] ">
         <div className=" flex justify-between items-center ">
           <ul>
-            {/* <li className="flex-grow">
-              <div className=" flex items-center justify-between rounded-full top-[-12px] bg-[#E7EFFA]  p-4 h-14 searchBtn">
-                <button
-                  className="mr-5"
-                //  onClick={handleClick}
-                >
-                  <CiSearch className="text-[#000000]" />
-                </button>
-                <input
-                  placeholder="search"
-                  className="border-0 w-full gap-10 outline-none  bg-[#E7EFFA]"
-                ></input>
-              </div>
-            </li> */}
+           
           </ul>
           <ul className="flex items-center">
             <li>
@@ -199,7 +186,7 @@ export default function Superadminheader() {
             <li className="hidden md:block">
               <div className="flex items-center px-3 py-3 ">
                 <div className="mr-4 flex items-center justify-center border border-white w-10 h-10 rounded-full bg-[#ffffff]">
-                <FaRegUserCircle className="text-[blue]" size={25} />
+                {/* <FaRegUserCircle className="text-[blue]" size={25} /> */}
                 </div>
 
                 <p className="text-[#011F4B] font-[Poppins] font-bold">
@@ -349,118 +336,6 @@ export default function Superadminheader() {
         </>
       )}
     </>
-    // <div className=''>
-    //    <header className="bg-[#a0aec0] text-white px-3 py-3 w-full shadow-bottom">
-    //     <div className="flex items-center justify-between">
-
-    //         <ul>
-    //         <div className="flex lg:hidden justify-between items-center">
-    //           <IoReorderThree
-    //             onClick={() => openSubmenu()}
-    //             className="text-3xl cursor-pointer"
-    //           />
-    //         </div>
-    //         <li className="text-[#011F4B]  px-1 py-3 font-[Poppins] font-medium text-2xl leading-9 ">
-    //           {/* {getPageTitle()} */}
-    //         </li>
-    //         </ul>
-    //         <div className="">
-    //         <ul className="flex items-center gap-5">
-    //         <li className="flex-grow">
-    //           <div className=" flex items-center justify-between p-1 bg-[#FFFFFF] rounded-lg top-[-12px]">
-    //             <button className="mr-5"
-    //             //  onClick={handleClick}
-    //              >
-    //               <CiSearch className=" text-[#000000]" />
-    //             </button>
-    //             <input
-    //               placeholder="search"
-    //               className="border-0 w-full gap-10 outline-none"
-    //             ></input>
-    //           </div>
-    //         </li>
-
-    //         <li >
-
-    //             <div className="relative">
-
-    //               <IoIosNotificationsOutline className="h-8 w-8 text-[#000000]"
-    //               onClick={openModal} />
-
-    //               <div className="absolute top-[-10px] right-[-4px]">
-    //                 <div className="rounded-full p-[3px] h-5 w-5 bg-[#011F4B] flex items-center justify-center text-white">
-    //                   {/* {notificationCount} */}
-    //                 </div>
-    //               </div>
-    //             </div>
-
-    //         </li>
-    //         <div>
-    //         <Modal
-    //     isOpen={modalIsOpen}
-    //     ariaHideApp={false}
-    //     onAfterOpen={afterOpenModal}
-    //     onRequestClose={closeModal}
-    //     // style={customStyles}
-    //     contentLabel="Example Modal"
-    //     className="custom-modal-content"
-    //     overlayClassName="custom-modal-overlay"
-    //   >
-    //     <h2 ref={(_subtitle) => (subtitle = _subtitle)}></h2>
-    //     <div className="flex justify-end">
-    //       <button onClick={closeModal}>
-    //         <IoCloseCircleOutline className="h-6 w-6" />
-    //         </button>
-    //       </div>
-    //     {notification.length > 0 ? (
-    //     <div>
-    //       {/* {notification.map((item,index)=>
-    //         (
-    //           <p key={index}>`{item.productName} {item.message} {formattedDate(item.createdAt)}`</p>
-
-    //         ))} */}
-
-    //     </div>
-    //   ):(
-    //     <div>No Notifications Available</div>
-    //   )}
-    //   </Modal>
-    //         </div>
-
-    //       </ul>
-    //     </div>
-    //     </div>
-    //   </header>
-    // </div>
-    //     <div className="">
-    //         <div className="flex justify-between items-center w-full">
-    //         <div>
-    //             <ul>
-    //                 <li>
-    //                 <div className=" flex items-center justify-between p-1 rounded-full top-[-12px] bg-[#E7EFFA]  p-4 w-80 h-14">
-    //                 <button className="mr-5"
-    //                 //  onClick={handleClick}
-    //                  >
-    //                  <CiSearch className=" text-[#000000]" />
-    //                 </button>
-    //              <input
-    //                    placeholder="search"
-    //                    className="border-0 w-full gap-10 outline-none  bg-[#E7EFFA]"
-    //                  ></input>
-    //                </div>
-    //                 </li>
-    //             </ul>
-
-    //         </div>
-    //         <div className="">
-    //         <ul className="flex gap-4">
-    //             <li>
-    //           fhgf
-    //             </li>
-    //             <li> sdfs</li>
-    //         </ul>
-    //         </div>
-    // </div>
-    //     </div>
+   
   );
 }

@@ -56,7 +56,6 @@ export default function   ProfileAdmin() {
           const response = await HttpClient.put(`/users/update`, data);
           setUserData(response?.userData);
           setUserDetails(response?.userData);
-          console.log("updateduserdata", response?.userData)
           toast.success(response?.message || "Profile updated successfully");
         } catch (error) {
           console.error(error);

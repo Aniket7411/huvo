@@ -38,8 +38,10 @@ function SuperAdminNav() {
         <div className="px-8 py-3">
 
           {/* <img src="/assets/cart.png" alt="Cart" width="60px" height="60px" /> */}
+          <Link to="/">
 
           <img src="/assets/newlogo.jpeg" alt="Logo" className="w-[100px] h-[20px] mb-5" />
+          </Link>
         </div>
       
         <hr className=' bg-gray-500 mx-10'></hr>
@@ -107,6 +109,20 @@ function SuperAdminNav() {
                     <BsWallet2 size={21} className="icon" />
                   </div>
                   Users/Buyers
+                </button>
+                <IoIosArrowRoundForward className="opacity-60" />
+              </Link>
+            </div>
+          </li>
+
+          <li>
+            <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
+              <Link to="/seller_payouts" className="flex items-center gap-2 ">
+                <button className="flex justify-center items-center gap-4 p-2">
+                  <div className="p-2 iconDiv">
+                    <BsWallet2 size={21} className="icon" />
+                  </div>
+                  Seller Payout
                 </button>
                 <IoIosArrowRoundForward className="opacity-60" />
               </Link>

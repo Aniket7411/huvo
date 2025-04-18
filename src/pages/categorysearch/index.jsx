@@ -65,11 +65,7 @@ export default function CategorySearh() {
     console.log(dataForFilter)
   };
 
-  const handleCheckboxChange = (list, setList, value) => {
-    setList((prev) =>
-      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
-    );
-  };
+
 
 
 
@@ -191,10 +187,7 @@ export default function CategorySearh() {
   return (
     <div className="h-auto">
 
-      <div class="px-4 ">
-        <h1 class="md:text-3xl text-lg  font-bold text-gray-800n " >Search Results for :  {searchGroup}</h1>
-
-      </div>
+      
 
 
       {/* Filter Button for Small Screens */}
@@ -213,110 +206,8 @@ export default function CategorySearh() {
       {/* Filter Sidebar */}
 
 
-      <div className="flex h-auto">
-        <div
-          style={{
-            maxHeight: '100vh',
-            overflowY: 'auto',
-          }}
-          className={`${filtersVisible ? "translate-x-0" : "-translate-x-full"
-            } lg:translate-x-0 fixed lg:static top-14 left-0 lg:w-1/4 bg-white shadow-md p-4 z-20 transition-transform duration-300`}
-        >
-          {/* Search Input */}
-          {/* <div className="mb-4">
-            <input
-              type="text"
-              placeholder="Search for products..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label="Search products"
-            />
-          </div> */}
+       
 
-          {/* Sorting Dropdown */}
-          <div className="mb-4">
-            <select
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label="Sort products"
-            >
-              <option value="">Sort By</option>
-              <option value="lowToHigh">Price: Low to High</option>
-              <option value="highToLow">Price: High to Low</option>
-            </select>
-          </div>
-
-          {/* Group Filter */}
-          <div className="mb-4">
-            <select
-              value={searchGroup}
-              onChange={(e) => setSearchGroup(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label="Filter by group"
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Kids">Kids</option>
-            </select>
-          </div>
-
-          {/* Color Filter */}
-          <div className="mb-4">
-            <h3 className="font-semibold mb-2">Colors</h3>
-            {colors.map((color) => (
-              <label key={color} className="flex items-center mb-1">
-                <input
-                  type="checkbox"
-                  value={color}
-                  checked={selectedColors.includes(color)}
-                  onChange={() =>
-                    handleCheckboxChange(selectedColors, setSelectedColors, color)
-                  }
-                  className="mr-2"
-                />
-                {color}
-              </label>
-            ))}
-          </div>
-
-          {/* Brand Filter */}
-          <div className="mb-4">
-            <h3 className="font-semibold mb-2">Brands</h3>
-            {allBrands.map((brand) => (
-              <label key={brand.id} className="flex items-center mb-2">
-                <input
-                  type="checkbox"
-                  value={brand.id}
-                  checked={selectedBrands.includes(brand.id)}
-                  onChange={() =>
-                    handleCheckboxChange(selectedBrands, setSelectedBrands, brand.id)
-                  }
-                  className="mr-2"
-                />
-                <img
-                  src={brand.image}
-                  alt={brand.brandName}
-                  className="w-8 h-8 object-cover rounded-full mr-2"
-                />
-                <span>{brand.brandName}</span>
-              </label>
-            ))}
-          </div>
-
-          {/* Apply Filters Button */}
-          <div className="mb-[30px]">
-            <button
-              onClick={handleSearch}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              Apply Filters
-            </button>
-          </div>
-        </div>
-
-        <div className="lg:w-3/4 w-full mx-auto">
 
 
 
@@ -461,12 +352,10 @@ export default function CategorySearh() {
 
 
 
-        </div>
 
 
 
 
-      </div>
 
 
 

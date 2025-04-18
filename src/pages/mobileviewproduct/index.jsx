@@ -20,59 +20,48 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
         {
           products.map((product) => {
             return (
-              <div key={product.id} className="rounded-md  p-2 flex flex-col items-center w-[48%]" style={{
-                outline: "1px solid blue"
-              }} >
-                <Link
-                  to={`/product-details/${product.productId}`}
-                  className="w-full"
-                >
-                  <img src={product.bannerImage || "https://via.placeholder.com/300"} className="h-[180px] rounded-lg  w-full" alt={product.name} />
-
-                </Link>
-
-                <h3 className="font-semibold text-lg mb-1 text-center line-clamp-2">{product?.name?.slice(0, 25) || "Product Name"}</h3>
-                {/* Star Ratings */}
-                <div className="flex items-center mb-2">
-                  <div className="flex text-yellow-400">{[...Array(5)].map((_, i) => <FaStar key={i} className="w-4 h-4" />)}</div>
-                  <span className="text-xs text-gray-500 ml-1">(New)</span>
-                </div>
-
-
-                {/* Pricing Details */}
-                {/* <div className="mb-2 w-full px-2">
-                  <div className="flex items-center justify-between text-sm text-gray-600">
-                    <PiCurrencyInr className="text-gray-600" />
-                    <span className="line-through mr-2">{product.price}</span>
-                    <CiDiscount1 className="text-green-500" />
-                    <span className="text-green-500 ml-1">{product.discount} off</span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm font-bold text-gray-800 mt-1">
-                    <div className="flex items-center">
-                      <PiCurrencyInr />
-                      <span>{finalPrice}</span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <span>Free Delivery</span>
-                    </div>
-                  </div>
-                </div> */}
-
-                {/* View Details Button */}
-                <Link
-                  to={`/product-details/${product.productId}`}
-                  className="w-full"
-                >
-                  <button
-                    className="w-full  rounded-lg bg-blue-600 hover:bg-blue-600 text-white text-center py-2 px-4 transition-all text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    aria-label={`View details for ${product.name}`}
-                  >
-                    View
-                  </button>
-                </Link>
-
-
+              <div className="w-[49%] bg-[#fff] py-2 rounded-lg flex flex-col shadow-md ">
+                                      <img
+                                        src={product?.bannerImage || "https://via.placeholder.com/300"}
+                                        alt={product?.name || "Product Image"}
+                                        className="h-[150px]  object-cover"
+                                        loading="lazy"
+                                      />
+                                      <div className="px-3">
+                                      
+                                    <h1 className="text-black font-semibold text-sm mt-2 line-clamp-2 mb-1">
+                                    {product?.name || "Product Name"}
+                                  </h1>
+                                  {/* Stars */}
+                                  <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
+                                    <div className="flex text-yellow-500">
+                                      {[...Array(5)].map((_, index) => (
+                                        <FaStar key={index} className="w-4 h-4" />
+                                      ))}
+                                    </div>
+                                    <span className="text-xs text-gray-500">(New)</span>
+                                  </div>
+              
+                                   {/* Pricing */}
+                                   <div className="flex gap-3 items-center text-sm mb-1">
+                         <p className="line-through font-medium text-red-600">{product?.actualPrice || "N/A"}</p>
+                                    <div className="flex items-center gap-1 text-green-600">
+                                      <PiCurrencyInr />
+                                      <p className="font-medium">
+                                      {product?.price || "N/A"}
+                                      </p>
+                                    </div>
+                                  </div>
+              <Link to= {`/product-details/${product?.productId}`}>
+                                  <button className="bg-blue-600 text-white px-2 py-1 rounded-md flex items-center gap-2 hover:bg-blue-700 transition-all">
+                View <FaArrowRight className="w-4 h-4" />
+              </button>
+              </Link>
               </div>
+                               
+              
+              
+                                  </div>
             )
           })
         }

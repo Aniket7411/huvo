@@ -22,6 +22,7 @@ export default function ProductDetails() {
   const { addToCartContext, cart, wishList, removeFromCartContext, updateCartItem } = useContext(CartContext)
 
 
+
   const openPaymentModal = () => {
     setIsPaymentModalOpen(true);
     // Prevent scrolling on the background
@@ -66,7 +67,6 @@ export default function ProductDetails() {
   const getProductDetails = async () => {
     setLoading(true);
     try {
-      debugger;
       const data = { productId: id };
       const response = await HttpClient.get("/product/productId", data);
       console.log("responseresponseresponse", response.product.price)
@@ -136,7 +136,6 @@ export default function ProductDetails() {
         if (response?.success === true) {
           setLoading(false)
           toast.success("Product added to cart successfully.");
-          window.location.reload();
 
         }
       } catch (error) {

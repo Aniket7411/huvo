@@ -4,7 +4,6 @@ const SellerProducts = () => {
   const location = useLocation();
   const vendorDetails = location.state;
 
-  console.log(location)
 
   if (!vendorDetails) {
     return <p>No vendor details provided.</p>;

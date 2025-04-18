@@ -67,6 +67,7 @@ import NewMenCollection from "./pages/newmen/index.jsx";
 import ShippingInfo from "./pages/shippingpolicies/index.jsx";
 import CheckOutWithoutLogin from "./pages/checkoutwithoutlogin/index.jsx";
 import CancellationManagementPage from "./pages/returnedorders/index.jsx";
+import SellerPayout from "./pages/sellerpayout/index.jsx";
 
 function App() {
   return (
@@ -312,7 +313,7 @@ function App() {
           <Route
             path="/products_category/:id"
             element={
-              <Layout changeHeaderColor="true">
+              <Layout>
                 <ProductsByCategory />
               </Layout>
             }
@@ -675,6 +676,17 @@ function App() {
             element={
               <SuperAdminAuth>
                 <InvoiceAdmin />
+              </SuperAdminAuth>
+            }
+          />
+        </Routes>
+
+        <Routes>
+          <Route
+            path="seller_payouts"
+            element={
+              <SuperAdminAuth>
+                <SellerPayout  />
               </SuperAdminAuth>
             }
           />

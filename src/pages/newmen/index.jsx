@@ -184,63 +184,14 @@ export default function WomenCollection() {
   return (
     <div className="h-auto">
       <div class="text-center mt-3">
-        <p className="font-[Poppins] font-normal text-center  text-sm md:text-lg text-[#2581eb] mt-2">
+        <p className="font-[Poppins] font-normal text-center  text-sm md:text-lg  text-[#2581eb] mt-2">
           Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
         </p>
       </div>
       <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
-        <ProductGrid menProducts={menProducts} />
         <ProductsShowingComponent allProducts={menProducts} />
         {/* Mobile Grid Section */}
-        <div className="md:hidden grid grid-cols-2 gap-3 p-3">
-          {menProducts.map((each, index) => {
-            const finalPrice = each.price - each.discount;
-            return (
-              <div
-                key={index}
-                className="bg-white flex flex-col rounded-lg shadow-sm p-2 border border-gray-200"
-              >
-                <Link to={`/product-details/${each?.productId}`}>
-                  <div className="aspect-square w-full mb-1">
-                    <img
-                      src={each?.bannerImage || "https://via.placeholder.com/300"}
-                      alt={each?.name || "Product Image"}
-                      className="h-full w-full object-cover rounded-md"
-                      loading="lazy"
-                    />
-                  </div>
-
-                  <h2 className="font-semibold text-gray-800 text-sm line-clamp-2">
-                    {each?.productName || "Product Name"}
-                  </h2>
-
-                  <div className="flex justify-between mt-1">
-                    <div className="flex items-center gap-1">
-                      <PiCurrencyInr className="text-xs" />
-                      <p className="line-through text-red-600 text-xs font-semibold">{each?.price}</p>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <PiCurrencyInr className="text-xs" />
-                      <p className="text-xs">{each?.discount}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center text-green-600 gap-1 mt-1">
-                    <PiCurrencyInr className="text-xs" />
-                    <p className="font-semibold text-xs">{finalPrice} /-</p>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="bg-[#011F4B] text-white px-2 py-1 rounded-lg text-xs mt-2 w-full"
-                  >
-                    View Product
-                  </button>
-                </Link>
-              </div>
-            );
-          })}
-        </div>
+     
       </section>
     </div>
   );

@@ -60,7 +60,6 @@ const ColumnChart = () => {
   const getDashboardData = async () => {
     try {
       const response = await HttpClient.get("/dashboard");
-      console.log("Full Response:", response);
 
       // Extract profit data
       if (response && response.profit) {

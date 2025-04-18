@@ -150,14 +150,12 @@ export default function Search() {
 
     const selectedColor = event.target.value
     setSelectedColor(selectedColor)
-    console.log('Selected Color:', selectedColor)
   }
  
   const handleSizeChange =(event)=>{
 
     const selectedSize = event.target.value
     setSelectedColor(selectedColor)
-    console.log('Selected Size:', selectedSize)
   }
   const handleSlider = (event) => {
     set_minValue(event.minValue);
@@ -178,14 +176,12 @@ export default function Search() {
   function toggleCategorySelector(){
     setIsOpenCategory(!isOpenCategory)
   }
-  console.log("category filter")
   const handlecategorychange = (category) => {
     setSelectedCategories(prevCategories =>
       prevCategories.includes(category)
         ? prevCategories.filter(cat => cat !== category)
         : [...prevCategories, category])
   }
-console.log("category change filter working")
 
   return (
     <section className="px-10 sm:px-20 py-7 font-[Quicksand]">

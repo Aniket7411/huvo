@@ -648,7 +648,7 @@ export default function CheckOutWithoutLogin() {
                                       key={i}
                                       htmlFor={`otherAddres${i}`}
                                       // className={`flex gap-2 items-start cursor-pointer border-2 border-[#D6CBCB] font-white shadow-[#0000001F]-500 py-5 px-12 rounded-md shadow-lg mb-4` + (item.isDefault === true ? ' hidden' : '') }
-                                      className="flex gap-2 items-start cursor-pointer border-2 border-[#D6CBCB] font-white shadow-[#0000001F]-500 py-5 px-12 rounded-md shadow-lg mb-4"
+                                      className="flex gap-2 items-start cursor-pointer border-2 border-[#D6CBCB] font-white shadow-[#0000001F]-500 py-5 px-4 rounded-md shadow-lg mb-4"
                                     >
                                       <input
                                         type="radio"

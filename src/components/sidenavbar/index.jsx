@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-import { MdSignalCellularAlt } from "react-icons/md";
+import { MdOutlineCancelScheduleSend, MdSignalCellularAlt } from "react-icons/md";
 import { FiTruck } from "react-icons/fi";
 import { BsWallet2 } from "react-icons/bs";
 import { BsReceipt } from "react-icons/bs";
@@ -122,9 +122,9 @@ function Sidenavbar() {
                 to="/cancelled_orders"
                 className="flex items-center gap-2"
               >
-                <button className="flex justify-center items-center gap-4  p-2">
+                <button className="flex justify-center items-center gap-2 p-2">
                   <div className="p-2 iconDiv">
-                    <FiTruck size={21} className="icon" />
+                  <MdOutlineCancelScheduleSend   size={21} className="icon" />
                   </div>
                   Cancelled Orders
                 </button>

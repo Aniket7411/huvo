@@ -26,7 +26,6 @@ const SellerBankForm = ({ existingData = null, onSubmit }) => {
         setIsLoading(true)
         try {
             const response = await HttpClient.get("/sellerbank")
-            console.log("dkdjdjkdj", response?.data?.contactDetails?.contact)
             setFormData({
                 name: response?.data?.bankDetails?.accountHolderName,
                 email: response?.data?.contactDetails?.email,

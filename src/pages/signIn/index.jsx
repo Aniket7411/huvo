@@ -38,9 +38,7 @@ export default function SignIn() {
         navigate("/login");
       }
     } catch (error) {
-      console.log(error?.message);
       toast.error(error?.response?.data?.message);
-      console.log(error?.response);
       setLoader(false);
       reset();
 
@@ -57,23 +55,17 @@ export default function SignIn() {
 
     try {
       const response = await HttpClient.post(`/users/username`, { username });
-      console.log(response)
-      console.log(response.status)
-      console.log(response.message)
+
       if (response.message === "Username is available") {
         setUserNameError("Username is available");
 
-        console.log("Username is available");
       }
-      console.log("b")
     }
 
     catch (error) {
       setIsError(true);
 
       if (error.response && error.response.status === 400) {
-        console.log(error.response)
-        console.log(error.response.status)
         if (error.response.data.message === "Username not available") {
           setUserNameError("Username already exists. Please try another.");
         } else if (error.response.data.message === "Invalid username. It must start with a letter and can only contain letters, numbers, and underscores.") {

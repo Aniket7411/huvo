@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import LoadSpinner from "../../../components/LoadSpinner";
 import Loader from "../../../components/loader";
 import ProductReview from "../../newproduct";
+import OrderStatusTracker from "./orderstatuses";
 
 const Orders = () => {
   const [allOrders, setAllOrders] = useState([]);
@@ -60,6 +61,7 @@ const Orders = () => {
 
 
       console.log("allOrders", formattedData)
+
     } catch (error) {
       console.error("Error fetching data:", error);
       toast.error(error?.response?.data?.message || "Failed to fetch orders.");
@@ -178,43 +180,9 @@ const Orders = () => {
                       View Details
                     </button>
                   </Link> */}
+                      <OrderStatusTracker orderStatuses={item?.orderStatuses}/>
 
-                    {/* Order Status Timeline */}
-                    <div className="mt-6">
-                      <h3 className="text-sm font-semibold text-blue-700 mb-3">ORDER STATUS</h3>
-                      <div className="flex flex-col md:flex-row items-center justify-between relative">
-                        {/* Connector Line */}
-                        <div className="absolute top-4 left-0 right-0 h-0.5 border-t-2 border-dashed border-blue-300 hidden md:block"></div>
-
-                        {timelineStages.map((stage, idx) => {
-                          // Find if the current stage exists in the orderStatuses
-                          const statusObj = item?.orderStatuses.find(s => s.status.toLowerCase() === stage.toLowerCase());
-                          const isCompleted = Boolean(statusObj);
-                          const isCurrent = item?.orderStatuses[item?.orderStatuses.length - 1]?.status.toLowerCase() === stage.toLowerCase();
-
-                          return (
-                            <div key={idx} className="relative flex flex-col items-center z-10 bg-white px-2">
-                              {/* Step Circle */}
-                              <div
-                                className={`w-8 h-8 rounded-full flex items-center justify-center 
-              ${isCompleted ? 'bg-blue-600' : 'bg-gray-300'}`}
-                              >
-                                <span className={`text-xs ${isCompleted ? 'text-white' : 'text-gray-600'}`}>{idx + 1}</span>
-                              </div>
-                              {/* Status Date */}
-                              <p className="text-xs text-gray-600 mt-1">
-                                {statusObj ? new Date(statusObj.date).toLocaleDateString('en-GB') : '—'}
-                              </p>
-                              {/* Status Label */}
-                              <p className={`text-xs font-medium mt-1 text-center 
-            ${isCompleted ? 'text-blue-900' : 'text-gray-500'}`}>
-                                {stage}
-                              </p>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
+                  
 
 
                   </div>

@@ -13,6 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import CategorySlider from "../categoryslider";
 import BrandSlider from "../brands";
+import ProductsShowingComponent from "../filterproductComponent";
 
 export default function ProductByCategory() {
   const [allProducts, setAllProducts] = useState([]);
@@ -38,7 +39,7 @@ export default function ProductByCategory() {
       const formattedData = response.data.map((eachProduct) => ({
         objectId: eachProduct._id,
         bannerImage: eachProduct.bannerImage,
-        productName: eachProduct.name,
+        name: eachProduct.name,
         brandName: eachProduct.brand?.name || "Unknown Brand",
         brandImage: eachProduct.brand?.image,
         onGoingOffer: eachProduct.brand?.onGoingOffer,
@@ -95,30 +96,6 @@ export default function ProductByCategory() {
     setFilteredProducts(filtered);
   };
 
-  // Handler functions
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const handleGenderChange = (e) => {
-    setGenderCategory(e.target.value);
-  };
-
-  const handleSortChange = (e) => {
-    setSortOrder(e.target.value);
-  };
-
-  const resetFilters = () => {
-    setSearchQuery("");
-    setGenderCategory("all");
-    setSortOrder("default");
-    setFilteredProducts(allProducts);
-  };
-
-  // Apply filters when any filter state changes
-  useEffect(() => {
-    applyFilters();
-  }, [searchQuery, genderCategory, sortOrder]);
 
   // Fetch products when search word changes
   useEffect(() => {
@@ -126,219 +103,13 @@ export default function ProductByCategory() {
   }, [searchWord]);
 
   return (
-    <div className="h-auto">
-      <section className="filter-section bg-white py-4 px-4">
-        {/* Title and Main Filter Container */}
-        <div className="flex flex-col space-y-4">
-         
+<>
 
-          {/* Filter Container */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            {/* Filter Header - Flex Row */}
-            <div className="flex flex-row justify-between items-center mb-2">
-              <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                <FaFilter className="text-blue-500" />
-                Filters
-              </h2>
+    <ProductsShowingComponent allProducts={allProducts} /> 
 
-              {/* Toggle Button */}
-              <button
-                onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
-              >
-                {showFilters ? (
-                  <>
-                    <span>Hide Filters</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
-                    </svg>
-                  </>
-                ) : (
-                  <>
-                    <span>Show Filters</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </>
-                )}
-              </button>
-            </div>
-
-            {/* Filter Options - Flex Column on mobile, Row on desktop */}
-            {showFilters && (
-              <div className="flex flex-col md:flex-row gap-4 pt-4 border-t border-gray-200">
-                {/* Search Products - Flex Item */}
-                <div className="flex-1 min-w-[200px]">
-                  <label className="block font-medium text-gray-700 text-sm mb-2">
-                    Search Products
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={handleSearch}
-                      placeholder="Search by name or brand..."
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Gender Category - Flex Item */}
-                <div className="flex-1 min-w-[200px]">
-                  <label className="block font-medium text-gray-700 text-sm mb-2">
-                    Gender Category
-                  </label>
-                  <select
-                    value={genderCategory}
-                    onChange={handleGenderChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
-                  >
-                    <option value="all">All Categories</option>
-                    <option value="men">Men</option>
-                    <option value="women">Women</option>
-                    <option value="kids">Kids</option>
-                  </select>
-                </div>
-
-                {/* Sorting - Flex Item */}
-                <div className="flex-1 min-w-[200px]">
-                  <label className="block font-medium text-gray-700 text-sm mb-2">
-                    Sort By
-                  </label>
-                  <select
-                    value={sortOrder}
-                    onChange={handleSortChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
-                  >
-                    <option value="default">Default</option>
-                    <option value="low-to-high">Price: Low to High</option>
-                    <option value="high-to-low">Price: High to Low</option>
-                  </select>
-                </div>
-
-                {/* Reset Button - Flex Item with alignment */}
-                <div className="flex-1 flex items-end min-w-[200px]">
-                  <button
-                    onClick={resetFilters}
-                    className="w-full md:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-                  >
-                    <FaFilterCircleXmark />
-                    Reset Filters
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
+    
 
 
-      <div className="lg:w-full mx-auto">
-        <CategorySlider />
-
-        <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
-          {searchQuery !== "" ? (
-            <h1 className="font-bold font-inter px-3 py-1">
-              Search Results for '{searchQuery}'
-            </h1>
-          ) : (
-            <h1 className="font-bold font-inter px-3 py-1 text-gray-500">
-              Exploring Products You'll Love!
-            </h1>
-          )}
-
-          {isLoading ? (
-            <Loader />
-          ) : filteredProducts.length === 0 ? (
-            <div className="p-8 text-center">
-              <p className="text-gray-500 text-lg">No products found matching your filters.</p>
-              <button
-                onClick={resetFilters}
-                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              >
-                Reset Filters
-              </button>
-            </div>
-          ) : (
-            <div className="p-4 gap-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {filteredProducts.map((eachProduct, i) => (
-                <div
-                  key={i}
-                  className="bg-white flex flex-col rounded-xl p-3 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300"
-                >
-                  {/* Product Image */}
-                  <div className="w-full aspect-square mb-3 overflow-hidden rounded-md">
-                    <img
-                      src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
-                      alt={eachProduct?.productName || "Product Image"}
-                      className="h-52 w-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-
-                  {/* Product Details */}
-                  <h1 className="text-black font-semibold text-lg line-clamp-2 mb-2">
-                    {eachProduct?.productName || "Product Name"}
-                  </h1>
-
-                  {/* Brand Name */}
-                  <p className="text-gray-600 text-sm mb-1">
-                    {eachProduct?.brandName || "Unknown Brand"}
-                  </p>
-
-                  {/* Product Rating */}
-                  <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
-                    <div className="flex text-yellow-500">
-                      {[...Array(5)].map((_, index) => (
-                        <FaStar key={index} className="w-4 h-4" />
-                      ))}
-                    </div>
-                    <span className="text-xs text-gray-500">(New)</span>
-                  </div>
-
-                  {/* Pricing Details */}
-                  <div className="flex justify-between items-center text-sm mb-2">
-                    <div className="flex items-center gap-1 text-red-600">
-                      <PiCurrencyInr />
-                      <p className="line-through font-medium">{eachProduct?.actualPrice || "N/A"}</p>
-                    </div>
-                    <div className="flex items-center gap-1 text-green-600">
-                      <CiDiscount1 />
-                      <PiCurrencyInr />
-                      <p className="font-medium">
-                        {eachProduct?.actualPrice && eachProduct?.price
-                          ? eachProduct.actualPrice - eachProduct.price
-                          : "N/A"} off
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Final Price */}
-                  <div className="flex justify-between items-center text-lg font-bold text-gray-800 mb-3">
-                    <div className="flex items-center">
-                      <PiCurrencyInr />
-                      <span>{eachProduct?.price || "N/A"}</span>
-                    </div>
-                    <span className="text-green-500 text-sm">Free Delivery</span>
-                  </div>
-
-                  {/* View Product Button */}
-                  <Link to={`/product-details/${eachProduct?.productId}`} className="w-full">
-                    <button className="w-full flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-all">
-                      View Product <FaArrowRight className="ml-2" />
-                    </button>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-      </div>
-    </div>
+    </>
   );
 }

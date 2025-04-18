@@ -25,7 +25,6 @@ const StoreAndProducts = () => {
     try {
       const response = await HttpClient.get(`/product/storeProducts`, { sellerId: id });
 
-      console.log("filteredProductss", response)
 
       const formattedData = response.data.map((eachProduct) => ({
         objectId: eachProduct._id,
@@ -70,9 +69,7 @@ const StoreAndProducts = () => {
     if (searchQuery) {
 
       // Apply sorting
-      console.log("searchQuery", searchQuery)
 
-      console.log("searchQuery", filtered)
 
       filtered = filtered.filter((product) =>
         product.productName.toLowerCase().includes(searchQuery.toLowerCase) ||

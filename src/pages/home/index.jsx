@@ -74,7 +74,7 @@ export default function Home() {
 
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResult, setSearchResult] = useState("")
-  const [category, setCategory] = useState("category_search")
+  const [category, setCategory] = useState("product_search")
   const navigate = useNavigate();
 
 
@@ -270,61 +270,6 @@ export default function Home() {
               </div>
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-yellow-400 rounded-full"></div>
             </div>
-
-
-
-            <div className="relative md:hidden flex items-center justify-between rounded-full bg-[#E7EFFA] px-4 py-2 shadow-lg">
-              {/* Search Icon Button */}
-              <button
-                className="text-gray-600 hover:text-gray-800 transition-colors mr-3"
-                onClick={handleSearch}
-                aria-label="Search"
-              >
-                <CiSearch className="text-xl" />
-              </button>
-
-              {/* Search Input */}
-              <input
-                type="text"
-                placeholder="Search by products, categories, or brands"
-                className="flex-1 text-sm placeholder-gray-500 text-gray-800 bg-transparent focus:outline-none"
-                value={searchQuery}
-                onChange={handleInputChange}
-              // onKeyUp={handleKeyInput}
-              />
-
-              {/* Dropdown Menu */}
-              <select
-                className="ml-3 text-sm bg-transparent text-gray-700 border-0 focus:ring-2 focus:ring-blue-500"
-                defaultValue="category"
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option disabled>Search by</option>
-                <option value="category_search">Category</option>
-                <option value="product_search">Product</option>
-                <option value="store_product">Brand</option>
-                <option value="store_product">Store</option>
-
-              </select>
-
-              {/* Search Suggestions */}
-              {searchResult?.length > 0 && (
-                <ul className="absolute top-full left-0 mt-2 w-full bg-white border rounded-lg shadow-lg max-h-48 overflow-auto z-50">
-                  {searchResult?.map((suggestion) => (
-                    <li
-                      key={suggestion?._id}
-                      className="p-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => handleSuggestionClick(suggestion, suggestion?._id)}
-                    >
-                      {category === "userName" ? suggestion.username : suggestion.name}
-                    </li>
-
-                  ))}
-                </ul>
-              )}
-            </div>
-
-
 
             <section className="px-2 md:px-10 py-3 ">
               <h2 className="font-[Quicksand] font-bold text-center text-sm md:text-4xl text-[#011F4B]">
