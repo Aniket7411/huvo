@@ -554,7 +554,7 @@ console.log("calculateTotal",totalCost)
       </p>
     </div>
 
-    <div className="flex justify-between text-gray-700 mb-3">
+    <div className="flex justify-between text-gray-700 mb-2">
       <p>SGST</p>
       <p className="flex items-center text-green-600 font-medium">
         + <PiCurrencyInr className="mr-1" />
