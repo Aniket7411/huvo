@@ -202,7 +202,7 @@ export default function CategorySearh() {
 
                     {/* Product Details */}
                     <h1 className="text-black font-semibold text-lg line-clamp-2 mb-2">
-                      {eachProduct?.productName || "Product Name"}
+                      {eachProduct?.productName.slice(0,30) || "Product Name"}
                     </h1>
 
                     {/* Product Rating */}

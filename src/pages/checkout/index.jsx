@@ -274,9 +274,11 @@ export default function CheckOut() {
         couponCode,
       });
 
+      console.log(response)
+
       if (response?.success)
         toast.success("Order Place Successfully!");
-      window.location.href = response?.payment_url;
+      window.location.href = await response?.payment_url;
       fetchProfileData();
       console.log("Cart>>>>>>>: ", cartProducts)
     } catch (error) {
