@@ -24,47 +24,18 @@ export default function CategorySearh() {
   //console.log("idididid", id)
 
 
-  const [products, setProducts] = useState([]);
-  const [isLoading, setLoading] = useState(false);
+
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortOption, setSortOption] = useState("");
-  const [ratingFilter, setRatingFilter] = useState("");
-  const [selectedColors, setSelectedColors] = useState([]);
-  const [selectedBrands, setSelectedBrands] = useState([]);
-  const [discountRange, setDiscountRange] = useState("");
-  const [filtersVisible, setFiltersVisible] = useState(false);
-  const [searchGroup, setSearchGroup] = useState(category)
-
-  const [allBrands, setAllBrands] = useState([])
-
-  const colors = ["Red", "Blue", "Green", "Black", "White"];
-  const brands = ["Nike", "Adidas", "Puma", "Reebok", "Under Armour"];
-  const discounts = ["10% & Above", "20% & Above", "30% & Above", "50% & Above"];
+ 
+ const [filtersVisible, setFiltersVisible] = useState(false);
 
 
 
-  const handleSearch = () => {
-    // Add your search logic here
-    console.log("Search Term:", searchTerm);
-    console.log("Sort Option:", sortOption);
-    console.log("Rating Filter:", ratingFilter);
-    console.log("Selected Colors:", selectedColors);
-    console.log("Selected Brands:", selectedBrands);
-    console.log("Discount Range:", discountRange);
-    const price = sortOption === "lowToHigh" ? "Low" : "High"
 
-    const dataForFilter = {
-      brand: selectedBrands,
-      price,
-      colors: selectedColors,
-      searchTerm,
-      group: "men"
-    }
 
-    console.log(dataForFilter)
-  };
 
+ 
 
 
 
@@ -85,7 +56,6 @@ export default function CategorySearh() {
         });
       setAllProducts(response.products);
 
-      console.log("trending products", response)
 
       const formattedData = response.products.map((eachProduct) => ({
         objectId: eachProduct._id,
@@ -133,6 +103,7 @@ export default function CategorySearh() {
         productId: eachProduct.productId,
       }))
       setAllProducts(formattedData)
+      console.log("formattedData",formattedData)
       }
       
 
@@ -156,29 +127,11 @@ export default function CategorySearh() {
     }
   };
 
-  const getAllBrands = async () => {
-    try {
-      const { brands } = await HttpClient.get("/brand");
-
-      const formattedBrands = brands.map((eachBrand) => ({
-        id: eachBrand._id,
-        brandId: eachBrand.brandId,
-        image: eachBrand.image,
-        logo: eachBrand.logo,
-        brandName: eachBrand.name,
-      }))
-      setAllBrands(formattedBrands)
-    } catch (error) {
-      toast.error(error?.response?.data?.message);
-    }
-  };
 
 
   useEffect(() => {
-    getAllCategories();
     fetchAllProducts();
 
-    getAllBrands();
   }, []);
 
 

@@ -273,7 +273,7 @@ const ProductsShowingComponent = (props) => {
                  w-full sm:w-[48%] md:w-[48%] lg:w-[31%] xl:w-[23%] 2xl:w-[18%]"
                   >
                     {/* Product Image */}
-                    <div className="w-full aspect-square mb-3 overflow-hidden rounded-md flex items-center justify-center">
+                    <div className="w-full aspect-square mb-1 overflow-hidden rounded-md flex items-center justify-center">
                       <img
                         src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
                         alt={eachProduct?.name || "Product Image"}
@@ -287,11 +287,8 @@ const ProductsShowingComponent = (props) => {
                       {eachProduct?.name || "Product Name"}
                     </h1>
 
-                    {/* Brand */}
-                    <p className="text-gray-600 text-sm mb-1">
-                      {eachProduct?.brandName || "Unknown Brand"}
-                    </p>
-
+                   
+                    <div className="flex justify-between">
                     {/* Stars */}
                     <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
                       <div className="flex text-yellow-500">
@@ -302,8 +299,14 @@ const ProductsShowingComponent = (props) => {
                       <span className="text-xs text-gray-500">(New)</span>
                     </div>
 
+                     {/* Brand */}
+                     <p className="text-gray-600 text-sm mb-1">
+                      {eachProduct?.brandName || "Unknown Brand"}
+                    </p>
+                    </div>
+
                     {/* Pricing */}
-                    <div className="flex justify-between items-center text-sm mb-2">
+                    <div className="flex justify-between items-center text-sm mb-1">
                       <div className="flex items-center gap-1 text-red-600">
                         <PiCurrencyInr />
                         <p className="line-through font-medium">{eachProduct?.actualPrice || "N/A"}</p>
@@ -320,10 +323,10 @@ const ProductsShowingComponent = (props) => {
                     </div>
 
                     {/* Final Price */}
-                    <div className="flex justify-between items-center text-lg font-bold text-gray-800 mb-2">
+                    <div className="flex justify-between items-center text-lg font-bold text-gray-800 mb-1">
                       <div className="flex items-center">
                         <PiCurrencyInr />
-                        <span>{eachProduct?.price || "N/A"}</span>
+                        <span>{eachProduct?.price || "N/A"}/-</span>
                       </div>
                       {/* <span className="text-green-500 text-sm">Free Delivery</span> */}
                     </div>

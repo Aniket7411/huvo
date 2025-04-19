@@ -73,7 +73,7 @@ const CategorySlider = () => {
   
       <Slider {...settings}>
         {categories.map((category) => (
-          <Link to={`/category_search/${category.group}/${category.uniqueId}`} key={category.uniqueId}>
+          <Link to={`/products_category/${category.name}`} >
             <div className="px-1 sm:px-2">
               <div className="flex flex-col items-center p-1 sm:p-2 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300">
                 <div className="relative">
