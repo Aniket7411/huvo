@@ -263,7 +263,8 @@ export default function CheckOut() {
 
       if (response?.success)
         toast.success("Order Place Successfully!");
-      window.location.href = response?.payment_url;
+      console.log(response)
+      // window.location.href = response?.payment_url;
       fetchProfileData();
       console.log("Cart>>>>>>>: ", cartProducts)
     } catch (error) {
