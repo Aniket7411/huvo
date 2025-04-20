@@ -235,6 +235,11 @@ export default function Header(props) {
               Home
             </li>
           </Link>
+          <Link to="/">
+            <li className="cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
+              Home
+            </li>
+          </Link>
 
           <Link to="/men-collection">
             <li className=" cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
@@ -418,7 +423,7 @@ export default function Header(props) {
 
 
       </div>
-      
+
 
 
 
@@ -492,7 +497,7 @@ export default function Header(props) {
 
         <div className="flex items-center gap-1">
 
-          <IoReorderThree  size={30} className="text-3xl cursor-pointer" onClick={() => openSubmenu()}
+          <IoReorderThree size={30} className="text-3xl cursor-pointer" onClick={() => openSubmenu()}
           />
 
           <img src="/assets/favicon.svg" alt="logo" className="w-[25px] bg-[#fff] rounded-full" />
@@ -526,7 +531,7 @@ export default function Header(props) {
             aria-label="Cart"
             className="relative"
           >
-            <HiOutlineShoppingBag  size={30} onClick={() => {
+            <HiOutlineShoppingBag size={30} onClick={() => {
               if (loginStatus === 0) {
                 navigate("/checkout/cart/not_login");
               } else {
@@ -547,7 +552,7 @@ export default function Header(props) {
               isLoggedIn() ? navigate("/profile") : SetdropdownContent(!dropdownContent)
             }
           >
-            <FaRegUser  size={30} className="text-lg cursor-pointer" />
+            <FaRegUser size={30} className="text-lg cursor-pointer" />
           </button>
         </div>
 
@@ -580,9 +585,9 @@ export default function Header(props) {
           onChange={(e) => setCategory(e.target.value)}
         >
           <option disabled>Search by</option>
-              <option value="product_search">Product</option>
-              <option value="category_search">Category</option>
-              <option value="store_product">Store</option>
+          <option value="product_search">Product</option>
+          <option value="category_search">Category</option>
+          <option value="store_product">Store</option>
         </select>
 
         {/* Search Suggestions */}
@@ -610,7 +615,7 @@ export default function Header(props) {
                 {/* <img src="assets/newlogo.jpeg" alt="logo" /> */}
                 <Link to="/">
 
-                <img src="/assets/newlogo.jpeg" className="w-[50px] h-[30px]" alt="logo" />
+                  <img src="/assets/newlogo.jpeg" className="w-[50px] h-[30px]" alt="logo" />
                 </Link>
 
               </div>
@@ -625,23 +630,23 @@ export default function Header(props) {
               <li onClick={closeSubmenu} className="cursor-pointer mb-2">
                 <Link to="/men-collection">
 
-                Men
+                  Men
                 </Link>
               </li>
 
               <li onClick={closeSubmenu} className="cursor-pointer mb-2">
                 <Link to="/women-collection">
-                Women
+                  Women
                 </Link>
               </li>
 
               <li onClick={closeSubmenu} className="cursor-pointer mb-2">
                 <Link to="/kids-collection">
-                Kids
+                  Kids
                 </Link>
               </li>
 
-             
+
             </ul>
           </div>
         </section>

@@ -144,27 +144,7 @@ export default function CheckOut() {
     }
   };
 
-  const openDialogForProduct = async (productIdName) => {
-
-    try {
-      const { product } = await HttpClient.get(
-        `/product/${cartProducts[productIdName]?.productId}`
-      );
-      setProductSize(product?.sizes);
-      setStock(
-        product?.sizes.filter(
-          (item) => item.size === cartProducts[productIdName]?.size
-        )[0]?.stock
-      );
-      setSelectedProduct(productIdName);
-      setSelectedQuantity(cartProducts[productIdName]?.quantity.toString());
-      setSelectedSize(cartProducts[productIdName]?.size);
-      setIsOpen(true);
-    } catch (error) {
-      console.log(error);
-      toast.error(error?.response?.data?.message);
-    }
-  };
+ 
 
 
   console.log("totalCartData", totalCartData)
@@ -260,25 +240,30 @@ export default function CheckOut() {
   const orderPlace = async () => {
 
     console.log("kkk",totalCost * 18/100 + totalCost)
+    console.log("kkk",Math.round(totalCost + (totalCost * 18) / 100))
 
 
 
 
     try {
       const response = await HttpClient.post("/order", {
-        totalAmount:  totalCost * 18/100 + totalCost,
+        totalAmount:  Math.round(totalCost + (totalCost * 18) / 100),
         totalProduct: Object.keys(totalCartData)?.length,
         products: totalCartData,
         paymentType,
         shippingDetails: shippingAddress,
         couponCode,
+        totalSgst: (totalCost * 18) / 100,
+        totalCgst: (totalCost * 18) / 100,
+
+
       });
 
       console.log(response)
 
       if (response?.success)
         toast.success("Order Place Successfully!");
-      window.location.href = await response?.payment_url;
+      window.location.href = response?.payment_url;
       fetchProfileData();
       console.log("Cart>>>>>>>: ", cartProducts)
     } catch (error) {
@@ -366,7 +351,7 @@ export default function CheckOut() {
   console.log("calculateTotal",totalCartData)
 
   const totalCost = Object.keys(totalCartData)
-  .map(key => totalCartData[key].price * totalCartData[key].quantity)
+  .map(key => totalCartData[key].price * totalCartData[key].quantity - totalCartData[key].cgst - totalCartData[key].sgst)
   .reduce((sum, cost) => sum + cost, 0);
 
 console.log("calculateTotal",totalCost)
@@ -504,7 +489,7 @@ console.log("calculateTotal",totalCost)
                               <div className="flex flex-wrap items-center gap-3 text-sm mt-1">
                                 <p className="text-red-500 font-medium flex items-center">
                                   <PiCurrencyInr className="mr-0.5" />
-                                  <span className="line-through">{item.actualPrice * item.quantity}</span>
+                                  <span className="line-through">{(item.actualPrice * item.quantity)}</span>
                                 </p>
 
                                 <p className="text-blue-500 bg-blue-50 px-2 py-0.5 rounded-full text-xs">
@@ -523,7 +508,7 @@ console.log("calculateTotal",totalCost)
 
                             {/* Total - Desktop */}
                             <div className="text-right font-bold text-gray-800 hidden sm:block min-w-[100px]">
-                              ₹{(item.price * item.quantity).toLocaleString()}
+                              ₹{(item.price * item.quantity) - ((item.cgst + item.sgst) * ( item.quantity))}
                             </div>
                           </div>
                         ))}
@@ -578,7 +563,9 @@ console.log("calculateTotal",totalCost)
       <p>Total Amount</p>
       <p className="flex items-center">
         <PiCurrencyInr className="mr-1" />
-        {totalCost + (totalCost * 18) / 100}
+        
+
+        {Math.round(totalCost + (totalCost * 18) / 100)}
       </p>
     </div>
   </div>
@@ -808,7 +795,9 @@ console.log("calculateTotal",totalCost)
     <p>Total Amount</p>
     <p className="flex items-center">
       <PiCurrencyInr className="mr-1" />
-      {totalCost + (totalCost * 18) / 100}
+
+      {Math.round(totalCost + (totalCost * 18) / 100)}
+
     </p>
   </div>
 
@@ -910,7 +899,8 @@ console.log("calculateTotal",totalCost)
     <p>Total Amount</p>
     <p className="flex items-center">
       <PiCurrencyInr className="mr-1" />
-      {(totalCost * 18) / 100 + totalCost}
+      {Math.round(totalCost + (totalCost * 18) / 100)}
+
     </p>
   </div>
 
