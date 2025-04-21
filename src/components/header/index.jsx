@@ -235,11 +235,7 @@ export default function Header(props) {
               Home
             </li>
           </Link>
-          <Link to="/">
-            <li className="cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
-              Home
-            </li>
-          </Link>
+
 
           <Link to="/men-collection">
             <li className=" cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
