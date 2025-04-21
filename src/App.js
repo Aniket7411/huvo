@@ -68,6 +68,7 @@ import ShippingInfo from "./pages/shippingpolicies/index.jsx";
 import CheckOutWithoutLogin from "./pages/checkoutwithoutlogin/index.jsx";
 import CancellationManagementPage from "./pages/returnedorders/index.jsx";
 import SellerPayout from "./pages/sellerpayout/index.jsx";
+import ProductReview from "./pages/newproduct/index.jsx";
 
 function App() {
   return (
@@ -90,7 +91,7 @@ function App() {
             path="/test"
             element={
               <Layout>
-                <CategorySlider />
+                <ProductReview />
               </Layout>
             }
           />

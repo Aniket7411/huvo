@@ -490,14 +490,14 @@ export default function Header(props) {
 
 
 
-      <div className="flex md:hidden  py-4 px-5 mb-auto text-[#000] justify-between items-center" style={{
+      <div className="flex md:hidden p-5 mb-auto text-[#000] justify-between items-center" style={{
         backgroundImage: "linear-gradient(to right, #007bff, #fff)",
       }} >
 
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-3">
 
-          <IoReorderThree size={30} className="text-3xl cursor-pointer" onClick={() => openSubmenu()}
+          <IoReorderThree size={35} className="text-3xl cursor-pointer" onClick={() => openSubmenu()}
           />
 
           <img src="/assets/favicon.svg" alt="logo" className="w-[25px] bg-[#fff] rounded-full" />
@@ -507,7 +507,7 @@ export default function Header(props) {
         </div>
 
 
-        <p className="text-[#fff] italic " style={{ fontFamily: "Caveat, cursive" }}>Huvo</p>
+        <p className="text-[#fff] font-semibold text-3xl">Huvo</p>
 
         <div className="flex gap-3 justify-between items-center cursor-pointer relative">
           {/* Wishlist Button */}
@@ -518,7 +518,7 @@ export default function Header(props) {
             }
             className="relative"
           >
-            <FiHeart size={30} className="text-xl cursor-pointer" />
+            <FiHeart size={28} className="text-xl cursor-pointer" />
             {wishListItems > 0 && (
               <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
                 {wishListItems}
@@ -531,7 +531,7 @@ export default function Header(props) {
             aria-label="Cart"
             className="relative"
           >
-            <HiOutlineShoppingBag size={30} onClick={() => {
+            <HiOutlineShoppingBag size={28} onClick={() => {
               if (loginStatus === 0) {
                 navigate("/checkout/cart/not_login");
               } else {
@@ -552,7 +552,7 @@ export default function Header(props) {
               isLoggedIn() ? navigate("/profile") : SetdropdownContent(!dropdownContent)
             }
           >
-            <FaRegUser size={30} className="text-lg cursor-pointer" />
+            <FaRegUser size={28} className="text-lg cursor-pointer" />
           </button>
         </div>
 
