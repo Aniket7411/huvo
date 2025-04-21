@@ -486,7 +486,7 @@ export default function Header(props) {
 
 
 
-      <div className="flex md:hidden p-5 mb-auto text-[#000] justify-between items-center" style={{
+      <div className="flex md:hidden p-4 mb-auto text-[#000] justify-between items-center" style={{
         backgroundImage: "linear-gradient(to right, #007bff, #fff)",
       }} >
 
@@ -503,7 +503,7 @@ export default function Header(props) {
         </div>
 
 
-        <p className="text-[#fff] font-semibold text-3xl">Huvo</p>
+        <p className="text-[#fff] font-semibold text-xl">Huvo</p>
 
         <div className="flex gap-3 justify-between items-center cursor-pointer relative">
           {/* Wishlist Button */}
@@ -548,7 +548,7 @@ export default function Header(props) {
               isLoggedIn() ? navigate("/profile") : SetdropdownContent(!dropdownContent)
             }
           >
-            <FaRegUser size={25} className="text-lg cursor-pointer" />
+            <FaRegUser size={25} className="text-lg mr-2 cursor-pointer" />
           </button>
         </div>
 
