@@ -301,7 +301,7 @@ export default function CheckOutWithoutLogin() {
 
     <>
       {
-        Object.keys(cartProducts).length === 0 ? <div className="flex justify-center items-center flex-col">
+        Object.keys(cartProducts).length === 0 ? <div className="flex justify-center items-center h-auto flex-col">
           <h2 className="text-xl font-semibold mb-2">
             Hey, it feels so light!
           </h2>
@@ -310,14 +310,14 @@ export default function CheckOutWithoutLogin() {
           </p>
           <img
             className="h-[200px] my-3"
-            src="../assets/empty-cart.png"
+            src="/assets/emptycart.png"
             alt="wishlistEmpty"
           />
           <Link
-            to="/wishlist"
+            to="/"
             className="py-3 px-12 text-lg font-semibold text-[#3466e8] border border-solid border-[#3466e8] rounded"
           >
-            ADD ITEMS FROM WISHLIST
+            Visit our products
           </Link>
         </div> : <div>
           <section className="px-10 py-7 font-[Quicksand]">
@@ -328,13 +328,12 @@ export default function CheckOutWithoutLogin() {
                     BAG
                   </Tab>
                   <span className="hidden sm:block mx-5">-------------</span>
-                  <Tab className="font-medium text-[#474747] focus:text-[#011F4B] active:text-[#011F4B] focus:outline-none font-[Poppins]">
+                  <p onClick={() => {
+                    toast.info("Please login first")
+                  }} className="font-medium cursor-pointer text-[#474747] focus:text-[#011F4B] active:text-[#011F4B] focus:outline-none font-[Poppins]">
                     ADDRESS
-                  </Tab>
-                  <span className="hidden sm:block mx-5">-------------</span>
-                  <Tab className="font-medium text-[#474747] focus:text-[#011F4B] active:text-[#011F4B] focus:outline-none font-[Poppins]">
-                    PAYMENT
-                  </Tab>
+                  </p>
+                 
                 </TabList>
                 <TabPanels className="">
                   <TabPanel>
@@ -495,14 +494,7 @@ export default function CheckOutWithoutLogin() {
                                 {couponDiscount}
                               </p>
                             </div>
-                            {/* <div className="flex justify-between mb-2">
-                      <p>Platform Fee</p>
-                      <p className="flex items-center">
-                        + <PiCurrencyInr />{
-                         10
-                        }
-                      </p>
-                    </div> */}
+                            
                             <div className="flex justify-between mb-2">
                               <p>Shipping Fee</p>
                               <p className="flex items-center">
@@ -510,18 +502,14 @@ export default function CheckOutWithoutLogin() {
                                 + <PiCurrencyInr />100
                               </p>
                             </div>
-                            <div className="border-[1px] border-dashed border-black border-bottom-1 my-4"></div>
-                            <div className="flex justify-between mb-2">
-                              <p>Total amount</p>
-                              <p className="flex items-center">
-                                <PiCurrencyInr />
-                                {totalCost - allDiscount + 100}
-                              </p>
-                            </div>
+                           
                           </div>
                           <button
                             className="font-[Quicksand] bg-[#011F4B] text-white rounded-md py-3 px-8 m-auto block"
-                            onClick={() => setSelectedIndex(1)}
+                          
+                            onClick={()=> {
+                              toast.info("Please login first")
+                            }}
                             disabled={
                               Object.keys(cartProducts).length ? false : true
                             }
@@ -768,121 +756,7 @@ export default function CheckOutWithoutLogin() {
                       </div>
                     </section>
                   </TabPanel>
-                  <TabPanel>
-                    <section className="font-[Poppins]">
-                      <div className="flex gap-6">
-                        <div className="w-8/12">
-                          <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-6">
-                            <details>
-                              <summary className="text-[#011F4B] font-medium text-lg cursor-pointer inline-flex items-center gap-2 justify-center">
-                                <span>
-                                  <BiSolidOffer className="fill-[#011F4B] inline-block" />
-                                </span>
-                                BANK OFFERS
-                              </summary>
-                              <p className="text-[#535353] font-normal mt-2">
-                                7% Discount with Shopping Cart
-                              </p>
-                            </details>
-                          </div>
-                          <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-6">
-                            <div className="flex gap-2 items-start">
-                              <input
-                                type="radio"
-                                name="paymentMode"
-                                id="cashOnDelivery"
-                                value={"cashOnDelivery"}
-                                className="h-5 w-5 cursor-pointer"
-                                onClick={(e) => setPaymentType(e.target.value)}
-                              />
-                              <label
-                                htmlFor="cashOnDelivery"
-                                className="font-semibold cursor-pointer"
-                              >
-                                Cash On Delivery (Cash / UPI )
-                              </label>
-                            </div>
-                            <div className="flex gap-2 items-start mt-3">
-                              <input
-                                type="radio"
-                                name="paymentMode"
-                                id="onlinePayment"
-                                value={"onlinePayment"}
-                                className="h-5 w-5 cursor-pointer"
-                                onClick={(e) => setPaymentType(e.target.value)}
-                              />
-                              <label
-                                htmlFor="onlinePayment"
-                                className="font-semibold cursor-pointer"
-                              >
-                                Online Payment
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="w-4/12 border-l-2 border-[#D6CBCB] px-5 font-[Poppins]">
-                          <p className="text-[#353535] font-medium text-lg mb-2">
-                            Price details
-                          </p>
-                          <div className="flex justify-between mb-2">
-                            <p>Total MRP</p>
-                            <p className="flex items-center">
-                              <PiCurrencyInr />
-                              {totalCost}
-                            </p>
-                          </div>
-                          <div className="flex justify-between mb-2">
-                            <p>Disount on MRP</p>
-                            <p className="flex items-center text-[#2ABF12]">
-                              -<PiCurrencyInr />
-                              {allDiscount}
-                            </p>
-                          </div>
-                          <div className="flex justify-between mb-2">
-                            <p>Coupon Discount</p>
-                            <p className="flex items-center">
-                              -<PiCurrencyInr />
-                              {couponDiscount}
-                            </p>
-                          </div>
-                          {/* <div className="flex justify-between mb-2">
-                    <p>Platform Fee</p>
-                    <p className="flex items-center">
-                      +<PiCurrencyInr />0
-                    </p>
-                  </div> */}
-                          <div className="flex justify-between mb-2">
-                            <p>Shipping Fee</p>
-                            <p className="flex items-center">
-                              {" "}
-                              + <PiCurrencyInr /> 100
-                            </p>
-                          </div>
-                          <div className="border-[1px] border-dashed border-black border-bottom-1 my-4"></div>
-                          <div className="flex justify-between mb-2">
-                            <p>Total amount</p>
-                            <p className="flex items-center">
-                              <PiCurrencyInr />
-                              {totalCost - allDiscount + 100}
-                            </p>
-                          </div>
-                          <button
-                            className={
-                              "font-[Quicksand] text-white bg-[#011F4B] font-medium text-lg rounded-md py-3 px-5 my-2 w-full" +
-                              (!paymentType ? " opacity-80" : "")
-                            }
-                             onClick={() =>
-                             
-                                 orderPlace()
-                            }
-                            disabled={paymentType ? false : true}
-                          >
-                            PLACE ORDER
-                          </button>
-                        </div>
-                      </div>
-                    </section>
-                  </TabPanel>
+                
                 </TabPanels>
               </TabGroup>
             ) : (
@@ -895,7 +769,7 @@ export default function CheckOutWithoutLogin() {
                 </p>
                 <img
                   className="h-[200px] my-3"
-                  src="../assets/empty-cart.png"
+                  src="../public/assets/empty-cart.png"
                   alt="wishlistEmpty"
                 />
                 <Link

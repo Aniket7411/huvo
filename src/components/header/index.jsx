@@ -548,7 +548,7 @@ export default function Header(props) {
               isLoggedIn() ? navigate("/profile") : SetdropdownContent(!dropdownContent)
             }
           >
-            <FaRegUser size={28} className="text-lg cursor-pointer" />
+            <FaRegUser size={25} className="text-lg cursor-pointer" />
           </button>
         </div>
 

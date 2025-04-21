@@ -81,8 +81,7 @@ const ProductsShowingComponent = (props) => {
 
   return (
     <div className="h-auto">
-      <CategorySlider />
-
+      
       <section className="filter-section bg-white py-4 px-4">
         <div className="flex flex-col space-y-4">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-1 md:p-3">
@@ -265,7 +264,7 @@ const ProductsShowingComponent = (props) => {
               {/* large screen */}
 
 
-              <div className="p-4  hidden md:flex flex-wrap justify-center gap-4">
+              <div className="p-4  hidden md:flex flex-wrap  gap-4">
                 {filteredProducts && filteredProducts.map((eachProduct, i) => (
                   <div
                     key={i}

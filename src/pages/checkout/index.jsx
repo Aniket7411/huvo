@@ -930,7 +930,7 @@ console.log("calculateTotal",totalCost)
                 </p>
                 <img
                   className="h-[200px] my-3"
-                  src="../assets/empty-cart.png"
+                  src="/assets/emptycart.png"
                   alt="wishlistEmpty"
                 />
                 <Link
