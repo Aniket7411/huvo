@@ -456,7 +456,7 @@ export default function Header(props) {
       )}
 
       <div
-        className="flex md:hidden p-4 text-[#011F4B] items-center justify-between"
+        className="flex md:hidden p-3 text-[#011F4B] items-center justify-between"
         style={{
           backgroundImage: "linear-gradient(to right, #007bff, #fff)",
           boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",

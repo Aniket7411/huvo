@@ -14,6 +14,7 @@ import { IoClose } from "react-icons/io5";
 import { CartContext } from "../../usecontext1/cartcontext";
 import ProductReview from "../newproduct";
 import Loader from "../../components/loader";
+import WomenCollection from "../women";
 // import { CartContext } from "../../usecontext1/cartcontext";
 
 const isLoggedIn = localStorage.getItem("accessToken")
@@ -240,7 +241,7 @@ export default function ProductDetails() {
 
           <Loader/>
         </div> : <div className="px-3 mt-5 md:mt-5 md:px-10">
-          <div className="flex flex-wrap gap-2 md:gap-16">
+          <div className="flex flex-wrap gap-2 ">
             <div className="flex-1 min-w-[300px] max-w-[350px]">
               <div className="p-1 rounded-md border border-gray-300 mt-5">
                 <ProductImages images={productDetails?.colors} />

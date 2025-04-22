@@ -448,8 +448,9 @@ export default function CheckOut() {
 
                             {/* Product Info */}
                             <div className="flex flex-col gap-2 flex-grow">
+                              <Link to={`/product-details/${item?.productId}`} >
                               <h2 className="font-semibold text-gray-800 text-lg sm:text-xl">{item.name}</h2>
-
+                              </Link>
 
                               <div className="flex items-center gap-2">
                                 <span className="text-sm text-gray-500 bg-gray-50 px-2 py-1 rounded">Size: {item.size}</span>

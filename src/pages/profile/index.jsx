@@ -447,87 +447,87 @@ export default function Profile() {
                 <p className="text-[#717171] font-normal">{userData.email}</p>
               </div> */}
               <div>
-              <TabList className="flex flex-wrap gap-2 mt-4 px-2 sm:px-0 sm:flex-col sm:gap-1">
-  {/* Common Tabs */}
-  <Tab className="flex-1 sm:flex-none outline-none">
-    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
-      <span className="hidden sm:inline-block mr-2">👤</span>
-      Profile
-    </div>
-  </Tab>
+                <TabList className="flex flex-wrap gap-2 mt-8 md:mt-2 px-2 sm:px-0 sm:flex-col sm:gap-1">
+                  {/* Common Tabs */}
+                  <Tab className="flex-1 sm:flex-none outline-none">
+                    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+                      <span className="hidden sm:inline-block mr-2">👤</span>
+                      Profile
+                    </div>
+                  </Tab>
 
-  {userType === "seller" && (
-    <Link to="/seller" className="flex-1 sm:flex-none outline-none">
-      <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
-        <span className="hidden sm:inline-block mr-2">📊</span>
-        Product Dashboard
-      </div>
-    </Link>
-  )}
+                  {userType === "seller" && (
+                    <Link to="/seller" className="flex-1 sm:flex-none outline-none">
+                      <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+                        <span className="hidden sm:inline-block mr-2">📊</span>
+                        Product Dashboard
+                      </div>
+                    </Link>
+                  )}
 
-  <Tab className="flex-1 sm:flex-none outline-none">
-    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
-      <span className="hidden sm:inline-block mr-2">📦</span>
-      Orders
-    </div>
-  </Tab>
+                  <Tab className="flex-1 sm:flex-none outline-none">
+                    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+                      <span className="hidden sm:inline-block mr-2">📦</span>
+                      Orders
+                    </div>
+                  </Tab>
 
-  <Tab className="flex-1 sm:flex-none outline-none">
-    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
-      <span className="hidden sm:inline-block mr-2">🎟️</span>
-      Coupons
-    </div>
-  </Tab>
+                  <Tab className="flex-1 sm:flex-none outline-none">
+                    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+                      <span className="hidden sm:inline-block mr-2">🎟️</span>
+                      Coupons
+                    </div>
+                  </Tab>
 
-  <Tab className="flex-1 sm:flex-none outline-none">
-    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
-      <span className="hidden sm:inline-block mr-2">🏠</span>
-      Addresses
-    </div>
-  </Tab>
+                  <Tab className="flex-1 sm:flex-none outline-none">
+                    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+                      <span className="hidden sm:inline-block mr-2">🏠</span>
+                      Addresses
+                    </div>
+                  </Tab>
 
-  {/* Business Tabs */}
-  {userType !== "USER" && (
-    <>
-      <Tab className="flex-1 sm:flex-none outline-none">
-        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
-          <span className="hidden sm:inline-block mr-2">🏢</span>
-          Business Details
-        </div>
-      </Tab>
+                  {/* Business Tabs */}
+                  {userType !== "USER" && (
+                    <>
+                      <Tab className="flex-1 sm:flex-none outline-none">
+                        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+                          <span className="hidden sm:inline-block mr-2">🏢</span>
+                          Business Details
+                        </div>
+                      </Tab>
 
-      <Tab className="flex-1 sm:flex-none outline-none">
-        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
-          <span className="hidden sm:inline-block mr-2">✅</span>
-          Verification
-        </div>
-      </Tab>
+                      <Tab className="flex-1 sm:flex-none outline-none">
+                        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+                          <span className="hidden sm:inline-block mr-2">✅</span>
+                          Verification
+                        </div>
+                      </Tab>
 
-      <Tab className="flex-1 sm:flex-none outline-none">
-        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
-          <span className="hidden sm:inline-block mr-2">💳</span>
-          Bank Details
-        </div>
-      </Tab>
+                      <Tab className="flex-1 sm:flex-none outline-none">
+                        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+                          <span className="hidden sm:inline-block mr-2">💳</span>
+                          Bank Details
+                        </div>
+                      </Tab>
 
-      <Tab className="flex-1 sm:flex-none outline-none">
-        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
-          <span className="hidden sm:inline-block mr-2">📅</span>
-          Subscription
-        </div>
-      </Tab>
+                      <Tab className="flex-1 sm:flex-none outline-none">
+                        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+                          <span className="hidden sm:inline-block mr-2">📅</span>
+                          Subscription
+                        </div>
+                      </Tab>
 
-      <Tab className="flex-1 sm:flex-none outline-none">
-        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
-          <span className="hidden sm:inline-block mr-2">🧾</span>
-          Invoices
-        </div>
-      </Tab>
-    </>
-  )}
+                      <Tab className="flex-1 sm:flex-none outline-none">
+                        <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
+                          <span className="hidden sm:inline-block mr-2">🧾</span>
+                          Invoices
+                        </div>
+                      </Tab>
+                    </>
+                  )}
 
-  {/* Seller-specific Tab */}
-  {/* {isSeller && (
+                  {/* Seller-specific Tab */}
+                  {/* {isSeller && (
     <Tab className="flex-1 sm:flex-none outline-none">
       <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
         <span className="hidden sm:inline-block mr-2">📅</span>
@@ -535,7 +535,7 @@ export default function Profile() {
       </div>
     </Tab>
   )} */}
-</TabList>
+                </TabList>
 
               </div>
             </div>

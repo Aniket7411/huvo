@@ -16,6 +16,8 @@ const Orders = () => {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [isReturnModalOpen, setIsReturnModalOpen] = useState(false);
   const [currentOrder, setCurrentOrder] = useState(null);
+  const [currentproductId, setCurrentProductId] = useState(null);
+
   const [cancelReason, setCancelReason] = useState("");
   const [returnReason, setReturnReason] = useState("");
 
@@ -82,13 +84,16 @@ const Orders = () => {
     setIsOpenOrderDetails(false);
   };
 
-  const showCancelModal = (orderId) => {
+  const showCancelModal = (orderId, productId) => {
     console.log(orderId)
+    setCurrentProductId(productId)
     setCurrentOrder(orderId);
     setIsCancelModalOpen(true);
   };
 
   const handleCancel = async () => {
+
+    console.log("currentOrder",currentOrder)
     if (cancelReason === "") {
       toast.info("Please select Reason")
     }
@@ -96,7 +101,7 @@ const Orders = () => {
       try {
         const response = await HttpClient.post(
           `order/cancel/${currentOrder}`,
-          { cancellationReason: cancelReason }
+          { cancellationReason: cancelReason, productId :currentproductId }
         );
         toast.success(response?.message)
       } catch (error) {
@@ -105,7 +110,6 @@ const Orders = () => {
 
       }
     }
-    toast.success(`Order #${currentOrder} cancellation requested`);
     toast.info(cancelReason)
 
     setIsCancelModalOpen(false);
@@ -144,7 +148,7 @@ const Orders = () => {
                   className="flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-blue-100"
                 >
                   {/* Product Image */}
-                  <div className="md:w-1/4 p-4 flex justify-center">
+                  <div className="md:w-1/4 p-2 flex justify-center">
                     <img
                       src={item?.bannerImage || "/placeholder.png"}
                       alt={item?.name || "Product Image"}
@@ -153,7 +157,7 @@ const Orders = () => {
                   </div>
 
                   {/* Product Details */}
-                  <div className="flex-1 p-4 md:p-6 border-b md:border-b-0 md:border-r border-dashed border-blue-200">
+                  <div className="flex-1 p-2 md:p-3 border-b md:border-b-0 md:border-r border-dashed border-blue-200">
                     <h2 className="text-xl font-bold text-blue-900 mb-2">{item?.name}</h2>
                     <div className="grid grid-cols-2 gap-2 mb-4">
                       <p className="text-sm text-gray-600">
@@ -193,7 +197,7 @@ const Orders = () => {
                     Track Order
                   </button> */}
                     <button
-                      onClick={() => showCancelModal(item?.orderId)}
+                      onClick={() => showCancelModal(item?.orderId, item?.productId)}
                       className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-lg hover:from-red-600 hover:to-red-800 transition-all shadow-md"
                     >
                       Cancel
