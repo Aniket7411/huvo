@@ -139,7 +139,7 @@ export default function Header(props) {
   const fetchSuggestions = async (searchword) => {
 
     try {
-      const response = await HttpClient.get("/search/final", { search: searchword, searchType: category });
+      const response = await HttpClient.get("/search/finalSearch", { search: searchword, searchType: category });
       if (response.success) {
         setSearchResult(response.data);
 
@@ -366,7 +366,7 @@ export default function Header(props) {
             )}
           </button>
 
-         {
+          {
             loginStatus === 0 ?
 
               <Link to="/login">
@@ -418,117 +418,117 @@ export default function Header(props) {
 
 
       {dropdownContent && (
-  <ul className="bg-white w-[200px] shadow-lg p-4 absolute top-15 right-5 rounded-md">
-    {isLoggedIn() ? (
-      <>
-        {["Orders", "Wishlist", "Contact Us", "Coupons", "Saved Cards", "Saved Addresses"].map(
-          (item, index) => (
-            <li
-              key={index}
-              className="font-[Poppins] text-[#333] font-medium cursor-pointer hover:text-[#007bff] transition duration-200 mb-2 last:mb-0"
-            >
-              {item}
-            </li>
-          )
-        )}
-        <Link to="/profile" onClick={() => SetdropdownContent(false)}>
-          <li className="font-[Poppins] text-[#333] font-medium cursor-pointer hover:text-[#007bff] transition duration-200">
-            Edit Profile
-          </li>
-        </Link>
-        <li
-          onClick={() => logout()}
-          className="font-[Poppins] text-[#333] font-medium cursor-pointer hover:text-[#ff4d4f] transition duration-200"
-        >
-          Logout
-        </li>
-      </>
-    ) : (
-      <>
-        <Link to="/login">
-          <li className="font-[Poppins] text-[#333] font-medium cursor-pointer hover:text-[#007bff] transition duration-200">
-            Login
-          </li>
-        </Link>
-      </>
-    )}
-  </ul>
-)}
-
-<div
-  className="flex md:hidden p-4 text-[#011F4B] items-center justify-between"
-  style={{
-    backgroundImage: "linear-gradient(to right, #007bff, #fff)",
-    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-  }}
->
-  {/* Left Section */}
-  <div className="flex items-center  gap-3 ">
-    <IoReorderThree
-      size={38}
-      className="text-3xl cursor-pointer "
-      onClick={() => openSubmenu()}
-    />
-    <img
-      src="/assets/favicon.svg"
-      alt="logo"
-      className="w-[30px] bg-[#fff] rounded-full shadow-md"
-    />
-  </div>
-
-  {/* Center Section */}
-  <p className=" font-bold text-xl">Huvo</p>
-
-  {/* Right Section */}
-  <div className="flex gap-3  items-center relative">
-    {/* Wishlist Button */}
-    <button
-      aria-label="Wishlist"
-      onClick={() =>
-        isLoggedIn() ? navigate("/wishlist") : toast.error("Please Login First")
-      }
-      className="relative"
-    >
-      <FiHeart size={28} className="text-xl cursor-pointer hover:scale-110 transition duration-200" />
-      {wishListItems > 0 && (
-        <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full shadow">
-          {wishListItems}
-        </span>
+        <ul className="bg-white w-[200px] shadow-lg p-4 absolute top-15 right-5 rounded-md">
+          {isLoggedIn() ? (
+            <>
+              {["Orders", "Wishlist", "Contact Us", "Coupons", "Saved Cards", "Saved Addresses"].map(
+                (item, index) => (
+                  <li
+                    key={index}
+                    className="font-[Poppins] text-[#333] font-medium cursor-pointer hover:text-[#007bff] transition duration-200 mb-2 last:mb-0"
+                  >
+                    {item}
+                  </li>
+                )
+              )}
+              <Link to="/profile" onClick={() => SetdropdownContent(false)}>
+                <li className="font-[Poppins] text-[#333] font-medium cursor-pointer hover:text-[#007bff] transition duration-200">
+                  Edit Profile
+                </li>
+              </Link>
+              <li
+                onClick={() => logout()}
+                className="font-[Poppins] text-[#333] font-medium cursor-pointer hover:text-[#ff4d4f] transition duration-200"
+              >
+                Logout
+              </li>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <li className="font-[Poppins] text-[#333] font-medium cursor-pointer hover:text-[#007bff] transition duration-200">
+                  Login
+                </li>
+              </Link>
+            </>
+          )}
+        </ul>
       )}
-    </button>
 
-    {/* Cart Button */}
-    <button aria-label="Cart" className="relative">
-      <HiOutlineShoppingBag
-        size={28}
-        onClick={() => {
-          if (loginStatus === 0) {
-            navigate("/checkout/cart/not_login");
-          } else {
-            navigate("/checkout/cart");
-          }
+      <div
+        className="flex md:hidden p-4 text-[#011F4B] items-center justify-between"
+        style={{
+          backgroundImage: "linear-gradient(to right, #007bff, #fff)",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
         }}
-        className="text-2xl  cursor-pointer hover:scale-110 transition duration-200"
-      />
-      {Object.keys(cart).length > 0 && (
-        <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#007bff] text-white text-xs font-bold rounded-full shadow">
-          {Object.keys(cart).length}
-        </span>
-      )}
-    </button>
+      >
+        {/* Left Section */}
+        <div className="flex items-center  gap-3 ">
+          <IoReorderThree
+            size={38}
+            className="text-3xl cursor-pointer "
+            onClick={() => openSubmenu()}
+          />
+          <img
+            src="/assets/favicon.svg"
+            alt="logo"
+            className="w-[30px] bg-[#fff] rounded-full shadow-md"
+          />
+        </div>
 
-    {/* User Profile Button */}
-    <button
-      aria-label="Profile"
-      onClick={() =>
-        isLoggedIn() ? navigate("/profile") : SetdropdownContent(!dropdownContent)
-      }
-      className="hover:scale-110 transition duration-200"
-    >
-      <FaRegUser size={25} className="text-lg mr-4  cursor-pointer" />
-    </button>
-  </div>
-</div>
+        {/* Center Section */}
+        <p className=" font-bold text-xl">Huvo</p>
+
+        {/* Right Section */}
+        <div className="flex gap-3  items-center relative">
+          {/* Wishlist Button */}
+          <button
+            aria-label="Wishlist"
+            onClick={() =>
+              isLoggedIn() ? navigate("/wishlist") : toast.error("Please Login First")
+            }
+            className="relative"
+          >
+            <FiHeart size={28} className="text-xl cursor-pointer hover:scale-110 transition duration-200" />
+            {wishListItems > 0 && (
+              <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full shadow">
+                {wishListItems}
+              </span>
+            )}
+          </button>
+
+          {/* Cart Button */}
+          <button aria-label="Cart" className="relative">
+            <HiOutlineShoppingBag
+              size={28}
+              onClick={() => {
+                if (loginStatus === 0) {
+                  navigate("/checkout/cart/not_login");
+                } else {
+                  navigate("/checkout/cart");
+                }
+              }}
+              className="text-2xl  cursor-pointer hover:scale-110 transition duration-200"
+            />
+            {Object.keys(cart).length > 0 && (
+              <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#007bff] text-white text-xs font-bold rounded-full shadow">
+                {Object.keys(cart).length}
+              </span>
+            )}
+          </button>
+
+          {/* User Profile Button */}
+          <button
+            aria-label="Profile"
+            onClick={() =>
+              isLoggedIn() ? navigate("/profile") : SetdropdownContent(!dropdownContent)
+            }
+            className="hover:scale-110 transition duration-200"
+          >
+            <FaRegUser size={25} className="text-lg mr-4  cursor-pointer" />
+          </button>
+        </div>
+      </div>
 
 
       <div className="flex items-center md:hidden h-[40px]  rounded-full bg-[#E7EFFA] px-4 py-2 shadow-lg">
