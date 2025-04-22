@@ -54,7 +54,7 @@ const ProductImages = ({ images }) => {
   }, [currentIndex, allImages.length]);
 
   return (
-    <div className="relative flex  md:flex-row gap-4 p-2 w-full mx-auto">
+    <div className="relative flex  md:flex-row gap-4 p-2 w-full max-w-4xl mx-auto">
       {/* Thumbnail/Dots Indicator - Left Side */}
       {allImages.length > 1 && (
         <div className="flex flex-col gap-2 overflow-y-auto py-2 h-auto">
@@ -118,7 +118,7 @@ const ProductImages = ({ images }) => {
         </div>
 
         {/* Always visible arrows for mobile */}
-        {allImages.length > 1 && (
+        {/* {allImages.length > 1 && (
           <div className="md:hidden flex justify-between w-full mt-2 px-2">
             <button
               onClick={prevImage}
@@ -135,7 +135,7 @@ const ProductImages = ({ images }) => {
               <FaArrowRight size={16} />
             </button>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
