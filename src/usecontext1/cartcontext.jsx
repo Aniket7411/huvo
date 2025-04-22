@@ -15,13 +15,14 @@ export const CartProvider = ({ children }) => {
 
   const [wishList, setWishList] = useState([]);
 
-  console.log("cartcartcartcart", cart)
 
   if (localStorage.getItem("accessToken") === null || localStorage.getItem("accessToken") === undefined) {
     localStorage.setItem("cart", JSON.stringify(cart))
   }
 
 
+
+  console.log("tokenIfLoggedIntokenIfLoggedIn",tokenIfLoggedIn)
 
 
 
