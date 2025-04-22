@@ -144,7 +144,7 @@ export default function CheckOut() {
     }
   };
 
- 
+
 
 
   console.log("totalCartData", totalCartData)
@@ -210,19 +210,19 @@ export default function CheckOut() {
     setTotalCartData((prevCart) => {
       // Clone the previous cart state
       const updatedCart = { ...prevCart };
-  
+
       // Validate the key and ensure the quantity is a valid number
       if (updatedCart[key] && typeof updatedCart[key].quantity === "number") {
         updatedCart[key].quantity += 1; // Increment quantity by 1
         console.log(`Quantity for ${key} incremented to:`, updatedCart[key].quantity);
       }
-  
+
       // Return the updated cart
       return updatedCart;
     });
   };
-  
-  
+
+
   const decreaseQuantity = (key) => {
     setTotalCartData((prevCart) => {
       const updatedCart = { ...prevCart };
@@ -232,22 +232,22 @@ export default function CheckOut() {
       return updatedCart;
     });
   };
-  
+
 
 
 
   //console.log("card product", products)
   const orderPlace = async () => {
 
-    console.log("kkk",totalCost * 18/100 + totalCost)
-    console.log("kkk",Math.round(totalCost + (totalCost * 18) / 100))
+    console.log("kkk", totalCost * 18 / 100 + totalCost)
+    console.log("kkk", Math.round(totalCost + (totalCost * 18) / 100))
 
 
 
 
     try {
       const response = await HttpClient.post("/order", {
-        totalAmount:  Math.round(totalCost + (totalCost * 18) / 100),
+        totalAmount: Math.round(totalCost + (totalCost * 18) / 100),
         totalProduct: Object.keys(totalCartData)?.length,
         products: totalCartData,
         paymentType,
@@ -264,7 +264,7 @@ export default function CheckOut() {
       if (response?.success)
         toast.success("Order Place Successfully!");
       console.log(response)
-      // window.location.href = response?.payment_url;
+      window.location.href = response?.payment_url;
       fetchProfileData();
       console.log("Cart>>>>>>>: ", cartProducts)
     } catch (error) {
@@ -349,13 +349,13 @@ export default function CheckOut() {
 
 
 
-  console.log("calculateTotal",totalCartData)
+  console.log("calculateTotal", totalCartData)
 
   const totalCost = Object.keys(totalCartData)
-  .map(key => totalCartData[key].price * totalCartData[key].quantity - totalCartData[key].cgst - totalCartData[key].sgst)
-  .reduce((sum, cost) => sum + cost, 0);
+    .map(key => totalCartData[key].price * totalCartData[key].quantity - totalCartData[key].cgst - totalCartData[key].sgst)
+    .reduce((sum, cost) => sum + cost, 0);
 
-console.log("calculateTotal",totalCost)
+  console.log("calculateTotal", totalCost)
 
   return (
 
@@ -441,7 +441,7 @@ console.log("calculateTotal",totalCost)
                               />
                               {item.discount > 0 && (
                                 <span className="absolute -top-2 -right-2 flex items-center bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                                 <PiCurrencyInr /> {item.actualPrice - item.price} OFF
+                                  <PiCurrencyInr /> {item.actualPrice - item.price} OFF
                                 </span>
                               )}
                             </div>
@@ -470,11 +470,11 @@ console.log("calculateTotal",totalCost)
                                   </button>
                                   <span className="px-3 py-1 text-center min-w-[2rem]">{item.quantity}</span>
                                   <button
-              onClick={() => increaseQuantity(key)}
-              className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
-            >
-              +
-            </button>
+                                    onClick={() => increaseQuantity(key)}
+                                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
+                                  >
+                                    +
+                                  </button>
 
                                 </div>
 
@@ -509,7 +509,7 @@ console.log("calculateTotal",totalCost)
 
                             {/* Total - Desktop */}
                             <div className="text-right font-bold text-gray-800 hidden sm:block min-w-[100px]">
-                              ₹{(item.price * item.quantity) - ((item.cgst + item.sgst) * ( item.quantity))}
+                              ₹{(item.price * item.quantity) - ((item.cgst + item.sgst) * (item.quantity))}
                             </div>
                           </div>
                         ))}
@@ -530,56 +530,56 @@ console.log("calculateTotal",totalCost)
                         </div>
                       </div>
                       <div className="md:w-4/12">
-                      <div className="border-2 border-gray-300 p-5 rounded-lg font-[Poppins] bg-white shadow-md">
-  <div>
-    <p className="text-gray-800 font-semibold text-xl mb-4">Price Details</p>
+                        <div className="border-2 border-gray-300 p-5 rounded-lg font-[Poppins] bg-white shadow-md">
+                          <div>
+                            <p className="text-gray-800 font-semibold text-xl mb-4">Price Details</p>
 
-    <div className="flex justify-between text-gray-700 mb-3">
-      <p>Total MRP</p>
-      <p className="flex items-center font-medium">
-        <PiCurrencyInr className="mr-1" />
-        {totalCost}
-      </p>
-    </div>
+                            <div className="flex justify-between text-gray-700 mb-3">
+                              <p>Total MRP</p>
+                              <p className="flex items-center font-medium">
+                                <PiCurrencyInr className="mr-1" />
+                                {totalCost}
+                              </p>
+                            </div>
 
-    <div className="flex justify-between text-gray-700 mb-2">
-      <p>SGST</p>
-      <p className="flex items-center text-green-600 font-medium">
-        + <PiCurrencyInr className="mr-1" />
-        {(totalCost * 9) / 100}
-      </p>
-    </div>
+                            <div className="flex justify-between text-gray-700 mb-2">
+                              <p>SGST</p>
+                              <p className="flex items-center text-green-600 font-medium">
+                                + <PiCurrencyInr className="mr-1" />
+                                {(totalCost * 9) / 100}
+                              </p>
+                            </div>
 
-    <div className="flex justify-between text-gray-700 mb-3">
-      <p>CGST</p>
-      <p className="flex items-center text-green-600 font-medium">
-        + <PiCurrencyInr className="mr-1" />
-        {(totalCost * 9) / 100}
-      </p>
-    </div>
+                            <div className="flex justify-between text-gray-700 mb-3">
+                              <p>CGST</p>
+                              <p className="flex items-center text-green-600 font-medium">
+                                + <PiCurrencyInr className="mr-1" />
+                                {(totalCost * 9) / 100}
+                              </p>
+                            </div>
 
-    <div className="border-t border-dashed border-gray-400 my-6"></div>
+                            <div className="border-t border-dashed border-gray-400 my-6"></div>
 
-    <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-      <p>Total Amount</p>
-      <p className="flex items-center">
-        <PiCurrencyInr className="mr-1" />
-        
+                            <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
+                              <p>Total Amount</p>
+                              <p className="flex items-center">
+                                <PiCurrencyInr className="mr-1" />
 
-        {Math.round(totalCost + (totalCost * 18) / 100)}
-      </p>
-    </div>
-  </div>
 
-  <button
-    className={`font-[Quicksand] bg-blue-900 text-white rounded-md py-3 px-8 w-full mt-4
+                                {Math.round(totalCost + (totalCost * 18) / 100)}
+                              </p>
+                            </div>
+                          </div>
+
+                          <button
+                            className={`font-[Quicksand] bg-blue-900 text-white rounded-md py-3 px-8 w-full mt-4
       ${Object.keys(cartProducts).length === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-[#011F4B] transition-colors"}`}
-    onClick={() => setSelectedIndex(1)}
-    disabled={Object.keys(cartProducts).length === 0}
-  >
-    CONTINUE
-  </button>
-</div>
+                            onClick={() => setSelectedIndex(1)}
+                            disabled={Object.keys(cartProducts).length === 0}
+                          >
+                            CONTINUE
+                          </button>
+                        </div>
 
                       </div>
                     </div>
@@ -764,53 +764,53 @@ console.log("calculateTotal",totalCost)
                           )}
                         </div>
                         <div className="mt-3 md:mt-0 md:w-4/12 border-l-2 border-gray-300 px-6 font-[Poppins]">
-  <p className="text-gray-800 font-semibold text-xl mb-4">Price Details</p>
+                          <p className="text-gray-800 font-semibold text-xl mb-4">Price Details</p>
 
-  <div className="flex justify-between text-gray-700 mb-3">
-    <p>Total MRP</p>
-    <p className="flex items-center font-medium">
-      <PiCurrencyInr className="mr-1" />
-      {totalCost}
-    </p>
-  </div>
+                          <div className="flex justify-between text-gray-700 mb-3">
+                            <p>Total MRP</p>
+                            <p className="flex items-center font-medium">
+                              <PiCurrencyInr className="mr-1" />
+                              {totalCost}
+                            </p>
+                          </div>
 
-  <div className="flex justify-between text-gray-700 mb-3">
-    <p>SGST</p>
-    <p className="flex items-center text-green-600 font-medium">
-      +<PiCurrencyInr className="mr-1" />
-      {(totalCost * 9) / 100}
-    </p>
-  </div>
+                          <div className="flex justify-between text-gray-700 mb-3">
+                            <p>SGST</p>
+                            <p className="flex items-center text-green-600 font-medium">
+                              +<PiCurrencyInr className="mr-1" />
+                              {(totalCost * 9) / 100}
+                            </p>
+                          </div>
 
-  <div className="flex justify-between text-gray-700 mb-3">
-    <p>CGST</p>
-    <p className="flex items-center text-green-600 font-medium">
-      +<PiCurrencyInr className="mr-1" />
-      {(totalCost * 9) / 100}
-    </p>
-  </div>
+                          <div className="flex justify-between text-gray-700 mb-3">
+                            <p>CGST</p>
+                            <p className="flex items-center text-green-600 font-medium">
+                              +<PiCurrencyInr className="mr-1" />
+                              {(totalCost * 9) / 100}
+                            </p>
+                          </div>
 
-  <div className="border-dashed border-t border-gray-400 my-6"></div>
+                          <div className="border-dashed border-t border-gray-400 my-6"></div>
 
-  <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-    <p>Total Amount</p>
-    <p className="flex items-center">
-      <PiCurrencyInr className="mr-1" />
+                          <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
+                            <p>Total Amount</p>
+                            <p className="flex items-center">
+                              <PiCurrencyInr className="mr-1" />
 
-      {Math.round(totalCost + (totalCost * 18) / 100)}
+                              {Math.round(totalCost + (totalCost * 18) / 100)}
 
-    </p>
-  </div>
+                            </p>
+                          </div>
 
-  <button
-    className={`font-[Quicksand] text-white bg-blue-900 font-medium text-lg rounded-lg py-3 px-6 w-full 
+                          <button
+                            className={`font-[Quicksand] text-white bg-blue-900 font-medium text-lg rounded-lg py-3 px-6 w-full 
       ${shippingAddress === null ? "opacity-50 cursor-not-allowed" : "hover:bg-[#011F4B] transition-colors"}`}
-    onClick={() => setSelectedIndex(2)}
-    disabled={shippingAddress === null}
-  >
-    Continue
-  </button>
-</div>
+                            onClick={() => setSelectedIndex(2)}
+                            disabled={shippingAddress === null}
+                          >
+                            Continue
+                          </button>
+                        </div>
 
                       </div>
                     </section>
@@ -868,52 +868,52 @@ console.log("calculateTotal",totalCost)
                           </div>
                         </div>
                         <div className="w-full md:w-4/12 border-l-2 border-gray-300 px-6 py-4 font-[Poppins] bg-white rounded-lg shadow-lg">
-  <p className="text-gray-800 font-semibold text-xl mb-4">Price Details</p>
+                          <p className="text-gray-800 font-semibold text-xl mb-4">Price Details</p>
 
-  <div className="flex justify-between mb-3 text-gray-700">
-    <p>Total MRP</p>
-    <p className="flex items-center font-medium">
-      <PiCurrencyInr className="mr-1" />
-      {totalCost}
-    </p>
-  </div>
+                          <div className="flex justify-between mb-3 text-gray-700">
+                            <p>Total MRP</p>
+                            <p className="flex items-center font-medium">
+                              <PiCurrencyInr className="mr-1" />
+                              {totalCost}
+                            </p>
+                          </div>
 
-  <div className="flex justify-between mb-3 text-gray-700">
-    <p>SGST</p>
-    <p className="flex items-center text-green-600 font-medium">
-      + <PiCurrencyInr className="mr-1" />
-      {(totalCost * 9) / 100}
-    </p>
-  </div>
+                          <div className="flex justify-between mb-3 text-gray-700">
+                            <p>SGST</p>
+                            <p className="flex items-center text-green-600 font-medium">
+                              + <PiCurrencyInr className="mr-1" />
+                              {(totalCost * 9) / 100}
+                            </p>
+                          </div>
 
-  <div className="flex justify-between mb-3 text-gray-700">
-    <p>CGST</p>
-    <p className="flex items-center text-green-600 font-medium">
-      + <PiCurrencyInr className="mr-1" />
-      {(totalCost * 9) / 100}
-    </p>
-  </div>
+                          <div className="flex justify-between mb-3 text-gray-700">
+                            <p>CGST</p>
+                            <p className="flex items-center text-green-600 font-medium">
+                              + <PiCurrencyInr className="mr-1" />
+                              {(totalCost * 9) / 100}
+                            </p>
+                          </div>
 
-  <div className="border-t border-dashed border-gray-400 my-6"></div>
+                          <div className="border-t border-dashed border-gray-400 my-6"></div>
 
-  <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-    <p>Total Amount</p>
-    <p className="flex items-center">
-      <PiCurrencyInr className="mr-1" />
-      {Math.round(totalCost + (totalCost * 18) / 100)}
+                          <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
+                            <p>Total Amount</p>
+                            <p className="flex items-center">
+                              <PiCurrencyInr className="mr-1" />
+                              {Math.round(totalCost + (totalCost * 18) / 100)}
 
-    </p>
-  </div>
+                            </p>
+                          </div>
 
-  <button
-    className={`font-[Quicksand] text-white bg-blue-900 font-medium text-lg rounded-md py-3 px-6 w-full
+                          <button
+                            className={`font-[Quicksand] text-white bg-blue-900 font-medium text-lg rounded-md py-3 px-6 w-full
       ${!paymentType ? "opacity-70 cursor-not-allowed" : "hover:bg-[#011F4B] transition-colors"}`}
-    onClick={orderPlace}
-    disabled={!paymentType}
-  >
-    PLACE ORDER
-  </button>
-</div>
+                            onClick={orderPlace}
+                            disabled={!paymentType}
+                          >
+                            PLACE ORDER
+                          </button>
+                        </div>
 
                       </div>
                     </section>
