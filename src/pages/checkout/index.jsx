@@ -816,6 +816,211 @@ export default function CheckOut() {
                       </div>
                     </section>
                   </TabPanel>
+
+                  <TabPanel>
+                    <div className="md:flex gap-6">
+                      <div className="md:w-8/12">
+                        <div className="bg-[#011F4B] text-white rounded-md p-3 flex flex-wrap gap-2 sm:gap-1 sm:flex-nowrap justify-between items-center font-[Poppins]">
+                          <div className="">
+                            {shippingAddress ? (
+                              <>
+                                <p>
+                                  Deliver to: {shippingAddress?.name},{" "}
+                                  {shippingAddress?.mobileNumber}
+                                </p>
+                                <p>
+                                  {shippingAddress?.address},{" "}
+                                  {shippingAddress?.town}, {shippingAddress?.city}
+                                </p>
+                                <p>
+                                  {shippingAddress?.state},{" "}
+                                  {shippingAddress?.postalCode}
+                                </p>
+                              </>
+                            ) : (
+                              <p>Check delivery time & services</p>
+                            )}
+                          </div>
+                          <div>
+                            {shippingAddress ? (
+                              <button
+                                className="px-3 py-2 text-white font-medium sm:text-sm border-2 border-white border-[#011F4B] rounded-md font-[Poppins]"
+                                onClick={() => {
+                                  setFormData(shippingAddress);
+                                  setIsOpenAddress(true);
+                                }}
+                              >
+                                CHANGE ADDRESS
+                              </button>
+                            ) : (
+                              <button
+                                className="px-3 py-2 text-white font-medium sm:text-sm border-2 border-white border-[#011F4B] rounded-md font-[Poppins]"
+                                onClick={() => setIsOpenAddress(true)}
+                              >
+                                ADD ADDRESS
+                              </button>
+                            )}
+                          </div>
+                        </div>
+
+                        {Object.entries(totalCartData).map(([key, item]) => (
+                          <div
+                            key={key}
+                            className="flex flex-col sm:flex-row items-start sm:items-center gap-4 border border-gray-100 rounded-xl p-4 mb-4 shadow-sm hover:shadow-md transition-all duration-300 bg-white"
+                          >
+                            {/* Image with badge */}
+                            <div className="relative">
+                              <img
+                                src={item.bannerImage || "https://via.placeholder.com/300"}
+                                alt={item.name}
+                                className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-lg shadow-inner"
+                              />
+                              {item.discount > 0 && (
+                                <span className="absolute -top-2 -right-2 flex items-center bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                  <PiCurrencyInr /> {item.actualPrice - item.price} OFF
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Product Info */}
+                            <div className="flex flex-col gap-2 flex-grow">
+                              <Link to={`/product-details/${item?.productId}`} >
+                              <h2 className="font-semibold text-gray-800 text-lg sm:text-xl">{item.name}</h2>
+                              </Link>
+
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm text-gray-500 bg-gray-50 px-2 py-1 rounded">Size: {item.size}</span>
+                                <span
+                                  className="text-sm text-gray-500 bg-gray-50 px-2 py-1 rounded flex items-center gap-1"
+                                  style={{ color: item.color.toLowerCase() === 'white' ? '#333' : item.color }}
+                                >
+                                  Color: <span className="w-3 h-3 rounded-full inline-block" style={{ backgroundColor: item.color }} />
+                                </span>
+                              </div>
+
+                              <div className="flex items-center gap-4 mt-1">
+                                <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                                  <button
+                                    onClick={() => decreaseQuantity(key)}
+                                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors">
+                                    -
+                                  </button>
+                                  <span className="px-3 py-1 text-center min-w-[2rem]">{item.quantity}</span>
+                                  <button
+                                    onClick={() => increaseQuantity(key)}
+                                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
+                                  >
+                                    +
+                                  </button>
+
+                                </div>
+
+                                <button
+                                  onClick={() => removeProductFromCart(key)}
+
+                                  className="text-red-500 hover:text-red-700 text-sm flex items-center gap-1">
+                                  <FiTrash2 className="w-4 h-4" />
+                                  Remove
+                                </button>
+                              </div>
+
+                              <div className="flex flex-wrap items-center gap-3 text-sm mt-1">
+                                <p className="text-red-500 font-medium flex items-center">
+                                  <PiCurrencyInr className="mr-0.5" />
+                                  <span className="line-through">{(item.actualPrice * item.quantity)}</span>
+                                </p>
+
+                                <p className="text-blue-500 bg-blue-50 px-2 py-0.5 rounded-full text-xs">
+                                  You save ₹{((item.actualPrice - item.price) * item.quantity).toLocaleString()}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Total - Mobile */}
+                            <div className="w-full sm:hidden flex justify-between items-center pt-2 border-t border-gray-100">
+                              <span className="font-semibold">Total:</span>
+                              <span className="font-bold text-lg text-gray-800">
+                                ₹{(item.price * item.quantity).toLocaleString()}
+                              </span>
+                            </div>
+
+                            {/* Total - Desktop */}
+                            <div className="text-right font-bold text-gray-800 hidden sm:block min-w-[100px]">
+                              ₹{(item.price * item.quantity) - ((item.cgst + item.sgst) * (item.quantity))}
+                            </div>
+                          </div>
+                        ))}
+
+
+
+
+                        <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-3">
+                          <Link to="/wishlist">
+                            <div className="flex justify-between items-center font-[Poppins]">
+                              <div className="text-[#353535] font-normal text-md flex items-center gap-1">
+                                <BsBookmarkPlus className="fill-[#011F4B] inline" />
+                                Add More From Wishlist
+                              </div>
+                              <FaChevronRight className="fill-[#011F4B] inline" />
+                            </div>
+                          </Link>
+                        </div>
+                      </div>
+                      <div className="md:w-4/12">
+                        <div className="border-2 border-gray-300 p-5 rounded-lg font-[Poppins] bg-white shadow-md">
+                          <div>
+                            <p className="text-gray-800 font-semibold text-xl mb-4">Price Details</p>
+
+                            <div className="flex justify-between text-gray-700 mb-3">
+                              <p>Total MRP</p>
+                              <p className="flex items-center font-medium">
+                                <PiCurrencyInr className="mr-1" />
+                                {totalCost}
+                              </p>
+                            </div>
+
+                            <div className="flex justify-between text-gray-700 mb-2">
+                              <p>SGST</p>
+                              <p className="flex items-center text-green-600 font-medium">
+                                + <PiCurrencyInr className="mr-1" />
+                                {(totalCost * 9) / 100}
+                              </p>
+                            </div>
+
+                            <div className="flex justify-between text-gray-700 mb-3">
+                              <p>CGST</p>
+                              <p className="flex items-center text-green-600 font-medium">
+                                + <PiCurrencyInr className="mr-1" />
+                                {(totalCost * 9) / 100}
+                              </p>
+                            </div>
+
+                            <div className="border-t border-dashed border-gray-400 my-6"></div>
+
+                            <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
+                              <p>Total Amount</p>
+                              <p className="flex items-center">
+                                <PiCurrencyInr className="mr-1" />
+
+
+                                {Math.round(totalCost + (totalCost * 18) / 100)}
+                              </p>
+                            </div>
+                          </div>
+
+                          <button
+                            className={`font-[Quicksand] bg-blue-900 text-white rounded-md py-3 px-8 w-full mt-4
+      ${Object.keys(cartProducts).length === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-[#011F4B] transition-colors"}`}
+                            onClick={() => setSelectedIndex(1)}
+                            disabled={Object.keys(cartProducts).length === 0}
+                          >
+                            CONTINUE
+                          </button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </TabPanel>
                   <TabPanel>
                     <section className="font-[Poppins]">
                       <div className="flex gap-6">
