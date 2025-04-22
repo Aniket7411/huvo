@@ -477,7 +477,10 @@ export default function Header(props) {
         </div>
 
         {/* Center Section */}
-        <p className=" font-bold text-xl">Huvo</p>
+        <p className="font-bold text-white text-2xl tracking-wide drop-shadow-md" style={{ fontFamily: "'Caveat', cursive" }}>
+  Huvo
+</p>
+
 
         {/* Right Section */}
         <div className="flex gap-3  items-center relative">

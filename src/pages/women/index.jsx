@@ -219,7 +219,12 @@ export default function WomenCollection() {
 
             <ProductGrid womenProducts={womenProducts} />
 
-            <ProductsShowingComponent allProducts={womenProducts} />
+            {
+        isLoading ? <div className="flex h-screen justify-center items-center"><Loader /></div> : <ProductsShowingComponent allProducts={womenProducts} />
+
+      }
+
+
 
 
 

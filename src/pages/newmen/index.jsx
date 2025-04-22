@@ -68,7 +68,6 @@ export default function WomenCollection() {
       group: "women"
     }
 
-    console.log(dataForFilter)
   };
 
   const handleCheckboxChange = (list, setList, value) => {
@@ -90,10 +89,8 @@ export default function WomenCollection() {
       );
 
 
-      console.log("jeansjeansjeans", response)
       setProducts();
     } catch (error) {
-      console.error("Error fetching products:", error);
     } finally {
       setLoading(false);
     }

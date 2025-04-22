@@ -113,26 +113,8 @@ const ProductsShowingComponent = (props) => {
             </div>
 
             {showFilters && (
-              <div className="flex flex-col md:flex-row gap-4 pt-4 border-t border-gray-200">
-                <div className="flex-1 min-w-[200px]">
-                  <label className="block font-medium text-gray-700 text-sm mb-2">
-                    Search Products
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={handleSearch}
-                      placeholder="Search by name or brand..."
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
+              <div className="flex flex-col md:flex-row gap-2 pt-4 border-t border-gray-200">
+              
 
                 <div className="flex-1 min-w-[200px]">
                   <label className="block font-medium text-gray-700 text-sm mb-2">
@@ -163,6 +145,25 @@ const ProductsShowingComponent = (props) => {
                     <option value="low-to-high">Price: Low to High</option>
                     <option value="high-to-low">Price: High to Low</option>
                   </select>
+                </div>
+                <div className="flex-1 min-w-[200px]">
+                  <label className="block font-medium text-gray-700 text-sm mb-2">
+                    Find Products
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={handleSearch}
+                      placeholder="Find by name or brand..."
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex-1 flex items-end min-w-[200px]">

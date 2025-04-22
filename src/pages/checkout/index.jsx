@@ -262,7 +262,7 @@ export default function CheckOut() {
       console.log(response)
 
       if (response?.success)
-        toast.success("Order Place Successfully!");
+        toast.success("Redirecting to Payment");
       console.log(response)
       window.location.href = response?.payment_url;
       fetchProfileData();
@@ -518,10 +518,10 @@ export default function CheckOut() {
 
 
 
-                        <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-6">
+                        <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-3">
                           <Link to="/wishlist">
                             <div className="flex justify-between items-center font-[Poppins]">
-                              <div className="text-[#353535] font-normal text-lg flex items-center gap-1">
+                              <div className="text-[#353535] font-normal text-md flex items-center gap-1">
                                 <BsBookmarkPlus className="fill-[#011F4B] inline" />
                                 Add More From Wishlist
                               </div>

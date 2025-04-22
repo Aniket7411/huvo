@@ -103,11 +103,15 @@ export default function ProductByCategory() {
   }, [searchWord]);
 
   return (
-<>
+    <>
 
-    <ProductsShowingComponent allProducts={allProducts} /> 
+      {
+        isLoading ? <div className="flex h-screen justify-center items-center"><Loader /></div> : <ProductsShowingComponent allProducts={allProducts} />
 
-    
+      }
+
+
+
 
 
     </>

@@ -57,7 +57,7 @@ const ProductImages = ({ images }) => {
     <div className="relative flex  md:flex-row gap-4 p-2 w-full max-w-4xl mx-auto">
       {/* Thumbnail/Dots Indicator - Left Side */}
       {allImages.length > 1 && (
-        <div className="flex flex-col gap-2 overflow-y-auto py-2 h-auto">
+        <div className="flex flex-col gap-2 overflow-y-auto h-auto">
           {allImages.map((img, i) => (
             <button
               key={i}

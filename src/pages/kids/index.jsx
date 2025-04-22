@@ -153,7 +153,7 @@ export default function KidsCollection() {
     }
   };
 
- 
+
 
 
   useEffect(() => {
@@ -174,9 +174,9 @@ export default function KidsCollection() {
 
 
 
-        <p className="font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg text-[#2581eb] mt-2">
-          Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
-        </p>
+      <p className="font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg text-[#2581eb] mt-2">
+        Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
+      </p>
 
 
 
@@ -187,23 +187,26 @@ export default function KidsCollection() {
 
 
 
-   
 
 
 
 
 
 
-          <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
-      
 
-            <ProductGrid kidsProducts={kidsProducts} />
-
-            <ProductsShowingComponent allProducts={kidsProducts} />
+      <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
 
 
+        <ProductGrid kidsProducts={kidsProducts} />
+        {
+          isLoading ? <div className="flex h-screen justify-center items-center"><Loader /></div> : <ProductsShowingComponent allProducts={kidsProducts} />
 
-          </section>
+        }
+
+
+
+
+      </section>
 
 
 
