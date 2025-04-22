@@ -240,7 +240,7 @@ export default function Home() {
     <>
 
       {
-        isLoading ? <div className=" h-[100vh]"> <Loader /> </div> :
+        isLoading ? <div className=" h-screen flex justify-center items-center"> <Loader /> </div> :
 
           <section>
 

@@ -65,7 +65,7 @@ export default function ProductDetails() {
     try {
       const data = { productId: id };
       const response = await HttpClient.get("/product/productId", data);
-    
+
 
 
       setRecommended(response)
@@ -81,8 +81,8 @@ export default function ProductDetails() {
   };
 
   useEffect(() => {
-    getProductDetails(id);
-  }, [id]);
+    getProductDetails();
+  }, []);
 
 
   const tokenIfLoggedIn = localStorage.getItem("accessToken")
@@ -231,7 +231,7 @@ export default function ProductDetails() {
   }
 
 
-  console.log("responseresponseresponse",productDetails?.productId)
+  console.log("responseresponseresponse", productDetails?.productId)
   return (
 
     <>
@@ -239,7 +239,7 @@ export default function ProductDetails() {
       {
         loading ? <div className="h-screen flex justify-center items-center">
 
-          <Loader/>
+          <Loader />
         </div> : <div className="px-3 mt-5 md:mt-5 md:px-10">
           <div className="flex flex-wrap gap-2 ">
             <div className="flex-1 min-w-[300px] max-w-[350px]">
@@ -522,8 +522,8 @@ export default function ProductDetails() {
                 </div>
 
                 {/* <div className="flex items-center gap-2 mt-1 text-gray-800"> */}
-                  {/* <CiDeliveryTruck size={30} className="text-gray-600" /> */}
-                  {/* <p className="font-semibold">Free delivery</p> */}
+                {/* <CiDeliveryTruck size={30} className="text-gray-600" /> */}
+                {/* <p className="font-semibold">Free delivery</p> */}
                 {/* </div> */}
               </div>
 
