@@ -369,9 +369,10 @@ export default function CheckOutWithoutLogin() {
                                   )}
                                   <div className="flex items-center gap-4">
                                     <h3>Product Name : Plazo</h3>
-                                    <p className="rounded-md px-1 " style={{
-                                      outline: "1px solid gray"
-                                    }}> <strong>Color :</strong>  {cartProducts[key].color}</p>
+                                    <p className="border border-gray-300 rounded-md px-2 py-1 text-sm font-medium text-gray-800">
+  <strong className="text-gray-900">Color:</strong> {cartProducts[key].color}
+</p>
+
                                   </div>
 
                                   <div className="flex gap-2 mb-2 mt-2 items-center">

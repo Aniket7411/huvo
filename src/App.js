@@ -69,6 +69,7 @@ import CheckOutWithoutLogin from "./pages/checkoutwithoutlogin/index.jsx";
 import CancellationManagementPage from "./pages/returnedorders/index.jsx";
 import SellerPayout from "./pages/sellerpayout/index.jsx";
 import ProductReview from "./pages/newproduct/index.jsx";
+import OrderDetails from "./pages/track-order/index.jsx";
 
 function App() {
   return (
@@ -113,6 +114,17 @@ function App() {
             element={
               <Layout>
                 <StoreAndProducts />
+              </Layout>
+            }
+          />
+        </Routes>
+
+        <Routes>
+          <Route
+            path="/resetPassword"
+            element={
+              <Layout>
+                <ResetPassword />
               </Layout>
             }
           />
@@ -368,7 +380,7 @@ function App() {
             element={
               <UserAuth>
                 <Layout changeHeaderColor="true">
-                  <TrackOrder />
+                  <OrderDetails />
                 </Layout>
               </UserAuth>
             }
@@ -424,9 +436,6 @@ function App() {
           />
         </Routes>
 
-        <Routes>
-          <Route path="reset-password" element={<ResetPassword />} />
-        </Routes>
         <Routes>
           <Route
             path="/seller"
@@ -687,7 +696,7 @@ function App() {
             path="seller_payouts"
             element={
               <SuperAdminAuth>
-                <SellerPayout  />
+                <SellerPayout />
               </SuperAdminAuth>
             }
           />

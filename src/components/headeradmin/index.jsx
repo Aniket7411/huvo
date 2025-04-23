@@ -272,9 +272,21 @@ function AdminHeader() {
                                   </span>
                                 )}
                               </p>
-                              <p className="text-sm sm:text-base font-semibold text-gray-800">
-                                Order ID: <span className="text-gray-600 font-normal">{item.OrderId || "N/A"}</span>
-                              </p>
+                              <Link 
+  to="/order_details" 
+  className="group block transition duration-200 hover:bg-gray-50 rounded-lg p-2 -m-2"
+>
+  <p className="text-sm sm:text-base font-semibold text-gray-800 transition-colors duration-200">
+    Order ID: 
+    <span className="text-gray-600 font-normal ml-1 group-hover:text-blue-500 transition-colors duration-200">
+      {item.OrderId || "N/A"}
+    </span>
+  </p>
+  <span className="block text-xs text-blue-600 underline mt-1 hover:font-bold transition-colors duration-200">
+    Click to view details →
+  </span>
+</Link>
+                         
                             </div>
 
                             <p className="text-sm sm:text-base font-medium text-gray-700 mb-1">

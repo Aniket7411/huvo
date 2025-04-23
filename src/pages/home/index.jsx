@@ -43,6 +43,9 @@ const testimonials = [
   },
 ];
 
+const tokenIfLoggedIn = localStorage.getItem("accessToken");
+
+
 
 export default function Home() {
   const [allProducts, setAllProducts] = useState([]);
@@ -181,6 +184,108 @@ export default function Home() {
 
   }
 
+
+  useEffect(() => {
+    const dataShift = async () => {
+      const localData = JSON.parse(localStorage.getItem("cart"));
+
+
+
+      console.log("localDatalocalData:", localData);
+      if (!localData || typeof localData !== "object" || Object.keys(localData).length === 0) {
+        console.error("No valid cart data found in localStorage.");
+        return;
+      }
+
+
+      // Process each item in the object of objects
+      let totalAmount = 0; // Initialize the total amount
+
+      const postDataObject = Object.keys(localData).reduce((acc, key) => {
+        const item = localData[key];
+
+        // Extract item details with default values
+        const price = item?.price || 0;
+        const quantity = item?.quantity || 1;
+        const platformFee = item?.platformCharge || 0;
+        const cgstRate = item?.cgst || 0; // Assuming cgst is a rate or fixed amount
+        const sgstRate = item?.sgst || 0; // Assuming sgst is a rate or fixed amount
+
+        // Calculate CGST and SGST for the item
+        const totalCgst = (cgstRate * quantity);
+        const totalSgst = (sgstRate * quantity);
+
+
+        // Calculate total price including platform fee and taxes
+
+
+
+
+        // Add to the overall total amount
+
+        // Construct the updated object for this item
+        acc[key] = {
+          color: item?.color || "N/A",
+          price,
+          plateformFee: platformFee,
+          sellerId: item?.seller || "Unknown",
+          name: item?.name || "Unnamed Product",
+          bannerImage: item?.bannerImage || "N/A",
+          quantity,
+          actualPrice: item?.actualPrice || "N/A",
+          cgst: totalCgst,
+          sgst: totalSgst,
+          size: item?.size || "N/A",
+          discount: item?.discount || "N/A",
+          productId: item?.productId || "N/A",
+        };
+
+        return acc;
+      }, {});
+
+
+      let totalCgst = 0;
+      let totalSgst = 0;
+      let totalCartAmout = 0;
+
+      Object.keys(localData).forEach((key) => {
+        const item = localData[key];
+        totalCgst += item?.cgst * item?.quantity;
+        totalSgst += item?.sgst * item?.quantity;
+        totalCartAmout += item?.price * item?.quantity;
+
+      });
+
+      console.log("totalCgst", totalCgst)
+      console.log("totalSgst", totalSgst)
+      console.log("totalCartAmout", totalCartAmout)
+
+      const dataForCart = {
+        cart: postDataObject,
+        cgst: totalCgst,
+        sgst: totalSgst,
+        totalAmount: totalCartAmout
+      }
+
+      console.log("dataForCart", dataForCart)
+
+
+
+
+
+
+      try {
+        const response = await HttpClient.post("/cart/login", dataForCart);
+        console.log("dataForCart", response);
+      } catch (error) {
+        console.error("Error during dataShift:", error);
+      }
+    };
+
+    if (tokenIfLoggedIn !== undefined && localStorage.getItem("cart")?.length > 0) {
+      dataShift();
+    }
+  }, [tokenIfLoggedIn]); // Dependency array ensures this runs when tokenIfLoggedIn changes
 
 
   useEffect(() => {

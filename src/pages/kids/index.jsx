@@ -175,8 +175,7 @@ export default function KidsCollection() {
 
 
       <p className="font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg text-[#2581eb] mt-2">
-        Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
-      </p>
+      Explore the latest trends and styles in kids' fashion. From playful everyday wear to stylish party outfits, find the perfect look for every little one.      </p>
 
 
 

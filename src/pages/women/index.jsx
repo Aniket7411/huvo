@@ -198,8 +198,7 @@ export default function WomenCollection() {
 
       <div class="text-center mt-3">
      <p className="font-[Poppins] font-normal text-center  text-sm md:text-lg text-[#2581eb] mt-4">
-          Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
-        </p>
+     Explore the latest trends and styles in women's fashion. From chic casual wear to elegant formal attire, discover the perfect outfit for every occasion.        </p>
       </div>
 
       

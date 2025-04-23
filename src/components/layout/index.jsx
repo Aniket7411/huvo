@@ -12,7 +12,7 @@ export default function Layout({ children }) {
 
 
         {/* Content with padding to accommodate the fixed header */}
-        <div className=" mt-[120px] md:mt-[80px] ">
+        <div className=" mt-[115px] md:mt-[75px] ">
           {children}
         </div>
 

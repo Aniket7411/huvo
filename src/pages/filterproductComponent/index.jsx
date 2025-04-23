@@ -81,7 +81,7 @@ const ProductsShowingComponent = (props) => {
 
   return (
     <div className="h-auto">
-      
+
       <section className="filter-section bg-white py-4 px-4">
         <div className="flex flex-col space-y-4">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-1 md:p-3">
@@ -114,7 +114,7 @@ const ProductsShowingComponent = (props) => {
 
             {showFilters && (
               <div className="flex flex-col md:flex-row gap-2 pt-4 border-t border-gray-200">
-              
+
 
                 <div className="flex-1 min-w-[200px]">
                   <label className="block font-medium text-gray-700 text-sm mb-2">
@@ -211,49 +211,49 @@ const ProductsShowingComponent = (props) => {
             <>
               {/* small screen */}
 
-              <div className="flex md:hidden my-5 flex-wrap items-center   justify-center gap-1">
+              <div className="flex md:hidden flex-wrap items-center  pb-3 justify-center items-center gap-1">
 
                 {
                   filteredProducts && filteredProducts.map((eachProduct, i) => (
                     <div className="w-[49%] bg-[#fff] py-2 rounded-lg flex flex-col shadow-md ">
-                        <img
-                          src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
-                          alt={eachProduct?.name || "Product Image"}
-                          className="h-[150px]  object-cover"
-                          loading="lazy"
-                        />
-                        <div className="px-3">
-                        
-                      <h1 className="text-black font-semibold text-sm mt-2 line-clamp-2 mb-1">
-                      {eachProduct?.name || "Product Name"}
-                    </h1>
-                    {/* Stars */}
-                    <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
-                      <div className="flex text-yellow-500">
-                        {[...Array(5)].map((_, index) => (
-                          <FaStar key={index} className="w-4 h-4" />
-                        ))}
-                      </div>
-                      <span className="text-xs text-gray-500">(New)</span>
-                    </div>
+                      <img
+                        src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
+                        alt={eachProduct?.name || "Product Image"}
+                        className="h-[150px]  object-cover"
+                        loading="lazy"
+                      />
+                      <div className="px-3">
 
-                     {/* Pricing */}
-                     <div className="flex gap-3 items-center text-sm mb-1">
-           <p className="line-through font-medium text-red-600">{eachProduct?.actualPrice || "N/A"}</p>
-                      <div className="flex items-center gap-1 text-green-600">
-                        <PiCurrencyInr />
-                        <p className="font-medium">
-                        {eachProduct?.price || "N/A"}
-                        </p>
+                        <h1 className="text-black font-semibold text-sm mt-2 line-clamp-2 mb-1">
+                          {eachProduct?.name || "Product Name"}
+                        </h1>
+                        {/* Stars */}
+                        <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
+                          <div className="flex text-yellow-500">
+                            {[...Array(5)].map((_, index) => (
+                              <FaStar key={index} className="w-4 h-4" />
+                            ))}
+                          </div>
+                          <span className="text-xs text-gray-500">(New)</span>
+                        </div>
+
+                        {/* Pricing */}
+                        <div className="flex gap-3 items-center text-sm mb-1">
+                          <p className="line-through font-medium text-red-600">{eachProduct?.actualPrice || "N/A"}</p>
+                          <div className="flex items-center gap-1 text-green-600">
+                            <PiCurrencyInr />
+                            <p className="font-medium">
+                              {eachProduct?.price || "N/A"}
+                            </p>
+                          </div>
+                        </div>
+                        <Link to={`/product-details/${eachProduct?.productId}`}>
+                          <button className="bg-blue-600 text-white px-2 py-1 rounded-md flex items-center gap-2 hover:bg-blue-700 transition-all">
+                            View <FaArrowRight className="w-4 h-4" />
+                          </button>
+                        </Link>
                       </div>
-                    </div>
-<Link to= {`/product-details/${eachProduct?.productId}`}>
-                    <button className="bg-blue-600 text-white px-2 py-1 rounded-md flex items-center gap-2 hover:bg-blue-700 transition-all">
-  View <FaArrowRight className="w-4 h-4" />
-</button>
-</Link>
-</div>
-                 
+
 
 
                     </div>
@@ -269,15 +269,15 @@ const ProductsShowingComponent = (props) => {
                 {filteredProducts && filteredProducts.map((eachProduct, i) => (
                   <div
                     key={i}
-                    className="bg-white flex flex-col rounded-xl p-3 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300
-                 w-full sm:w-[48%] md:w-[48%] lg:w-[31%] xl:w-[23%] 2xl:w-[18%]"
+                    className="bg-white flex flex-col h-auto rounded-xl p-3 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300
+                 w-full sm:w-[48%]  md:w-[48%] lg:w-[31%] xl:w-[23%] 2xl:w-[18%]"
                   >
                     {/* Product Image */}
-                    <div className="w-full aspect-square mb-1 overflow-hidden rounded-md flex items-center justify-center">
+                    <div className="w-full  overflow-hidden rounded-md flex items-center justify-center">
                       <img
                         src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
                         alt={eachProduct?.name || "Product Image"}
-                        className="h-30 w-full object-cover"
+                        className="h-[220px] w-full object-cover"
                         loading="lazy"
                       />
                     </div>
@@ -287,22 +287,22 @@ const ProductsShowingComponent = (props) => {
                       {eachProduct?.name || "Product Name"}
                     </h1>
 
-                   
-                    <div className="flex justify-between">
-                    {/* Stars */}
-                    <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
-                      <div className="flex text-yellow-500">
-                        {[...Array(5)].map((_, index) => (
-                          <FaStar key={index} className="w-4 h-4" />
-                        ))}
-                      </div>
-                      <span className="text-xs text-gray-500">(New)</span>
-                    </div>
 
-                     {/* Brand */}
-                     <p className="text-gray-600 text-sm mb-1">
-                      {eachProduct?.brandName || "Unknown Brand"}
-                    </p>
+                    <div className="flex justify-between">
+                      {/* Stars */}
+                      <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
+                        <div className="flex text-yellow-500">
+                          {[...Array(5)].map((_, index) => (
+                            <FaStar key={index} className="w-4 h-4" />
+                          ))}
+                        </div>
+                        <span className="text-xs text-gray-500">(New)</span>
+                      </div>
+
+                      {/* Brand */}
+                      <p className="text-gray-600 text-sm mb-1">
+                        {eachProduct?.brandName || "Unknown Brand"}
+                      </p>
                     </div>
 
                     {/* Pricing */}

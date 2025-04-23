@@ -13,6 +13,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { CartContext } from "../../usecontext1/cartcontext";
 import Loader from "../loader";
 import { motion } from "framer-motion";
+import { IoIosLogOut } from "react-icons/io";
 
 
 
@@ -583,51 +584,85 @@ export default function Header(props) {
         )}
       </div>
       {isSubmenu && (
-        // tab nabbar
-        <section>
-          <div className="block md:hidden z-10 text-[blue] bg-[#fff] fixed sm:w-[50%] w-[100%] p-5 top-0 right-0">
-            <div className="flex justify-between items-center">
-              <div className="mb-3">
-                {/* <img src="assets/newlogo.jpeg" alt="logo" /> */}
-                <Link to="/">
+  <section>
+    <div className="block md:hidden z-20 text-[#fff] bg-blue-500 fixed sm:w-[70%] w-full p-6 top-0 right-0 shadow-lg">
+      {/* Navbar Header */}
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <Link to="/">
+          <p className="font-bold text-white text-3xl tracking-wide drop-shadow-md" style={{ fontFamily: "'Caveat', cursive" }}>
+  Huvo
+</p>
+          </Link>
+        </div>
+        <button
+          className="text-black text-xl"
+          onClick={() => closeSubmenu()}
+        >
+          <RxCross2 />
+        </button>
+      </div>
 
-                  <img src="/assets/newlogo.jpeg" className="w-[50px] h-[30px]" alt="logo" />
-                </Link>
+      {/* Navigation Links */}
+      <ul className=" font-medium space-y-3">
+        <li onClick={closeSubmenu} className="cursor-pointer">
+          <Link
+            to="/men-collection"
+            className="hover:text-blue-800 transition duration-300"
+          >
+            Men
+          </Link>
+        </li>
+        <li onClick={closeSubmenu} className="cursor-pointer">
+          <Link
+            to="/women-collection"
+            className="hover:text-blue-800 transition duration-300"
+          >
+            Women
+          </Link>
+        </li>
+        <li onClick={closeSubmenu} className="cursor-pointer">
+          <Link
+            to="/kids-collection"
+            className="hover:text-blue-800 transition duration-300"
+          >
+            Kids
+          </Link>
+        </li>
+        <li onClick={closeSubmenu} className="cursor-pointer">
+          <Link
+            to="/contact-us"
+            className="hover:text-blue-800 transition duration-300"
+          >
+            Contact Us
+          </Link>
+        </li>
+        <li onClick={clickToLogout} className="cursor-pointer flex items-center gap-2">
+          <p
+       
+            className="hover:text-blue-800 transition duration-300"
+          >
+            Logout 
 
-              </div>
-              <button className="text-black " onClick={() => closeSubmenu()}>
-                <RxCross2 />
-              </button>
-            </div>
-            <ul className="text-[#56B6E6] font-semibold">
-              <li onClick={closeSubmenu} className="cursor-pointer mb-2">
-              </li>
+          </p>
+          <IoIosLogOut />
+        </li>
+      </ul>
 
-              <li onClick={closeSubmenu} className="cursor-pointer mb-2">
-                <Link to="/men-collection">
+  
+      {/* Contact Us Section */}
+      <div className="mt-6 border-t pt-4 text-sm text-[#fff]">
+        <p className="mb-2">
+          <strong>Email:</strong> contact@huvo.in
+        </p>
+        <p>
+          <strong>Phone:</strong> +91-9876543210
+        </p>
+      </div>
+    </div>
+  </section>
+)}
 
-                  Men
-                </Link>
-              </li>
-
-              <li onClick={closeSubmenu} className="cursor-pointer mb-2">
-                <Link to="/women-collection">
-                  Women
-                </Link>
-              </li>
-
-              <li onClick={closeSubmenu} className="cursor-pointer mb-2">
-                <Link to="/kids-collection">
-                  Kids
-                </Link>
-              </li>
-
-
-            </ul>
-          </div>
-        </section>
-      )
-      }
 
     </>
   );

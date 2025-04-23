@@ -64,74 +64,71 @@ export default function ResetPassword() {
     }
   return (
     <>
-      <section className="login-bg h-screen">
-        <div className="go-home absolute right-[30px] top-[20px] z-[1]">
-          <Link
-            className="text-end text-[#011f4b] font-[Quicksand] font-medium"
-            to="/"
+  <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="w-full max-w-md bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+      <div className="text-center">
+        <h1 className="text-2xl font-bold text-gray-800 mb-2">Reset Password</h1>
+        <p className="text-gray-600 mb-6">Please enter your new password</p>
+        
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="form-control">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1 text-left">
+              New Password
+            </label>
+            <input
+              id="password"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+              placeholder="Enter new password"
+              type="password"
+              autoComplete="new-password"
+              {...register("password", {
+                required: "*Password is required",
+                minLength: {
+                  value: 8,
+                  message: "*Password should be at least 8 characters",
+                },
+              })}
+            />
+            {errors.password && (
+              <p className="mt-1 text-sm text-red-600 text-left">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+
+          <div className="form-control">
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1 text-left">
+              Confirm Password
+            </label>
+            <input
+              id="confirmPassword"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+              placeholder="Confirm your password"
+              type="password"
+              autoComplete="new-password"
+              {...register("confirmPassword", {
+                validate: (value) =>
+                  value === getValues("password") || "The passwords do not match",
+                required: "*Please confirm your password",
+              })}
+            />
+            {errors.confirmPassword && (
+              <p className="mt-1 text-sm text-red-600 text-left">
+                {errors.confirmPassword.message}
+              </p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-2 text-white font-medium rounded-lg transition focus:outline-none focus:ring-2"
           >
-            Back to Home
-          </Link>
-          <div className="h-[2px] bg-[#011f4b] w-[0px] transition-all duration-300"></div>
-        </div>
-        <div className="absolute z-[1] w-full md:w-[50%] px-5 sm:px-0 right-0 text-center top-[25vh] font-[Quicksand]">
-          <p className="font-semibold text-3xl md:4xl xl:text-5xl text-black mb-8">
-            RESET PASSWORD
-          </p>
-          <form onSubmit={handleSubmit(onSubmit)}> 
-          <div className="form-control mb-5">
-        <input
-                className="text-[#5A5A5A] rounded-lg font-medium text-lg  border-[1px] border-black border-solid bg-transparent outline-none w-full sm:w-3/4 xl:w-1/2 p-3"
-                placeholder="Enter new Password"
-                type="password"
-                name="password"
-                autoComplete="on"
-                {...register("password", {
-                  required: "*Password is required.",
-                  minLength: {
-                    value: 8,
-                    message: "*Password should be at-least 8 characters.",
-                  },
-                })}
-              />
-              {errors.password && (
-                <p className="errorMsg text-[#E40606]">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-            <div className="form-control mb-5">
-              <input
-                className="text-[#5A5A5A] rounded-lg font-medium text-lg  border-[1px] border-black border-solid bg-transparent outline-none w-full sm:w-3/4 xl:w-1/2 p-3"
-                placeholder="Enter confirm Password"
-                type="password"
-                name="password"
-                autoComplete="on"
-                {...register("confirmPassword", {
-                  validate: (value) =>
-                  value === getValues("password") || "The passwords should match" ,
-                  required: "*Password is required.",
-                  minLength: {
-                    value: 8,
-                    message: "*Password should be at-least 8 characters.",
-                  },
-                })}
-              />
-              {errors.confirmPassword && (
-                <p className="errorMsg text-[#E40606]">
-                  {errors.confirmPassword.message}
-                </p>
-              )}
-              </div>
-              <button
-                      type="submit"
-                      className="mt-2 bg-[#011F4B]  text-white xl:text-xl lg:text-lg font-medium p-3  focus:outline-none rounded-lg  text-center w-full sm:w-3/4 xl:w-1/2 font-[QuickSand]"
-                    >
-                      Save Password
-                    </button>
+            Save Password
+          </button>
         </form>
-        </div>
-      </section>
-    </>
+      </div>
+    </div>
+  </section>
+</>
   )
 }

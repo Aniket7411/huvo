@@ -28,6 +28,7 @@ export default function Login() {
     try {
       const { message } = await HttpClient.post("/users/forgetPassword", data);
       toast.success(message);
+      
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -153,16 +154,24 @@ export default function Login() {
             )}
             {!forgetPassword && (
               <>
-                <div className="flex items-center justify-center">
-                  <Link to="/">
-                    <img src="/assets/vardacartslogo.svg" alt="Logo" className="w-[100px] mb-4" />
-                  </Link>
-                </div>
+               <div className="flex items-center justify-center">
+  <Link to="/">
+    <img
+      src="/assets/vardacartslogo.svg"
+      alt="Logo"
+      className="w-[180px] mb-3"
+    />
+  </Link>
+</div>
 
+<p className="text-lg text-gray-600 text-center mb-2">
+  Your one-stop shop for everything you love!
+</p>
 
-                <p className="font-semibold text-3xl md:3xl xl:text-5xl text-black mb-8">
-                  LOG IN
-                </p>
+<p className="font-semibold text-3xl md:text-3xl xl:text-5xl text-black mb-2">
+  LOG IN
+</p>
+
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="form-control mb-10">

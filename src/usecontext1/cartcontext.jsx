@@ -22,7 +22,28 @@ export const CartProvider = ({ children }) => {
 
 
 
-  console.log("tokenIfLoggedIntokenIfLoggedIn",tokenIfLoggedIn)
+  console.log("tokenIfLoggedIntokenIfLoggedIn", tokenIfLoggedIn)
+
+
+  // useEffect(() => {
+  //   const dataShift = async () => {
+  //     const localData = JSON.parse(localStorage.getItem("cart"));
+
+  //     console.log("localData:", localData);
+
+  //     try {
+  //       const response = await HttpClient.post("/cart/", localData);
+  //       console.log("localData", response);
+  //     } catch (error) {
+  //       console.error("Error during dataShift:", error);
+  //     }
+  //   };
+
+  //   if (tokenIfLoggedIn !== undefined && localStorage.getItem("cart")?.length > 0) {
+  //     dataShift();
+  //   }
+  // }, [tokenIfLoggedIn]); // Dependency array ensures this runs when tokenIfLoggedIn changes
+
 
 
 

@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import Loader from "../../components/loader";
 
 import { FaFilterCircleXmark } from "react-icons/fa6";
+import ProductsShowingComponent from "../filterproductComponent";
 
 
 export default function CategorySearh() {
@@ -60,7 +61,7 @@ export default function CategorySearh() {
       const formattedData = response.products.map((eachProduct) => ({
         objectId: eachProduct._id,
         bannerImage: eachProduct.bannerImage,
-        productName: eachProduct.name,
+        name: eachProduct.name,
         brandName: eachProduct.brand.name,
         brandImage: eachProduct.brand.image,
         onGoingOffer: eachProduct.brand.onGoingOffer,
@@ -77,6 +78,8 @@ export default function CategorySearh() {
         actualPrice: eachProduct.actualPrice
       }))
       setAllProducts(formattedData)
+      console.log("formattedData",formattedData)
+
       }
       else{
         //do other thing
@@ -87,7 +90,7 @@ export default function CategorySearh() {
       const formattedData = response.products.map((eachProduct) => ({
         objectId: eachProduct._id,
         bannerImage: eachProduct.bannerImage,
-        productName: eachProduct.name,
+        name: eachProduct.name,
         brandName: eachProduct.brand.name,
         brandImage: eachProduct.brand.image,
         onGoingOffer: eachProduct.brand.onGoingOffer,
@@ -103,7 +106,6 @@ export default function CategorySearh() {
         productId: eachProduct.productId,
       }))
       setAllProducts(formattedData)
-      console.log("formattedData",formattedData)
       }
       
 
@@ -140,12 +142,13 @@ export default function CategorySearh() {
   return (
     <div className="h-auto">
 
+      <ProductsShowingComponent allProducts={allProducts}/>
+
       
 
 
       {/* Filter Button for Small Screens */}
-      <div className="top-0 left-0 w-full bg-white shadow-md z-10 px-2 flex justify-between lg:hidden border border-gray-300 rounded-lg ring-1 ring-blue-300">
-        {/* <h2 className="text-lg font-bold text-gray-800">Filter</h2> */}
+      {/* <div className="top-0 left-0 w-full bg-white shadow-md z-10 px-2 flex justify-between lg:hidden border border-gray-300 rounded-lg ring-1 ring-blue-300">
 
         <button
           onClick={() => setFiltersVisible(!filtersVisible)}
@@ -153,10 +156,9 @@ export default function CategorySearh() {
         >
           {filtersVisible ? <FaFilterCircleXmark size={25} /> : <CiFilter size={25} />}
         </button>
-      </div>
+      </div> */}
 
 
-      {/* Filter Sidebar */}
 
 
        
@@ -165,9 +167,8 @@ export default function CategorySearh() {
 
 
 
+{/* 
 
-
-          {/* Desktop Grid Section */}
           <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
 
             {searchTerm !== "" ? (
@@ -190,7 +191,6 @@ export default function CategorySearh() {
                     key={i}
                     className="bg-white flex flex-col rounded-xl p-3 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300"
                   >
-                    {/* Product Image */}
                     <div className="w-full aspect-square mb-3 overflow-hidden rounded-md">
                       <img
                         src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
@@ -200,12 +200,10 @@ export default function CategorySearh() {
                       />
                     </div>
 
-                    {/* Product Details */}
                     <h1 className="text-black font-semibold text-lg line-clamp-2 mb-2">
                       {eachProduct?.productName.slice(0,30) || "Product Name"}
                     </h1>
 
-                    {/* Product Rating */}
                     <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
                       <div className="flex text-yellow-500">
                         {[...Array(5)].map((_, index) => (
@@ -215,7 +213,6 @@ export default function CategorySearh() {
                       <span className="text-xs text-gray-500">(200+ orders)</span>
                     </div>
 
-                    {/* Pricing Details */}
                     <div className="flex justify-between items-center text-sm mb-2">
                       <div className="flex items-center gap-1 text-red-600">
                         <PiCurrencyInr />
@@ -228,16 +225,13 @@ export default function CategorySearh() {
                       </div>
                     </div>
 
-                    {/* Final Price */}
                     <div className="flex justify-between items-center text-lg font-bold text-gray-800 mb-3">
                       <div className="flex items-center">
                         <PiCurrencyInr />
                         <span>{finalPrice}</span>
                       </div>
-                      {/* <span className="text-green-500 text-sm">Free Delivery</span> */}
                     </div>
 
-                    {/* View Product Button */}
                     <Link to={`/product-details/${eachProduct?.productId}`} className="w-full">
                       <button className="w-full flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-all">
                         View Product <FaArrowRight className="ml-2" />
@@ -249,7 +243,6 @@ export default function CategorySearh() {
             </div>
             </section>
 
-            {/* Mobile Grid Section */}
             <div className="md:hidden grid grid-cols-2 gap-3 p-3">
               {menProducts.map((each, index) => {
                 const finalPrice = each.price - each.discount;
@@ -301,7 +294,7 @@ export default function CategorySearh() {
             </div>
           </section>
 
-
+ */}
 
 
 

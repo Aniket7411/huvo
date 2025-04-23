@@ -16,6 +16,8 @@ function ProductAddPage() {
   const [verifyModal, setVerifyModal] = useState(false)
 
   const [totalProductCost, setTotalProductCost] = useState(null)
+
+  
   const options = [
     { id: 1, name: "Red", value: "red", colorCode: "#FF0000" },
     { id: 2, name: "Green", value: "green", colorCode: "#008000" },
@@ -28,8 +30,56 @@ function ProductAddPage() {
     { id: 9, name: "White", value: "white", colorCode: "#FFFFFF" },
     { id: 10, name: "Grey", value: "grey", colorCode: "#808080" },
     { id: 11, name: "Turquoise", value: "turquoise", colorCode: "#40E0D0" },
+    { id: 12, name: "Brown", value: "brown", colorCode: "#A52A2A" },
+    { id: 13, name: "Cyan", value: "cyan", colorCode: "#00FFFF" },
+    { id: 14, name: "Magenta", value: "magenta", colorCode: "#FF00FF" },
+    { id: 15, name: "Lime", value: "lime", colorCode: "#00FF00" },
+    { id: 16, name: "Beige", value: "beige", colorCode: "#F5F5DC" },
+    { id: 17, name: "Maroon", value: "maroon", colorCode: "#800000" },
+    { id: 18, name: "Navy", value: "navy", colorCode: "#000080" },
+    { id: 19, name: "Olive", value: "olive", colorCode: "#808000" },
+    { id: 20, name: "Teal", value: "teal", colorCode: "#008080" },
+    { id: 21, name: "Lavender", value: "lavender", colorCode: "#E6E6FA" },
+    { id: 22, name: "Coral", value: "coral", colorCode: "#FF7F50" },
+    { id: 23, name: "Gold", value: "gold", colorCode: "#FFD700" },
+    { id: 24, name: "Silver", value: "silver", colorCode: "#C0C0C0" },
+    { id: 25, name: "Crimson", value: "crimson", colorCode: "#DC143C" },
+    { id: 26, name: "Indigo", value: "indigo", colorCode: "#4B0082" },
+    { id: 27, name: "Violet", value: "violet", colorCode: "#EE82EE" },
+    { id: 28, name: "Salmon", value: "salmon", colorCode: "#FA8072" },
+    { id: 29, name: "Aqua", value: "aqua", colorCode: "#00FFFF" },
+    { id: 30, name: "Azure", value: "azure", colorCode: "#F0FFFF" },
+    { id: 31, name: "Bisque", value: "bisque", colorCode: "#FFE4C4" },
+    { id: 32, name: "Chocolate", value: "chocolate", colorCode: "#D2691E" },
+    { id: 33, name: "Copper", value: "copper", colorCode: "#B87333" },
+    { id: 34, name: "Emerald", value: "emerald", colorCode: "#50C878" },
+    { id: 35, name: "Fuchsia", value: "fuchsia", colorCode: "#FF00FF" },
+    { id: 36, name: "Ivory", value: "ivory", colorCode: "#FFFFF0" },
+    { id: 37, name: "Khaki", value: "khaki", colorCode: "#F0E68C" },
+    { id: 38, name: "Mint", value: "mint", colorCode: "#98FF98" },
+    { id: 39, name: "Mustard", value: "mustard", colorCode: "#FFDB58" },
+    { id: 40, name: "Peach", value: "peach", colorCode: "#FFE5B4" },
+    { id: 41, name: "Plum", value: "plum", colorCode: "#DDA0DD" },
+    { id: 42, name: "Ruby", value: "ruby", colorCode: "#E0115F" },
+    { id: 43, name: "Sapphire", value: "sapphire", colorCode: "#0F52BA" },
+    { id: 44, name: "Sky Blue", value: "sky-blue", colorCode: "#87CEEB" },
+    { id: 45, name: "Tan", value: "tan", colorCode: "#D2B48C" },
+    { id: 46, name: "Tangerine", value: "tangerine", colorCode: "#F28500" },
+    { id: 47, name: "Wine", value: "wine", colorCode: "#722F37" },
+    { id: 48, name: "Amber", value: "amber", colorCode: "#FFBF00" },
+    { id: 49, name: "Charcoal", value: "charcoal", colorCode: "#36454F" },
+    { id: 50, name: "Denim", value: "denim", colorCode: "#1560BD" },
+    { id: 51, name: "Eggplant", value: "eggplant", colorCode: "#614051" },
+    { id: 52, name: "Jade", value: "jade", colorCode: "#00A86B" },
+    { id: 53, name: "Lilac", value: "lilac", colorCode: "#C8A2C8" },
+    { id: 54, name: "Pearl", value: "pearl", colorCode: "#EAE0C8" },
+    { id: 55, name: "Rust", value: "rust", colorCode: "#B7410E" },
+    { id: 56, name: "Sand", value: "sand", colorCode: "#C2B280" },
+    { id: 57, name: "Sea Green", value: "sea-green", colorCode: "#2E8B57" },
+    { id: 58, name: "Slate", value: "slate", colorCode: "#708090" },
+    { id: 59, name: "Snow", value: "snow", colorCode: "#FFFAFA" },
+    { id: 60, name: "Steel Blue", value: "steel-blue", colorCode: "#4682B4" }
   ];
-
 
   const [isLoading, setIsloading] = useState(false)
 
