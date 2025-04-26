@@ -58,6 +58,8 @@ export default function ProductByCategory() {
 
       setAllProducts(formattedData);
       setFilteredProducts(formattedData);
+      setLoading(false);
+
     } catch (error) {
       toast.error("Failed to fetch products");
     } finally {
@@ -105,10 +107,33 @@ export default function ProductByCategory() {
   return (
     <>
 
-      {
-        isLoading ? <div className="flex h-screen justify-center items-center"><Loader /></div> : <ProductsShowingComponent allProducts={allProducts} />
+{
+  isLoading ? (
+    <div className="flex h-screen justify-center items-center">
+      <Loader />
+    </div>
+  ) : allProducts && allProducts.length > 0 ? (
+    <ProductsShowingComponent allProducts={allProducts} />
+  ) : (
+    <div className="flex flex-col justify-center items-center h-screen">
+      {/* <img
+        src="https://via.placeholder.com/150"
+        alt="No Products"
+        className="w-40 h-40 object-cover mb-4"
+      /> */}
+      <p className="text-gray-600 text-lg font-semibold">
+        No products available!
+      </p>
+      <button
+        className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-all"
+        onClick={() => window.location.reload()}
+      >
+        Refresh
+      </button>
+    </div>
+  )
+}
 
-      }
 
 
 

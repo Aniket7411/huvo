@@ -3,10 +3,10 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function Privacypolicy() {
   return (
-    <div className='p-20 mt-10'>
+    <div className='md:p-14 p-3 mt-10'>
       <h1 className='text-center mx-auto w-fit font-[Poppins] cursor-pointer font-bold text-4xl'>Privacy Policy</h1>
       <p className=' 
-      text-[#949494] font-light font-[Poppins]  [text-align:justify]" mt-10'>
+      text-[#949494] font-light font-[Poppins]  [text-align:justify]" mt-3'>
         Welcome to Huvo. This document is an electronic record in terms of Information Technology Act, 2000 and published in accordance with the provisions of Re 3 ) of the Information Technology (Intermediaries guidelines) Res, 2011 that require publishing the res and regations, privacy policy and Terms of Use for access or usage of Huvo marketplace platform - www.Huvoofficial.com (hereinafter referred to as "Platform")
 
       </p>

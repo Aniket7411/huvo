@@ -110,7 +110,6 @@ const Orders = () => {
 
       }
     }
-    toast.info(cancelReason)
 
     setIsCancelModalOpen(false);
     setCancelReason("");

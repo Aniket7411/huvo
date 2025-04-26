@@ -376,7 +376,7 @@ function App() {
 
         <Routes>
           <Route
-            path="track-order"
+            path="order_details"
             element={
               <UserAuth>
                 <Layout changeHeaderColor="true">

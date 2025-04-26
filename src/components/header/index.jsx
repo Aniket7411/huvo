@@ -8,7 +8,7 @@ import { RxCross2 } from "react-icons/rx";
 import { LogOut, isLoggedIn } from "../../server/user";
 import { toast } from "react-toastify";
 import { HttpClient } from "../../server/client/http";
-import { CiSearch } from "react-icons/ci";
+import { CiLogin, CiSearch } from "react-icons/ci";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { CartContext } from "../../usecontext1/cartcontext";
 import Loader from "../loader";
@@ -418,6 +418,7 @@ export default function Header(props) {
 
 
 
+
       {dropdownContent && (
         <ul className="bg-white w-[200px] shadow-lg p-4 absolute top-15 right-5 rounded-md">
           {isLoggedIn() ? (
@@ -447,7 +448,7 @@ export default function Header(props) {
           ) : (
             <>
               <Link to="/login">
-                <li className="font-[Poppins] text-[#333] font-medium cursor-pointer hover:text-[#007bff] transition duration-200">
+                <li className="font-[Poppins] text-[red] font-medium cursor-pointer hover:text-[#007bff] transition duration-200">
                   Login
                 </li>
               </Link>
@@ -479,8 +480,8 @@ export default function Header(props) {
 
         {/* Center Section */}
         <p className="font-bold text-white text-2xl tracking-wide drop-shadow-md" style={{ fontFamily: "'Caveat', cursive" }}>
-  Huvo
-</p>
+          Huvo
+        </p>
 
 
         {/* Right Section */}
@@ -525,11 +526,18 @@ export default function Header(props) {
           <button
             aria-label="Profile"
             onClick={() =>
-              isLoggedIn() ? navigate("/profile") : SetdropdownContent(!dropdownContent)
+              isLoggedIn() ? navigate("/profile") : navigate('/login')
             }
             className="hover:scale-110 transition duration-200"
           >
-            <FaRegUser size={25} className="text-lg mr-4  cursor-pointer" />
+            <Link to="/login">
+
+              {
+                loginStatus === 0 ? <FaRegUser size={25} className="text-lg font-semibold mr-3  cursor-pointer" /> : <CiLogin size={25} className="text-lg font-semibold mr-3  cursor-pointer" />
+
+              }
+
+            </Link>
           </button>
         </div>
       </div>
@@ -584,84 +592,82 @@ export default function Header(props) {
         )}
       </div>
       {isSubmenu && (
-  <section>
-    <div className="block md:hidden z-20 text-[#fff] bg-blue-500 fixed sm:w-[70%] w-full p-6 top-0 right-0 shadow-lg">
-      {/* Navbar Header */}
-      <div className="flex justify-between items-center mb-4">
-        <div>
-          <Link to="/">
-          <p className="font-bold text-white text-3xl tracking-wide drop-shadow-md" style={{ fontFamily: "'Caveat', cursive" }}>
-  Huvo
-</p>
-          </Link>
-        </div>
-        <button
-          className="text-black text-xl"
-          onClick={() => closeSubmenu()}
-        >
-          <RxCross2 />
-        </button>
-      </div>
+        <section>
+          <div className="block md:hidden z-20 text-[#fff] bg-blue-500 fixed sm:w-[70%] w-full p-6 top-0 right-0 shadow-lg">
+            {/* Navbar Header */}
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <Link to="/">
+                  <p className="font-bold text-white text-3xl tracking-wide drop-shadow-md" style={{ fontFamily: "'Caveat', cursive" }}>
+                    Huvo
+                  </p>
+                </Link>
+              </div>
+              <button
+                className="text-black text-xl"
+                onClick={() => closeSubmenu()}
+              >
+                <RxCross2 />
+              </button>
+            </div>
 
-      {/* Navigation Links */}
-      <ul className=" font-medium space-y-3">
-        <li onClick={closeSubmenu} className="cursor-pointer">
-          <Link
-            to="/men-collection"
-            className="hover:text-blue-800 transition duration-300"
-          >
-            Men
-          </Link>
-        </li>
-        <li onClick={closeSubmenu} className="cursor-pointer">
-          <Link
-            to="/women-collection"
-            className="hover:text-blue-800 transition duration-300"
-          >
-            Women
-          </Link>
-        </li>
-        <li onClick={closeSubmenu} className="cursor-pointer">
-          <Link
-            to="/kids-collection"
-            className="hover:text-blue-800 transition duration-300"
-          >
-            Kids
-          </Link>
-        </li>
-        <li onClick={closeSubmenu} className="cursor-pointer">
-          <Link
-            to="/contact-us"
-            className="hover:text-blue-800 transition duration-300"
-          >
-            Contact Us
-          </Link>
-        </li>
-        <li onClick={clickToLogout} className="cursor-pointer flex items-center gap-2">
-          <p
-       
-            className="hover:text-blue-800 transition duration-300"
-          >
-            Logout 
+            {/* Navigation Links */}
+            <ul className=" font-medium space-y-3">
+              <li onClick={closeSubmenu} className="cursor-pointer">
+                <Link
+                  to="/men-collection"
+                  className="hover:text-blue-800 transition duration-300"
+                >
+                  Men
+                </Link>
+              </li>
+              <li onClick={closeSubmenu} className="cursor-pointer">
+                <Link
+                  to="/women-collection"
+                  className="hover:text-blue-800 transition duration-300"
+                >
+                  Women
+                </Link>
+              </li>
+              <li onClick={closeSubmenu} className="cursor-pointer">
+                <Link
+                  to="/kids-collection"
+                  className="hover:text-blue-800 transition duration-300"
+                >
+                  Kids
+                </Link>
+              </li>
+              <li onClick={closeSubmenu} className="cursor-pointer">
+                <Link
+                  to="/contact-us"
+                  className="hover:text-blue-800 transition duration-300"
+                >
+                  Contact Us
+                </Link>
+              </li>
+              <li onClick={clickToLogout} className="cursor-pointer flex items-center gap-2">
+                <p
 
-          </p>
-          <IoIosLogOut />
-        </li>
-      </ul>
+                  className="hover:text-blue-800 transition duration-300"
+                >
+                  Logout
 
-  
-      {/* Contact Us Section */}
-      <div className="mt-6 border-t pt-4 text-sm text-[#fff]">
-        <p className="mb-2">
-          <strong>Email:</strong> contact@huvo.in
-        </p>
-        <p>
-          <strong>Phone:</strong> +91-9876543210
-        </p>
-      </div>
-    </div>
-  </section>
-)}
+                </p>
+                <IoIosLogOut />
+              </li>
+            </ul>
+
+
+            {/* Contact Us Section */}
+            <div className="mt-6 border-t pt-4 text-sm text-[#fff]">
+              <p className="mb-2">
+                <strong>Email:</strong> contact@huvo.in
+              </p>
+
+            </div>
+          </div>
+        </section>
+      )}
 
 
     </>

@@ -368,24 +368,24 @@ export default function CheckOut() {
             {Object.keys(cartProducts).length ? (
               <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
                 <TabList className="flex justify-between mt-2 sm:justify-center">
-  <Tab className="font-medium text-[#474747] focus:text-[#011F4B] active:text-[#011F4B] focus:outline-none font-[Poppins] hover:text-[#011F4B] transition-colors duration-300 px-4 py-2">
-    BAG
-  </Tab>
-  <span className="hidden sm:block mx-5 text-gray-400">-------------</span>
-  <Tab className="font-medium text-[#474747] focus:text-[#011F4B] active:text-[#011F4B] focus:outline-none font-[Poppins] hover:text-[#011F4B] transition-colors duration-300 px-4 py-2">
-    ADDRESS
-  </Tab>
-  <span className="hidden sm:block mx-5 text-gray-400">-------------</span>
-  <Tab className="font-medium text-[#474747] focus:text-[#011F4B] active:text-[#011F4B] focus:outline-none font-[Poppins] hover:text-[#011F4B] transition-colors duration-300 px-4 py-2">
-    PAYMENT
-  </Tab>
-</TabList>
+                  <Tab className="font-medium text-[#474747] focus:text-[#011F4B] active:text-[#011F4B] focus:outline-none font-[Poppins] hover:text-[#011F4B] transition-colors duration-300 px-4 py-2">
+                    BAG
+                  </Tab>
+                  <span className="hidden sm:block mx-5 text-gray-400">-------------</span>
+                  <Tab className="font-medium text-[#474747] focus:text-[#011F4B] active:text-[#011F4B] focus:outline-none font-[Poppins] hover:text-[#011F4B] transition-colors duration-300 px-4 py-2">
+                    ADDRESS
+                  </Tab>
+                  <span className="hidden sm:block mx-5 text-gray-400">-------------</span>
+                  <Tab className="font-medium text-[#474747] focus:text-[#011F4B] active:text-[#011F4B] focus:outline-none font-[Poppins] hover:text-[#011F4B] transition-colors duration-300 px-4 py-2">
+                    PAYMENT
+                  </Tab>
+                </TabList>
 
                 <TabPanels className="mt-8">
                   <TabPanel>
                     <div className="md:flex gap-6">
                       <div className="md:w-8/12">
-                       
+
 
                         {Object.entries(totalCartData).map(([key, item]) => (
                           <div
@@ -409,7 +409,7 @@ export default function CheckOut() {
                             {/* Product Info */}
                             <div className="flex flex-col gap-2 flex-grow">
                               <Link to={`/product-details/${item?.productId}`} >
-                              <h2 className="font-semibold text-gray-800 text-lg sm:text-xl">{item.name}</h2>
+                                <h2 className="font-semibold text-gray-800 text-lg sm:text-xl">{item.name}</h2>
                               </Link>
 
                               <div className="flex items-center gap-2">
@@ -475,8 +475,8 @@ export default function CheckOut() {
                           </div>
                         ))}
 
-                        
-<div className="border-2 border-[#D6CBCB] p-3 rounded-md my-3">
+
+                        <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-3">
                           <Link to="/wishlist">
                             <div className="flex justify-between items-center font-[Poppins]">
                               <div className="text-[#353535] font-normal text-md flex items-center gap-1">
@@ -488,7 +488,7 @@ export default function CheckOut() {
                           </Link>
                         </div>
 
-<div className="bg-[#011F4B] text-white rounded-md p-3 flex flex-wrap gap-2 sm:gap-1 sm:flex-nowrap justify-between items-center font-[Poppins]">
+                        <div className="bg-[#011F4B] text-white rounded-md p-3 flex flex-wrap gap-2 sm:gap-1 sm:flex-nowrap justify-between items-center font-[Poppins]">
                           <div className="">
                             {shippingAddress ? (
                               <>
@@ -822,120 +822,119 @@ export default function CheckOut() {
                     </section>
                   </TabPanel>
 
-                 
+
                   <TabPanel>
-                  <section className="font-[Poppins] p-4">
-  <div className="flex flex-col md:flex-row gap-6">
-    {/* Offers and Payment Mode */}
-    <div className="md:w-8/12">
-      {/* Bank Offers */}
-      <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-2">
-        <details>
-          <summary className="text-[#011F4B] font-medium text-lg cursor-pointer flex items-center gap-2">
-            <BiSolidOffer className="fill-[#011F4B]" />
-            BANK OFFERS
-          </summary>
-          <p className="text-[#535353] font-normal mt-2">
-            7% Discount with Shopping Cart
-          </p>
-        </details>
-      </div>
+                    <section className="font-[Poppins] p-4">
+                      <div className="flex flex-col md:flex-row gap-6">
+                        {/* Offers and Payment Mode */}
+                        <div className="md:w-8/12">
+                          {/* Bank Offers */}
+                          <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-2">
+                            <details>
+                              <summary className="text-[#011F4B] font-medium text-lg cursor-pointer flex items-center gap-2">
+                                <BiSolidOffer className="fill-[#011F4B]" />
+                                BANK OFFERS
+                              </summary>
+                              <p className="text-[#535353] font-normal mt-2">
+                                7% Discount with Shopping Cart
+                              </p>
+                            </details>
+                          </div>
 
-      {/* Payment Modes */}
-      <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-3">
-        <div className="flex gap-2 items-start">
-          <input
-            type="radio"
-            name="paymentMode"
-            id="cashOnDelivery"
-            value="cashOnDelivery"
-            className="h-5 w-5 cursor-pointer"
-            onClick={(e) => setPaymentType(e.target.value)}
-          />
-          <label
-            htmlFor="cashOnDelivery"
-            className="font-semibold cursor-pointer"
-          >
-            Cash On Delivery (Cash / UPI)
-          </label>
-        </div>
-        <div className="flex gap-2 items-start mt-3">
-          <input
-            type="radio"
-            name="paymentMode"
-            id="onlinePayment"
-            value="onlinePayment"
-            className="h-5 w-5 cursor-pointer"
-            onClick={(e) => setPaymentType(e.target.value)}
-          />
-          <label
-            htmlFor="onlinePayment"
-            className="font-semibold cursor-pointer"
-          >
-            Online Payment
-          </label>
-        </div>
-      </div>
-    </div>
+                          {/* Payment Modes */}
+                          <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-3">
+                            <div className="flex gap-2 items-start">
+                              <input
+                                type="radio"
+                                name="paymentMode"
+                                id="cashOnDelivery"
+                                value="cashOnDelivery"
+                                className="h-5 w-5 cursor-pointer"
+                                onClick={(e) => setPaymentType(e.target.value)}
+                              />
+                              <label
+                                htmlFor="cashOnDelivery"
+                                className="font-semibold cursor-pointer"
+                              >
+                                Cash On Delivery (Cash / UPI)
+                              </label>
+                            </div>
+                            <div className="flex gap-2 items-start mt-3">
+                              <input
+                                type="radio"
+                                name="paymentMode"
+                                id="onlinePayment"
+                                value="onlinePayment"
+                                className="h-5 w-5 cursor-pointer"
+                                onClick={(e) => setPaymentType(e.target.value)}
+                              />
+                              <label
+                                htmlFor="onlinePayment"
+                                className="font-semibold cursor-pointer"
+                              >
+                                Online Payment
+                              </label>
+                            </div>
+                          </div>
+                        </div>
 
-    {/* Price Details */}
-    <div className="w-full md:w-4/12 border-t md:border-t-0 md:border-l-2 border-gray-300 px-6 py-4 bg-white rounded-lg shadow-lg">
-      <p className="text-gray-800 font-semibold text-xl mb-2">Price Details</p>
+                        {/* Price Details */}
+                        <div className="w-full md:w-4/12 border-t md:border-t-0 md:border-l-2 border-gray-300 px-6 py-4 bg-white rounded-lg shadow-lg">
+                          <p className="text-gray-800 font-semibold text-xl mb-2">Price Details</p>
 
-      <div className="flex justify-between mb-3 text-gray-700">
-        <p>Total MRP</p>
-        <p className="flex items-center font-medium">
-          <PiCurrencyInr className="mr-1" />
-          {totalCost}
-        </p>
-      </div>
+                          <div className="flex justify-between mb-3 text-gray-700">
+                            <p>Total MRP</p>
+                            <p className="flex items-center font-medium">
+                              <PiCurrencyInr className="mr-1" />
+                              {totalCost}
+                            </p>
+                          </div>
 
-      <div className="flex justify-between mb-3 text-gray-700">
-        <p>SGST</p>
-        <p className="flex items-center text-green-600 font-medium">
-          + <PiCurrencyInr className="mr-1" />
-          {(totalCost * 9) / 100}
-        </p>
-      </div>
+                          <div className="flex justify-between mb-3 text-gray-700">
+                            <p>SGST</p>
+                            <p className="flex items-center text-green-600 font-medium">
+                              + <PiCurrencyInr className="mr-1" />
+                              {(totalCost * 9) / 100}
+                            </p>
+                          </div>
 
-      <div className="flex justify-between mb-3 text-gray-700">
-        <p>CGST</p>
-        <p className="flex items-center text-green-600 font-medium">
-          + <PiCurrencyInr className="mr-1" />
-          {(totalCost * 9) / 100}
-        </p>
-      </div>
+                          <div className="flex justify-between mb-3 text-gray-700">
+                            <p>CGST</p>
+                            <p className="flex items-center text-green-600 font-medium">
+                              + <PiCurrencyInr className="mr-1" />
+                              {(totalCost * 9) / 100}
+                            </p>
+                          </div>
 
-      <div className="border-t border-dashed border-gray-400 my-6"></div>
+                          <div className="border-t border-dashed border-gray-400 my-6"></div>
 
-      <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-        <p>Total Amount</p>
-        <p className="flex items-center">
-          <PiCurrencyInr className="mr-1" />
-          {Math.round(totalCost + (totalCost * 18) / 100)}
-        </p>
-      </div>
+                          <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
+                            <p>Total Amount</p>
+                            <p className="flex items-center">
+                              <PiCurrencyInr className="mr-1" />
+                              {Math.round(totalCost + (totalCost * 18) / 100)}
+                            </p>
+                          </div>
 
-      <button
-        className={`font-[Quicksand] text-white bg-blue-900 font-medium text-lg rounded-md py-3 px-6 w-full ${
-          !paymentType
-            ? "opacity-70 cursor-not-allowed"
-            : "hover:bg-[#011F4B] transition-colors"
-        }`}
-        onClick={orderPlace}
-        disabled={!paymentType}
-      >
-        PLACE ORDER
-      </button>
-    </div>
-  </div>
-</section>
+                          <button
+                            className={`font-[Quicksand] text-white bg-blue-900 font-medium text-lg rounded-md py-3 px-6 w-full ${!paymentType
+                                ? "opacity-70 cursor-not-allowed"
+                                : "hover:bg-[#011F4B] transition-colors"
+                              }`}
+                            onClick={orderPlace}
+                            disabled={!paymentType}
+                          >
+                            PLACE ORDER
+                          </button>
+                        </div>
+                      </div>
+                    </section>
 
                   </TabPanel>
                   <TabPanel>
                     <div className="md:flex gap-6">
                       <div className="md:w-8/12">
-                        
+
 
                         {Object.entries(totalCartData).map(([key, item]) => (
                           <div
@@ -959,24 +958,24 @@ export default function CheckOut() {
                             {/* Product Info */}
                             <div className="flex flex-col gap-2 flex-grow">
                               <Link to={`/product-details/${item?.productId}`} >
-                              <h2 className="font-semibold text-gray-800 text-lg sm:text-xl">{item.name}</h2>
+                                <h2 className="font-semibold text-gray-800 text-lg sm:text-xl">{item.name}</h2>
                               </Link>
 
                               <div className="flex flex-wrap items-center gap-2 text-sm">
-  <span className="text-gray-700 bg-gray-100 px-3 py-1 rounded-lg shadow-sm">
-    Size: <span className="font-medium">{item.size || "N/A"}</span>
-  </span>
-  <span className="text-gray-700 bg-gray-100 px-3 py-1 rounded-lg shadow-sm flex items-center gap-2">
-    Color: 
-    <span 
-      className="w-4 h-4 rounded-full border border-gray-300 shadow" 
-      style={{ backgroundColor: item.color }}
-    ></span>
-    <span className="capitalize font-medium" style={{ color: item.color.toLowerCase() === 'white' ? '#333' : item.color }}>
-      {item.color || "N/A"}
-    </span>
-  </span>
-</div>
+                                <span className="text-gray-700 bg-gray-100 px-3 py-1 rounded-lg shadow-sm">
+                                  Size: <span className="font-medium">{item.size || "N/A"}</span>
+                                </span>
+                                <span className="text-gray-700 bg-gray-100 px-3 py-1 rounded-lg shadow-sm flex items-center gap-2">
+                                  Color:
+                                  <span
+                                    className="w-4 h-4 rounded-full border border-gray-300 shadow"
+                                    style={{ backgroundColor: item.color }}
+                                  ></span>
+                                  <span className="capitalize font-medium" style={{ color: item.color.toLowerCase() === 'white' ? '#333' : item.color }}>
+                                    {item.color || "N/A"}
+                                  </span>
+                                </span>
+                              </div>
 
 
                               <div className="flex items-center gap-4 mt-1">
@@ -1032,7 +1031,7 @@ export default function CheckOut() {
                           </div>
                         ))}
 
-<div className="bg-[#011F4B] text-white rounded-md p-3 flex flex-wrap gap-2 sm:gap-1 sm:flex-nowrap justify-between items-center font-[Poppins]">
+                        <div className="bg-[#011F4B] text-white rounded-md p-3 flex flex-wrap gap-2 sm:gap-1 sm:flex-nowrap justify-between items-center font-[Poppins]">
                           <div className="">
                             {shippingAddress ? (
                               <>
@@ -1161,10 +1160,17 @@ export default function CheckOut() {
                 />
                 <Link
                   to="/wishlist"
-                  className="py-3 px-12 text-lg font-semibold text-[#3466e8] border border-solid border-[#3466e8] rounded"
+
                 >
-                  ADD ITEMS FROM WISHLIST
+                  <button
+                    onClick={() => window.location.href = '/wishlist'}
+                    className="py-2 px-6 text-lg font-semibold text-blue-600 border border-blue-600 rounded-lg shadow-md hover:bg-blue-600 hover:text-white transition-all duration-300 ease-in-out"
+                  >
+                    ADD ITEMS FROM WISHLIST
+                  </button>
+
                 </Link>
+
               </div>
             )}
           </section>

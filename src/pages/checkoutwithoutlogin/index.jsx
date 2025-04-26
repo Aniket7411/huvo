@@ -19,7 +19,7 @@ import { FaChevronRight } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import { HttpClient } from "../../server/client/http";
-import { FiEdit } from "react-icons/fi";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import { getUserData, setUserData } from "../../server/user";
 import IndiaTime from "../../components/getIndiaTime";
@@ -333,7 +333,7 @@ export default function CheckOutWithoutLogin() {
                   }} className="font-medium cursor-pointer text-[#474747] focus:text-[#011F4B] active:text-[#011F4B] focus:outline-none font-[Poppins]">
                     ADDRESS
                   </p>
-                 
+
                 </TabList>
                 <TabPanels className="">
                   <TabPanel>
@@ -341,115 +341,116 @@ export default function CheckOutWithoutLogin() {
                       <div className="md:w-8/12">
 
 
-                        {Object.keys(cartProducts).map((key, i) => {
-                          return (
-                            <div
-                              className="border-2 border-[#D6CBCB] p-3 rounded-md my-6 font-[Poppins] relative"
-                              key={i}
-                            >
-                              <button
-                                className="flex items-center justify-center absolute top-3 right-3 h-6 w-6 border border-solid border-[#d4d5d9] rounded-full bg-white font-bold text-xl"
-                                onClick={() => removeProductFromCart(key)}
-                              >
-                                <RxCross2 className="text-sm" />
-                              </button>
-                              <div className="flex gap-4">
-                                <div>
-                                  <img
-                                    className="w-28 h-42 rounded-xl"
-                                    src={cartProducts[key].bannerImage}
-                                    alt={cartProducts[key].name}
-                                  />
-                                </div>
-                                <div>
-                                  {cartProducts[key].description && (
-                                    <p className="text-[#4D4D4D] font-medium mb-1">
-                                      {cartProducts[key].description}
-                                    </p>
-                                  )}
-                                  <div className="flex items-center gap-4">
-                                    <h3>Product Name : Plazo</h3>
-                                    <p className="border border-gray-300 rounded-md px-2 py-1 text-sm font-medium text-gray-800">
-  <strong className="text-gray-900">Color:</strong> {cartProducts[key].color}
-</p>
 
+                        {Object.keys(cartProducts).map((key, i) => (
+                          <div
+                            className="border-2 border-gray-300 p-3 rounded-md my-6 font-[Poppins] relative bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+                            key={i}
+                          >
+                            {/* Remove Button */}
+                            <button
+                              className="flex items-center justify-center absolute top-3 right-3 h-6 w-6 border border-gray-300 rounded-full bg-white font-bold text-xl"
+                              onClick={() => removeProductFromCart(key)}
+                            >
+                              <RxCross2 className="text-sm" />
+                            </button>
+
+                            <div className="flex gap-4">
+                              {/* Product Image */}
+                              <div>
+                                <img
+                                  className="w-28 h-42 rounded-xl object-cover"
+                                  src={cartProducts[key]?.bannerImage || "https://via.placeholder.com/150"}
+                                  alt={cartProducts[key]?.name || "Product Image"}
+                                />
+                              </div>
+
+                              {/* Product Details */}
+                              <div>
+                                {cartProducts[key]?.description && (
+                                  <p className="text-gray-700 font-medium mb-1">
+                                    {cartProducts[key].description}
+                                  </p>
+                                )}
+
+
+                                <div className="flex flex-col gap-2 flex-grow">
+                                  <Link to={`/product-details/${cartProducts[key]?.productId}`}>
+                                    <h2 className="font-semibold text-gray-800 text-lg sm:text-xl">{cartProducts[key]?.name || "N/A"}</h2>
+                                  </Link>
+
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm text-gray-500 bg-gray-50 px-2 py-1 rounded">Size: {cartProducts[key]?.size || "N/A"}</span>
+                                    <span
+                                      className="text-sm text-gray-500 bg-gray-50 px-2 py-1 rounded flex items-center gap-1"
+                                      style={{ color: cartProducts[key]?.color?.toLowerCase() === 'white' ? '#333' : cartProducts[key]?.color }}
+                                    >
+                                      Color: <span className="w-3 h-3 rounded-full inline-block" style={{ backgroundColor: cartProducts[key]?.color }} />
+                                    </span>
                                   </div>
 
-                                  <div className="flex gap-2 mb-2 mt-2 items-center">
-                                    <p className="text-[#4D4D4D] font-medium">
-                                      Size : {cartProducts[key].size}
-                                    </p>
+                                  <div className="flex items-center gap-4 mt-1">
+                                    <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                                      <button
 
+onClick={() =>
+  setCartProducts((prevCart) => {
+    const updatedCart = { ...prevCart };
+    updatedCart[key].quantity = Math.max(1, updatedCart[key].quantity - 1);
+    return updatedCart;
+  })
+}
+                                        className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors">
+                                        -
+                                      </button>
+                                      <span className="px-3 py-1 text-center min-w-[2rem]">{cartProducts[key]?.quantity || 0}</span>
+                                      <button
 
-                                    {cartProducts[key].quantity && (
-                                      <div className="flex items-center gap-2 rounded-xl">
-                                        {/* Decrement Button */}
-                                        <button
-                                          onClick={() =>
-                                            setCartProducts((prevCart) => {
-                                              const updatedCart = { ...prevCart };
-                                              updatedCart[key].quantity = Math.max(1, updatedCart[key].quantity - 1);
-                                              return updatedCart;
-                                            })
-                                          }
-                                          disabled={cartProducts[key].quantity === 1}
-                                          className={`text-2xl text-purple-700 hover:scale-110 transition-transform duration-200 
-              ${cartProducts[key].quantity === 1 ? "text-gray-400 cursor-not-allowed" : "hover:text-purple-900"}`}
-                                        >
-                                          <CiSquareMinus />
-                                        </button>
-
-                                        {/* Quantity Display */}
-                                        <p className="text-[#4D4D4D] text-md font-medium">
-                                          Quantity: {cartProducts[key].quantity}
-                                        </p>
-
-                                        {/* Increment Button */}
-                                        <button
-                                          onClick={() =>
-                                            setCartProducts((prevCart) => {
-                                              const updatedCart = { ...prevCart };
-                                              updatedCart[key].quantity += 1;
-                                              return updatedCart;
-                                            })
-                                          }
-                                          className="text-2xl text-purple-700 hover:text-purple-900 hover:scale-110 transition-transform duration-200"
-                                        >
-                                          <CiSquarePlus />
-                                        </button>
-                                      </div>
-                                    )}
+onClick={() =>
+  setCartProducts((prevCart) => {
+    const updatedCart = { ...prevCart };
+    updatedCart[key].quantity += 1;
+    return updatedCart;
+  })
+}
+                                        className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
+                                      >
+                                        +
+                                      </button>
+                                    </div>
 
                                     <button
-                                      onClick={() => openDialogForProduct(key)}
-                                    >
-                                      {/* <FiEdit /> */}
+                                      onClick={() => removeProductFromCart(key)}
+                                      className="text-red-500 hover:text-red-700 text-sm flex items-center gap-1">
+                                      <FiTrash2 className="w-4 h-4" />
+                                      Remove
                                     </button>
                                   </div>
-                                  <p className="flex items-center font-medium mb-2">
-                                    <PiCurrencyInr />
-                                    {cartProducts[key].price}
 
+                                  <div className="flex flex-wrap items-center gap-3 text-sm mt-1">
+                                    <p className="text-red-500 font-medium flex items-center">
+                                      <PiCurrencyInr className="mr-0.5" />
+                                      <span className="line-through">{(cartProducts[key]?.actualPrice * cartProducts[key]?.quantity) || 0}</span>
+                                    </p>
 
-                                    <span className="ml-2 line-through text-xs flex items-center">
-                                      <PiCurrencyInr /> {cartProducts[key].discount}                                      </span>
-
-
-
-
-
-
-
-                                  </p>
-                                  <p className="text-[#4D4D4D] font-medium mb-2">
-                                    7 days return available
-                                  </p>
-
+                                    <p className="text-blue-500 bg-blue-50 px-2 py-0.5 rounded-full text-xs">
+                                      You save ₹{((cartProducts[key]?.actualPrice - cartProducts[key]?.price) * cartProducts[key]?.quantity).toLocaleString() || 0}
+                                    </p>
+                                  </div>
                                 </div>
+
+                            
+
+
+
+                                <p className="text-gray-700 font-medium">
+                                  7 days return available
+                                </p>
                               </div>
                             </div>
-                          );
-                        })}
+                          </div>
+                        ))}
+
 
                       </div>
                       <div className="md:w-4/12">
@@ -495,7 +496,7 @@ export default function CheckOutWithoutLogin() {
                                 {couponDiscount}
                               </p>
                             </div>
-                            
+
                             <div className="flex justify-between mb-2">
                               <p>Shipping Fee</p>
                               <p className="flex items-center">
@@ -503,12 +504,12 @@ export default function CheckOutWithoutLogin() {
                                 + <PiCurrencyInr />100
                               </p>
                             </div>
-                           
+
                           </div>
                           <button
                             className="font-[Quicksand] bg-[#011F4B] text-white rounded-md py-3 px-8 m-auto block"
-                          
-                            onClick={()=> {
+
+                            onClick={() => {
                               toast.info("Please login first")
                             }}
                             disabled={
@@ -757,7 +758,7 @@ export default function CheckOutWithoutLogin() {
                       </div>
                     </section>
                   </TabPanel>
-                
+
                 </TabPanels>
               </TabGroup>
             ) : (
