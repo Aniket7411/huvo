@@ -240,10 +240,12 @@ export default function ProductDetails() {
         loading ? <div className="h-screen flex justify-center items-center">
 
           <Loader />
-        </div> : <div className="px-3 mt-5 md:mt-5 md:px-10">
+        </div> : 
+        
+        <div className="p-3 mt-5 md:mt-5 md:p-8">
           <div className="flex flex-wrap gap-2 ">
             <div className="flex-1 min-w-[300px] max-w-[350px]">
-              <div className="p-1 rounded-md border border-gray-300 mt-5">
+              <div className="p-1 rounded-md border border-gray-300 ">
                 <ProductImages images={productDetails?.colors} />
 
               </div>
@@ -257,7 +259,7 @@ export default function ProductDetails() {
 
               </div>
 
-              <div className="flex flex-col gap-2 mt-3">
+              <div className="flex flex-col gap-2 mt-2">
                 <div className="flex flex-col sm:flex-row sm:gap-4 gap-2">
 
 
@@ -315,15 +317,17 @@ export default function ProductDetails() {
                 </div>
 
                 <div>
-                  <Link to={`/products_by_brand/${productDetails?.brand?.name || "default"}`} >
 
                     <p className="text-lg font-medium text-gray-600">
                       Brand:{" "}
+                      <Link to={`/products_by_brand&seller/${productDetails?.brand?.name || "default"}`} >
+
                       <span className="text-gray-800 font-semibold">
                         {productDetails?.brand?.name || "Unknown"}
                       </span>
+                      </Link>
+
                     </p>
-                  </Link>
                 </div>
               </div>
 
@@ -382,7 +386,7 @@ export default function ProductDetails() {
                             setSelectedSize(sizeObj.size);
                             console.log(`Size selected: ${sizeObj.size}`);
                           }}
-                          className={`px-5 py-2 border rounded-md text-sm font-medium cursor-pointer transition-all duration-200 shadow-sm
+                          className={`px-3 py-1 border rounded-md text-sm font-medium cursor-pointer transition-all duration-200 shadow-sm
                   ${selectedSize === sizeObj.size
                               ? "bg-green-500 text-white border-green-600 shadow-md"
                               : "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-200 hover:scale-105"
@@ -529,11 +533,10 @@ export default function ProductDetails() {
 
               <p className="text-[#2562eb] mt-1 font-semibold">
                 <p onClick={openPaymentModal} className="hover:underline cursor-pointer">
-                  View Payment Details
+                  View Payment Options
                 </p>
               </p>
 
-              <ProductReview productId={productDetails?.productId} />
 
 
 
@@ -575,6 +578,10 @@ export default function ProductDetails() {
 
 
             </div>
+
+
+            <ProductReview productId={productDetails?.productId} />
+
 
 
           </div>

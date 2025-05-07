@@ -54,7 +54,8 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                                     loading="lazy"
                                   />
                                 </div>
-            
+
+                                <div className="flex justify-between">            
                                 <h1 className="text-black font-semibold text-lg line-clamp-2 mb-2">
                                   {product?.name || "Product Name"}
                                 </h1>
@@ -62,6 +63,9 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                                 <p className="text-gray-600 text-sm mb-1">
                                   {product?.brandName || "Unknown Brand"}
                                 </p>
+
+                                </div>
+
               
                                 <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
                                   <div className="flex text-yellow-500">

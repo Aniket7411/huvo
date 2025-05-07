@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { HttpClient } from "../../../server/client/http";
+import uploadImageOnCloudinary from "../../../server/client/imageUpload";
 
 const BrandAdvertisement = () => {
   // State for each field
   const [brandId, setBrandId] = useState("");
   const [brandName, setBrandName] = useState("");
-  const [subType1, setSubType1] = useState(["category"]); // Default value for subType1
-  const [subType2, setSubType2] = useState(["group"]); // Default value for subType2
   const [bannerImage, setBannerImage] = useState(null);
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
@@ -17,6 +16,10 @@ const BrandAdvertisement = () => {
   const [selectedBrands, setSelectedBrands] = useState([]); // For multiple brand selections
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  const [selectedGroup, setSelectedGroup] = useState(""); // Tracks selected group
+  const group = ["Men", "Women", "All"]; // Options for group dropdown
+
+
   // Handle file input change (for banner image)
   const handleFileChange = (e) => {
     setBannerImage(URL.createObjectURL(e.target.files[0]));
@@ -26,21 +29,8 @@ const BrandAdvertisement = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check for required fields and subtype rules
-    if (!brandId || !brandName || !name || !title || !description || !bannerImage || !selectedCategory || selectedBrands.length === 0) {
-      setError("All fields are required!");
-      return;
-    }
 
-    if (!subType1.includes("category")) {
-      setError("subType1 must include 'category'.");
-      return;
-    }
 
-    if (!subType2.includes("group")) {
-      setError("subType2 must include 'group'.");
-      return;
-    }
 
     // If all checks pass, log the form data
     const adData = {
@@ -51,13 +41,18 @@ const BrandAdvertisement = () => {
       brandId,
       brandName,
       bannerImage,
-      subType1,
-      subType2,
       selectedBrands,
       selectedCategory,
     };
 
-    console.log("Advertisement Data: ", adData);
+    const addDetails = {
+      addCategory: selectedCategory,
+      brands: selectedBrands,
+      group: selectedGroup,
+      addImage: bannerImage
+    }
+
+    console.log("Advertisement Data: ", addDetails);
 
     // Clear form after successful submission (optional)
     setName("");
@@ -181,6 +176,26 @@ const BrandAdvertisement = () => {
           </div>
         </div>
 
+        {/* Select Group */}
+        <div className="mb-6">
+          <label className="block text-lg font-medium mb-2">Select Group</label>
+          <select
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+            value={selectedGroup}
+            onChange={(e) => setSelectedGroup(e.target.value)}
+            required
+          >
+            <option value="" disabled>
+              Select a group
+            </option>
+            {group.map((grp, index) => (
+              <option key={index} value={grp}>
+                {grp}
+              </option>
+            ))}
+          </select>
+        </div>
+
         {/* Select Category */}
         <div className="mb-6">
           <label className="block text-lg font-medium mb-2">Select Category</label>
@@ -199,27 +214,21 @@ const BrandAdvertisement = () => {
           </select>
         </div>
 
-        {/* Banner Image Upload */}
-        <div className="mb-6">
-          <label className="block text-lg font-medium mb-2">Banner Image</label>
+
+
+
+
+        <div className="mb-4">
+          <label className="block text-lg font-medium mb-2">Upload Advertisement Image</label>
           <input
             type="file"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-            onChange={handleFileChange}
-            required
+            // onChange={handleFileChange}
+
+            onChange={async (e) => {
+              setBannerImage(await uploadImageOnCloudinary(e));
+            }}
           />
-          {bannerImage && (
-            <div className="mt-2 flex items-center">
-              <img src={bannerImage} alt="Banner Preview" className="w-32 h-32 object-cover rounded-lg" />
-              <button
-                type="button"
-                onClick={() => setBannerImage(null)}
-                className="bg-red-500 px-2 ml-2 text-white rounded-lg py-1"
-              >
-                Remove Image
-              </button>
-            </div>
-          )}
         </div>
 
         {/* Submit Button */}

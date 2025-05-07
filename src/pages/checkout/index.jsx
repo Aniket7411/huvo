@@ -328,10 +328,15 @@ export default function CheckOut() {
     toast.error("This Payment method is not available!");
   };
 
+
   useEffect(() => {
-    fetchCartProducts();
-    getAllCoupons();
+    if (localStorage?.getItem("accessToken")) {
+      fetchCartProducts();
+      getAllCoupons();
+    }
   }, []);
+
+
 
 
 
@@ -918,8 +923,8 @@ export default function CheckOut() {
 
                           <button
                             className={`font-[Quicksand] text-white bg-blue-900 font-medium text-lg rounded-md py-3 px-6 w-full ${!paymentType
-                                ? "opacity-70 cursor-not-allowed"
-                                : "hover:bg-[#011F4B] transition-colors"
+                              ? "opacity-70 cursor-not-allowed"
+                              : "hover:bg-[#011F4B] transition-colors"
                               }`}
                             onClick={orderPlace}
                             disabled={!paymentType}

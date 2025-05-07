@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { HttpClient } from "../../../server/client/http";
 import SuperAdminNav from "../../../components/superadminNavbar/superadminnav";
+import uploadImageOnCloudinary from "../../../server/client/imageUpload";
 
 const CategoryAdvertisement = () => {
   const [categories, setCategories] = useState([]);
@@ -16,7 +17,6 @@ const CategoryAdvertisement = () => {
   const getAllCategories = async () => {
     try {
       const response = await HttpClient.get("/category/");
-      console.log(response);
 
       const formattedData = response.categories.map((eachCategory) => ({
         id: eachCategory._id,
@@ -78,10 +78,20 @@ const CategoryAdvertisement = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form data (for example, send to the server)
-    console.log("Category:", selectedCategory);
-    console.log("Brands:", selectedBrands);
-    console.log("Groups:", selectedGroups);
-    console.log("File:", selectedFile);
+    // console.log("Category:", selectedCategory);
+    // console.log("Brands:", selectedBrands);
+    // console.log("Groups:", selectedGroups);
+    // console.log("File:", selectedFile);
+
+    const addDetails = {
+        addCategory : selectedCategory,
+        brands : selectedBrands,
+        group : selectedGroups,
+        addImage :selectedFile
+    }
+
+    console.log(addDetails)
+
   };
 
   return (
@@ -191,7 +201,11 @@ const CategoryAdvertisement = () => {
           <input
             type="file"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-            onChange={handleFileChange}
+            // onChange={handleFileChange}
+
+             onChange={async (e) => {
+              setSelectedFile(await uploadImageOnCloudinary(e));
+                            }}
           />
         </div>
 

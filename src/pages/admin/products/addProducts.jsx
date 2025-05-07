@@ -17,7 +17,7 @@ function ProductAddPage() {
 
   const [totalProductCost, setTotalProductCost] = useState(null)
 
-  
+
   const options = [
     { id: 1, name: "Red", value: "red", colorCode: "#FF0000" },
     { id: 2, name: "Green", value: "green", colorCode: "#008000" },
@@ -183,24 +183,24 @@ function ProductAddPage() {
         setIsloading(false); // Reset loading state
 
         setReturnableDays("");
-setBannerImage("");
-setProductDetails([""]);
-setActiveCategoryId("");
-setSizeWithStock([]);
-setColorWithImages([
-  {
-    colorCode: "#000000",
-    images: [],
-  },
-]);
+        setBannerImage("");
+        setProductDetails([""]);
+        setActiveCategoryId("");
+        setSizeWithStock([]);
+        setColorWithImages([
+          {
+            colorCode: "#000000",
+            images: [],
+          },
+        ]);
 
 
-toggleShoeSelection(false);
+        toggleShoeSelection(false);
 
-toast.success("Product added successfully");
+        toast.success("Product added successfully");
 
 
-        
+
       } catch (error) {
         // Handle error
         setIsloading(false); // Reset loading state
@@ -701,6 +701,27 @@ toast.success("Product added successfully");
             )}
           </div>
 
+
+          <div className="mb-3">
+            <label
+              htmlFor="weight"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Weight  (In Grams )
+            </label>
+            <input
+              id="weight"
+              type="number"
+              name="weight"
+              placeholder="Weight in Grams"
+
+              className="mt-1 p-2 w-full border border-gray-300 rounded-md outline-none"
+              {...register("weight", {
+                required: "*Weight is required.",
+              })}
+            />
+
+          </div>
           {/* {isShoeSelectionEnabled ? "" :  <div className="mb-3">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Sizes
@@ -903,12 +924,12 @@ toast.success("Product added successfully");
               )}
             </div>
 
-              <label
-                htmlFor="returnable"
-                className="text-sm bg-gray-50 p-3 gap-2 rounded-lg shadow-sm font-medium text-gray-700"
-              >
-                Returnable within 7 days after delivery
-              </label>
+            <label
+              htmlFor="returnable"
+              className="text-sm bg-gray-50 p-3 gap-2 rounded-lg shadow-sm font-medium text-gray-700"
+            >
+              Returnable within 7 days after delivery
+            </label>
 
           </div>
 

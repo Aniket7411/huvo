@@ -2,7 +2,7 @@ import React from "react";
 
 const TermsAndConditions = () => {
     return (
-        <div className="bg-gray-100 p-6 md:p-10 rounded-lg shadow-lg">
+        <div className="bg-gray-100 px-4  -mt-[10px]   lg:-mt-[25px]  md:p-8 rounded-lg shadow-lg">
             <h1 className="text-2xl font-bold text-gray-800 mb-4 mt-4">Terms and Conditions</h1>
             <p className="text-gray-700 mb-4">
                 For the purpose of these Terms and Conditions, the terms <strong>"we", "us", "our"</strong> refer to <strong>VRADAKART PRIVATE LIMITED</strong>, whose registered/operational office is at #78/1 BEEMANENI TOWERS, NAGAWARA MAIN ROAD, HEBBAL, Bengaluru, KARNATAKA 560045. The terms <strong>"you", "your", "user", "visitor"</strong> refer to any natural or legal person visiting our website and/or agreeing to purchase from us.

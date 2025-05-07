@@ -187,7 +187,7 @@ export default function Home() {
 
   useEffect(() => {
     const dataShift = async () => {
-      const localData = JSON.parse(localStorage.getItem("cart"));
+      const localData = JSON.parse(localStorage?.getItem("cart"));
 
 
 
@@ -198,20 +198,17 @@ export default function Home() {
       }
 
 
-      // Process each item in the object of objects
-      let totalAmount = 0; // Initialize the total amount
+      let totalAmount = 0;
 
       const postDataObject = Object.keys(localData).reduce((acc, key) => {
         const item = localData[key];
 
-        // Extract item details with default values
         const price = item?.price || 0;
         const quantity = item?.quantity || 1;
         const platformFee = item?.platformCharge || 0;
-        const cgstRate = item?.cgst || 0; // Assuming cgst is a rate or fixed amount
-        const sgstRate = item?.sgst || 0; // Assuming sgst is a rate or fixed amount
+        const cgstRate = item?.cgst || 0;
+        const sgstRate = item?.sgst || 0;
 
-        // Calculate CGST and SGST for the item
         const totalCgst = (cgstRate * quantity);
         const totalSgst = (sgstRate * quantity);
 
@@ -221,9 +218,7 @@ export default function Home() {
 
 
 
-        // Add to the overall total amount
 
-        // Construct the updated object for this item
         acc[key] = {
           color: item?.color || "N/A",
           price,
@@ -285,7 +280,7 @@ export default function Home() {
     if (tokenIfLoggedIn !== undefined && localStorage.getItem("cart")?.length > 0) {
       dataShift();
     }
-  }, [tokenIfLoggedIn]); // Dependency array ensures this runs when tokenIfLoggedIn changes
+  }, [tokenIfLoggedIn]);
 
 
   useEffect(() => {
@@ -353,7 +348,7 @@ export default function Home() {
               className="bg-gradient-to-r  from-blue-500 via-blue-600 to-blue-700 text-white text-center py-2 md:py-6 shadow-lg"
 
             >
-              <div className="flex justify-center items-center mt-2 h-[100px] px-2  md:h-[250px]  space-x-3 animate-pulse">
+              <div className="flex justify-center items-center h-[100px] px-2  md:h-[250px]  space-x-3 animate-pulse">
                 <svg
                   className="w-6 h-6 text-yellow-300"
                   xmlns="http://www.w3.org/2000/svg"
@@ -376,18 +371,12 @@ export default function Home() {
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-yellow-400 rounded-full"></div>
             </div>
 
-            <section className="px-2 md:px-10 py-3 ">
+            <section className="px-2 md:px-10 py-2 ">
               <h2 className="font-[Quicksand] font-bold text-center text-sm md:text-4xl text-[#011F4B]">
                 CATEGORIES TO EXPLORE
               </h2>
               <p className="font-[Poppins]  text-center text-sm md:text-lg font-light mb-2">
                 "Discover the Best Deals and Products Across All Categories"</p>
-
-
-
-
-
-
             </section>
             <CategorySlider />
 
@@ -555,22 +544,14 @@ export default function Home() {
                 </section>
                 <ProductGrid kidsProducts={kidsProducts} />
 
-
-
-
-              </div>
+             </div>
 
             </section>
-
-
             <hr className="my-2" />
-
             <section className="md:px-10 px-3 py-2 md:py-6 text-center ">
               <p className="font-[Quicksand] font-medium text-[#011F4B] text-center text-lg  md:text-4xl mb-2 border-3">
                 EXPLORE TOP BRANDS
               </p>
-
-
               <div className="flex justify-center items-center">
                 {brands.length ? (
                   <Swiper
@@ -623,12 +604,7 @@ export default function Home() {
                   </h2>
                 )}
               </div>
-
-
-
-
             </section>
-
             <section className="bg-[#F6F6F6] px-5 py-5 ">
               <p className="text-center text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
                 Testimonials

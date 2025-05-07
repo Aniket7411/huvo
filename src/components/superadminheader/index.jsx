@@ -42,8 +42,8 @@ export default function Superadminheader() {
   const [sidenav, setSidenav] = useState(false);
   const [date, setDate] = useState('')
   const [adminName, setAdminName] = useState('')
-      const navigate = useNavigate();
-  
+  const navigate = useNavigate();
+
 
   // const nameofadmin = localStorage.getItem('userData')
 
@@ -131,10 +131,10 @@ export default function Superadminheader() {
 
   return (
     <>
-      <header className="text-white px-3 py-3 w-[100%] ">
+      <header className="text-white px-3 py-2 w-[100%] ">
         <div className=" flex justify-between items-center ">
           <ul>
-           
+
           </ul>
           <ul className="flex items-center">
             <li>
@@ -186,7 +186,7 @@ export default function Superadminheader() {
             <li className="hidden md:block">
               <div className="flex items-center px-3 py-3 ">
                 <div className="mr-4 flex items-center justify-center border border-white w-10 h-10 rounded-full bg-[#ffffff]">
-                {/* <FaRegUserCircle className="text-[blue]" size={25} /> */}
+                  {/* <FaRegUserCircle className="text-[blue]" size={25} /> */}
                 </div>
 
                 <p className="text-[#011F4B] font-[Poppins] font-bold">
@@ -220,7 +220,7 @@ export default function Superadminheader() {
                 <Link to="/">
                   {/* <img src="/assets/cart.png" alt="Cart" width="60px" height="60px" /> */}
                   <img src="/assets/newlogo.jpeg" className="w-[30px]" alt="logo" />
-                  </Link>
+                </Link>
                 <div onClick={() => setSidenav(false)}>
                   <RxCross2 h-14 w-14 />
                 </div>
@@ -230,7 +230,7 @@ export default function Superadminheader() {
                   Huvo
                 </p>
               </div>
-           
+
 
               <hr className=" bg-gray-500 mx-10 my-4"></hr>
             </div>
@@ -281,7 +281,7 @@ export default function Superadminheader() {
                     </Link>
                   </div>
                 </li>
-                <li>
+                {/* <li>
                   <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
                     <Link
                       to="/admin/buyers"
@@ -296,7 +296,7 @@ export default function Superadminheader() {
                       <IoIosArrowRoundForward className="opacity-60" />
                     </Link>
                   </div>
-                </li>
+                </li> */}
 
                 <li>
                   <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
@@ -336,6 +336,6 @@ export default function Superadminheader() {
         </>
       )}
     </>
-   
+
   );
 }

@@ -27,6 +27,7 @@ import LoadSpinner from "../../components/LoadSpinner";
 import Loader from "../../components/loader";
 import Orders from "./orders";
 import SellerBankForm from "../sellerbankdetails";
+import Subscription from "../Subscription/subscription";
 
 Modal.setAppElement('#root'); // Assuming your root element's ID is 'root'
 
@@ -988,18 +989,6 @@ export default function Profile() {
                       </div>
 
 
-                      {/* <div className="grid grid-cols-3 gap-4 mb-4">
-                        <input
-                          type="text"
-                          placeholder="Enter here"
-                          className="border border-gray-300 rounded-lg p-3 w-full"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Enter here"
-                          className="border border-gray-300 rounded-lg p-3 w-full col-span-2"
-                        />
-                      </div> */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                           <label className="block text-[#626262] font-medium mb-2 ml-2">
@@ -1389,40 +1378,9 @@ export default function Profile() {
                 </div> */}
               </TabPanel>
               <TabPanel className="h-full p-4 bg-gray-50">
-                <h1 className="text-2xl font-bold text-gray-800 mb-2">Subscription</h1>
 
-                <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-                  {["Free", "Silver", "Gold", "Platinum"].map((plan) => (
-                    <div
-                      key={plan}
-                      className="shadow-lg border border-gray-200 rounded-lg bg-white w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"
-                    >
-                      <Switch
-                        onClick={() => alert("Feature will be available soon")}
-                        className="m-2"
-                      />
-                      <div className="flex flex-col items-center">
-                        <h2 className="text-lg font-semibold text-gray-700">{plan}</h2>
-                        <img
-                          src="https://s3-alpha-sig.figma.com/img/e0f6/ba85/9941adab5aa94e793b68a430fa3c454c?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YKERHzcIqP3i559PB8Q-f-3uqF5h94VrwYcSJs4rENPcTn9Gz4K6kcQMFIfVrYAUS4wYmRseXdeJGMtLTI9aZDDByj0THBXJNknZU4mSQYlMei5-5FpD-x5RpFegLD-ofhUGb2Q~ROvyrCzD2mh6el1nGSvajITdEGxUacMzEkUksjkyu3qYJBGG8KhNJtovNKdwLSf7z9Mo7W-mEYfC-yHEKJV5895Dsv1PJBTF2rMmnqWdaSGdZpHMh7JdibavI1xnClJtEqoLBUJEmLiqoxxnFnolSycfsU61lMY4rlq1~lJHUjME1XROAG2pNASjJqTJ7IzM~4bz6nP1i0smUQ__"
-                          alt={`${plan} plan`}
-                          className="w-12 h-12 my-4"
-                        />
-                        <hr className="border-t border-gray-300 w-4/5 my-2" />
-                        <p className="text-center text-sm text-gray-600">
-                          Pay fee in easy (interest-free) installments. Choose from monthly or
-                          quarterly payment options.
-                        </p>
-                        <button
-                          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                          type="button"
-                        >
-                          {plan}
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <Subscription/>
+              
               </TabPanel>
 
               <TabPanel className=" bg-[#F2F2F2]  h-full">

@@ -1,107 +1,142 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { HttpClient } from "../../server/client/http";
+import { useParams } from "react-router-dom";
+import Loader from "../../components/loader";
 
 const OrderDetails = () => {
-  const order = {
-    orderId: "ORD12345",
-    orderStatus: "Delivered",
-    customer: {
-      name: "Amit Sharma",
-      email: "amit.sharma@example.com",
-      phone: "+91 9876543210",
-      address: "H.No 12, Sector 21, Kanpur, Uttar Pradesh",
-    },
-    products: [
-      {
-        id: 1,
-        name: "Casual Shirt",
-        size: "L",
-        color: "Blue",
-        price: "₹1299",
-        quantity: 1,
-        image: "https://via.placeholder.com/80",
-      },
-      {
-        id: 2,
-        name: "Slim Fit Jeans",
-        size: "32",
-        color: "Black",
-        price: "₹2199",
-        quantity: 2,
-        image: "https://via.placeholder.com/80",
-      },
-    ],
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
+  const { id } = useParams();
+
+
+  const getOrderDetails = async () => {
+    setIsLoading(true)
+    try {
+      const response = await HttpClient.get(`/order/${id}`);
+
+      const formattedData = response?.data.map((order) => ({
+        orderId: order.orderId,
+        orderStatus: order.orderStatus.map((status) => ({
+          status: status.status,
+          date: status.date,
+        })),
+        paymentType: order.paymentType,
+        seller: order.seller,
+        shippingDetails: {
+          name: order.shippingDetails?.name,
+          address: order.shippingDetails?.address,
+          city: order.shippingDetails?.city,
+          postalCode: order.shippingDetails?.postalCode,
+          state: order.shippingDetails?.state,
+          town: order.shippingDetails?.town,
+          mobileNumber: order.shippingDetails?.mobileNumber,
+        },
+        products: order.product.map((product) => ({
+          bannerImage: product.bannerImage,
+          name: product.name,
+          price: product.price,
+          discountedPrice: product.discountedPrice,
+          color: product.color,
+          size: product.size,
+          quantity: product.quantity,
+        })),
+        totalProduct: order.totalProduct,
+        updatedAt: order.updatedAt,
+        user: order.user,
+      }));
+
+      setOrders(formattedData);
+      setIsLoading(false)
+
+    } catch (error) {
+      console.error("Error fetching order details:", error);
+      setIsLoading(false)
+
+    }
   };
 
+  useEffect(() => {
+    getOrderDetails();
+  }, []);
+
   return (
-    <div className=" mx-auto mt-[55px] px-6">
-      {/* Order Header */}
-      <div className="mb-2 ">
-        <h1 className="md:text-3xl text-lg font-bold text-gray-800">Order Details</h1>
-        <p className="text-gray-600">Order ID: {order.orderId}</p>
-      </div>
+    <div className="mx-auto mt-4 px-6 ">
+      <h1 className="text-2xl font-semibold text-center mb-2">Order Details</h1>
 
-      {/* Order Status and Customer Details */}
-      <div className="grid sm:grid-cols-2 gap-6 mb-2">
-        {/* Order Status */}
-        <div className="bg-gray-100 p-4 rounded-lg shadow">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Order Status</h2>
-          <p
-            className={`text-lg font-medium ${
-              order.orderStatus === "Delivered" ? "text-green-600" : "text-red-600"
-            }`}
-          >
-            {order.orderStatus}
-          </p>
-        </div>
+      {
+        isLoading ? <div className="flex justify-center h-screen items-center">
+          <Loader />
 
-        {/* Customer Details */}
-        <div className="bg-gray-100 p-4 rounded-lg shadow">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Customer Details</h2>
-          <p className="text-gray-700">
-            <span className="font-medium">Name:</span> {order.customer.name}
-          </p>
-          <p className="text-gray-700">
-            <span className="font-medium">Email:</span> {order.customer.email}
-          </p>
-          <p className="text-gray-700">
-            <span className="font-medium">Phone:</span> {order.customer.phone}
-          </p>
-          <p className="text-gray-700">
-            <span className="font-medium">Address:</span> {order.customer.address}
-          </p>
-        </div>
-      </div>
+        </div> : <>  {orders.length > 0 ? (
+          orders.map((order, orderIndex) => (
+            <div key={orderIndex} className="border rounded-lg shadow-lg p-4 mb-6 bg-white">
 
-      {/* Product Details */}
-      <div className="bg-gray-100 p-6 rounded-lg shadow">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Products in Order</h2>
-        <div className="space-y-4">
-          {order.products.map((product) => (
-            <div
-              key={product.id}
-              className="flex flex-wrap sm:flex-nowrap items-center justify-between bg-white p-4 rounded-lg shadow"
-            >
-              <div className="flex items-center">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-16 h-16 rounded-md mr-4"
-                />
-                <div>
-                  <p className="text-gray-800 font-medium">{product.name}</p>
-                  <p className="text-gray-600 text-sm">
-                    Size: {product.size}, Color: {product.color}
+              <div className="flex flex-wrap justify-between">
+                <div className="mb-4">
+                  <h2 className="text-lg font-bold">Order ID: {order.orderId}</h2>
+                  <p className="text-sm text-gray-600">
+                    Order Status: {order.orderStatus.map((status, i) => (
+                      <span key={i} className="block">
+                        {status.status} ({new Date(status.date).toLocaleDateString()})
+                      </span>
+                    ))}
                   </p>
+                  <p className="text-sm text-gray-600">Payment Type: {order.paymentType}</p>
+                  <p className="text-sm text-gray-600">Seller ID: {order.seller}</p>
                 </div>
+
+                <div className="mb-4">
+                  <h3 className="text-md font-bold mb-2">Shipping Details:</h3>
+                  <p>{order.shippingDetails.name}</p>
+                  <p>{order.shippingDetails.address}</p>
+                  <p>{order.shippingDetails.city}, {order.shippingDetails.state}</p>
+                  <p>{order.shippingDetails.postalCode}</p>
+                  <p>{order.shippingDetails.mobileNumber}</p>
+                </div>
+
               </div>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mt-4 sm:mt-0">
-                <p className="text-gray-800 font-medium">Price: {product.price}</p>
-                <p className="text-gray-800">Quantity: {product.quantity}</p>
+
+              <div className="mb-4">
+                <h3 className="text-md font-bold mb-2">Products:</h3>
+                {order.products.map((product, productIndex) => (
+                  <div key={productIndex} className="flex items-start gap-4 mb-4 border-b pb-4">
+                    <img
+                      src={product.bannerImage}
+                      alt={product.name}
+                      className="w-24 h-24 object-cover rounded-md"
+                    />
+                    <div>
+                      <h4 className="text-sm font-bold">{product.name}</h4>
+                      <p className="text-sm text-gray-600">Color: {product.color}</p>
+                      <p className="text-sm text-gray-600">Size: {product.size}</p>
+                      <p className="text-sm text-gray-600">Quantity: {product.quantity}</p>
+                      <p className="text-sm text-gray-600">Price: ₹{product.price}</p>
+                      <p className="text-sm text-green-600">
+                        Discounted Price: ₹{product.discountedPrice}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div>
+                <p className="text-sm text-gray-600">
+                  Total Products: {order.totalProduct}
+                </p>
+                <p className="text-sm text-gray-600">
+                  Updated At: {new Date(order.updatedAt).toLocaleString()}
+                </p>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
+          ))
+        ) : (
+          <p className="text-center text-gray-600">No orders found.</p>
+        )}
+
+        </>
+      }
+
+
     </div>
   );
 };

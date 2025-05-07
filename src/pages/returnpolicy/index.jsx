@@ -2,11 +2,11 @@ import React from 'react'
 
 function Returnpolicy() {
     return (
-        <div className='p-20  mt-10'>
+        <div className='px-8 md:pt-2 lg:pt-2'>
 
-            <h1 className='text-center mx-auto w-fit font-[Poppins] cursor-pointer font-bold text-4xl'>Return Policy</h1>
+            <h1 className=' mx-auto w-fit font-[Poppins] cursor-pointer lg:mt-[20px] font-bold text-4xl'>Return Policy</h1>
             <p className=' 
-      text-[#949494] font-light font-[Poppins]  [text-align:justify]" mt-10'>
+      text-[#949494] font-light font-[Poppins]  [text-align:justify]" mt-2'>
                 Huvo’s returns and exchange policy gives you an option to return or exchange items purchased on Huvo for any reason within the specified return/exchange period (check product details page for the same) Returns will be picked from the same address where the product is delivered. Feel free to try on a product but all we ask is that the product remains unused and is preserved in its original condition along with the tags and packaging. In case a Seal Tag is received with the item, ensure that it remains attached & intact with the product to avoid any hassles in the event of a return/exchange. There are two ways to return the product to us:
 
 

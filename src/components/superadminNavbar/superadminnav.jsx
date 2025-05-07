@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { GrUserAdmin } from "react-icons/gr";
+
 
 import { MdSignalCellularAlt } from "react-icons/md";
 import { FiTruck } from "react-icons/fi";
@@ -40,10 +42,10 @@ function SuperAdminNav() {
           {/* <img src="/assets/cart.png" alt="Cart" width="60px" height="60px" /> */}
           <Link to="/">
 
-          <img src="/assets/newlogo.jpeg" alt="Logo" className="w-[100px] h-[20px] mb-5" />
+            <img src="/assets/newlogo.jpeg" alt="Logo" className="w-[100px] h-[20px] mb-5" />
           </Link>
         </div>
-      
+
         <hr className=' bg-gray-500 mx-10'></hr>
       </div>
       <div className="px-1 sidebarSubDiv overflow-y-auto">
@@ -61,6 +63,24 @@ function SuperAdminNav() {
               </Link>
             </div>
           </li>
+
+
+
+          <li>
+            <div className="hover:bg-[#011F4B] text-sm  rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
+              <Link to="/manage_admin" className="flex items-center gap-2">
+                <button className="flex justify-center items-center gap-4 p-2">
+                  <div className="p-2 iconDiv">
+                    <GrUserAdmin size={21} className="icon" />
+                  </div>
+                  Manage admins
+                </button>
+                <IoIosArrowRoundForward className="opacity-60" />
+              </Link>
+            </div>
+          </li>
+
+
 
           <li>
             <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
@@ -101,7 +121,7 @@ function SuperAdminNav() {
               </Link>
             </div>
           </li>
-          <li>
+          {/* <li>
             <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
               <Link to="/admin/buyers" className="flex items-center gap-2 ">
                 <button className="flex justify-center items-center gap-4 p-2">
@@ -113,7 +133,7 @@ function SuperAdminNav() {
                 <IoIosArrowRoundForward className="opacity-60" />
               </Link>
             </div>
-          </li>
+          </li> */}
 
           <li>
             <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">

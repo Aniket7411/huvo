@@ -1,62 +1,169 @@
-import { Switch } from "antd"
+import React, { useState } from "react";
+import { Switch } from "antd";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const Subscription = () => <div className="p-2 overflow-auto">
-    <h1 className="text-xl font-semibold sm:pt-10 lg:pt-2">Subscription</h1>
-    <div className="flex sm:flex-col lg:flex-row flex-wrap mt-3 ">
-        <div className="shadow-xl outline lg:w-1/5 sm:w-1/2 rounded m-2 ">
-            <Switch className=" m-2" />
-            <div className="flex flex-col justify-center items-center">
-                <h1 >Free</h1>
-                <img src="https://s3-alpha-sig.figma.com/img/e0f6/ba85/9941adab5aa94e793b68a430fa3c454c?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YKERHzcIqP3i559PB8Q-f-3uqF5h94VrwYcSJs4rENPcTn9Gz4K6kcQMFIfVrYAUS4wYmRseXdeJGMtLTI9aZDDByj0THBXJNknZU4mSQYlMei5-5FpD-x5RpFegLD-ofhUGb2Q~ROvyrCzD2mh6el1nGSvajITdEGxUacMzEkUksjkyu3qYJBGG8KhNJtovNKdwLSf7z9Mo7W-mEYfC-yHEKJV5895Dsv1PJBTF2rMmnqWdaSGdZpHMh7JdibavI1xnClJtEqoLBUJEmLiqoxxnFnolSycfsU61lMY4rlq1~lJHUjME1XROAG2pNASjJqTJ7IzM~4bz6nP1i0smUQ__" className="w-10 h-10 m-2" />
-                <hr className="border-t border-gray-300 w-4/5 my-2" />
-                <p className="text-center text-base">Pay fee in easy (interest free) instalments. You can choose
-                    from monthly / quarterly payment options.</p>
-                <div className="m-3">
-                    <button className="mt-2 bg-blue-500 text-white px-2 py-1 rounded-md" type="button">Free</button>
-                </div>
+const Subscription = () => {
+  const navigate = useNavigate();
+  const [selectedPlan, setSelectedPlan] = useState(null);
+
+  const subscriptionPlans = [
+    {
+      id: "free",
+      name: "Free",
+      price: "₹0",
+      image: "https://example.com/free-icon.png",
+      description: "Basic features with limited capabilities",
+      features: [
+        "5 products listing",
+        "Basic analytics",
+        "Email support"
+      ]
+    },
+    {
+      id: "silver",
+      name: "Silver",
+      price: "₹499/month",
+      image: "https://example.com/silver-icon.png",
+      description: "For growing businesses",
+      features: [
+        "50 products listing",
+        "Advanced analytics",
+        "Priority email support",
+        "Basic marketing tools"
+      ]
+    },
+    {
+      id: "gold",
+      name: "Gold",
+      price: "₹999/month",
+      image: "https://example.com/gold-icon.png",
+      description: "For established sellers",
+      features: [
+        "200 products listing",
+        "Premium analytics",
+        "24/7 chat support",
+        "Advanced marketing tools",
+        "Discount coupons"
+      ]
+    },
+    {
+      id: "platinum",
+      name: "Platinum",
+      price: "₹1999/month",
+      image: "https://example.com/platinum-icon.png",
+      description: "For high-volume sellers",
+      features: [
+        "Unlimited products",
+        "Enterprise analytics",
+        "Dedicated account manager",
+        "All marketing features",
+        "API access"
+      ]
+    }
+  ];
+
+  const handlePlanSelect = (planId) => {
+    setSelectedPlan(planId);
+    toast.success(`${subscriptionPlans.find(p => p.id === planId).name} plan selected`);
+  };
+
+  const proceedToPayment = () => {
+    if (!selectedPlan) {
+      toast.error("Please select a plan first");
+      return;
+    }
+    navigate(`/payment?plan=${selectedPlan}`);
+  };
+
+  return (
+    <div className="p-4 max-w-7xl mx-auto">
+      <h1 className="text-2xl font-bold mb-6">Choose Your Subscription Plan</h1>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {subscriptionPlans.map((plan) => (
+          <div 
+            key={plan.id}
+            className={`border rounded-lg p-4 transition-all duration-300 ${
+              selectedPlan === plan.id 
+                ? "ring-2 ring-blue-500 shadow-lg" 
+                : "hover:shadow-md"
+            }`}
+          >
+            <div className="flex justify-between items-start mb-4">
+              <Switch 
+                checked={selectedPlan === plan.id}
+                onChange={() => handlePlanSelect(plan.id)}
+              />
+              <h2 className="text-xl font-semibold">{plan.name}</h2>
             </div>
-        </div>
-        <div className="shadow-xl outline lg:w-1/5 sm:w-1/2 rounded  m-2 ">
-            <Switch className=" m-2" />
-            <div className="flex flex-col justify-center items-center">
-                <h1 >Silver</h1>
-                <img src="https://s3-alpha-sig.figma.com/img/e0f6/ba85/9941adab5aa94e793b68a430fa3c454c?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YKERHzcIqP3i559PB8Q-f-3uqF5h94VrwYcSJs4rENPcTn9Gz4K6kcQMFIfVrYAUS4wYmRseXdeJGMtLTI9aZDDByj0THBXJNknZU4mSQYlMei5-5FpD-x5RpFegLD-ofhUGb2Q~ROvyrCzD2mh6el1nGSvajITdEGxUacMzEkUksjkyu3qYJBGG8KhNJtovNKdwLSf7z9Mo7W-mEYfC-yHEKJV5895Dsv1PJBTF2rMmnqWdaSGdZpHMh7JdibavI1xnClJtEqoLBUJEmLiqoxxnFnolSycfsU61lMY4rlq1~lJHUjME1XROAG2pNASjJqTJ7IzM~4bz6nP1i0smUQ__" className="w-10 h-10 m-2" />
-                <hr className="border-t border-gray-300 w-4/5 my-2" />
-                <p className="text-center text-base">Pay fee in easy (interest free) instalments. You can choose
-                    from monthly / quarterly payment options.</p>
-                <div className="m-3">
-                    <button className="mt-2 bg-blue-500 text-white px-2 py-1 rounded-md" type="button">Silver</button>
-                </div>
+            
+            <div className="flex flex-col items-center">
+              <img 
+                src={plan.image} 
+                alt={plan.name} 
+                className="w-16 h-16 mb-3 object-contain"
+                onError={(e) => {
+                  e.target.src = "https://via.placeholder.com/64?text=Plan";
+                }}
+              />
+              
+              <p className="text-2xl font-bold text-blue-600 mb-2">{plan.price}</p>
+              
+              <hr className="border-t border-gray-200 w-full my-2" />
+              
+              <p className="text-center text-gray-600 mb-3">{plan.description}</p>
+              
+              <ul className="space-y-2 mb-4 text-sm">
+                {plan.features.map((feature, index) => (
+                  <li key={index} className="flex items-start">
+                    <span className="text-green-500 mr-2">✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              
+              <button
+                onClick={() => handlePlanSelect(plan.id)}
+                className={`w-full py-2 rounded-md ${
+                  selectedPlan === plan.id
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 hover:bg-gray-200"
+                }`}
+              >
+                {selectedPlan === plan.id ? "Selected" : "Select Plan"}
+              </button>
             </div>
+          </div>
+        ))}
+      </div>
+
+      {selectedPlan && (
+        <div className="mt-8 text-center">
+          <button
+            onClick={proceedToPayment}
+            className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg text-lg"
+          >
+            Proceed to Payment
+          </button>
+          <p className="mt-2 text-gray-500">
+            You'll be redirected to our secure payment gateway
+          </p>
         </div>
-        <div className="shadow-xl outline lg:w-1/5 sm:w-1/2  rounded  m-2 ">
-            <Switch className=" m-2" />
-            <div className="flex flex-col justify-center items-center">
-                <h1 >Gold</h1>
-                <img src="https://s3-alpha-sig.figma.com/img/7041/0cdc/8db98d4e5a1966a3635c40a18dd3dffc?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=M8PtRdJEfyr-3VydNpt-p9TXTIS62MZ0ulEuOlrUUschE3gGKFQGahdq9362CTT8G921CCk4WPGiZR4AgZqFozIOt32ER6Gwwf44PEQYTunLMLC744-CsRCwlHd9ggY0l88eSWuCFHJIwm8GGpAbObljaHpidXcFpop1keQ8az3fqBN8TuDv7XoyeqGl6i30Qvri9d3mozteTOGplSpur6FkS21RmOVcpZHI6nmfVYMmZXWvfhqEH4wFOgJPQe1Iaoa17eYm8m~JZyC3h325JwQCUS7jOnPxfRJm-ry6UOI4eUc-UD03ACm4a9gbbvAhl~HwJJFco8cCzt9WH56IDQ__" className="w-10 h-10 m-2" />
-                <hr className="border-t border-gray-300 w-4/5 my-2" />
-                <p className="text-center text-base">Pay fee in easy (interest free) instalments. You can choose
-                    from monthly / quarterly payment options.</p>
-                <div className="m-3">
-                    <button className="mt-2 bg-blue-500 text-white px-2 py-1 rounded-md" type="button">Gold</button>
-                </div>
-            </div>
-        </div>
-        <div className="shadow-xl outline lg:w-1/5 sm:w-1/2  rounded m-2 ">
-            <Switch className=" m-2" />
-            <div className="flex flex-col justify-center items-center">
-                <h1 >Platinum</h1>
-                <img src="https://s3-alpha-sig.figma.com/img/0af0/8347/bec87743630eb6bff408545d4d4a9ccf?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ox5La6UMJqx23pXPseTqE7srdLyUbI4oYupm6Cr~ajnqspYoCis9-TmQ603zaWbScxB88qhpGnVNsWg7R2B30WsvJs7rYOkRppjGL5zP4oGdcPYDsAssmepNpbOPY7d6RSg3VW-TziEXbKDje~DJPGOEbf5-8oohlzztMZ1TZ5AMVaIL7AiIxz3yEpUOezdLgL3D~2q~s0pgtNPPre3Iua4rp1H80S8T0jMHxVmIrM-jhcGhGxzkzCMCeHvyTHbBQSjIv8f6gYTsNpMnpdvg4B-Q6HVMNTVnuZCWy3Z4hW1ZvDyOTQPUgpXvW4JpksJbtYR1hATtsgQh0H6usr5~ow__" className="w-10 h-10 m-2" />
-                <hr className="border-t border-gray-300 w-4/5 my-2" />
-                <p className="text-center text-base">Pay fee in easy (interest free) instalments. You can choose
-                    from monthly / quarterly payment options.</p>
-                <div className="m-3">
-                    <button className="mt-2 bg-blue-500 text-white px-2 py-1 rounded-md" type="button">Platinum</button>
-                </div>
-            </div>
-        </div>
+      )}
+
+      <div className="mt-8 p-4 bg-blue-50 rounded-lg">
+        <h3 className="font-semibold mb-2">Payment Options:</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Credit/Debit Cards</li>
+          <li>Net Banking</li>
+          <li>UPI Payments</li>
+          <li>Wallet Payments</li>
+          <li>EMI Options Available</li>
+        </ul>
+      </div>
     </div>
-</div>
+  );
+};
 
-
-export default Subscription
+export default Subscription;

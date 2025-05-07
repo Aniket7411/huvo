@@ -55,7 +55,7 @@ console.log("response",sellerDetails)
 
       </div>
     ) : (
-      <div className="p-6 bg-gray-100 rounded-lg shadow-md mx-auto">
+      <div className="p-6 bg-gray-100 rounded-lg shadow-md w-[100vw] md:w-auto">
         <h1 className="text-2xl font-bold text-gray-800 mb-3 text-center">Seller Details</h1>
   
         {/* Personal and Store Details */}

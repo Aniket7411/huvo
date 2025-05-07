@@ -22,7 +22,7 @@ export default function Vendors() {
   const getUnverifiedVendors = async () => {
     try {
       const response = await HttpClient.get("/users/seller/unverified")
-      console.log("aaaa",response)
+      console.log("aaaa", response)
 
     } catch (error) {
 
@@ -76,7 +76,7 @@ export default function Vendors() {
 
         <Superadminheader />
         <div className='mx-4'>
-          <div className=' flex items-center justify-between'>
+          <div className=' flex items-center flex-wrap justify-between'>
             <ul>
               <li className='font-pooppins font-medium text-[#46484D]'>
                 Vendors
@@ -163,22 +163,15 @@ export default function Vendors() {
                       </h5>
                     </td>
                     <td className="p-4 pl-8">
-                      <button
-                        className={`rounded-full h-[34px] w-[90px] flex items-center justify-center gap-2 font-poppins font-medium text-[14px] leading-[21px] transition-all duration-300 ease-in-out ${item.status
-                          ? "bg-[#CCEED7] text-[#18B348] hover:bg-[#B8E6C0] scale-105"
-                          : "bg-[#FFD9DB] text-[#E40606] hover:bg-[#FFC3C7] scale-105"
+                      <div
+                        className={`rounded-md h-[34px] w-[90px] flex items-center justify-center gap-2 font-poppins font-medium text-[14px] leading-[21px] transition-transform duration-300 ease-in-out ${!item.status
+                            ? "bg-[#FFD9DB] text-[#E40606] hover:bg-[#FFC3C7] scale-105"
+                            : "bg-[#CCEED7] text-[#18B348] hover:bg-[#B8E6C0] scale-105"
                           }`}
                       >
-                        {item.status ? (
-                          <>
-                            <FaToggleOn className="text-[#18B348] text-lg" /> Active
-                          </>
-                        ) : (
-                          <>
-                            <FaToggleOff className="text-[#E40606] text-lg" /> Inactive
-                          </>
-                        )}
-                      </button>
+                        <p>{item.status ? "Active" : "Inactive"}</p>
+                      </div>
+
                     </td>
 
                     <td className="p-4 pl-8">

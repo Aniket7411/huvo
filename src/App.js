@@ -70,6 +70,9 @@ import CancellationManagementPage from "./pages/returnedorders/index.jsx";
 import SellerPayout from "./pages/sellerpayout/index.jsx";
 import ProductReview from "./pages/newproduct/index.jsx";
 import OrderDetails from "./pages/track-order/index.jsx";
+import CouponList from "./pages/coupon/index.jsx";
+import SellerCoupons from "./pages/sellercoupons/index.jsx";
+import AdminManagement from "./pages/adminsmanagement/addadmin/index.jsx";
 
 function App() {
   return (
@@ -324,6 +327,30 @@ function App() {
 
         <Routes>
           <Route
+            path="add_coupons"
+            element={
+              <Layout changeHeaderColor="true">
+                <CouponList />
+              </Layout>
+            }
+          />
+        </Routes>
+
+        <Routes>
+          <Route
+            path="seller/coupon"
+            element={
+              <Layout changeHeaderColor="true">
+                <SellerCoupons />
+              </Layout>
+            }
+          />
+        </Routes>
+
+
+
+        <Routes>
+          <Route
             path="/products_category/:id"
             element={
               <Layout>
@@ -376,7 +403,7 @@ function App() {
 
         <Routes>
           <Route
-            path="order_details"
+            path="/order_details/:id"
             element={
               <UserAuth>
                 <Layout changeHeaderColor="true">
@@ -658,6 +685,17 @@ function App() {
             }
           />
         </Routes>
+
+        <Routes>
+          <Route
+            path="manage_admin"
+            element={
+              <SuperAdminAuth>
+                <AdminManagement />
+              </SuperAdminAuth>
+            }
+          />
+        </Routes>
         <Routes>
           <Route
             path="admin/products"
@@ -753,7 +791,7 @@ function App() {
         </Routes>
         <Routes>
           <Route
-            path="admin/vendors/product_details"
+            path="admin/vendors/product_details/:id"
             element={
               <SuperAdminAuth>
                 <SellerProducts />

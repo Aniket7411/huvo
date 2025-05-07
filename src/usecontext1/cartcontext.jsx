@@ -58,9 +58,15 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+
+
   useEffect(() => {
-    fetchServerData();
+    if (localStorage?.getItem("accessToken")) {
+      fetchServerData();
+
+    }
   }, [tokenIfLoggedIn]);
+
 
   // Add item to cart
   const addToCartContext = (product, selectedSize, selectedQuantity) => {

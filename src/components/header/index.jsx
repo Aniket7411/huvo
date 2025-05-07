@@ -28,7 +28,7 @@ export default function Header(props) {
   const location = useLocation();
   const { cart, } = useContext(CartContext)
 
-  const cartLength = Object.keys(cart).length;
+  const cartLength = Object?.keys(cart).length;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -71,12 +71,12 @@ export default function Header(props) {
 
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
+    if (localStorage?.getItem("accessToken")) {
       loginStatus = 1;
+      getWishList();
     }
+  }, []);
 
-    getWishList()
-  }, [])
 
 
 
@@ -154,13 +154,13 @@ export default function Header(props) {
 
   const numberOfCartItems = 0
 
-  const localCartItem = localStorage.getItem("cart");
+  const localCartItem = localStorage?.getItem("cart");
 
 
   const parsedCart = JSON.parse(localCartItem);
 
 
-  const localCount = Object.keys(parsedCart).length;
+  const localCount = Object?.keys(parsedCart).length;
 
 
 
@@ -285,7 +285,7 @@ export default function Header(props) {
             >
               <option disabled>Search by</option>
               <option value="product_search">Product</option>
-              <option value="category_search">Category</option>
+              {/* <option value="category_search">Category</option> */}
               <option value="store_product">Store</option>
 
             </select>
@@ -346,14 +346,14 @@ export default function Header(props) {
 
             {
               loginStatus === 0 ? <>
-                {Object.keys(localCount).length > 0 && (
+                {Object?.keys(localCount).length > 0 && (
                   <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
-                    {Object.keys(localCount).length}
+                    {Object?.keys(localCount).length}
                   </span>
                 )}</> : <>
-                {Object.keys(cart).length > 0 && (
+                {Object?.keys(cart).length > 0 && (
                   <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
-                    {Object.keys(cart).length}
+                    {Object?.keys(cart).length}
                   </span>
                 )}</>
             }
@@ -382,18 +382,24 @@ export default function Header(props) {
                 </button>
                 {dropdownOpen && (
                   <div
-                    className={`absolute top-12 right-0 w-40 bg-[#fff]  shadow-lg rounded-lg border p-2 
+                    className={`absolute  top-12 right-0 w-40 bg-[#fff]  shadow-lg rounded-lg border p-2 
                       transform transition-all duration-300 ease-in-out ${dropdownOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
                       }`}
                   >
 
-                    <ul className="text-[#000] text-md ">
+                    <ul className="text-[#000] text-md font-sans ">
                       <Link to="/profile">
                         <li className="p-2 hover:bg-gray-100 cursor-pointer">My Profile</li>
                       </Link>
                       <Link to="/seller">
                         {
-                          localStorage.getItem("role") === "SELLER" && <li className="p-2  hover:bg-gray-100 cursor-pointer">Product Dashboard</li>
+                          localStorage?.getItem("role") === "SELLER" && <li className="p-2  hover:bg-gray-100 cursor-pointer">Product Dashboard</li>
+
+                        }
+                      </Link>
+                      <Link to="/admin">
+                        {
+                          localStorage?.getItem("role") === "ADMIN" && <li className="p-2  hover:bg-gray-100 cursor-pointer">Admin Dashboard</li>
 
                         }
                       </Link>
@@ -515,9 +521,9 @@ export default function Header(props) {
               }}
               className="text-2xl  cursor-pointer hover:scale-110 transition duration-200"
             />
-            {Object.keys(cart).length > 0 && (
+            {Object?.keys(cart)?.length > 0 && (
               <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#007bff] text-white text-xs font-bold rounded-full shadow">
-                {Object.keys(cart).length}
+                {Object?.keys(cart).length}
               </span>
             )}
           </button>
