@@ -93,7 +93,7 @@ const Orders = () => {
 
   const handleCancel = async () => {
 
-    console.log("currentOrder",currentOrder)
+    console.log("currentOrder", currentOrder)
     if (cancelReason === "") {
       toast.info("Please select Reason")
     }
@@ -101,7 +101,7 @@ const Orders = () => {
       try {
         const response = await HttpClient.post(
           `order/cancel/${currentOrder}`,
-          { cancellationReason: cancelReason, productId :currentproductId }
+          { cancellationReason: cancelReason, productId: currentproductId }
         );
         toast.success(response?.message)
       } catch (error) {
@@ -183,9 +183,9 @@ const Orders = () => {
                       View Details
                     </button>
                   </Link> */}
-                      <OrderStatusTracker orderStatuses={item?.orderStatuses}/>
+                    <OrderStatusTracker orderStatuses={item?.orderStatuses} />
 
-                  
+
 
 
                   </div>
@@ -207,6 +207,12 @@ const Orders = () => {
                     >
                       Return
                     </button>
+                    <Link to="/tracking_order">                    <button
+                      className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-700 text-white rounded-lg hover:from-amber-600 hover:to-amber-800 transition-all shadow-md"
+                    >
+                      Track Order
+                    </button>
+                    </Link>
 
                   </div>
                 </div>

@@ -301,21 +301,21 @@ export default function CheckOutWithoutLogin() {
 
     <>
       {
-        Object.keys(cartProducts).length === 0 ? <div className="flex justify-center items-center h-auto flex-col">
+        Object.keys(cartProducts).length === 0 ? <div className="flex justify-center p-4 items-center h-auto flex-col">
           <h2 className="text-xl font-semibold mb-2">
             Hey, it feels so light!
           </h2>
-          <p className="mb-3">
+          <p className="mb-2 text-center">
             There is nothing in your bag. Let's add some items.
           </p>
           <img
-            className="h-[200px] my-3"
+            className="h-[200px] my-1"
             src="/assets/emptycart.png"
             alt="wishlistEmpty"
           />
           <Link
             to="/"
-            className="py-3 px-12 text-lg font-semibold text-[#3466e8] border border-solid border-[#3466e8] rounded"
+            className="lg:py-3 py-2 px-4 lg:px-12 text-lg font-semibold text-[#3466e8] border border-solid border-[#3466e8] rounded"
           >
             Visit our products
           </Link>
@@ -393,26 +393,26 @@ export default function CheckOutWithoutLogin() {
                                     <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
                                       <button
 
-onClick={() =>
-  setCartProducts((prevCart) => {
-    const updatedCart = { ...prevCart };
-    updatedCart[key].quantity = Math.max(1, updatedCart[key].quantity - 1);
-    return updatedCart;
-  })
-}
+                                        onClick={() =>
+                                          setCartProducts((prevCart) => {
+                                            const updatedCart = { ...prevCart };
+                                            updatedCart[key].quantity = Math.max(1, updatedCart[key].quantity - 1);
+                                            return updatedCart;
+                                          })
+                                        }
                                         className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors">
                                         -
                                       </button>
                                       <span className="px-3 py-1 text-center min-w-[2rem]">{cartProducts[key]?.quantity || 0}</span>
                                       <button
 
-onClick={() =>
-  setCartProducts((prevCart) => {
-    const updatedCart = { ...prevCart };
-    updatedCart[key].quantity += 1;
-    return updatedCart;
-  })
-}
+                                        onClick={() =>
+                                          setCartProducts((prevCart) => {
+                                            const updatedCart = { ...prevCart };
+                                            updatedCart[key].quantity += 1;
+                                            return updatedCart;
+                                          })
+                                        }
                                         className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
                                       >
                                         +
@@ -439,7 +439,7 @@ onClick={() =>
                                   </div>
                                 </div>
 
-                            
+
 
 
 

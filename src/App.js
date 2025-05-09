@@ -73,6 +73,7 @@ import OrderDetails from "./pages/track-order/index.jsx";
 import CouponList from "./pages/coupon/index.jsx";
 import SellerCoupons from "./pages/sellercoupons/index.jsx";
 import AdminManagement from "./pages/adminsmanagement/addadmin/index.jsx";
+import OrderTracking from "./pages/trackorderstatus/index.jsx";
 
 function App() {
   return (
@@ -413,6 +414,19 @@ function App() {
             }
           />
         </Routes>
+
+
+        <Routes>
+          <Route
+            path="/tracking_order"
+            element={
+              <Layout changeHeaderColor="true">
+                <OrderTracking />
+              </Layout>
+            }
+          />
+        </Routes>
+
         <Routes>
           <Route
             path="profile"

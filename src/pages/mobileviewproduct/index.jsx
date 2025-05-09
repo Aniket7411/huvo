@@ -12,7 +12,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
           { products: [], title: "Featured Products" };
 
   return (
-    <div className="p-4 bg-gray-50 md:hidden ">
+    <div className=" bg-gray-50 md:hidden ">
 
 
 

@@ -83,9 +83,9 @@ const ProductsShowingComponent = (props) => {
 
     <div className="h-auto">
 
-      <section className="filter-section bg-white py-4 px-4">
+      <section className="filter-section bg-white py-2 ">
         <div className="flex flex-col space-y-4">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-1 md:p-3">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-1 md:p-2">
             <div className="flex flex-row justify-between items-center mb-1">
               <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
                 <FaFilter className="text-blue-500" />
@@ -114,9 +114,27 @@ const ProductsShowingComponent = (props) => {
             </div>
 
             {showFilters && (
-              <div className="flex flex-col md:flex-row gap-2 pt-4 border-t border-gray-200">
+              <div className="flex flex-col md:flex-row gap-2 pt-2 border-t border-gray-200">
 
-
+                <div className="flex-1 min-w-[200px]">
+                  <label className="block font-medium text-gray-700 text-sm mb-2">
+                    Find Products
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={handleSearch}
+                      placeholder="Find by name or brand..."
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
                 <div className="flex-1 min-w-[200px]">
                   <label className="block font-medium text-gray-700 text-sm mb-2">
                     Gender Category
@@ -147,25 +165,7 @@ const ProductsShowingComponent = (props) => {
                     <option value="high-to-low">Price: High to Low</option>
                   </select>
                 </div>
-                <div className="flex-1 min-w-[200px]">
-                  <label className="block font-medium text-gray-700 text-sm mb-2">
-                    Find Products
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={handleSearch}
-                      placeholder="Find by name or brand..."
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
+
 
                 <div className="flex-1 flex items-end min-w-[200px]">
                   <button
@@ -182,6 +182,8 @@ const ProductsShowingComponent = (props) => {
         </div>
       </section>
 
+
+
       <div className="lg:w-full mx-auto">
 
         <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
@@ -190,7 +192,7 @@ const ProductsShowingComponent = (props) => {
               Search Results for '{searchQuery}'
             </h1>
           ) : (
-            <h1 className="font-bold font-inter text-md md:text-3xl px-3 py-1 text-gray-500">
+            <h1 className="font-bold font-inter text-md md:text-3xl px-2 text-gray-500">
               Exploring Products You'll Love!
             </h1>
           )}
@@ -208,51 +210,51 @@ const ProductsShowingComponent = (props) => {
 
               <div className="flex md:hidden flex-wrap   pb-3 justify-center items-center gap-1">
 
-              {
-  filteredProducts && filteredProducts.length > 0 ? (
-    filteredProducts.map((eachProduct, i) => (
-      <div key={i} className="w-[49%] bg-[#fff] py-2 rounded-lg flex flex-col shadow-md ">
-        <img
-          src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
-          alt={eachProduct?.name || "Product Image"}
-          className="h-[150px] object-cover"
-          loading="lazy"
-        />
-        <div className="px-3">
-          <h1 className="text-[blue] font-semibold text-sm mt-2 line-clamp-2 mb-1">
-            {eachProduct?.name ? eachProduct.name.slice(0, 10) : "Product Name"}
-          </h1>
-          {/* Stars */}
-          <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
-            <div className="flex text-yellow-500">
-              {[...Array(5)].map((_, index) => (
-                <FaStar key={index} className="w-4 h-4" />
-              ))}
-            </div>
-            <span className="text-xs text-gray-500">(New)</span>
-          </div>
-          {/* Pricing */}
-          <div className="flex gap-3 items-center text-sm mb-1">
-            <p className="line-through font-medium text-red-600">{eachProduct?.actualPrice || "N/A"}</p>
-            <div className="flex items-center gap-1 text-green-600">
-              <PiCurrencyInr />
-              <p className="font-medium">{eachProduct?.price || "N/A"}</p>
-            </div>
-          </div>
-          <Link to={`/product-details/${eachProduct?.productId}`}>
-            <button className="bg-blue-600 text-white px-2 py-1 rounded-md flex items-center gap-2 hover:bg-blue-700 transition-all">
-              View <FaArrowRight className="w-4 h-4" />
-            </button>
-          </Link>
-        </div>
-      </div>
-    ))
-  ) : (
-    <div className="text-center w-full text-gray-500 mt-4">
-      No products available.
-    </div>
-  )
-}
+                {
+                  filteredProducts && filteredProducts.length > 0 ? (
+                    filteredProducts.map((eachProduct, i) => (
+                      <div key={i} className="w-[49%] bg-[#fff] py-2 rounded-lg flex flex-col shadow-md ">
+                        <img
+                          src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
+                          alt={eachProduct?.name || "Product Image"}
+                          className="h-[150px] object-cover"
+                          loading="lazy"
+                        />
+                        <div className="px-3">
+                          <h1 className="text-[blue] font-semibold text-sm mt-2 line-clamp-2 mb-1">
+                            {eachProduct?.name ? eachProduct.name.slice(0, 10) : "Product Name"}
+                          </h1>
+                          {/* Stars */}
+                          <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
+                            <div className="flex text-yellow-500">
+                              {[...Array(5)].map((_, index) => (
+                                <FaStar key={index} className="w-4 h-4" />
+                              ))}
+                            </div>
+                            <span className="text-xs text-gray-500">(New)</span>
+                          </div>
+                          {/* Pricing */}
+                          <div className="flex gap-3 items-center text-sm mb-1">
+                            <p className="line-through font-medium text-red-600">{eachProduct?.actualPrice || "N/A"}</p>
+                            <div className="flex items-center gap-1 text-green-600">
+                              <PiCurrencyInr />
+                              <p className="font-medium">{eachProduct?.price || "N/A"}</p>
+                            </div>
+                          </div>
+                          <Link to={`/product-details/${eachProduct?.productId}`}>
+                            <button className="bg-blue-600 text-white px-2 py-1 rounded-md flex items-center gap-2 hover:bg-blue-700 transition-all">
+                              View <FaArrowRight className="w-4 h-4" />
+                            </button>
+                          </Link>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center w-full text-gray-500 mt-4">
+                      No products available.
+                    </div>
+                  )
+                }
 
 
               </div>
@@ -260,86 +262,86 @@ const ProductsShowingComponent = (props) => {
               {/* large screen */}
 
 
-              <div className="p-4 hidden md:flex flex-wrap gap-4">
-  {filteredProducts && filteredProducts.length > 0 ? (
-    filteredProducts.map((eachProduct, i) => (
-      <div
-        key={i}
-        className="bg-white flex flex-col h-auto rounded-xl p-3 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300
+              <div className=" hidden md:flex flex-wrap items-center p-2 justify-center gap-4">
+                {filteredProducts && filteredProducts.length > 0 ? (
+                  filteredProducts.map((eachProduct, i) => (
+                    <div
+                      key={i}
+                      className="bg-white flex flex-col h-auto rounded-xl p-3 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300
                  w-full sm:w-[48%]  md:w-[48%] lg:w-[31%] xl:w-[23%] 2xl:w-[18%]"
-      >
-        {/* Product Image */}
-        <div className="w-full overflow-hidden rounded-md flex items-center justify-center">
-          <img
-            src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
-            alt={eachProduct?.name || "Product Image"}
-            className="h-[220px] w-full object-cover"
-            loading="lazy"
-          />
-        </div>
+                    >
+                      {/* Product Image */}
+                      <div className="w-full overflow-hidden rounded-md flex items-center justify-center">
+                        <img
+                          src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
+                          alt={eachProduct?.name || "Product Image"}
+                          className="h-[220px] w-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
 
-        {/* Product Name */}
-        <h1 className="text-black font-semibold text-lg line-clamp-2 mb-1">
-          {eachProduct?.name || "Product Name"}
-        </h1>
+                      {/* Product Name */}
+                      <h1 className="text-black font-semibold text-lg line-clamp-2 mb-1">
+                        {eachProduct?.name || "Product Name"}
+                      </h1>
 
-        <div className="flex justify-between">
-          {/* Stars */}
-          <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
-            <div className="flex text-yellow-500">
-              {[...Array(5)].map((_, index) => (
-                <FaStar key={index} className="w-4 h-4" />
-              ))}
-            </div>
-            <span className="text-xs text-gray-500">(New)</span>
-          </div>
+                      <div className="flex justify-between">
+                        {/* Stars */}
+                        <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
+                          <div className="flex text-yellow-500">
+                            {[...Array(5)].map((_, index) => (
+                              <FaStar key={index} className="w-4 h-4" />
+                            ))}
+                          </div>
+                          <span className="text-xs text-gray-500">(New)</span>
+                        </div>
 
-          {/* Brand */}
-          <p className="text-gray-600 text-sm mb-1">
-            {eachProduct?.brandName || "Unknown Brand"}
-          </p>
-        </div>
+                        {/* Brand */}
+                        <p className="text-gray-600 text-sm mb-1">
+                          {eachProduct?.brandName || "Unknown Brand"}
+                        </p>
+                      </div>
 
-        {/* Pricing */}
-        <div className="flex justify-between items-center text-sm mb-1">
-          <div className="flex items-center gap-1 text-red-600">
-            <PiCurrencyInr />
-            <p className="line-through font-medium">{eachProduct?.actualPrice || "N/A"}</p>
-          </div>
-          <div className="flex items-center gap-1 text-green-600">
-            <CiDiscount1 />
-            <PiCurrencyInr />
-            <p className="font-medium">
-              {eachProduct?.actualPrice && eachProduct?.price
-                ? eachProduct.actualPrice - eachProduct.price
-                : "N/A"}{" "}
-              off
-            </p>
-          </div>
-        </div>
+                      {/* Pricing */}
+                      <div className="flex justify-between items-center text-sm mb-1">
+                        <div className="flex items-center gap-1 text-red-600">
+                          <PiCurrencyInr />
+                          <p className="line-through font-medium">{eachProduct?.actualPrice || "N/A"}</p>
+                        </div>
+                        <div className="flex items-center gap-1 text-green-600">
+                          <CiDiscount1 />
+                          <PiCurrencyInr />
+                          <p className="font-medium">
+                            {eachProduct?.actualPrice && eachProduct?.price
+                              ? eachProduct.actualPrice - eachProduct.price
+                              : "N/A"}{" "}
+                            off
+                          </p>
+                        </div>
+                      </div>
 
-        {/* Final Price */}
-        <div className="flex justify-between items-center text-lg font-bold text-gray-800 mb-1">
-          <div className="flex items-center">
-            <PiCurrencyInr />
-            <span>{eachProduct?.price || "N/A"}/-</span>
-          </div>
-        </div>
+                      {/* Final Price */}
+                      <div className="flex justify-between items-center text-lg font-bold text-gray-800 mb-1">
+                        <div className="flex items-center">
+                          <PiCurrencyInr />
+                          <span>{eachProduct?.price || "N/A"}/-</span>
+                        </div>
+                      </div>
 
-        {/* Button */}
-        <Link to={`/product-details/${eachProduct?.productId}`} className="w-full">
-          <button className="w-full flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-all">
-            View Product <FaArrowRight className="ml-2" />
-          </button>
-        </Link>
-      </div>
-    ))
-  ) : (
-    <div className="text-center w-full text-gray-500 mt-4">
-      No products available.
-    </div>
-  )}
-</div>
+                      {/* Button */}
+                      <Link to={`/product-details/${eachProduct?.productId}`} className="w-full">
+                        <button className="w-full flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-all">
+                          View Product <FaArrowRight className="ml-2" />
+                        </button>
+                      </Link>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center w-full text-gray-500 mt-4">
+                    No products available.
+                  </div>
+                )}
+              </div>
 
 
 

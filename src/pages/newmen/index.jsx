@@ -179,16 +179,16 @@ export default function WomenCollection() {
   const menProducts = allProducts.filter((item) => item.group === "men").splice(0, 8);
 
   return (
-    <div className="h-auto">
-      <div class="text-center mt-3">
-        <p className="font-[Poppins] font-normal text-center  text-sm md:text-lg  text-[#2581eb] mt-2">
+    <div className="h-auto px-2 md:px-4">
+      <div class="text-center mt-3 ">
+        <p className="font-[Poppins] font-normal text-center  text-sm md:text-lg  text-[#2581eb] mt-2 lg:mt-[70px]">
           Explore the latest trends and styles in men's fashion. From casual wear to formal attire, find the perfect outfit for every occasion.
         </p>
       </div>
       <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
         <ProductsShowingComponent allProducts={menProducts} />
         {/* Mobile Grid Section */}
-     
+
       </section>
     </div>
   );

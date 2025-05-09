@@ -193,47 +193,47 @@ export default function WomenCollection() {
 
 
   return (
-    <div className="h-auto">
+    <div className="h-auto px-2 md:px-4">
 
 
       <div class="text-center mt-3">
-     <p className="font-[Poppins] font-normal text-center  text-sm md:text-lg text-[#2581eb] mt-4">
-     Explore the latest trends and styles in women's fashion. From chic casual wear to elegant formal attire, discover the perfect outfit for every occasion.        </p>
+        <p className="font-[Poppins] font-normal text-center  text-sm md:text-lg text-[#2581eb]  lg:mt-[70px] mt-4">
+          Explore the latest trends and styles in women's fashion. From chic casual wear to elegant formal attire, discover the perfect outfit for every occasion.        </p>
       </div>
 
-      
-
-        <div className=" w-full mx-auto">
 
 
-
-
-
-
-          {/* Desktop Grid Section */}
-          <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
-
-
-
-
-            <ProductGrid womenProducts={womenProducts} />
-
-            {
-        isLoading ? <div className="flex h-screen justify-center items-center"><Loader /></div> : <ProductsShowingComponent allProducts={womenProducts} />
-
-      }
+      <div className=" w-full mx-auto">
 
 
 
 
 
-          </section>
+
+        {/* Desktop Grid Section */}
+        <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
+
+
+
+
+          <ProductGrid womenProducts={womenProducts} />
+
+          {
+            isLoading ? <div className="flex h-screen justify-center items-center"><Loader /></div> : <ProductsShowingComponent allProducts={womenProducts} />
+
+          }
 
 
 
 
 
-        </div>
+        </section>
+
+
+
+
+
+      </div>
 
 
 

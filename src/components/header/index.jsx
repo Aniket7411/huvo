@@ -165,7 +165,7 @@ export default function Header(props) {
 
 
 
-
+  console.log("loginStatusloginStatusloginStatusloginStatus", loginStatus)
 
 
 
@@ -500,7 +500,7 @@ export default function Header(props) {
             }
             className="relative"
           >
-            <FiHeart size={28} className="text-xl cursor-pointer hover:scale-110 transition duration-200" />
+            <FiHeart size={25} className="text-xl cursor-pointer hover:scale-110 transition duration-200" />
             {wishListItems > 0 && (
               <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full shadow">
                 {wishListItems}
@@ -511,7 +511,7 @@ export default function Header(props) {
           {/* Cart Button */}
           <button aria-label="Cart" className="relative">
             <HiOutlineShoppingBag
-              size={28}
+              size={25}
               onClick={() => {
                 if (loginStatus === 0) {
                   navigate("/checkout/cart/not_login");
@@ -529,22 +529,11 @@ export default function Header(props) {
           </button>
 
           {/* User Profile Button */}
-          <button
-            aria-label="Profile"
-            onClick={() =>
-              isLoggedIn() ? navigate("/profile") : navigate('/login')
-            }
-            className="hover:scale-110 transition duration-200"
-          >
-            <Link to="/login">
 
-              {
-                loginStatus === 0 ? <FaRegUser size={25} className="text-lg font-semibold mr-3  cursor-pointer" /> : <CiLogin size={25} className="text-lg font-semibold mr-3  cursor-pointer" />
 
-              }
-
-            </Link>
-          </button>
+          {
+            isLoggedIn() ? <Link to="/profile"><FaRegUser size={25} /></Link> : <Link to="/login"> Login </Link>
+          }
         </div>
       </div>
 
@@ -577,7 +566,7 @@ export default function Header(props) {
         >
           <option disabled>Search by</option>
           <option value="product_search">Product</option>
-          <option value="category_search">Category</option>
+          {/* <option value="category_search">Category</option> */}
           <option value="store_product">Store</option>
         </select>
 
@@ -651,26 +640,25 @@ export default function Header(props) {
                   Contact Us
                 </Link>
               </li>
-              <li onClick={clickToLogout} className="cursor-pointer flex items-center gap-2">
-                <p
 
-                  className="hover:text-blue-800 transition duration-300"
-                >
-                  Logout
+              {
+                isLoggedIn() && <li onClick={clickToLogout} className="cursor-pointer flex items-center gap-2">
+                  <p
 
-                </p>
-                <IoIosLogOut />
-              </li>
+                    className="hover:text-blue-800 transition duration-300"
+                  >
+                    Logout
+
+                  </p>
+                  <IoIosLogOut />
+                </li>
+              }
+
+
             </ul>
 
 
-            {/* Contact Us Section */}
-            <div className="mt-6 border-t pt-4 text-sm text-[#fff]">
-              <p className="mb-2">
-                <strong>Email:</strong> contact@huvo.in
-              </p>
 
-            </div>
           </div>
         </section>
       )}

@@ -272,6 +272,10 @@ export default function Home() {
       try {
         const response = await HttpClient.post("/cart/login", dataForCart);
         console.log("dataForCart", response);
+        if (response?.success) {
+          localStorage.setItem("cart", JSON.stringify({}));
+        }
+
       } catch (error) {
         console.error("Error during dataShift:", error);
       }
@@ -544,7 +548,7 @@ export default function Home() {
                 </section>
                 <ProductGrid kidsProducts={kidsProducts} />
 
-             </div>
+              </div>
 
             </section>
             <hr className="my-2" />

@@ -170,12 +170,12 @@ export default function KidsCollection() {
 
 
   return (
-    <div className="h-auto">
+    <div className="h-auto px-2 md:px-4 ">
 
 
 
-      <p className="font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg text-[#2581eb] mt-2">
-      Explore the latest trends and styles in kids' fashion. From playful everyday wear to stylish party outfits, find the perfect look for every little one.      </p>
+      <p className="font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg  lg:mt-[70px] text-[#2581eb] mt-2">
+        Explore the latest trends and styles in kids' fashion. From playful everyday wear to stylish party outfits, find the perfect look for every little one.      </p>
 
 
 

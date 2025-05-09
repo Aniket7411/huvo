@@ -236,7 +236,7 @@ export default function Login() {
                   >
                     <span className="cursor-pointer">FORGET PASSWORD?</span>
                   </p>
-                  <button className="font-medium text-[#011F4B] border-2 border-solid border-[#011F4B] py-2 px-8">
+                  <button className="font-medium text-[#011F4B] rounded-lg border-2 border-solid border-[#011F4B] py-2 px-6">
                     LOG IN
                   </button>
                   <p className="text-[#5A5A5A] font-medium my-3">OR</p>
