@@ -139,6 +139,7 @@ function OrderList() {
             placeholder="Search by Order ID or Name"
             className="border-0 text-gray-800 text-sm px-2 outline-none placeholder-gray-400 flex-grow"
             value={searchTerm}
+            
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>

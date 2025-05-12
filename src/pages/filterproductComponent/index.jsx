@@ -208,7 +208,7 @@ const ProductsShowingComponent = (props) => {
             <>
               {/* small screen */}
 
-              <div className="flex md:hidden flex-wrap   pb-3 justify-center items-center gap-1">
+              <div className="flex md:hidden flex-wrap   p-2 justify-center items-center gap-1">
 
                 {
                   filteredProducts && filteredProducts.length > 0 ? (
@@ -262,13 +262,13 @@ const ProductsShowingComponent = (props) => {
               {/* large screen */}
 
 
-              <div className=" hidden md:flex flex-wrap items-center p-2 justify-center gap-4">
+              <div className=" hidden md:flex flex-wrap items-center p-2 justify-start gap-4">
                 {filteredProducts && filteredProducts.length > 0 ? (
                   filteredProducts.map((eachProduct, i) => (
                     <div
                       key={i}
                       className="bg-white flex flex-col h-auto rounded-xl p-3 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300
-                 w-full sm:w-[48%]  md:w-[48%] lg:w-[31%] xl:w-[23%] 2xl:w-[18%]"
+                 w-full sm:w-[48%]  md:w-1/3 lg:w-1/5 xl:w-[23%] 2xl:w-[18%]"
                     >
                       {/* Product Image */}
                       <div className="w-full overflow-hidden rounded-md flex items-center justify-center">

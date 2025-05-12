@@ -475,7 +475,8 @@ export default function CheckOut() {
 
                             {/* Total - Desktop */}
                             <div className="text-right font-bold text-gray-800 hidden sm:block min-w-[100px]">
-                              ₹{(item.price * item.quantity) - ((item.cgst + item.sgst) * (item.quantity))}
+                              ₹ {(item.price * item.quantity) - ((item.cgst + item.sgst) * (item.quantity))}
+                              <span className="text-sm"> (Ex. Gst)</span>
                             </div>
                           </div>
                         ))}

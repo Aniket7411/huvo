@@ -269,7 +269,7 @@ export default function Header(props) {
 
             {/* Search Input */}
             <input
-              type="text"
+              type="search"
               placeholder="Search By Products,Categories or Brands"
               className="flex-1 text-sm placeholder-gray-500 text-gray-800 bg-transparent focus:outline-none"
               value={searchQuery}
@@ -491,7 +491,7 @@ export default function Header(props) {
 
 
         {/* Right Section */}
-        <div className="flex gap-3  items-center relative">
+        <div className="flex gap-2  items-center relative">
           {/* Wishlist Button */}
           <button
             aria-label="Wishlist"
@@ -550,7 +550,7 @@ export default function Header(props) {
 
         {/* Search Input */}
         <input
-          type="text"
+          type="search"
           placeholder="Search By Products,Categories or Brands"
           className="flex-1 text-sm placeholder-gray-500 text-gray-800 bg-transparent focus:outline-none"
           value={searchQuery}
@@ -566,8 +566,7 @@ export default function Header(props) {
         >
           <option disabled>Search by</option>
           <option value="product_search">Product</option>
-          {/* <option value="category_search">Category</option> */}
-          <option value="store_product">Store</option>
+          flex gap-3  items-center relative          <option value="store_product">Store</option>
         </select>
 
         {/* Search Suggestions */}
