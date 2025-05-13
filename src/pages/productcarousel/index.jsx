@@ -30,6 +30,8 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
     ],
   };
 
+
+  console.log("productsproducts",products)
   return (
 
         <div className="p-4 bg-gray-50 bg-red hidden md:block ">
@@ -61,7 +63,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                                 </h1>
               
                                 <p className="text-gray-600 text-sm mb-1">
-                                  {product?.brandName || "Unknown Brand"}
+                                  {product?.brandName  || "Unknown Brand"}
                                 </p>
 
                                 </div>

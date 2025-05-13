@@ -75,10 +75,15 @@ import SellerCoupons from "./pages/sellercoupons/index.jsx";
 import AdminManagement from "./pages/adminsmanagement/addadmin/index.jsx";
 import OrderTracking from "./pages/trackorderstatus/index.jsx";
 
+import ScrollToTop from "./components/scrolltop/index.jsx";
+import SellerPayoutDetail from "./pages/sellerpayoutdetail/index.jsx";
+
 function App() {
   return (
     <CartProvider>
       <BrowserRouter>
+        <ScrollToTop /> {/* Ensure this is included */}
+
         <Routes>
           <Route
             path="/"
@@ -749,6 +754,16 @@ function App() {
             element={
               <SuperAdminAuth>
                 <SellerPayout />
+              </SuperAdminAuth>
+            }
+          />
+        </Routes>
+        <Routes>
+          <Route
+            path="seller_payouts_details"
+            element={
+              <SuperAdminAuth>
+                <SellerPayoutDetail />
               </SuperAdminAuth>
             }
           />

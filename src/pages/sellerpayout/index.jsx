@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Superadminheader from '../../components/superadminheader';
 import SuperAdminNav from '../../components/superadminNavbar/superadminnav';
+import { Link } from 'react-router-dom';
 
 // Dummy data
 const dummyPayouts = [
@@ -74,7 +75,9 @@ const SellerPayout = () => {
                     {filteredData.length > 0 ? (
                         filteredData.map((item, idx) => (
                             <tr key={idx} className="hover:bg-gray-50">
+                                <Link to="/seller_payouts_details">
                                 <td className="px-4 py-3">{item.sellerEmail}</td>
+                                </Link>
                                 <td className="px-4 py-3">{item.name}</td>
                                 <td className="px-4 py-3">{item.orderName}</td>
                                 <td className="px-4 py-3 text-green-600 font-medium">₹{item.payoutAmount}</td>

@@ -23,6 +23,7 @@ import Loader from "../../components/loader";
 import { CiSearch } from "react-icons/ci";
 import CategorySlider from "../categoryslider";
 import ProductGrid from "../mobileviewproduct";
+import BrandSlider from "../brands";
 
 
 const testimonials = [
@@ -141,15 +142,26 @@ export default function Home() {
     setIsLoading(true)
     try {
       const response = await HttpClient.get("/product");
-      setAllProducts(response.products);
+      setAllProducts(response?.products);
 
-      console.log("trending products", response)
+      console.log("hhhhhh", response?.products)
+
+      console.log("hhhhhh", response?.products[0]?.brand?.name)
+
+
+      console.log("k", response?.products)
+
+      const k = response.products.map((each) => ({
+        brand: each?.brand?.name,
+      }))
+
+      console.log("k", k)
 
       const formattedData = response.products.map((eachProduct) => ({
         objectId: eachProduct._id,
         bannerImage: eachProduct.bannerImage,
         productName: eachProduct.name,
-        brandName: eachProduct.brand.name,
+        brandName:  eachProduct?.brand?.name,
         brandImage: eachProduct.brand.image,
         onGoingOffer: eachProduct.brand.onGoingOffer,
         brandId: eachProduct.brand.brandId,
@@ -164,6 +176,8 @@ export default function Home() {
         productId: eachProduct.productId,
         actualPrice: eachProduct.actualPrice
       }))
+
+      console.log("fffff", formattedData)
       setTrendingProducts(formattedData)
       setIsLoading(false)
 
@@ -332,11 +346,12 @@ export default function Home() {
   };
 
 
-
+  console.log("fffff", allProducts)
 
   const kidsProducts = allProducts.filter((item) => item.group === "kids").slice(0, 8);
   const womenProducts = allProducts.filter((item) => item.group === "women").slice(0, 8);
   const menProducts = allProducts.filter((item) => item.group === "men").slice(0, 8);
+
 
 
 
@@ -390,7 +405,7 @@ export default function Home() {
 
             <section className="">
 
-              <Link to="/women-collection">
+              {/* <Link to="/women-collection">
 
                 <div className="md:h-[250px] h-[200px]"
 
@@ -426,9 +441,8 @@ export default function Home() {
                   </div>
                 </div>
 
-              </Link>
+              </Link> */}
               <div>
-                <Brandslider />
 
                 <section className=" hidden md:block">
 
@@ -439,7 +453,22 @@ export default function Home() {
 
               </div>
               <hr className="my-2" />
-              <Link to="/men-collection">
+
+
+              {/* Heading Section with Animation */}
+              <div className="mb-2 animate-fade-in-up">
+
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2 leading-tight">
+                  Trusted by <span className="text-blue-600">Leading Brands</span>
+                </h2>
+                <p className="text-xl text-gray-600  mx-auto">
+                  We collaborate with visionary companies to create impactful solutions that drive success.
+                </p>
+              </div>
+              <BrandSlider />
+
+
+              {/* <Link to="/men-collection">
 
 
 
@@ -485,10 +514,9 @@ export default function Home() {
 
                 </div>
 
-              </Link>
+              </Link> */}
 
               <div>
-                <Brandslider />
 
                 <section className=" hidden md:block">
 
@@ -502,7 +530,7 @@ export default function Home() {
               </div>
 
               <hr className="my-2" />
-              <Link to="/kids-collection">
+              {/* <Link to="/kids-collection">
 
                 <div
 
@@ -537,9 +565,9 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
-              </Link>
+              </Link> */}
               <div>
-                <Brandslider />
+
 
 
                 <section className="  md:block">

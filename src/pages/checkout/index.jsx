@@ -94,7 +94,7 @@ export default function CheckOut() {
     try {
       const response = await HttpClient.get("/cart");
 
-      console.log(response.data)
+      console.log("tp", response.data)
       console.log(Object.keys(response.data))
       setTotalCartData(response.data)
 
@@ -255,8 +255,6 @@ export default function CheckOut() {
         couponCode,
         totalSgst: (totalCost * 18) / 100,
         totalCgst: (totalCost * 18) / 100,
-
-
       });
 
       console.log(response)
@@ -360,7 +358,32 @@ export default function CheckOut() {
     .map(key => totalCartData[key].price * totalCartData[key].quantity - totalCartData[key].cgst - totalCartData[key].sgst)
     .reduce((sum, cost) => sum + cost, 0);
 
-  console.log("calculateTotal", totalCost)
+
+
+  console.log("cartProducts", cartProducts)
+
+  function calculateTotalSum(items) {
+    return Object.values(items).reduce(
+      (total, item) => total + (item.actualPrice * item.quantity),
+      0
+    );
+  }
+
+  function calculateTotalDiscount(items) {
+    return Object.values(items).reduce(
+      (total, item) => total + (item.price * item.quantity),
+      0
+    );
+  }
+
+  const totalSum = calculateTotalSum(cartProducts);
+  const totalprice = calculateTotalDiscount(cartProducts);
+
+  console.log("totalprice", totalprice)
+
+  const totalDiscountOfProducts = totalSum - totalprice
+
+  console.log("totalDiscountOfProducts", totalDiscountOfProducts)
 
   return (
 
@@ -550,30 +573,29 @@ export default function CheckOut() {
                               <p>Total MRP</p>
                               <p className="flex items-center font-medium">
                                 <PiCurrencyInr className="mr-1" />
-                                {totalCost}
+                                {totalSum}
                               </p>
                             </div>
 
                             <div className="flex justify-between text-gray-700 mb-2">
-                              <p>SGST</p>
+                              {/* <p>SGST</p>
                               <p className="flex items-center text-green-600 font-medium">
                                 + <PiCurrencyInr className="mr-1" />
                                 {(totalCost * 9) / 100}
+                              </p> */}
+
+                              <p>DISCOUNT</p>
+                              <p className="flex items-center text-green-600 font-medium">
+                                + <PiCurrencyInr className="mr-1" />
+                                {totalDiscountOfProducts}
                               </p>
                             </div>
 
-                            <div className="flex justify-between text-gray-700 mb-3">
-                              <p>CGST</p>
-                              <p className="flex items-center text-green-600 font-medium">
-                                + <PiCurrencyInr className="mr-1" />
-                                {(totalCost * 9) / 100}
-                              </p>
-                            </div>
 
                             <div className="border-t border-dashed border-gray-400 my-6"></div>
 
                             <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-                              <p>Total Amount</p>
+                              <p>Total Amount (Incl GST)</p>
                               <p className="flex items-center">
                                 <PiCurrencyInr className="mr-1" />
 
@@ -782,30 +804,26 @@ export default function CheckOut() {
                             <p>Total MRP</p>
                             <p className="flex items-center font-medium">
                               <PiCurrencyInr className="mr-1" />
-                              {totalCost}
+                              {totalSum}
                             </p>
                           </div>
 
                           <div className="flex justify-between text-gray-700 mb-3">
-                            <p>SGST</p>
+                          
+
+                            <p>DISCOUNT</p>
                             <p className="flex items-center text-green-600 font-medium">
-                              +<PiCurrencyInr className="mr-1" />
-                              {(totalCost * 9) / 100}
+                              + <PiCurrencyInr className="mr-1" />
+                              {totalDiscountOfProducts}
                             </p>
                           </div>
 
-                          <div className="flex justify-between text-gray-700 mb-3">
-                            <p>CGST</p>
-                            <p className="flex items-center text-green-600 font-medium">
-                              +<PiCurrencyInr className="mr-1" />
-                              {(totalCost * 9) / 100}
-                            </p>
-                          </div>
+
 
                           <div className="border-dashed border-t border-gray-400 my-6"></div>
 
                           <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-                            <p>Total Amount</p>
+                            <p>Total Amount (Incl GST)</p>
                             <p className="flex items-center">
                               <PiCurrencyInr className="mr-1" />
 
@@ -892,30 +910,26 @@ export default function CheckOut() {
                             <p>Total MRP</p>
                             <p className="flex items-center font-medium">
                               <PiCurrencyInr className="mr-1" />
-                              {totalCost}
+                              {totalSum}
                             </p>
                           </div>
 
                           <div className="flex justify-between mb-3 text-gray-700">
-                            <p>SGST</p>
+                         
+
+
+                            <p>DISCOUNT</p>
                             <p className="flex items-center text-green-600 font-medium">
                               + <PiCurrencyInr className="mr-1" />
-                              {(totalCost * 9) / 100}
+                              {totalDiscountOfProducts}
                             </p>
                           </div>
 
-                          <div className="flex justify-between mb-3 text-gray-700">
-                            <p>CGST</p>
-                            <p className="flex items-center text-green-600 font-medium">
-                              + <PiCurrencyInr className="mr-1" />
-                              {(totalCost * 9) / 100}
-                            </p>
-                          </div>
 
                           <div className="border-t border-dashed border-gray-400 my-6"></div>
 
                           <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-                            <p>Total Amount</p>
+                            <p>Total Amount (Incl GST)</p>
                             <p className="flex items-center">
                               <PiCurrencyInr className="mr-1" />
                               {Math.round(totalCost + (totalCost * 18) / 100)}
@@ -1107,26 +1121,14 @@ export default function CheckOut() {
                               </p>
                             </div>
 
-                            <div className="flex justify-between text-gray-700 mb-2">
-                              <p>SGST</p>
-                              <p className="flex items-center text-green-600 font-medium">
-                                + <PiCurrencyInr className="mr-1" />
-                                {(totalCost * 9) / 100}
-                              </p>
-                            </div>
+                           
 
-                            <div className="flex justify-between text-gray-700 mb-3">
-                              <p>CGST</p>
-                              <p className="flex items-center text-green-600 font-medium">
-                                + <PiCurrencyInr className="mr-1" />
-                                {(totalCost * 9) / 100}
-                              </p>
-                            </div>
+
 
                             <div className="border-t border-dashed border-gray-400 my-6"></div>
 
                             <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-                              <p>Total Amount</p>
+                              <p>Total Amount (Incl GST)</p>
                               <p className="flex items-center">
                                 <PiCurrencyInr className="mr-1" />
 

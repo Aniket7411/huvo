@@ -83,7 +83,7 @@ const ProductReview = ({ productId }) => {
   const closeReviewsModal = () => setIsReviewsModalOpen(false);
 
   return (
-    <div className="bg-white rounded-lg shadow p-4 mb-6">
+    <div className="bg-white rounded-lg w-[100%] shadow p-4 mb-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
         <h2 className="text-lg font-semibold text-gray-800">Ratings & Reviews</h2>
@@ -94,12 +94,12 @@ const ProductReview = ({ productId }) => {
           >
             View Reviews ({allReviews.length})
           </button>
-          <button
+          {/* <button
             onClick={openRatingModal}
             className="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded hover:bg-gray-300 transition"
           >
             Add Review
-          </button>
+          </button> */}
         </div>
       </div>
 

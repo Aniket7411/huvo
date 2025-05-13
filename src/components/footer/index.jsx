@@ -92,12 +92,7 @@ export default function Footer() {
         </Link>
 
         {/* Mail Us */}
-        <a
-          href="https://mail.google.com/mail/?view=cm&fs=1&to=huvoofficial@gmail.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex flex-col"
-        >
+  
           <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
             <p className="mr-2">Mail us</p>
             <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
@@ -105,7 +100,7 @@ export default function Footer() {
           <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
             contact@huvo.in
           </p>
-        </a>
+   
 
         {/* Contact Us (Modal Trigger) */}
         <Link to="/contact_us">

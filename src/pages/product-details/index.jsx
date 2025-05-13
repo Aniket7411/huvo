@@ -251,7 +251,7 @@ export default function ProductDetails() {
               </div>
             </div>
 
-            <div className="flex-1">
+            <div className="flex-1 w-auto">
               <div className="flex items-center gap-2 ">
                 <h1 className="text-2xl  font-inter md:text-xl lg:text-2xl font-semibold text-[#2563eb] ">
                   Product Name : {productDetails?.name}
