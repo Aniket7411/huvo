@@ -9,9 +9,13 @@ const OrderTracking = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
+
+ const match = location.pathname.match(/tracking_order\/([^/]+)\/([^/]+)/);
+  const orderId = match ? match[1] : null; // Extract Order ID
+  const productId = match ? match[2] : null; // Extract Product ID
+
+
     // Extract `orderId` from query params
-    const searchParams = new URLSearchParams(location.search);
-    const orderId = searchParams.get("orderId") || "cq48xu5ymtMYwNPKjC1Nc"; // Default orderId for testing
 
     useEffect(() => {
         if (!orderId) {
@@ -25,8 +29,10 @@ const OrderTracking = () => {
 
             try {
                 const response = await HttpClient.post("/order/trackOrder", {
-                    orderId,
+                    orderId,productId
                 });
+
+                console.log("responseresponse",response)
 
                 setOrderData(response.data);
             } catch (err) {
@@ -63,6 +69,8 @@ const OrderTracking = () => {
             return dateString;
         }
     };
+
+    console.log("orderDataorderDataorderData",orderData)
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8">
@@ -233,7 +241,7 @@ const OrderTracking = () => {
                                         <p className="mt-2 text-gray-600">
                                             No tracking history available
                                         </p>
-                                    </div>
+                                      </div>
                                 )}
                             </div>
                         </div>

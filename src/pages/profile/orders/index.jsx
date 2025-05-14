@@ -128,6 +128,8 @@ const Orders = () => {
     setReturnReason("");
   };
 
+
+  console.log("allOrdersallOrdersallOrders", allOrders)
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white md:p-8">
       {
@@ -207,12 +209,14 @@ const Orders = () => {
                     >
                       Return
                     </button>
-                    <Link to="/tracking_order">                    <button
-                      className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-700 text-white rounded-lg hover:from-amber-600 hover:to-amber-800 transition-all shadow-md"
-                    >
-                      Track Order
-                    </button>
+                    <Link to={`/tracking_order/${item?.orderId}/${item?.productId}`}>
+                      <button
+                        className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-700 text-white rounded-lg hover:from-amber-600 hover:to-amber-800 transition-all shadow-md"
+                      >
+                        Track Order
+                      </button>
                     </Link>
+
 
                   </div>
                 </div>

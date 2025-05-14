@@ -423,7 +423,7 @@ function App() {
 
         <Routes>
           <Route
-            path="/tracking_order"
+            path="/tracking_order/:id/:id"
             element={
               <Layout changeHeaderColor="true">
                 <OrderTracking />
