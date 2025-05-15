@@ -441,12 +441,7 @@ export default function Profile() {
         <TabGroup >
           <div className="sm:flex gap-2" >
             <div className="w-full sm:w-1/5">
-              {/* <div className="bg-[#EFEFEF] border border-solid border-[#D6D6D6] p-5 mb-8">
-                <p className="text-[#2F2F2F] font-bold text-lg">
-                  {userData.firstName} {userData.lastName}
-                </p>
-                <p className="text-[#717171] font-normal">{userData.email}</p>
-              </div> */}
+           
               <div>
                 <TabList className="flex flex-wrap gap-2 mt-4 md:mt-2 px-2 sm:px-0 sm:flex-col sm:gap-1">
                   {/* Common Tabs */}
@@ -527,15 +522,7 @@ export default function Profile() {
                     </>
                   )}
 
-                  {/* Seller-specific Tab */}
-                  {/* {isSeller && (
-    <Tab className="flex-1 sm:flex-none outline-none">
-      <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
-        <span className="hidden sm:inline-block mr-2">📅</span>
-        Subscription
-      </div>
-    </Tab>
-  )} */}
+              
                 </TabList>
 
               </div>
@@ -562,7 +549,6 @@ export default function Profile() {
                           type="text"
                           className="w-full p-3 outline-none border border-solid border-[#CBCBCB] rounded-[12px] "
                           {...register("firstName", {
-                            // required: "*First Name is required.",
                           })}
                         />
                       </div>
@@ -574,7 +560,6 @@ export default function Profile() {
                           type="text"
                           className="w-full p-3 outline-none border border-solid border-[#CBCBCB] rounded-[12px]"
                           {...register("lastName", {
-                            // required: "*Last Name is required.",
                           })}
                         />
                       </div>
@@ -1379,8 +1364,8 @@ export default function Profile() {
               </TabPanel>
               <TabPanel className="h-full p-4 bg-gray-50">
 
-                <Subscription/>
-              
+                <Subscription />
+
               </TabPanel>
 
               <TabPanel className=" bg-[#F2F2F2]  h-full">
@@ -1420,6 +1405,7 @@ export default function Profile() {
 
           </div>
         </TabGroup>
+
       </section >
       <Transition appear show={isOpenAddress}>
         <Dialog

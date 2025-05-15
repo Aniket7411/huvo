@@ -225,11 +225,7 @@ export default function Superadminheader() {
                   <RxCross2 h-14 w-14 />
                 </div>
               </div>
-              <div className="flex items-center px-8 py-5">
-                <p className="font-[Poppins] font-bold  text-[#000000] ">
-                  Huvo
-                </p>
-              </div>
+
 
 
               <hr className=" bg-gray-500 mx-10 my-4"></hr>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { HttpClient } from "../../server/client/http";
 import { format } from "date-fns";
+import { FiPackage, FiTruck, FiCheckCircle, FiClock, FiXCircle, FiDollarSign } from "react-icons/fi";
 
 const OrderTracking = () => {
     const location = useLocation();
@@ -9,13 +10,9 @@ const OrderTracking = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-
- const match = location.pathname.match(/tracking_order\/([^/]+)\/([^/]+)/);
-  const orderId = match ? match[1] : null; // Extract Order ID
-  const productId = match ? match[2] : null; // Extract Product ID
-
-
-    // Extract `orderId` from query params
+    const match = location.pathname.match(/tracking_order\/([^/]+)\/([^/]+)/);
+    const orderId = match ? match[1] : null;
+    const productId = match ? match[2] : null;
 
     useEffect(() => {
         if (!orderId) {
@@ -29,10 +26,8 @@ const OrderTracking = () => {
 
             try {
                 const response = await HttpClient.post("/order/trackOrder", {
-                    orderId,productId
+                    orderId, productId
                 });
-
-                console.log("responseresponse",response)
 
                 setOrderData(response.data);
             } catch (err) {
@@ -46,8 +41,8 @@ const OrderTracking = () => {
         fetchOrderDetails();
     }, [orderId]);
 
-    const getStatusColor = (statusCode) => {
-        switch (statusCode) {
+    const getStatusColor = (status) => {
+        switch (status) {
             case "DELIVERED":
                 return "bg-green-100 text-green-800";
             case "CANCELLED":
@@ -61,6 +56,21 @@ const OrderTracking = () => {
         }
     };
 
+    const getStatusIcon = (status) => {
+        switch (status) {
+            case "DELIVERED":
+                return <FiCheckCircle className="text-green-500" />;
+            case "CANCELLED":
+                return <FiXCircle className="text-red-500" />;
+            case "IN_TRANSIT":
+                return <FiTruck className="text-blue-500" />;
+            case "OUT_FOR_DELIVERY":
+                return <FiTruck className="text-purple-500" />;
+            default:
+                return <FiClock className="text-gray-500" />;
+        }
+    };
+
     const formatDate = (dateString) => {
         if (!dateString) return "N/A";
         try {
@@ -70,183 +80,189 @@ const OrderTracking = () => {
         }
     };
 
-    console.log("orderDataorderDataorderData",orderData)
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center -mt-[15px] bg-gray-50">
+                <div className="text-center">
+                    <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p className="mt-4 text-lg font-medium text-gray-700">Loading order details...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen -mt-[20px] flex items-center justify-center bg-gray-50">
+                <div className="text-center p-6 bg-white rounded-lg shadow-md max-w-md">
+                    <div className="text-red-500 text-5xl mb-4">!</div>
+                    <h2 className="text-xl font-bold text-gray-800 mb-2">Error Loading Order</h2>
+                    <p className="text-gray-600 mb-4">{error}</p>
+                    <button
+                        onClick={() => window.location.reload()}
+                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                    >
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    if (!orderData) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="text-center">
+                    <p className="text-lg font-medium text-gray-700">No order data found</p>
+                </div>
+            </div>
+        );
+    }
+
+    const order = orderData.data?.[0];
+    const product = order?.product?.[0];
+    const tracking = order?.trackingOrder?.tracking_history?.[0];
+    const shipping = order?.postShipping;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8">
-            <div className=" mx-auto">
-                <div className="text-center mb-2">
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-                        Track Your Order
-                    </h1>
-                    <p className="text-gray-600">
-                        Check the status and details of your order
-                    </p>
-                </div>
+        <div className="min-h-screen -mt-[20px] bg-gray-50 p-4 md:p-8">
+            <div className="max-w-6xl mx-auto">
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Order Tracking</h1>
 
-                {loading && (
-                    <div className="flex flex-col items-center justify-center py-4">
-                        <div className="h-16 w-16 border-4 border-blue-500 rounded-full animate-spin border-t-transparent mb-4"></div>
-                        <p className="text-gray-600">Fetching order details...</p>
-                    </div>
-                )}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Order Summary Card */}
+                    <div className="bg-white rounded-lg shadow-md p-6 col-span-1">
+                        <h2 className="text-xl font-semibold text-gray-800 mb-4">Order Summary</h2>
 
-                {error && (
-                    <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-2 rounded">
-                        <div className="flex">
-                            <div className="flex-shrink-0">
-                                <svg
-                                    className="h-5 w-5 text-red-500"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                    fill="currentColor"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                                        clipRule="evenodd"
+                        <div className="flex items-start mb-4">
+                            <div className="w-20 h-20 bg-gray-100 rounded-md overflow-hidden mr-4">
+                                {product?.bannerImage && (
+                                    <img
+                                        src={product.bannerImage}
+                                        alt={product.name}
+                                        className="w-full h-full object-cover"
                                     />
-                                </svg>
-                            </div>
-                            <div className="ml-3">
-                                <p className="text-sm text-red-700">{error}</p>
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                {orderData && !loading && (
-                    <div className="space-y-3">
-                        {/* Order Summary Card */}
-                        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-                            <div className="p-6">
-                                <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                                    Order Summary
-                                </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <p className="text-sm text-gray-500">Airway Bill No</p>
-                                        <p className="font-medium">
-                                            {orderData?.airwaybilno || "N/A"}
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-500">Order No</p>
-                                        <p className="font-medium">{orderData?.orderno || "N/A"}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-500">Order Type</p>
-                                        <p className="font-medium">{orderData?.ordertype || "N/A"}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-500">Expected Delivery</p>
-                                        <p className="font-medium">
-                                            {formatDate(orderData?.exp_delivery)}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="bg-gray-50 px-6 py-4">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <p className="text-sm text-gray-500">Current Status</p>
-                                        <span
-                                            className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
-                                                orderData?.latest_status_code
-                                            )}`}
-                                        >
-                                            {orderData?.latest_status || "N/A"}
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-500">Status Code</p>
-                                        <p className="font-medium">
-                                            {orderData?.latest_status_code || "N/A"}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Tracking History */}
-                        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-                            <div className="p-6">
-                                <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                                    Tracking History
-                                </h2>
-                                {orderData?.tracking_history?.length > 0 ? (
-                                    <div className="space-y-6">
-                                        {orderData.tracking_history.map((item, index) => (
-                                            <div
-                                                key={item?._id || index}
-                                                className={`relative pl-6 pb-6 ${index !== orderData.tracking_history.length - 1
-                                                    ? "border-l-2 border-gray-200"
-                                                    : ""
-                                                    }`}
-                                            >
-                                                <div
-                                                    className={`absolute w-4 h-4 rounded-full -left-2 top-1 ${index === 0
-                                                        ? "bg-blue-500"
-                                                        : "bg-gray-300"
-                                                        }`}
-                                                ></div>
-                                                <div className="space-y-2">
-                                                    <div className="flex justify-between items-start">
-                                                        <h3 className="font-medium text-gray-800">
-                                                            {item?.status || "N/A"}
-                                                        </h3>
-                                                        <span
-                                                            className={`text-xs px-2 py-1 rounded ${getStatusColor(
-                                                                item?.status_code
-                                                            )}`}
-                                                        >
-                                                            {item?.status_code || "N/A"}
-                                                        </span>
-                                                    </div>
-                                                    <p className="text-sm text-gray-600">
-                                                        {formatDate(item?.createdAt)}
-                                                    </p>
-                                                    {item?.lsp_status && (
-                                                        <p className="text-sm">
-                                                            <span className="text-gray-500">LSP Status:</span>{" "}
-                                                            {item.lsp_status}
-                                                        </p>
-                                                    )}
-                                                    {item?.remarks && (
-                                                        <div className="bg-gray-50 p-3 rounded">
-                                                            <p className="text-sm text-gray-700">
-                                                                <strong>Remark</strong> {item.remarks}
-                                                            </p>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <div className="text-center py-8">
-                                        <svg
-                                            className="mx-auto h-12 w-12 text-gray-400"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={1}
-                                                d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                            />
-                                        </svg>
-                                        <p className="mt-2 text-gray-600">
-                                            No tracking history available
-                                        </p>
-                                      </div>
                                 )}
                             </div>
+                            <div>
+                                <h3 className="font-medium text-gray-800">{product?.name}</h3>
+                                <p className="text-sm text-gray-600">Size: {product?.size}</p>
+                                <p className="text-sm text-gray-600">Color: <span className="inline-block w-3 h-3 rounded-full mr-1" style={{ backgroundColor: product?.color }}></span></p>
+                                <p className="text-sm text-gray-600">Qty: {product?.quantity}</p>
+                            </div>
+                        </div>
+
+                        <div className="border-t border-gray-200 pt-4">
+                            <div className="flex justify-between mb-2">
+                                <span className="text-gray-600">Order ID:</span>
+                                <span className="font-medium">{orderId}</span>
+                            </div>
+                            <div className="flex justify-between mb-2">
+                                <span className="text-gray-600">Product ID:</span>
+                                <span className="font-medium">{productId}</span>
+                            </div>
+                            <div className="flex justify-between mb-2">
+                                <span className="text-gray-600">Order Date:</span>
+                                <span className="font-medium">{formatDate(order?.orderStatus?.[0]?.date)}</span>
+                            </div>
                         </div>
                     </div>
-                )}
+
+                    {/* Tracking Information */}
+                    <div className="bg-white rounded-lg shadow-md p-6 col-span-2">
+                        <h2 className="text-xl font-semibold text-gray-800 mb-4">Tracking Information</h2>
+
+                        {shipping && (
+                            <div className="mb-6">
+                                <h3 className="font-medium text-gray-700 mb-2">Shipping Details</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <p className="text-sm text-gray-600">Courier</p>
+                                        <p className="font-medium">{shipping.courier}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-gray-600">Airway Bill No</p>
+                                        <p className="font-medium">{shipping.airwaybilno}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-gray-600">Service Type</p>
+                                        <p className="font-medium">{shipping.service_type}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-gray-600">Routing Code</p>
+                                        <p className="font-medium">{shipping.routing_code}</p>
+                                    </div>
+                                </div>
+                                {shipping.dispatch_label && (
+                                    <a
+                                        href={shipping.dispatch_label}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm"
+                                    >
+                                        Download Shipping Label
+                                    </a>
+                                )}
+                            </div>
+                        )}
+
+                        {/* Status Timeline */}
+                        <div>
+                            <h3 className="font-medium text-gray-700 mb-3">Status Timeline</h3>
+                            <div className="space-y-4">
+                                {order?.orderStatus?.map((statusItem, index) => (
+                                    <div key={index} className="flex items-start">
+                                        <div className="mr-3 mt-1">
+                                            {getStatusIcon(statusItem.status)}
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="flex justify-between">
+                                                <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(statusItem.status)}`}>
+                                                    {statusItem.status.replace(/_/g, ' ')}
+                                                </span>
+                                                <span className="text-xs text-gray-500">{formatDate(statusItem.date)}</span>
+                                            </div>
+                                            <p className="text-sm text-gray-600 mt-1">
+                                                {statusItem.status === "placed" && "Your order has been placed"}
+                                                {statusItem.status === "confirmed" && "Seller has confirmed your order"}
+                                                {statusItem.status === "shipped" && "Your order has been shipped"}
+                                                {statusItem.status === "delivered" && "Your order has been delivered"}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Payment Summary */}
+                <div className="bg-white rounded-lg shadow-md p-6 mt-6">
+                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Payment Summary</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="border rounded-lg p-4">
+                            <div className="flex items-center mb-2">
+                                <FiDollarSign className="text-blue-500 mr-2" />
+                                <h3 className="font-medium text-gray-700">Product Price</h3>
+                            </div>
+                            <p className="text-2xl font-bold">₹{product?.price?.toFixed(2)}</p>
+                        </div>
+                        <div className="border rounded-lg p-4">
+                            <div className="flex items-center mb-2">
+                                <FiDollarSign className="text-green-500 mr-2" />
+                                <h3 className="font-medium text-gray-700">Discount</h3>
+                            </div>
+                            <p className="text-2xl font-bold text-green-600">-₹{product?.discount?.toFixed(2)}</p>
+                        </div>
+                        <div className="border rounded-lg p-4 bg-gray-50">
+                            <div className="flex items-center mb-2">
+                                <FiDollarSign className="text-purple-500 mr-2" />
+                                <h3 className="font-medium text-gray-700">Final Amount</h3>
+                            </div>
+                            <p className="text-2xl font-bold">₹{orderData.amount?.toFixed(2)}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -152,7 +152,6 @@ export default function Header(props) {
 
 
 
-  const numberOfCartItems = 0
 
   const localCartItem = localStorage?.getItem("cart");
 
@@ -163,6 +162,9 @@ export default function Header(props) {
   const localCount = Object?.keys(parsedCart).length;
 
 
+  const localStoredCartCount = Object.keys(JSON.parse(localStorage.getItem("cart"))).length;
+
+  console.log("localStoredCartCount",localStoredCartCount)
 
 
   console.log("loginStatusloginStatusloginStatusloginStatus", loginStatus)
@@ -521,11 +523,24 @@ export default function Header(props) {
               }}
               className="text-2xl  cursor-pointer hover:scale-110 transition duration-200"
             />
-            {Object?.keys(cart)?.length > 0 && (
-              <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#007bff] text-white text-xs font-bold rounded-full shadow">
-                {Object?.keys(cart).length}
-              </span>
-            )}
+
+
+            {
+              !isLoggedIn ? <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#007bff] text-white text-xs font-bold rounded-full shadow">
+                {wishListItems}
+              </span> : <>
+                {Object?.keys(cart)?.length > 0 && (
+                  <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#007bff] text-white text-xs font-bold rounded-full shadow">
+                    {localStoredCartCount}
+                  </span>
+                )}
+
+              </>
+            }
+
+
+
+
           </button>
 
           {/* User Profile Button */}
