@@ -57,12 +57,12 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                     />
                   </div>
 
-                  <div className="flex justify-between">
-                    <h1 className="text-black font-semibold text-lg line-clamp-2 mb-2">
-                      {product?.name.slice(0, 15) || "Product Name"}
+                  <div className="flex justify-between items-center">
+                    <h1 className="text-black font-semibold text-lg line-clamp-2 ">
+                      {product?.name || "Product Name"}
                     </h1>
 
-                    <p className="text-gray-600 text-sm mb-1">
+                    <p className="text-gray-600 text-sm ">
                       {product?.brandName || "Unknown Brand"}
                     </p>
 

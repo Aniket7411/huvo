@@ -57,7 +57,7 @@ const AdminHeader = () => {
     try {
       const response = await HttpClient.get("/notification");
       setNotifications(response);
-      setUnreadCount(response.filter(item => !item.isRead).length);
+      setUnreadCount(response?.filter(item => !item?.isRead)?.length);
     } catch (error) {
       toast.error(error?.response?.data?.message || "Failed to load notifications");
     }
@@ -226,7 +226,7 @@ const AdminHeader = () => {
 
           {/* Modal Content */}
           <div className="flex-1 overflow-y-auto p-4">
-            {notifications.length > 0 ? (
+            {notifications?.length > 0 ? (
               <div className="space-y-3">
                 {notifications.map((notification, index) => (
                   <div

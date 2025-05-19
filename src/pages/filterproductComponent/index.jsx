@@ -222,7 +222,7 @@ const ProductsShowingComponent = (props) => {
                         />
                         <div className="px-3">
                           <h1 className="text-[blue] font-semibold text-sm mt-2 line-clamp-2 mb-1">
-                            {eachProduct?.name ? eachProduct.name.slice(0, 10) : "Product Name"}
+                            {eachProduct?.name ? eachProduct.name.slice(0, 7) : "Product Name"}
                           </h1>
                           {/* Stars */}
                           <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">

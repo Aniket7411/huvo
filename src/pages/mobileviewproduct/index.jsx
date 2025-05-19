@@ -30,7 +30,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                 <div className="px-3">
 
                   <h1 className="text-black font-semibold text-sm mt-2 line-clamp-2 mb-1">
-                    {product?.name.slice(0, 10) || "Product Name"}
+                    {product?.name || "Product Name"}
                   </h1>
                   {/* Stars */}
                   <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">

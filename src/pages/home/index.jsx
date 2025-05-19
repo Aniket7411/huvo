@@ -147,52 +147,36 @@ export default function Home() {
       console.log("llllllll", response?.products)
 
 
-      const formattedData1 = response?.product((eachProduct) => ({
-        bannerImage: eachProduct?.bannerImage,
-        brandName: eachProduct?.brand?.name,
-        productName: eachProduct?.name,
-        price: eachProduct?.price,
-        discount: eachProduct?.discount,
-        group: eachProduct?.group[0].name,
-        productDetails: eachProduct.productDetails[0],
-        totalRating: eachProduct?.totalRating,
-        productId: eachProduct.productId,
-        isReturnable: eachProduct.isReturnable,
-        onGoingOffer: eachProduct.brand.onGoingOffer,
+      const formattedData1 = response?.products?.map((each) => ({
+        actualPrice: each?.actualPrice,
+        brandName: each?.brand?.name,
+        bannerImage: each?.bannerImage,
+        group: each?.group,
+        name: each?.productDetails[0],
+        reviews: each?.reviews,
 
+        objectId: each?._id,
+        productName: each?.name,
 
-
+        brandImage: each?.brand?.image,
+        onGoingOffer: each?.brand?.onGoingOffer,
+        brandId: each?.brand?.brandId,
+        categoryId: each?.category?.categoryId,
+        categoryDescription: each?.category?.description,
+        productDescription: each?.description,
+        isReturnable: each?.isReturnable,
+        discount: each?.discount,
+        price: each?.price,
+        productId: each?.productId,
       }))
 
       setAllProducts(formattedData1)
 
-
-      console.log("formattedData1formattedData1", formattedData1)
-
-      const formattedData = response.products.map((eachProduct) => ({
-        objectId: eachProduct._id,
-        bannerImage: eachProduct.bannerImage,
-        productName: eachProduct.name,
-
-        brandImage: eachProduct.brand.image,
-        onGoingOffer: eachProduct.brand.onGoingOffer,
-        brandId: eachProduct.brand.brandId,
-        categoryId: eachProduct.category.categoryId,
-        categoryDescription: eachProduct.category.description,
-        productDescription: eachProduct.description,
-        productDetails: eachProduct.productDetails[0],
-        group: eachProduct.group,
-        isReturnable: eachProduct.isReturnable,
-        discount: eachProduct.discount,
-        price: eachProduct.price,
-        productId: eachProduct.productId,
-        actualPrice: eachProduct.actualPrice
-      }))
+      console.log("llllllll", formattedData1)
 
 
-      console.log("aniket shsahsaj", formattedData)
 
-      setAllProducts(formattedData)
+
       setIsLoading(false)
 
 
@@ -308,8 +292,6 @@ export default function Home() {
 
 
   const fetchSuggestions = async (searchword) => {
-
-    //
     try {
       const response = await HttpClient.get("/search/final", { search: searchword, searchType: category });
       console.log("final", response)
@@ -347,6 +329,11 @@ export default function Home() {
   const kidsProducts = allProducts.filter((item) => item.group === "kids").slice(0, 8);
   const womenProducts = allProducts.filter((item) => item.group === "women").slice(0, 8);
   const menProducts = allProducts.filter((item) => item.group === "men").slice(0, 8);
+
+  console.log("kidsProducts", kidsProducts)
+  console.log("womenProducts", womenProducts)
+
+  console.log("menProducts", menProducts)
 
 
 
@@ -437,13 +424,39 @@ export default function Home() {
                   </div>
                 </div>
 
+
+
+
               </Link> */}
+
+
+              <div class="relative flex flex-col items-center justify-center py-2 px-6 bg-gradient-to-br from-fuchsia-500 to-purple-600 overflow-hidden">
+                <div class="absolute inset-0 flex items-center justify-center space-x-48 opacity-20">
+                  <div class="w-64 h-64 rounded-full bg-pink-400 animate-float-delay-1"></div>
+                  <div class="w-80 h-80 rounded-full bg-purple-400 animate-float-delay-2"></div>
+                </div>
+
+                <h1 class="relative z-10 text-xl text-3xl md:text-5xl font-bold text-center text-white mb-2 animate-fade-in">
+                  <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-pink-100">
+                    WOMEN'S COLLECTION
+                  </span>
+                </h1>
+
+                <div class="relative z-10 w-32 h-1 bg-white/80 mt-2 animate-expand"></div>
+
+                <p class="relative z-10 text-xl md:text-2xl text-pink-100 text-center mt-2 max-w-2xl animate-typewriter whitespace-nowrap overflow-hidden">
+                  Where elegance meets confidence
+                </p>
+
+              </div>
               <div>
 
                 <section className=" hidden md:block">
 
                   <ProductCarouselmd womenProducts={womenProducts} />
                 </section>
+
+
                 <ProductGrid womenProducts={womenProducts} />
 
 
@@ -505,7 +518,25 @@ export default function Home() {
 
               </Link> */}
 
+              <div class="flex flex-col items-center justify-center py-2 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white overflow-hidden">
+                <h1 class="text-xl md:text-3xl lg:text-5xl  text-center mb-2 animate-fade-in [text-shadow:_0_0_10px_rgba(34,211,238,0.7)]">
+                  MEN'S EDGE
+                </h1>
+
+                <p class="text-xl md:text-2xl text-cyan-100 text-center max-w-2xl font-mono overflow-hidden whitespace-nowrap border-r-4 border-cyan-300 animate-typewriter">
+                  Where innovation meets style
+                </p>
+
+                <div class="flex mt-2 space-x-4">
+                  <div class="w-3 h-3 bg-white rounded-full animate-pulse-slow delay-100"></div>
+                  <div class="w-3 h-3 bg-cyan-300 rounded-full animate-pulse-slow delay-300"></div>
+                  <div class="w-3 h-3 bg-white rounded-full animate-pulse-slow delay-500"></div>
+                </div>
+
+
+              </div>
               <div>
+
 
                 <section className=" hidden md:block">
 
@@ -555,6 +586,22 @@ export default function Home() {
                   </div>
                 </div>
               </Link> */}
+
+              <div class="flex flex-col items-center justify-center py-2 px-3 bg-gradient-to-r from-pink-100 to-purple-100 overflow-hidden">
+                <h1 class="text-xl md:text-3xl lg:text-5xl font-bold text-center text-purple-800 mb-2 animate-bounce">
+                  Welcome to Our Kids' World
+                </h1>
+
+                <p class="text-lg md:text-xl text-center text-purple-600 max-w-2xl opacity-0 animate-fade-in animate-delay-300">
+                  Discover adorable outfits and accessories for your little ones!
+                </p>
+
+                <div class="flex mt-3 space-x-2">
+                  <div class="w-4 h-4 rounded-full bg-pink-400 animate-float delay-100"></div>
+                  <div class="w-4 h-4 rounded-full bg-purple-400 animate-float delay-200"></div>
+                  <div class="w-4 h-4 rounded-full bg-blue-400 animate-float delay-300"></div>
+                </div>
+              </div>
               <div>
 
 
@@ -569,7 +616,9 @@ export default function Home() {
 
             </section>
             <hr className="my-2" />
-            <section className="md:px-10 px-3 py-2 md:py-6 text-center ">
+            <BrandSlider/>
+            <CategorySlider/>
+            {/* <section className="md:px-10 px-3 py-2 md:py-6 text-center ">
               <p className="font-[Quicksand] font-medium text-[#011F4B] text-center text-lg  md:text-4xl mb-2 border-3">
                 EXPLORE TOP BRANDS
               </p>
@@ -625,7 +674,7 @@ export default function Home() {
                   </h2>
                 )}
               </div>
-            </section>
+            </section> */}
             <section className="bg-[#F6F6F6] px-5 py-5 ">
               <p className="text-center text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
                 Testimonials

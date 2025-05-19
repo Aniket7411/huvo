@@ -411,7 +411,7 @@ export default function Profile() {
       {isSeller && (
         <div
 
-          className={`flex  flex-col items-center  mx-2 ${verificationStatus
+          className={`flex  flex-col items-center  md:mt-[65px] mx-2 ${verificationStatus
             ? "bg-green-100 border border-green-500 text-green-800"
             : "bg-red-100 border border-red-500 text-red-800"
             } p-3 rounded-lg`}
@@ -595,11 +595,13 @@ export default function Profile() {
                         </label>
                         <input
                           type="date"
-                          className="w-full p-3 outline-none border border-solid border-[#CBCBCB] rounded-[12px] "
+                          className="w-full p-3 outline-none border border-solid border-[#CBCBCB] rounded-[12px]"
+                          max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split("T")[0]}
                           {...register("dob", {
                             // required: "*DOB is required.",
                           })}
                         />
+
                       </div>
                       <div>
                         <label className="block text-[#626262] font-medium mb-2 ml-2">
@@ -1036,7 +1038,7 @@ export default function Profile() {
                           />
                         </div>
                       </div>
-              
+
 
 
                     </div>
