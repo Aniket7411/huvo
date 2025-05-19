@@ -10,76 +10,87 @@ import { MdArrowOutward } from "react-icons/md";
 import Loader from "../../../components/loader";
 import ReactModal from "react-modal";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import Modal from "react-modal";
+
+
+
+const options = [
+  { id: 1, name: "Red", value: "red", colorCode: "#FF0000" },
+  { id: 2, name: "Green", value: "green", colorCode: "#008000" },
+  { id: 3, name: "Blue", value: "blue", colorCode: "#0000FF" },
+  { id: 4, name: "Yellow", value: "yellow", colorCode: "#FFFF00" },
+  { id: 5, name: "Pink", value: "pink", colorCode: "#FFC0CB" },
+  { id: 6, name: "Purple", value: "purple", colorCode: "#800080" },
+  { id: 7, name: "Orange", value: "orange", colorCode: "#FFA500" },
+  { id: 8, name: "Black", value: "black", colorCode: "#000000" },
+  { id: 9, name: "White", value: "white", colorCode: "#FFFFFF" },
+  { id: 10, name: "Grey", value: "grey", colorCode: "#808080" },
+  { id: 11, name: "Turquoise", value: "turquoise", colorCode: "#40E0D0" },
+  { id: 12, name: "Brown", value: "brown", colorCode: "#A52A2A" },
+  { id: 13, name: "Cyan", value: "cyan", colorCode: "#00FFFF" },
+  { id: 14, name: "Magenta", value: "magenta", colorCode: "#FF00FF" },
+  { id: 15, name: "Lime", value: "lime", colorCode: "#00FF00" },
+  { id: 16, name: "Beige", value: "beige", colorCode: "#F5F5DC" },
+  { id: 17, name: "Maroon", value: "maroon", colorCode: "#800000" },
+  { id: 18, name: "Navy", value: "navy", colorCode: "#000080" },
+  { id: 19, name: "Olive", value: "olive", colorCode: "#808000" },
+  { id: 20, name: "Teal", value: "teal", colorCode: "#008080" },
+  { id: 21, name: "Lavender", value: "lavender", colorCode: "#E6E6FA" },
+  { id: 22, name: "Coral", value: "coral", colorCode: "#FF7F50" },
+  { id: 23, name: "Gold", value: "gold", colorCode: "#FFD700" },
+  { id: 24, name: "Silver", value: "silver", colorCode: "#C0C0C0" },
+  { id: 25, name: "Crimson", value: "crimson", colorCode: "#DC143C" },
+  { id: 26, name: "Indigo", value: "indigo", colorCode: "#4B0082" },
+  { id: 27, name: "Violet", value: "violet", colorCode: "#EE82EE" },
+  { id: 28, name: "Salmon", value: "salmon", colorCode: "#FA8072" },
+  { id: 29, name: "Aqua", value: "aqua", colorCode: "#00FFFF" },
+  { id: 30, name: "Azure", value: "azure", colorCode: "#F0FFFF" },
+  { id: 31, name: "Bisque", value: "bisque", colorCode: "#FFE4C4" },
+  { id: 32, name: "Chocolate", value: "chocolate", colorCode: "#D2691E" },
+  { id: 33, name: "Copper", value: "copper", colorCode: "#B87333" },
+  { id: 34, name: "Emerald", value: "emerald", colorCode: "#50C878" },
+  { id: 35, name: "Fuchsia", value: "fuchsia", colorCode: "#FF00FF" },
+  { id: 36, name: "Ivory", value: "ivory", colorCode: "#FFFFF0" },
+  { id: 37, name: "Khaki", value: "khaki", colorCode: "#F0E68C" },
+  { id: 38, name: "Mint", value: "mint", colorCode: "#98FF98" },
+  { id: 39, name: "Mustard", value: "mustard", colorCode: "#FFDB58" },
+  { id: 40, name: "Peach", value: "peach", colorCode: "#FFE5B4" },
+  { id: 41, name: "Plum", value: "plum", colorCode: "#DDA0DD" },
+  { id: 42, name: "Ruby", value: "ruby", colorCode: "#E0115F" },
+  { id: 43, name: "Sapphire", value: "sapphire", colorCode: "#0F52BA" },
+  { id: 44, name: "Sky Blue", value: "sky-blue", colorCode: "#87CEEB" },
+  { id: 45, name: "Tan", value: "tan", colorCode: "#D2B48C" },
+  { id: 46, name: "Tangerine", value: "tangerine", colorCode: "#F28500" },
+  { id: 47, name: "Wine", value: "wine", colorCode: "#722F37" },
+  { id: 48, name: "Amber", value: "amber", colorCode: "#FFBF00" },
+  { id: 49, name: "Charcoal", value: "charcoal", colorCode: "#36454F" },
+  { id: 50, name: "Denim", value: "denim", colorCode: "#1560BD" },
+  { id: 51, name: "Eggplant", value: "eggplant", colorCode: "#614051" },
+  { id: 52, name: "Jade", value: "jade", colorCode: "#00A86B" },
+  { id: 53, name: "Lilac", value: "lilac", colorCode: "#C8A2C8" },
+  { id: 54, name: "Pearl", value: "pearl", colorCode: "#EAE0C8" },
+  { id: 55, name: "Rust", value: "rust", colorCode: "#B7410E" },
+  { id: 56, name: "Sand", value: "sand", colorCode: "#C2B280" },
+  { id: 57, name: "Sea Green", value: "sea-green", colorCode: "#2E8B57" },
+  { id: 58, name: "Slate", value: "slate", colorCode: "#708090" },
+  { id: 59, name: "Snow", value: "snow", colorCode: "#FFFAFA" },
+  { id: 60, name: "Steel Blue", value: "steel-blue", colorCode: "#4682B4" }
+];
 
 function ProductAddPage() {
+
+  const [responseData, setResponseData] = useState([])
+
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const closeModal = () => setIsModalOpen(false);
 
   const [verifyModal, setVerifyModal] = useState(false)
 
   const [totalProductCost, setTotalProductCost] = useState(null)
 
 
-  const options = [
-    { id: 1, name: "Red", value: "red", colorCode: "#FF0000" },
-    { id: 2, name: "Green", value: "green", colorCode: "#008000" },
-    { id: 3, name: "Blue", value: "blue", colorCode: "#0000FF" },
-    { id: 4, name: "Yellow", value: "yellow", colorCode: "#FFFF00" },
-    { id: 5, name: "Pink", value: "pink", colorCode: "#FFC0CB" },
-    { id: 6, name: "Purple", value: "purple", colorCode: "#800080" },
-    { id: 7, name: "Orange", value: "orange", colorCode: "#FFA500" },
-    { id: 8, name: "Black", value: "black", colorCode: "#000000" },
-    { id: 9, name: "White", value: "white", colorCode: "#FFFFFF" },
-    { id: 10, name: "Grey", value: "grey", colorCode: "#808080" },
-    { id: 11, name: "Turquoise", value: "turquoise", colorCode: "#40E0D0" },
-    { id: 12, name: "Brown", value: "brown", colorCode: "#A52A2A" },
-    { id: 13, name: "Cyan", value: "cyan", colorCode: "#00FFFF" },
-    { id: 14, name: "Magenta", value: "magenta", colorCode: "#FF00FF" },
-    { id: 15, name: "Lime", value: "lime", colorCode: "#00FF00" },
-    { id: 16, name: "Beige", value: "beige", colorCode: "#F5F5DC" },
-    { id: 17, name: "Maroon", value: "maroon", colorCode: "#800000" },
-    { id: 18, name: "Navy", value: "navy", colorCode: "#000080" },
-    { id: 19, name: "Olive", value: "olive", colorCode: "#808000" },
-    { id: 20, name: "Teal", value: "teal", colorCode: "#008080" },
-    { id: 21, name: "Lavender", value: "lavender", colorCode: "#E6E6FA" },
-    { id: 22, name: "Coral", value: "coral", colorCode: "#FF7F50" },
-    { id: 23, name: "Gold", value: "gold", colorCode: "#FFD700" },
-    { id: 24, name: "Silver", value: "silver", colorCode: "#C0C0C0" },
-    { id: 25, name: "Crimson", value: "crimson", colorCode: "#DC143C" },
-    { id: 26, name: "Indigo", value: "indigo", colorCode: "#4B0082" },
-    { id: 27, name: "Violet", value: "violet", colorCode: "#EE82EE" },
-    { id: 28, name: "Salmon", value: "salmon", colorCode: "#FA8072" },
-    { id: 29, name: "Aqua", value: "aqua", colorCode: "#00FFFF" },
-    { id: 30, name: "Azure", value: "azure", colorCode: "#F0FFFF" },
-    { id: 31, name: "Bisque", value: "bisque", colorCode: "#FFE4C4" },
-    { id: 32, name: "Chocolate", value: "chocolate", colorCode: "#D2691E" },
-    { id: 33, name: "Copper", value: "copper", colorCode: "#B87333" },
-    { id: 34, name: "Emerald", value: "emerald", colorCode: "#50C878" },
-    { id: 35, name: "Fuchsia", value: "fuchsia", colorCode: "#FF00FF" },
-    { id: 36, name: "Ivory", value: "ivory", colorCode: "#FFFFF0" },
-    { id: 37, name: "Khaki", value: "khaki", colorCode: "#F0E68C" },
-    { id: 38, name: "Mint", value: "mint", colorCode: "#98FF98" },
-    { id: 39, name: "Mustard", value: "mustard", colorCode: "#FFDB58" },
-    { id: 40, name: "Peach", value: "peach", colorCode: "#FFE5B4" },
-    { id: 41, name: "Plum", value: "plum", colorCode: "#DDA0DD" },
-    { id: 42, name: "Ruby", value: "ruby", colorCode: "#E0115F" },
-    { id: 43, name: "Sapphire", value: "sapphire", colorCode: "#0F52BA" },
-    { id: 44, name: "Sky Blue", value: "sky-blue", colorCode: "#87CEEB" },
-    { id: 45, name: "Tan", value: "tan", colorCode: "#D2B48C" },
-    { id: 46, name: "Tangerine", value: "tangerine", colorCode: "#F28500" },
-    { id: 47, name: "Wine", value: "wine", colorCode: "#722F37" },
-    { id: 48, name: "Amber", value: "amber", colorCode: "#FFBF00" },
-    { id: 49, name: "Charcoal", value: "charcoal", colorCode: "#36454F" },
-    { id: 50, name: "Denim", value: "denim", colorCode: "#1560BD" },
-    { id: 51, name: "Eggplant", value: "eggplant", colorCode: "#614051" },
-    { id: 52, name: "Jade", value: "jade", colorCode: "#00A86B" },
-    { id: 53, name: "Lilac", value: "lilac", colorCode: "#C8A2C8" },
-    { id: 54, name: "Pearl", value: "pearl", colorCode: "#EAE0C8" },
-    { id: 55, name: "Rust", value: "rust", colorCode: "#B7410E" },
-    { id: 56, name: "Sand", value: "sand", colorCode: "#C2B280" },
-    { id: 57, name: "Sea Green", value: "sea-green", colorCode: "#2E8B57" },
-    { id: 58, name: "Slate", value: "slate", colorCode: "#708090" },
-    { id: 59, name: "Snow", value: "snow", colorCode: "#FFFAFA" },
-    { id: 60, name: "Steel Blue", value: "steel-blue", colorCode: "#4682B4" }
-  ];
 
   const [isLoading, setIsloading] = useState(false)
 
@@ -177,7 +188,17 @@ function ProductAddPage() {
 
         // Send API request
         const response = await HttpClient.post("/product", productInfo);
-        console.log("API Response:", response);
+        console.log("API:", response);
+        setResponseData(response)
+
+        console.log("API", response)
+
+        setIsModalOpen(true)
+
+
+
+
+
 
         // Handle success
         setIsloading(false); // Reset loading state
@@ -371,7 +392,7 @@ function ProductAddPage() {
             >
               Product Details
             </label>
-            {productDetails.map((text, index) => (
+            {productDetails?.map((text, index) => (
               <div key={index} className="flex items-center mb-2">
                 <input
                   type="text"
@@ -461,13 +482,13 @@ function ProductAddPage() {
               <option defaultValue disabled>
                 Select Category
               </option>
-              {allCategories.map((category, i) => (
+              {allCategories?.map((category, i) => (
                 <option value={category?._id} key={i}>
                   {category?.name}
                 </option>
               ))}
             </select>
-            {errors.category && (
+            {errors?.category && (
               <span className="text-red-500">{errors.category.message}</span>
             )}
           </div>
@@ -487,7 +508,7 @@ function ProductAddPage() {
                   {/* Numeric Sizes Group */}
                   <div>
                     <h4 className="font-medium">Numeric Sizes (7, 8, 9, 10):</h4>
-                    {["7", "8", "9", "10"].map((size) => (
+                    {["7", "8", "9", "10"]?.map((size) => (
                       <div key={size} className="flex flex-wrap items-center gap-4 mb-2">
                         <label className="flex items-center gap-2">
                           <input
@@ -604,7 +625,7 @@ function ProductAddPage() {
               <option defaultValue disabled>
                 Select Brand
               </option>
-              {allBrands.map((brand, i) => (
+              {allBrands?.map((brand, i) => (
                 <option value={brand?._id} key={i}>
                   {brand?.name}
                 </option>
@@ -765,7 +786,7 @@ function ProductAddPage() {
               Colors
             </label>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-3">
-              {colorWithImages.map((item, i) => {
+              {colorWithImages?.map((item, i) => {
                 return (
                   <div key={i}>
                     <label
@@ -780,9 +801,9 @@ function ProductAddPage() {
                         value={item.colorCode} // Bind the current colorCode value
                         onChange={(e) => handleColorChange(e.target.value, i)} // Pass the selected value and index
                       >
-                        {options.map((option) => (
-                          <option key={option.id} value={option.colorCode}>
-                            {option.name}
+                        {options?.map((option) => (
+                          <option key={option?.id} value={option?.colorCode}>
+                            {option?.name}
                           </option>
                         ))}
                       </select>
@@ -805,7 +826,7 @@ function ProductAddPage() {
                       </button>
 
                     </div>
-                    {item?.images.map((url, index) => (
+                    {item?.images?.map((url, index) => (
                       <div key={index} className="flex items-center mb-2">
                         {url && (
                           <img
@@ -965,6 +986,154 @@ function ProductAddPage() {
 
         </form>
       </div>
+
+
+    <Modal
+  isOpen={isModalOpen}
+  onRequestClose={closeModal}
+  contentLabel="Product Details Modal"
+  className="bg-white max-w-3xl w-full mx-auto p-6 rounded-2xl shadow-lg flex flex-col outline-none"
+  overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50"
+>
+  <div className="flex flex-col h-full">
+    <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Product Added Successfully!</h2>
+    
+    <div className="flex flex-col md:flex-row gap-6 overflow-auto flex-grow">
+      {/* Left Column - Product Image */}
+      <div className="md:w-1/3 flex flex-col items-center">
+        <img 
+          src={responseData?.bannerImage} 
+          className="w-full h-auto max-h-64 object-contain rounded-lg border border-gray-200" 
+          alt="Product" 
+        />
+        <div className="mt-4 w-full">
+          <h3 className="font-semibold text-lg">{responseData?.name || "N/A"}</h3>
+          <p className="text-gray-600 text-sm">{responseData?.description || "No description"}</p>
+        </div>
+      </div>
+
+      {/* Right Column - Details */}
+      <div className="md:w-2/3 space-y-4">
+        {/* Pricing Section */}
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h4 className="font-medium text-gray-700 mb-3">Pricing Details</h4>
+          <div className="grid grid-cols-2 gap-3 text-sm">
+            <div>
+              <span className="text-gray-500">Initial Price:</span>
+              <span className="font-medium ml-2">₹{responseData?.labelPrice}</span>
+            </div>
+            <div>
+              <span className="text-gray-500">Discount:</span>
+              <span className="text-green-600 font-medium ml-2">
+                ₹{responseData?.discount || "0.00"}
+              </span>
+            </div>
+            <div>
+              <span className="text-gray-500">GST:</span>
+              <span className="font-medium ml-2">
+                ₹{(responseData?.cgst || 0) + (responseData?.sgst || 0)}
+              </span>
+            </div>
+            <div>
+              <span className="text-gray-500">Platform Fee:</span>
+              <span className="font-medium ml-2">₹{responseData?.platformCharge || "0.00"}</span>
+            </div>
+            <div className="col-span-2 pt-2 border-t border-gray-200">
+              <span className="text-gray-500">Final Price:</span>
+              <span className="font-bold text-lg ml-2">₹{responseData?.price || "0.00"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Product Info Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <h4 className="font-medium text-gray-700 mb-2">Product ID</h4>
+            <div className="bg-gray-100 px-3 py-2 rounded text-sm">
+              {responseData?.productId || "N/A"}
+            </div>
+          </div>
+          
+          <div>
+            <h4 className="font-medium text-gray-700 mb-2">Return Policy</h4>
+            <div className={`px-3 py-2 rounded text-sm ${responseData?.isReturnable ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+              {responseData?.isReturnable ? "Returnable" : "Non-returnable"}
+            </div>
+          </div>
+        </div>
+
+        {/* Colors Section */}
+        <div>
+          <h4 className="font-medium text-gray-700 mb-2">Colors</h4>
+          {responseData?.colors?.length ? (
+            <div className="flex flex-wrap gap-3">
+              {responseData.colors.map((color, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <div
+                    className="w-5 h-5 rounded-full border border-gray-300"
+                    style={{ backgroundColor: color?.colorCode || "#000" }}
+                  />
+                  {color?.images?.[0] && (
+                    <a
+                      href={color.images[0]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 text-sm underline"
+                    >
+                      View Image
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-gray-500 text-sm">No colors specified</div>
+          )}
+        </div>
+
+        {/* Sizes Section */}
+        <div>
+          <h4 className="font-medium text-gray-700 mb-2">Sizes & Stock</h4>
+          {responseData?.sizes?.length ? (
+            <div className="flex flex-wrap gap-2">
+              {responseData.sizes.map((size, index) => (
+                <div 
+                  key={index} 
+                  className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center"
+                >
+                  <span className="font-medium">{size.size}</span>
+                  <span className="text-gray-500 ml-1">({size.stock || "0"})</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-gray-500 text-sm">No sizes specified</div>
+          )}
+        </div>
+
+        {/* Material Section */}
+        {responseData?.materialAndCare && (
+          <div>
+            <h4 className="font-medium text-gray-700 mb-2">Material & Care</h4>
+            <p className="text-sm bg-gray-50 p-3 rounded">{responseData.materialAndCare}</p>
+          </div>
+        )}
+      </div>
+    </div>
+
+    {/* Footer with Button */}
+    <div className="mt-6 pt-4 border-t border-gray-200 flex justify-end">
+
+      
+      <button
+        onClick={closeModal}
+        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+      >
+        Close or Add Another Product
+      </button>
+    </div>
+  </div>
+</Modal>
     </div>
   );
 }

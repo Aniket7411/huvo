@@ -5,8 +5,10 @@ import { Link } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import { PiCurrencyInr } from "react-icons/pi";
 import { CiDiscount1, CiDeliveryTruck } from "react-icons/ci";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaStar } from "react-icons/fa";
 import Loader from "../../components/loader"; // Import the Loader component
+import ProductsShowingComponent from "../filterproductComponent";
+import { MdDelete } from "react-icons/md";
 
 export default function WishList() {
   const [products, setProducts] = useState([]);
@@ -17,7 +19,7 @@ export default function WishList() {
     try {
       const { data } = await HttpClient.get("/wishlist");
 
-      console.log("formattedDat", data)
+      console.log("formattedDatsssssss", data)
       const formattedData = data.map((item) => ({
         bannerImage: item.bannerImage || "https://via.placeholder.com/300",
         color: item.color,
@@ -31,7 +33,7 @@ export default function WishList() {
       }));
       setProducts(formattedData);
 
-      console.log("formattedDatawishlist", formattedData)
+      console.log("formattedDatawishlist", products)
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message || "Failed to fetch wishlist");
@@ -41,6 +43,8 @@ export default function WishList() {
   };
 
   const removeProductFromWishlist = async (productId) => {
+
+    console.log("jjjjj", productId)
     try {
       const { message } = await HttpClient.delete(`/wishlist/${productId}`);
       toast.success(message);
@@ -70,115 +74,194 @@ export default function WishList() {
   }, []);
 
   return (
-    <section className="px-4 sm:px-6 lg:px-8 py-6 font-[Quicksand]">
+    <section className="px-4 sm:px-6 lg:px-8 py-4 font-[Quicksand]">
       {isLoading ? ( // Show loader if data is being fetched
         <div className="flex items-center justify-center h-[60vh]">
           <Loader />
         </div>
       ) : products.length ? ( // Show wishlist if data is loaded
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-[#282c3f] mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-[#282c3f] mb-2">
             My Wishlist{" "}
             <span className="font-normal">({products.length} items)</span>
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {products.map((product) => (
-              <div
-                key={product.objectID}
-                className="bg-white flex flex-col items-center rounded-2xl p-3 shadow-lg border border-gray-200 w-full hover:shadow-xl transition-shadow duration-300"
-              >
-                {/* Remove from Wishlist Button */}
-                <button
-                  className="self-end p-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
-                  onClick={() => removeProductFromWishlist(product.objectID)}
-                  aria-label="Remove from wishlist"
-                >
-                  <RxCross2 className="text-lg" />
-                </button>
 
-                {/* Product Image */}
-                <img
-                  src={product.bannerImage}
-                  alt={product.name}
-                  className="h-40 w-40 object-cover rounded-md mb-2"
-                  loading="lazy"
-                  onError={(e) => {
-                    e.target.src = "https://via.placeholder.com/300";
-                  }}
-                />
 
-                {/* Product Name */}
-                <h1 className="text-black font-bold text-xl mb-2 text-center">
-                  {product.name}
-                </h1>
+          {/* small screen */}
 
-                {/* Rating and Orders */}
-                <div className="flex items-center gap-4 text-gray-700 mb-2">
-                  <p className="flex items-center text-sm font-semibold">
-                    <span className="text-yellow-500 mr-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
-                      >
-                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                      </svg>
-                    </span>
-                    Rating: 4.5 / 5
-                  </p>
+          <div className="flex md:hidden flex-wrap  items-center gap-1">
+
+            {
+              products && products.length > 0 ? (
+                products.map((eachProduct, i) => (
+                  <div key={i} className="w-[49%] bg-[#fff] py-2 rounded-lg flex flex-col shadow-md ">
+                    <img
+                      src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
+                      alt={eachProduct?.name || "Product Image"}
+                      className="h-[150px] object-cover"
+                      loading="lazy"
+                    />
+                    <div className="px-3">
+                      <h1 className="text-[blue] font-semibold text-sm mt-2 line-clamp-2 mb-1">
+                        {eachProduct?.name ? eachProduct.name.slice(0, 15) : "Product Name"}
+                      </h1>
+                      {/* Stars */}
+                      <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
+                        <div className="flex text-yellow-500">
+                          {[...Array(5)].map((_, index) => (
+                            <FaStar key={index} className="w-4 h-4" />
+                          ))}
+                        </div>
+                        <span className="text-xs text-gray-500">(New)</span>
+                      </div>
+                      {/* Pricing */}
+                      <div className="flex gap-3 items-center text-sm mb-1">
+                        <p className=" font-medium ">{eachProduct?.size || "N/A"}</p>
+                        <div className="flex items-center gap-1 text-green-600">
+                          <PiCurrencyInr />
+                          <p className="font-medium">{eachProduct?.price || "N/A"}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between w-full">
+                        {/* View Button */}
+                        <Link to={`/product-details/${eachProduct?.productId}`}>
+                          <button className="bg-blue-600 text-white px-2 py-1 rounded-md flex items-center gap-1 sm:gap-2 text-xs sm:text-sm hover:bg-blue-700 transition-all">
+                            View <FaArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
+                          </button>
+                        </Link>
+
+
+                        {/* Delete Button */}
+                        <button
+                          className="ml-2 bg-red-600 text-white px-2 py-1 rounded-md text-xs sm:text-sm hover:bg-red-700 transition-all"
+                          onClick={() => removeProductFromWishlist(eachProduct?.objectID)}
+                          aria-label="Remove from wishlist"
+                        >
+                          Delete
+                        </button>
+                      </div>
+
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center w-full text-gray-500 mt-4">
+                  No products available.
                 </div>
+              )
+            }
 
-                {/* Price Details */}
-                <div className="flex justify-between w-full items-center mb-1">
-                  {/* Original Price */}
-                  <div className="flex items-center gap-1">
-                    <PiCurrencyInr className="text-red-600" />
-                    <p className="line-through text-red-600 font-semibold">
-                      {product.price}
-                    </p>
-                  </div>
 
-                  {/* Discount Price */}
-                  <div className="flex items-center gap-1">
-                    <CiDiscount1 className="text-green-600" />
-                    <PiCurrencyInr className="text-green-600" />
-                    <p className="font-semibold text-green-600">
-                      {product.discount}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Final Price and Delivery */}
-                <div className="flex justify-between items-center w-full mb-2">
-                  <div className="flex items-center text-green-600 gap-1">
-                    <PiCurrencyInr />
-                    <p className="font-semibold">
-                      {product.price - product.discount} /-
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <CiDeliveryTruck />
-                    {/* <p className="font-semibold items-end">Free delivery</p> */}
-                  </div>
-                </div>
-
-                {/* Move to Cart Button */}
-
-                <Link to={`/product-details/${product.productId}`}>
-                <button
-                    className="flex items-center justify-center bg-[#011F4B] text-white px-3 py-2 rounded-lg text-md hover:bg-[#02386e] transition-colors duration-200 w-full"
-                    aria-label="Product details"
-                  >
-                      Product Details
-                    <FaArrowRight className="ml-2" />
-                  </button>
-                </Link>
-              </div>
-            ))}
           </div>
+
+
+
+
+          {/* large screen */}
+
+
+          <div className=" hidden md:flex flex-wrap items-center p-2 justify-start gap-4">
+            {products && products.length > 0 ? (
+              products.map((eachProduct, i) => (
+                <div
+                  key={i}
+                  className="bg-white flex flex-col h-auto rounded-xl p-3 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300
+                           w-full sm:w-[48%]  md:w-1/3 lg:w-1/5 xl:w-[23%] 2xl:w-[18%]"
+                >
+                  {/* Product Image */}
+                  <div className="w-full overflow-hidden rounded-md flex items-center justify-center">
+                    <img
+                      src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
+                      alt={eachProduct?.name || "Product Image"}
+                      className="h-[220px] w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  {/* Product Name */}
+                  <h1 className="text-black font-semibold text-lg line-clamp-2 mb-1">
+                    {eachProduct?.name || "Product Name"}
+                  </h1>
+
+                  <div className="flex justify-between">
+                    {/* Stars */}
+                    <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
+                      <div className="flex text-yellow-500">
+                        {[...Array(5)].map((_, index) => (
+                          <FaStar key={index} className="w-4 h-4" />
+                        ))}
+                      </div>
+                      <span className="text-xs text-gray-500">(New)</span>
+                    </div>
+
+                    {/* Brand */}
+                    <p className="text-gray-600 text-sm mb-1">
+                      {eachProduct?.brandName || "Unknown Brand"}
+                    </p>
+                  </div>
+
+                  {/* Pricing */}
+                  <div className="flex justify-between items-center text-sm mb-1">
+                    <div className="flex items-center gap-1 text-red-600">
+                     
+                      <p className=" font-medium">{eachProduct?.size || "N/A"}</p>
+                    </div>
+                    <div className="flex items-center gap-1 text-green-600">
+                      <CiDiscount1 />
+                      <PiCurrencyInr />
+                      <p className="font-medium">
+                        {eachProduct?.actualPrice && eachProduct?.price
+                          ? eachProduct.actualPrice - eachProduct.price
+                          : "N/A"}{" "}
+                        off
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Final Price */}
+                  <div className="flex justify-between items-center text-lg font-bold text-gray-800 mb-1">
+                    <div className="flex items-center">
+                      <PiCurrencyInr />
+                      <span>{eachProduct?.price || "N/A"}/-</span>
+                    </div>
+                  </div>
+
+
+                  <div className="flex justify-between items-center ">
+                    {/* View Product Button */}
+                    <Link
+                      to={`/product-details/${eachProduct?.productId}`}
+                      className="w-full"
+                    >
+                      <button
+                        className="w-auto flex items-center justify-center bg-blue-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-700 transition-all duration-300"
+                        aria-label={`View details of ${eachProduct?.name || "the product"}`}
+                      >
+                        View Product <FaArrowRight className="ml-2" />
+                      </button>
+                    </Link>
+
+                    {/* Remove from Wishlist Button */}
+                    <button
+                      onClick={() => removeProductFromWishlist(eachProduct?.objectID)}
+                      className="w-auto flex items-center justify-center bg-blue-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-700 transition-all duration-300"
+                      aria-label="Remove product from wishlist"
+                    >
+                      Remove 
+                    </button>
+
+
+                  </div>
+
+                </div>
+              ))
+            ) : (
+              <div className="text-center w-full text-gray-500 mt-4">
+                No products available.
+              </div>
+            )}
+          </div>
+
         </div>
       ) : ( // Show empty state if no products are found
         <div className="flex flex-col items-center justify-center text-center py-10">

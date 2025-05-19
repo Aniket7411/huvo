@@ -164,7 +164,7 @@ export default function Header(props) {
 
   const localStoredCartCount = Object.keys(JSON.parse(localStorage.getItem("cart"))).length;
 
-  console.log("localStoredCartCount",localStoredCartCount)
+  console.log("localStoredCartCount", localStoredCartCount)
 
 
   console.log("loginStatusloginStatusloginStatusloginStatus", loginStatus)
@@ -476,7 +476,7 @@ export default function Header(props) {
         <div className="flex items-center  gap-3 ">
           <IoReorderThree
             size={38}
-            className="text-3xl cursor-pointer "
+            className="text-3xl cursor-pointer text-[#fff] "
             onClick={() => openSubmenu()}
           />
           <img
@@ -504,7 +504,7 @@ export default function Header(props) {
           >
             <FiHeart size={25} className="text-xl cursor-pointer hover:scale-110 transition duration-200" />
             {wishListItems > 0 && (
-              <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full shadow">
+              <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#007bff] text-white text-xs font-bold rounded-full shadow">
                 {wishListItems}
               </span>
             )}
@@ -539,16 +539,51 @@ export default function Header(props) {
             }
 
 
+            {
+              loginStatus === 0 ? <>
+                {Object?.keys(localCount).length > 0 && (
+                  <span className="absolute top-0 right-0 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
+                    {Object?.keys(localCount).length}
+                  </span>
+                )}</> : <>
+                {Object?.keys(cart).length > 0 && (
+                  <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#007bff] text-white text-xs font-bold rounded-full shadow  ">
+                    {Object?.keys(cart).length}
+                  </span>
+                )}</>
+            }
+
+
+            {/* Cart Item Count */}
+            {Object.keys(cart).length > 0 && (
+              <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#007bff] text-white text-xs font-bold rounded-full shadow">
+                {Object.keys(cart).length}
+              </span>
+            )}
+          
 
 
           </button>
 
           {/* User Profile Button */}
 
-
           {
-            isLoggedIn() ? <Link to="/profile"><FaRegUser size={25} /></Link> : <Link to="/login"> Login </Link>
+            isLoggedIn() ? (
+              <Link to="/profile">
+                <button className="px-2 py-1 text-[#000] rounded-lg  transition duration-300 ease-in-out flex items-center">
+                  <FaRegUser size={23} />
+
+                </button>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <button className="px-2 py-1 text-[#000] rounded-lg  transition duration-300 ease-in-out">
+                  Login
+                </button>
+              </Link>
+            )
           }
+
         </div>
       </div>
 

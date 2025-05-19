@@ -131,7 +131,7 @@ const Orders = () => {
 
   console.log("allOrdersallOrdersallOrders", allOrders)
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white md:p-8">
+    <div className="min-h-screen  md:p-8">
       {
         isLoading ? <div className="flex justify-center h-screen items-center">
           <Loader />

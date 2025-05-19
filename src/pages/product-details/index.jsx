@@ -399,7 +399,7 @@ export default function ProductDetails() {
                         </span>
                       ))
                     ) : (
-                      <p className="text-gray-500">No sizes available</p>
+                      <p className="text-gray-500">No sizes available (Out of stock)</p>
                     )}
                   </div>
                 </div>
