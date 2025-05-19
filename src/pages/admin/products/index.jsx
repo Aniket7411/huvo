@@ -336,39 +336,39 @@ function ProductList() {
 
 
 
-      <div className="flex justify-between items-center flex-wrap  p-3 space-y-4 sm:space-y-0">
-      {/* Search Section */}
-      <div className="flex items-center bg-white rounded-lg shadow-md p-2 w-full sm:w-auto">
-        <button className="p-2 hover:bg-gray-100 rounded-full transition">
-          <CiSearch className="text-gray-600 text-xl" />
-        </button>
-        <input
-          onChange={handleKeywordSearch}
-          type="search"
-          placeholder="Search"
-          className="border-0 w-full text-gray-800 text-sm px-1 outline-none placeholder-gray-400"
-        />
-      </div>
+        <div className="flex justify-between items-center flex-wrap  p-3 space-y-4 sm:space-y-0">
+          {/* Search Section */}
+          <div className="flex items-center bg-white rounded-lg shadow-md p-2 w-full sm:w-auto">
+            <button className="p-2 hover:bg-gray-100 rounded-full transition">
+              <CiSearch className="text-gray-600 text-xl" />
+            </button>
+            <input
+              onChange={handleKeywordSearch}
+              type="search"
+              placeholder="Search"
+              className="border-0 w-full text-gray-800 text-sm px-1 outline-none placeholder-gray-400"
+            />
+          </div>
 
-      {/* Title */}
-      <h1 className="font-[Poppins] text-black text-2xl font-semibold sm:font-medium sm:text-lg w-full sm:w-auto text-center sm:text-left">
-        All listed Products
-      </h1>
+          {/* Title */}
+          <h1 className="font-[Poppins] text-black text-2xl font-semibold sm:font-medium sm:text-lg w-full sm:w-auto text-center sm:text-left">
+            All listed Products
+          </h1>
 
-      {/* Add Product Button */}
+          {/* Add Product Button */}
 
-      <div className="flex items-center gap-2">
-  <Link
-    to="/seller/products/add"
-    className="flex items-center gap-2 bg-[#011F4B] text-white px-4 py-2 rounded-md  transition"
-  >
-    <IoAddCircleOutline className="text-xl" />
-    <span className="text-sm font-medium">Add Product</span>
-  </Link>
-</div>
+          <div className="flex items-center gap-2">
+            <Link
+              to="/seller/products/add"
+              className="flex items-center gap-2 bg-[#011F4B] text-white px-4 py-2 rounded-md  transition"
+            >
+              <IoAddCircleOutline className="text-xl" />
+              <span className="text-sm font-medium">Add Product</span>
+            </Link>
+          </div>
 
-    
-    </div>
+
+        </div>
         <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded lg:hidden ml-3 sm:block" onClick={openModal} >
           Filter
         </button>
@@ -456,10 +456,10 @@ function ProductList() {
                                 <button
                                   className="hover:text-primary hover:text-[red]"
                                   onClick={() => deleteProduct(item?.productId)}
-                                >        
-                                                        <MdDelete size={30} />
+                                >
+                                  <MdDelete size={30} />
 
-                                
+
                                 </button>
                               </div>
                             </td>
@@ -520,16 +520,16 @@ function ProductList() {
                 <RiArrowDownSLine className="w-10" />
               </div>
               <div className="flex items-center p-2 mr-2 ml-4 border border-[#CED4DA] rounded-md mt-3">
-  <CiSearch className="text-[#000000] mr-2" />
-  <input
-    type="search"
-    placeholder="Search product"
-    className="w-full border-none focus:ring-0 focus:outline-none"
-    onChange={handleKeywordSearch}
-    value={KeywordSearch}
-  />
+                <CiSearch className="text-[#000000] mr-2" />
+                <input
+                  type="search"
+                  placeholder="Search product"
+                  className="w-full border-none focus:ring-0 focus:outline-none"
+                  onChange={handleKeywordSearch}
+                  value={KeywordSearch}
+                />
 
-</div>
+              </div>
 
             </div>
             <div className="border rounded-md shadow-lg py-5 mb-3">

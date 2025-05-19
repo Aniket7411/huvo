@@ -230,7 +230,7 @@ export default function Superadminheader() {
 
               <hr className=" bg-gray-500 mx-10 my-4"></hr>
             </div>
-            <div className="px-1 sidebarSubDiv overflow-y-auto">
+              <div className="px-1 sidebarSubDiv overflow-y-auto">
               <ul className="px-5 font-[Poppins] text-[#000000] font-normal hover:text-#FFFFFF">
                 <li>
                   <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full  transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
@@ -256,6 +256,38 @@ export default function Superadminheader() {
                           <BsReceipt size={21} className="icon" />
                         </div>
                         Vendors/Seller
+                      </button>
+                      <IoIosArrowRoundForward className="opacity-60" />
+                    </Link>
+                  </div>
+                </li>
+                  <li>
+                  <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
+                    <Link
+                      to="/manage_admin"
+                      className="flex items-center gap-2"
+                    >
+                      <button className="flex justify-center items-center gap-4  p-2">
+                        <div className="p-2 iconDiv">
+                          <BsReceipt size={21} className="icon" />
+                        </div>
+                      Manage Admin
+                      </button>
+                      <IoIosArrowRoundForward className="opacity-60" />
+                    </Link>
+                  </div>
+                </li>
+                <li>
+                  <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
+                    <Link
+                      to="/admin/approval"
+                      className="flex items-center gap-2"
+                    >
+                      <button className="flex justify-center items-center gap-4  p-2">
+                        <div className="p-2 iconDiv">
+                          <BsReceipt size={21} className="icon" />
+                        </div>
+                      Approval Requests
                       </button>
                       <IoIosArrowRoundForward className="opacity-60" />
                     </Link>

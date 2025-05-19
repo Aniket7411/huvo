@@ -24,6 +24,7 @@ import { CiSearch } from "react-icons/ci";
 import CategorySlider from "../categoryslider";
 import ProductGrid from "../mobileviewproduct";
 import BrandSlider from "../brands";
+import TrendingHeader from "../brandheadingcomponents";
 
 
 const testimonials = [
@@ -455,16 +456,9 @@ export default function Home() {
               <hr className="my-2" />
 
 
-              {/* Heading Section with Animation */}
-              <div className="mb-2 animate-fade-in-up">
+         
 
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2 leading-tight">
-                  Trusted by <span className="text-blue-600">Leading Brands</span>
-                </h2>
-                <p className="text-xl text-gray-600  mx-auto">
-                  We collaborate with visionary companies to create impactful solutions that drive success.
-                </p>
-              </div>
+              <TrendingHeader category =  "All"/>
               <BrandSlider />
 
 
