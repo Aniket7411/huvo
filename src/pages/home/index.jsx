@@ -143,26 +143,37 @@ export default function Home() {
     setIsLoading(true)
     try {
       const response = await HttpClient.get("/product");
-      setAllProducts(response?.products);
 
-      console.log("hhhhhh", response?.products)
-
-      console.log("hhhhhh", response?.products[0]?.brand?.name)
+      console.log("llllllll", response?.products)
 
 
-      console.log("k", response?.products)
+      const formattedData1 = response?.product((eachProduct) => ({
+        bannerImage: eachProduct?.bannerImage,
+        brandName: eachProduct?.brand?.name,
+        productName: eachProduct?.name,
+        price: eachProduct?.price,
+        discount: eachProduct?.discount,
+        group: eachProduct?.group[0].name,
+        productDetails: eachProduct.productDetails[0],
+        totalRating: eachProduct?.totalRating,
+        productId: eachProduct.productId,
+        isReturnable: eachProduct.isReturnable,
+        onGoingOffer: eachProduct.brand.onGoingOffer,
 
-      const k = response.products.map((each) => ({
-        brand: each?.brand?.name,
+
+
       }))
 
-      console.log("k", k)
+      setAllProducts(formattedData1)
+
+
+      console.log("formattedData1formattedData1", formattedData1)
 
       const formattedData = response.products.map((eachProduct) => ({
         objectId: eachProduct._id,
         bannerImage: eachProduct.bannerImage,
         productName: eachProduct.name,
-        brandName:  eachProduct?.brand?.name,
+
         brandImage: eachProduct.brand.image,
         onGoingOffer: eachProduct.brand.onGoingOffer,
         brandId: eachProduct.brand.brandId,
@@ -178,8 +189,10 @@ export default function Home() {
         actualPrice: eachProduct.actualPrice
       }))
 
-      console.log("fffff", formattedData)
-      setTrendingProducts(formattedData)
+
+      console.log("aniket shsahsaj", formattedData)
+
+      setAllProducts(formattedData)
       setIsLoading(false)
 
 
@@ -189,23 +202,11 @@ export default function Home() {
     }
   };
 
-  const geTopProducts = async () => {
-    try {
-      const response = await HttpClient.get("/product/trending/top")
-    } catch (error) {
-      console.error(error);
-      toast.error(error?.response?.data?.message);
-    }
-
-  }
 
 
   useEffect(() => {
     const dataShift = async () => {
       const localData = JSON.parse(localStorage?.getItem("cart"));
-
-
-
       console.log("localDatalocalData:", localData);
       if (!localData || typeof localData !== "object" || Object.keys(localData).length === 0) {
         console.error("No valid cart data found in localStorage.");
@@ -229,11 +230,6 @@ export default function Home() {
 
 
         // Calculate total price including platform fee and taxes
-
-
-
-
-
         acc[key] = {
           color: item?.color || "N/A",
           price,
@@ -306,7 +302,6 @@ export default function Home() {
     fetchAllProducts();
     getAllBrands();
     getAllCategories();
-    geTopProducts();
 
 
   }, []);
@@ -347,7 +342,7 @@ export default function Home() {
   };
 
 
-  console.log("fffff", allProducts)
+  console.log("fffffk", allProducts)
 
   const kidsProducts = allProducts.filter((item) => item.group === "kids").slice(0, 8);
   const womenProducts = allProducts.filter((item) => item.group === "women").slice(0, 8);
@@ -365,7 +360,7 @@ export default function Home() {
           <section>
 
             <div
-              className="bg-gradient-to-r  from-blue-500 via-blue-600 to-blue-700 text-white text-center py-2 md:py-6 shadow-lg"
+              className="bg-gradient-to-r -mt-4  from-blue-500 via-blue-600 to-blue-700 text-white text-center py-2 md:py-6 shadow-lg"
 
             >
               <div className="flex justify-center items-center h-[100px] px-2  md:h-[250px]  space-x-3 animate-pulse">
@@ -456,9 +451,9 @@ export default function Home() {
               <hr className="my-2" />
 
 
-         
 
-              <TrendingHeader category =  "All"/>
+
+              <TrendingHeader category="All" />
               <BrandSlider />
 
 

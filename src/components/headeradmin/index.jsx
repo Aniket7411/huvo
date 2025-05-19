@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoReorderThree, IoCloseCircleOutline } from "react-icons/io5";
 import { BsPerson, BsReceipt, BsWallet2 } from "react-icons/bs";
 import { FiTruck } from "react-icons/fi";
-import { MdSignalCellularAlt } from "react-icons/md";
+import { MdArrowOutward, MdSignalCellularAlt } from "react-icons/md";
 import { toast } from "react-toastify";
 import Modal from 'react-modal';
 import { format } from "date-fns";
@@ -188,7 +188,7 @@ const AdminHeader = () => {
                         </span>
                         <span>{item.name}</span>
                       </div>
-                      <IoIosNotificationsOutline className="opacity-60" />
+                      <MdArrowOutward  className="opacity-60" />
                     </Link>
                   </li>
                 ))}

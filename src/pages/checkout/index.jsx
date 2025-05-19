@@ -586,7 +586,7 @@ export default function CheckOut() {
 
                               <p>DISCOUNT</p>
                               <p className="flex items-center text-green-600 font-medium">
-                                + <PiCurrencyInr className="mr-1" />
+                                - <PiCurrencyInr className="mr-1" />
                                 {totalDiscountOfProducts}
                               </p>
                             </div>
@@ -813,7 +813,7 @@ export default function CheckOut() {
 
                             <p>DISCOUNT</p>
                             <p className="flex items-center text-green-600 font-medium">
-                              + <PiCurrencyInr className="mr-1" />
+                              - <PiCurrencyInr className="mr-1" />
                               {totalDiscountOfProducts}
                             </p>
                           </div>
@@ -920,7 +920,7 @@ export default function CheckOut() {
 
                             <p>DISCOUNT</p>
                             <p className="flex items-center text-green-600 font-medium">
-                              + <PiCurrencyInr className="mr-1" />
+                              - <PiCurrencyInr className="mr-1" />
                               {totalDiscountOfProducts}
                             </p>
                           </div>

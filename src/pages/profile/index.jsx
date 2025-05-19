@@ -441,7 +441,7 @@ export default function Profile() {
         <TabGroup >
           <div className="sm:flex gap-2" >
             <div className="w-full sm:w-1/5">
-           
+
               <div>
                 <TabList className="flex flex-wrap gap-2 mt-4 md:mt-2 px-2 sm:px-0 sm:flex-col sm:gap-1">
                   {/* Common Tabs */}
@@ -513,16 +513,16 @@ export default function Profile() {
                         </div>
                       </Tab>
 
-                      <Tab className="flex-1 sm:flex-none outline-none">
+                      {/* <Tab className="flex-1 sm:flex-none outline-none">
                         <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
                           <span className="hidden sm:inline-block mr-2">🧾</span>
                           Invoices
                         </div>
-                      </Tab>
+                      </Tab> */}
                     </>
                   )}
 
-              
+
                 </TabList>
 
               </div>
@@ -854,7 +854,7 @@ export default function Profile() {
                 </div>
               </TabPanel>
               <TabPanel className="bg-[#F2F2F2] h-full">
-                <div className="p-5">
+                <div className=" p-2 md:p-5">
                   <div className="px-5 border-b border-solid border-[#D6D6D6]">
                     <p className="text-[#2F2F2F] font-semibold text-lg mb-2">
                       Business Verification Form
@@ -967,10 +967,16 @@ export default function Profile() {
                           type="text"
                           placeholder="Enter alternative/Incharge number"
                           className="border border-gray-300 rounded-lg p-3 w-full col-span-2"
+                          maxLength="10"
                           {...register("contactNumberIncharge", {
-                            // required: "*Last Name is required.",
+                            required: "*Contact number is required.",
+                            pattern: {
+                              value: /^\d{10}$/,
+                              message: "*Please enter a valid 10-digit number.",
+                            },
                           })}
                         />
+
                       </div>
 
 
@@ -1030,39 +1036,12 @@ export default function Profile() {
                           />
                         </div>
                       </div>
-                      <div className="py-5">Tax And Legal Information
-                        <hr></hr>
-                      </div>
-
-
-                      <div className="flex flex-col gap-3 mt-6">
-                        <label className="flex items-center">
-                          <input type="checkbox" className="mr-2" />
-                          <span className="text-gray-600 text-sm">
-                            I confirm that the information provided is accurate and up-to-date.
-                          </span>
-                        </label>
-
-                        <label className="flex items-center">
-                          <input type="checkbox" className="mr-2" />
-                          <span className="text-gray-600 text-sm">
-                            I agree to the <a href="#" className="text-blue-600 underline">Terms & Conditions</a> and <a href="#" className="text-blue-600 underline">Privacy Policy</a>.
-                          </span>
-                        </label>
-
-                        <label className="flex items-center">
-                          <input type="checkbox" className="mr-2" />
-                          <span className="text-gray-600 text-sm">
-                            I agree to receive marketing and promotional emails from VendorKart. (Optional)
-                          </span>
-                        </label>
-                      </div>
-
+              
 
 
                     </div>
                     <button
-                      className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-8 py-3 mx-auto block my-12"
+                      className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-8 py-3 mx-auto block my-4"
                       type="submit"
                     >
                       SAVE
