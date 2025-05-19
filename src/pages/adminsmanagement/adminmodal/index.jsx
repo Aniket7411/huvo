@@ -4,7 +4,8 @@ import { FiX } from "react-icons/fi";
 
 const AddAdminModal = ({ isOpen, onClose, onSubmit }) => {
     const [formData, setFormData] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         phoneNumber: "",
         password: "",
@@ -40,12 +41,24 @@ const AddAdminModal = ({ isOpen, onClose, onSubmit }) => {
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Name</label>
+                        <label className="block text-sm font-medium text-gray-700">First Name</label>
                         <input
                             type="text"
-                            name="name"
-                            placeholder="Enter Name"
-                            value={formData.name}
+                            name="firstName"
+                            placeholder="Enter firstName"
+                            value={formData.firstname}
+                            onChange={handleChange}
+                            className="w-full border rounded-lg p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                        />
+                    </div>
+                     <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">Last Name</label>
+                        <input
+                            type="text"
+                            name="lastName"
+                            placeholder="EnterLast Name"
+                            value={formData.lastName}
                             onChange={handleChange}
                             className="w-full border rounded-lg p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             required

@@ -159,7 +159,7 @@ export default function Header(props) {
   const parsedCart = JSON.parse(localCartItem);
 
 
-  const localCount = Object?.keys(parsedCart).length;
+  const localCount = Object?.keys(parsedCart)?.length;
 
 
   const localStoredCartCount = Object.keys(JSON.parse(localStorage.getItem("cart"))).length;
