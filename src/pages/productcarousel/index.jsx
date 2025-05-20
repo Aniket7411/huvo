@@ -6,6 +6,7 @@ import { CiDiscount1, CiDeliveryTruck } from "react-icons/ci";
 import { FaArrowRight, FaStar } from "react-icons/fa";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { TbJewishStarFilled } from "react-icons/tb";
 
 const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
   const { products, title } =
@@ -58,27 +59,42 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                   </div>
 
                   <div className="flex justify-between items-center">
-                    <h1 className="text-black font-semibold text-lg line-clamp-2 ">
-                      {product?.name || "Product Name"}
+                    <h1 className="text-black font-semibold text-lg line-clamp-2">
+                      {product?.name?.length > 20 ? `${product.name.slice(0, 25)}` : product?.name || "Product Name"}
                     </h1>
 
-                    <p className="text-gray-600 text-sm ">
+
+
+
+                  </div>
+
+
+
+
+
+                  <div className="flex gap-2 justify-between mb-1 items-center">
+
+                    <p className="text-gray-600 text-md ">
                       {product?.brandName || "Unknown Brand"}
                     </p>
-
-                  </div>
-
-
-                  <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
-                    <div className="flex text-yellow-500">
-                      {[...Array(5)].map((_, index) => (
-                        <FaStar key={index} className="w-4 h-4" />
-                      ))}
+                    <div
+                      className={`px-2 py-1 flex items-center rounded-md gap-1 text-white ${4.5 >= 3.5
+                        ? "bg-green-500"
+                        : 4.5 >= 3
+                          ? "bg-yellow-500"
+                          : "bg-red-400"
+                        }`}
+                    >
+                      {
+                        product?.totalRating >= 50 ?
+                          product?.avgRating : "New"
+                      }
+                      <TbJewishStarFilled className="text-sm" />
                     </div>
-                    <span className="text-xs text-gray-500">(New)</span>
+
                   </div>
 
-                  <div className="flex justify-between items-center text-sm mb-2">
+                  <div className="flex justify-between items-center text-sm mb-1">
                     <div className="flex items-center gap-1 text-red-600">
                       <PiCurrencyInr />
                       <p className="line-through font-medium">{product?.actualPrice || "N/A"}</p>

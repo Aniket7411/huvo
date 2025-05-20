@@ -6,9 +6,12 @@ import { CiDiscount1 } from "react-icons/ci";
 import CategorySlider from "../categoryslider";
 import Loader from "../../components/loader";
 import { FaFilterCircleXmark } from "react-icons/fa6";
+import { TbJewishStarFilled } from "react-icons/tb";
 
 const ProductsShowingComponent = (props) => {
   const { allProducts } = props;
+
+  console.log("allProductsallProductsallProducts",allProducts)
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
@@ -78,6 +81,8 @@ const ProductsShowingComponent = (props) => {
   useEffect(() => {
     applyFilters();
   }, [searchQuery, genderCategory, sortOrder, allProducts]);
+
+
 
   return (
 
@@ -221,18 +226,11 @@ const ProductsShowingComponent = (props) => {
                           loading="lazy"
                         />
                         <div className="px-3">
-                          <h1 className="text-[blue] font-semibold text-sm mt-2 line-clamp-2 mb-1">
-                            {eachProduct?.name ? eachProduct.name.slice(0, 7) : "Product Name"}
+                          <h1 className="text-[blue] font-semibold text-sm mt-1 mb-1">
+                            {eachProduct?.productName ? eachProduct.productName.slice(0, 7) : "Product Name"}
                           </h1>
                           {/* Stars */}
-                          <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
-                            <div className="flex text-yellow-500">
-                              {[...Array(5)].map((_, index) => (
-                                <FaStar key={index} className="w-4 h-4" />
-                              ))}
-                            </div>
-                            <span className="text-xs text-gray-500">(New)</span>
-                          </div>
+                      
                           {/* Pricing */}
                           <div className="flex gap-3 items-center text-sm mb-1">
                             <p className="line-through font-medium text-red-600">{eachProduct?.actualPrice || "N/A"}</p>
@@ -246,6 +244,43 @@ const ProductsShowingComponent = (props) => {
                               View <FaArrowRight className="w-4 h-4" />
                             </button>
                           </Link>
+                        </div>
+
+
+                        <div className="flex justify-between items-center">
+                          <h1 className="text-black font-semibold text-lg line-clamp-2">
+                            {eachProduct?.name?.length > 20 ? `${eachProduct.name.slice(0, 25)}` : eachProduct?.name || "Product Name"}
+                          </h1>
+
+
+
+
+                        </div>
+
+
+
+
+
+                        <div className="flex gap-2 justify-between mb-1 items-center">
+
+                          <p className="text-gray-600 text-md ">
+                            {eachProduct?.brandName || "Unknown Brand"}
+                          </p>
+                          <div
+                            className={`px-2 py-1 flex items-center rounded-md gap-1 text-white ${4.5 >= 3.5
+                              ? "bg-green-500"
+                              : 4.5 >= 3
+                                ? "bg-yellow-500"
+                                : "bg-red-400"
+                              }`}
+                          >
+                            {
+                              eachProduct?.totalRating >= 50 ?
+                                eachProduct?.avgRating : "New"
+                            }
+                            <TbJewishStarFilled className="text-sm" />
+                          </div>
+
                         </div>
                       </div>
                     ))
@@ -281,26 +316,34 @@ const ProductsShowingComponent = (props) => {
                       </div>
 
                       {/* Product Name */}
-                      <h1 className="text-black font-semibold text-lg line-clamp-2 mb-1">
-                        {eachProduct?.name || "Product Name"}
+                      <h1 className="text-black font-semibold text-lg mb-1">
+                        {eachProduct?.productName || "Product Name"}
                       </h1>
 
-                      <div className="flex justify-between">
-                        {/* Stars */}
-                        <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
-                          <div className="flex text-yellow-500">
-                            {[...Array(5)].map((_, index) => (
-                              <FaStar key={index} className="w-4 h-4" />
-                            ))}
-                          </div>
-                          <span className="text-xs text-gray-500">(New)</span>
-                        </div>
+                    
 
-                        {/* Brand */}
-                        <p className="text-gray-600 text-sm mb-1">
+
+                      <div className="flex gap-2 justify-between mb-1 items-center">
+
+                        <p className="text-gray-600 text-md ">
                           {eachProduct?.brandName || "Unknown Brand"}
                         </p>
-                      </div>
+                        <div
+                          className={`px-2 py-1 flex items-center rounded-md gap-1 text-white ${4.5 >= 3.5
+                            ? "bg-green-500"
+                            : 4.5 >= 3
+                              ? "bg-yellow-500"
+                              : "bg-red-400"
+                            }`}
+                        >
+                          {
+                            eachProduct?.totalRating >= 50 ?
+                              eachProduct?.avgRating : "New"
+                          }
+                          <TbJewishStarFilled className="text-sm" />
+                        </div>
+
+                      </div>  
 
                       {/* Pricing */}
                       <div className="flex justify-between items-center text-sm mb-1">

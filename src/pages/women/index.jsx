@@ -121,18 +121,20 @@ export default function WomenCollection() {
         productName: eachProduct.name,
         brandName: eachProduct.brand.name,
         brandImage: eachProduct.brand.image,
+        actualPrice: eachProduct?.actualPrice,
+        discount: eachProduct?.discount,
+
+        name: eachProduct?.productDetails[0],
+
         onGoingOffer: eachProduct.brand.onGoingOffer,
         brandId: eachProduct.brand.brandId,
         categoryId: eachProduct.category.categoryId,
         categoryDescription: eachProduct.category.description,
         productDescription: eachProduct.description,
-        productDetails: eachProduct.productDetails[0],
         group: eachProduct.group,
         isReturnable: eachProduct.isReturnable,
-        discount: eachProduct.discount,
         price: eachProduct.price,
         productId: eachProduct.productId,
-        productName: eachProduct.name
       }))
       setAllProducts(formattedData)
 

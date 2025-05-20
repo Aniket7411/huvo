@@ -117,6 +117,11 @@ export default function KidsCollection() {
         productName: eachProduct.name,
         brandName: eachProduct.brand.name,
         brandImage: eachProduct.brand.image,
+        actualPrice: eachProduct?.actualPrice,
+        discount: eachProduct?.discount,
+
+        name: eachProduct?.productDetails[0],
+
         onGoingOffer: eachProduct.brand.onGoingOffer,
         brandId: eachProduct.brand.brandId,
         categoryId: eachProduct.category.categoryId,
@@ -125,12 +130,11 @@ export default function KidsCollection() {
         productDetails: eachProduct.productDetails[0],
         group: eachProduct.group,
         isReturnable: eachProduct.isReturnable,
-        discount: eachProduct.discount,
         price: eachProduct.price,
         productId: eachProduct.productId,
-        productName: eachProduct.name
       }))
       setAllProducts(formattedData)
+      
 
     } catch (error) {
       console.error(error);
@@ -162,12 +166,9 @@ export default function KidsCollection() {
 
   }, []);
 
-
   const kidsProducts = allProducts.filter((item) => item.group === "kids").splice(0, 8);
 
-  console.log("menProductsmenProducts", kidsProducts)
-  console.log("searchGroupsearchGroupsearchGroup", searchGroup)
-
+ 
 
   return (
     <div className="h-auto px-2 md:px-4 ">
@@ -177,23 +178,7 @@ export default function KidsCollection() {
       <p className="font-[Poppins] font-normal text-center  mb-2 text-sm md:text-lg  lg:mt-[70px] text-[#2581eb] mt-2">
         Explore the latest trends and styles in kids' fashion. From playful everyday wear to stylish party outfits, find the perfect look for every little one.      </p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
+     <section className="bg-gradient-to-t from-[#aed3f4] to-[#fff]">
 
 
         <ProductGrid kidsProducts={kidsProducts} />

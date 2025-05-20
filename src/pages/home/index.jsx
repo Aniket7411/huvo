@@ -144,7 +144,7 @@ export default function Home() {
     try {
       const response = await HttpClient.get("/product");
 
-      console.log("llllllll", response?.products)
+      console.log("nnnnnn", response?.products)
 
 
       const formattedData1 = response?.products?.map((each) => ({
@@ -154,7 +154,6 @@ export default function Home() {
         group: each?.group,
         name: each?.productDetails[0],
         reviews: each?.reviews,
-
         objectId: each?._id,
         productName: each?.name,
 
@@ -168,6 +167,9 @@ export default function Home() {
         discount: each?.discount,
         price: each?.price,
         productId: each?.productId,
+        avgRating: each?.avgRating,
+        avgBrandRating: each?.avgBrandRating,
+        totalRating: each?.totalRating
       }))
 
       setAllProducts(formattedData1)
@@ -444,7 +446,7 @@ export default function Home() {
 
                 <div class="relative z-10 w-32 h-1 bg-white/80 mt-2 animate-expand"></div>
 
-                <p class="relative z-10 text-xl md:text-2xl text-pink-100 text-center mt-2 max-w-2xl animate-typewriter whitespace-nowrap overflow-hidden">
+                <p class="relative z-10 text-lg md:text-2xl text-pink-100 text-center mt-2 max-w-2xl animate-typewriter whitespace-nowrap overflow-hidden">
                   Where elegance meets confidence
                 </p>
 
@@ -523,7 +525,7 @@ export default function Home() {
                   MEN'S EDGE
                 </h1>
 
-                <p class="text-xl md:text-2xl text-cyan-100 text-center max-w-2xl font-mono overflow-hidden whitespace-nowrap border-r-4 border-cyan-300 animate-typewriter">
+                <p class="text-lg md:text-2xl text-cyan-100 text-center max-w-2xl font-mono overflow-hidden whitespace-nowrap border-r-4 border-cyan-300 animate-typewriter">
                   Where innovation meets style
                 </p>
 
@@ -616,8 +618,8 @@ export default function Home() {
 
             </section>
             <hr className="my-2" />
-            <BrandSlider/>
-            <CategorySlider/>
+            <BrandSlider />
+            <CategorySlider />
             {/* <section className="md:px-10 px-3 py-2 md:py-6 text-center ">
               <p className="font-[Quicksand] font-medium text-[#011F4B] text-center text-lg  md:text-4xl mb-2 border-3">
                 EXPLORE TOP BRANDS
