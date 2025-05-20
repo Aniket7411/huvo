@@ -99,15 +99,16 @@ const Orders = () => {
     }
     else {
       try {
+        //debugger
         const response = await HttpClient.post(
           `order/cancel/${currentOrder}`,
           { cancellationReason: cancelReason, productId: currentproductId }
         );
         toast.success(response?.message)
       } catch (error) {
-        toast.error(error?.message)
-
-
+        if (error?.response?.status === 400) {
+          toast.error(error?.response?.data?.message)
+        }
       }
     }
 
