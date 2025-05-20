@@ -14,7 +14,7 @@ const TrendingBrandsHeader = (props) => {
 
                 <h1 className="text-xl md:text-2xl font-bold tracking-tight">
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-600 via-gray-800 to-black">
-                        Brands for {category}
+                       Trending Brands for {category}
                     </span>
                 </h1>
                 {/*                 
