@@ -255,15 +255,21 @@
   }
   .animate-expand { animation: expand 1s ease-out forwards 0.5s; }
 
-  @keyframes typewriter {
-    from { width: 0; }
-    to { width: 100%; }
-  }
-  .animate-typewriter {
-    animation: typewriter 2s steps(25) forwards 0.8s,
-               blink-caret 0.75s step-end infinite;
-    border-right: 3px solid rgba(255,255,255,0.7);
-  }
+ @keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: rgba(255,255,255,0.7); }
+}
+
+.animate-typewriter {
+  animation: typewriter 2s steps(25) forwards 2s, /* Delay of 2s added */
+             blink-caret 0.75s step-end infinite 2s; /* Same delay added */
+  border-right: 3px solid rgba(255,255,255,0.7);
+}
 
   /* Floating Icons */
   @keyframes floatRotate {

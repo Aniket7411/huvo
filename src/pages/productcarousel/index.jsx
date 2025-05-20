@@ -110,7 +110,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center text-lg font-bold text-gray-800 mb-3">
+                  <div className="flex justify-between items-center text-lg font-bold text-gray-800 mb-1">
                     <div className="flex items-center">
                       <PiCurrencyInr />
                       <span>{product?.price || "N/A"}</span>

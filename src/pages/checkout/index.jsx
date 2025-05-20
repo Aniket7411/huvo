@@ -15,7 +15,7 @@ import {
 import { BiSolidOffer, BiSolidCoupon } from "react-icons/bi";
 import { PiCurrencyInr } from "react-icons/pi";
 import { BsBookmarkPlus } from "react-icons/bs";
-import { FaChevronRight } from "react-icons/fa";
+import { FaChevronRight, FaMinus, FaPlus, FaTruck } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import { HttpClient } from "../../server/client/http";
@@ -415,94 +415,135 @@ export default function CheckOut() {
                       <div className="md:w-8/12">
 
 
-                        {Object.entries(totalCartData).map(([key, item]) => (
+                    
+
+                        {Object.keys(totalCartData).map((key, i) => (
                           <div
-                            key={key}
-                            className="flex flex-col sm:flex-row items-start sm:items-center gap-4 border border-gray-100 rounded-xl p-4 mb-4 shadow-sm hover:shadow-md transition-all duration-300 bg-white"
+                            className="border border-gray-200 p-3 sm:p-4 rounded-lg my-3 sm:my-4 font-[Poppins] relative bg-white shadow-sm hover:shadow-md transition-all duration-200"
+                            key={i}
                           >
-                            {/* Image with badge */}
-                            <div className="relative">
-                              <img
-                                src={item.bannerImage || "https://via.placeholder.com/300"}
-                                alt={item.name}
-                                className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-lg shadow-inner"
-                              />
-                              {item.discount > 0 && (
-                                <span className="absolute -top-2 -right-2 flex items-center bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                                  <PiCurrencyInr /> {item.actualPrice - item.price} OFF
-                                </span>
-                              )}
-                            </div>
+                            {/* Remove Button (Top-right) */}
+                            {/* <button
+                              className="absolute top-2 right-2 sm:top-3 sm:right-3 p-1 sm:p-1.5 rounded-full bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-500 transition-colors duration-200"
+                              onClick={() => removeProductFromCart(key)}
+                              aria-label="Remove item"
+                            >
+                              <RxCross2 className="w-3 h-3" />
+                            </button> */}
 
-                            {/* Product Info */}
-                            <div className="flex flex-col gap-2 flex-grow">
-                              <Link to={`/product-details/${item?.productId}`} >
-                                <h2 className="font-semibold text-gray-800 text-lg sm:text-xl">{item.name}</h2>
-                              </Link>
-
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm text-gray-500 bg-gray-50 px-2 py-1 rounded">Size: {item.size}</span>
-                                <span
-                                  className="text-sm text-gray-500 bg-gray-50 px-2 py-1 rounded flex items-center gap-1"
-                                  style={{ color: item.color.toLowerCase() === 'white' ? '#333' : item.color }}
-                                >
-                                  Color: <span className="w-3 h-3 rounded-full inline-block" style={{ backgroundColor: item.color }} />
-                                </span>
+                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                              {/* Product Image (Responsive sizing) */}
+                              <div className="flex-shrink-0 w-full sm:w-24 h-24 md:w-32 md:h-32">
+                                <img
+                                  className="w-full h-full rounded-lg object-cover border border-gray-100"
+                                  src={cartProducts[key]?.bannerImage || "https://via.placeholder.com/150"}
+                                  alt={cartProducts[key]?.name || "Product Image"}
+                                  loading="lazy"
+                                />
                               </div>
 
-                              <div className="flex items-center gap-4 mt-1">
-                                <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-                                  <button
-                                    onClick={() => decreaseQuantity(key)}
-                                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors">
-                                    -
-                                  </button>
-                                  <span className="px-3 py-1 text-center min-w-[2rem]">{item.quantity}</span>
-                                  <button
-                                    onClick={() => increaseQuantity(key)}
-                                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
-                                  >
-                                    +
-                                  </button>
+                              {/* Product Details (Flexible width) */}
+                              <div className="flex-grow">
+                                <Link
+                                  to={`/product-details/${cartProducts[key]?.productId}`}
+                                  className="hover:underline"
+                                >
+                                  <h2 className="font-semibold text-gray-900 text-base sm:text-lg md:text-xl mb-1 line-clamp-2">
+                                    {cartProducts[key]?.name || "N/A"}
+                                  </h2>
+                                </Link>
 
+                                {cartProducts[key]?.description && (
+                                  <p className="text-gray-600 text-xs sm:text-sm mb-2 line-clamp-2">
+                                    {cartProducts[key].description}
+                                  </p>
+                                )}
+
+                                {/* Size & Color Chips (Wrap on small screens) */}
+                                <div className="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                                  <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
+                                    Size: {cartProducts[key]?.size || "N/A"}
+                                  </span>
+                                  <span
+                                    className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full flex items-center gap-1"
+                                    style={{ color: cartProducts[key]?.color?.toLowerCase() === 'white' ? '#333' : cartProducts[key]?.color }}
+                                  >
+                                    Color: <span className="w-3 h-3 rounded-full inline-block border border-gray-200" style={{ backgroundColor: cartProducts[key]?.color }} />
+                                  </span>
                                 </div>
 
-                                <button
-                                  onClick={() => removeProductFromCart(key)}
+                                {/* Price Section (Stacked on mobile) */}
+                                <div className="mb-1">
+                                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
+                                    <span className="text-lg font-bold text-gray-900">
+                                      ₹{(cartProducts[key]?.actualPrice - cartProducts[key]?.discount) * cartProducts[key]?.quantity || 0}
+                                    </span>
+                                    <span className="text-sm text-gray-500 line-through">
+                                      ₹{cartProducts[key]?.actualPrice * cartProducts[key]?.quantity || 0}
+                                    </span>
+                                    <span className="text-xs font-medium text-green-600 bg-green-50 px-1.5 py-0.5 rounded">
+                                      Save ₹{((cartProducts[key]?.actualPrice - cartProducts[key]?.price) * cartProducts[key]?.quantity).toLocaleString() || 0}
+                                    </span>
+                                  </div>
+                                </div>
 
-                                  className="text-red-500 hover:text-red-700 text-sm flex items-center gap-1">
-                                  <FiTrash2 className="w-4 h-4" />
-                                  Remove
-                                </button>
+                                {/* Quantity Controls & Remove Button (Flex direction changes on mobile) */}
+                                <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-2 sm:gap-4">
+                                  <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden w-fit">
+                                    <button
+                                      onClick={() =>
+                                        setCartProducts((prevCart) => {
+                                          const updatedCart = { ...prevCart };
+                                          updatedCart[key].quantity = Math.max(1, updatedCart[key].quantity - 1);
+                                          return updatedCart;
+                                        })
+                                      }
+                                      className="px-3 py-1 bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
+                                      aria-label="Decrease quantity"
+                                    >
+                                      -
+                                    </button>
+                                    <span className="px-3 py-1 text-center min-w-[2rem] text-gray-800">
+                                      {cartProducts[key]?.quantity || 0}
+                                    </span>
+                                    <button
+                                      onClick={() =>
+                                        setCartProducts((prevCart) => {
+                                          const updatedCart = { ...prevCart };
+                                          updatedCart[key].quantity += 1;
+                                          return updatedCart;
+                                        })
+                                      }
+                                      className="px-3 py-1 bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
+                                      aria-label="Increase quantity"
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+
+                                  <button
+                                    onClick={() => removeProductFromCart(key)}
+                                    className="flex items-center gap-1.5 text-xs sm:text-sm text-red-500 hover:text-red-700 transition-colors px-3 py-1.5 rounded-lg hover:bg-red-50 w-fit"
+                                  >
+                                    <FiTrash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                    <span>Remove</span>
+                                  </button>
+                                </div>
+
+                                {/* Return Policy (Consistent across screens) */}
+                                <div className="mt-1 sm:mt-3 pt-2 sm:pt-3 border-t border-gray-100">
+                                  <p className="text-xs text-gray-500 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    7-day returns • Free shipping
+                                  </p>
+                                </div>
                               </div>
-
-                              <div className="flex flex-wrap items-center gap-3 text-sm mt-1">
-                                <p className="text-red-500 font-medium flex items-center">
-                                  <PiCurrencyInr className="mr-0.5" />
-                                  <span className="line-through">{(item.actualPrice * item.quantity)}</span>
-                                </p>
-
-                                <p className="text-blue-500 bg-blue-50 px-2 py-0.5 rounded-full text-xs">
-                                  You save ₹{((item.actualPrice - item.price) * item.quantity).toLocaleString()}
-                                </p>
-                              </div>
-                            </div>
-
-                            {/* Total - Mobile */}
-                            <div className="w-full sm:hidden flex justify-between items-center pt-2 border-t border-gray-100">
-                              <span className="font-semibold">Total:</span>
-                              <span className="font-bold text-lg text-gray-800">
-                                ₹{(item.price * item.quantity).toLocaleString()}
-                              </span>
-                            </div>
-
-                            {/* Total - Desktop */}
-                            <div className="text-right font-bold text-gray-800 hidden sm:block min-w-[100px]">
-                              ₹ {(item.price * item.quantity) - ((item.cgst + item.sgst) * (item.quantity))}
-                              <span className="text-sm"> (Ex. Gst)</span>
                             </div>
                           </div>
                         ))}
+
 
 
                         <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-3">
@@ -595,7 +636,7 @@ export default function CheckOut() {
                             <div className="border-t border-dashed border-gray-400 my-6"></div>
 
                             <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-                              <p>Total Amount (Incl GST)</p>
+                              <p>Total Amount </p>
                               <p className="flex items-center">
                                 <PiCurrencyInr className="mr-1" />
 
@@ -809,7 +850,7 @@ export default function CheckOut() {
                           </div>
 
                           <div className="flex justify-between text-gray-700 mb-3">
-                          
+
 
                             <p>DISCOUNT</p>
                             <p className="flex items-center text-green-600 font-medium">
@@ -823,7 +864,7 @@ export default function CheckOut() {
                           <div className="border-dashed border-t border-gray-400 my-6"></div>
 
                           <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-                            <p>Total Amount (Incl GST)</p>
+                            <p>Total Amount </p>
                             <p className="flex items-center">
                               <PiCurrencyInr className="mr-1" />
 
@@ -915,7 +956,7 @@ export default function CheckOut() {
                           </div>
 
                           <div className="flex justify-between mb-3 text-gray-700">
-                         
+
 
 
                             <p>DISCOUNT</p>
@@ -929,7 +970,7 @@ export default function CheckOut() {
                           <div className="border-t border-dashed border-gray-400 my-6"></div>
 
                           <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-                            <p>Total Amount (Incl GST)</p>
+                            <p>Total Amount </p>
                             <p className="flex items-center">
                               <PiCurrencyInr className="mr-1" />
                               {Math.round(totalCost + (totalCost * 18) / 100)}
@@ -1121,7 +1162,7 @@ export default function CheckOut() {
                               </p>
                             </div>
 
-                           
+
 
 
 

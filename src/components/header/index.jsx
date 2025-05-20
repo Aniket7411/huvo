@@ -370,7 +370,7 @@ export default function Header(props) {
           </button>
 
           {
-            loginStatus === 0 ?
+             !isLoggedIn() ? 
 
               <Link to="/login">
                 <p className="p-2   text-[#fff] text-lg cursor-pointer" >Login</p>
@@ -515,7 +515,7 @@ export default function Header(props) {
             <HiOutlineShoppingBag
               size={25}
               onClick={() => {
-                if (loginStatus === 0) {
+                if ( isLoggedIn() ) {
                   navigate("/checkout/cart/not_login");
                 } else {
                   navigate("/checkout/cart");
@@ -683,7 +683,7 @@ export default function Header(props) {
               </li>
               <li onClick={closeSubmenu} className="cursor-pointer">
                 <Link
-                  to="/contact-us"
+                  to="/contact_us"
                   className="hover:text-blue-800 transition duration-300"
                 >
                   Contact Us

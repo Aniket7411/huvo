@@ -1,40 +1,33 @@
 import React from 'react';
 
-const TrendingHeader = ({ category }) => {
-    const displayCategory = category.charAt(0).toUpperCase() + category.slice(1);
-
+const TrendingBrandsHeader = (props) => {
+    const {category} = props
     return (
-        <div className="flex flex-col items-center w-full px-4 py-2">
-            {/* Compact header with blue gradient */}
-            <div className="w-full max-w-2xl">
-                <h1 className="text-2xl md:text-3xl font-bold text-center mb-1">
-                    Trending Brands for{' '}
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
-                        {displayCategory}
+        <div className="flex flex-col items-center w-full px-4 py-3 bg-gradient-to-b from-gray-50 to-white">
+            {/* Premium brand header with metallic gradient */}
+            <div className="w-full max-w-2xl text-center">
+                <div className="mb-2 flex justify-center space-x-2">
+                    {['⭐', '🛍️', '⭐'].map((emoji, index) => (
+                        <span key={index} className="text-xl opacity-90">{emoji}</span>
+                    ))}
+                </div>
+
+                <h1 className="text-xl md:text-2xl font-bold tracking-tight">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-600 via-gray-800 to-black">
+                        Brands for {category}
                     </span>
                 </h1>
+                {/*                 
+                <h2 className="text-lg md:text-xl font-medium text-gray-700 mb-3">
+                    Trending <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-amber-800">{displayCategory}</span> Collections
+                </h2> */}
 
-                <p className="text-gray-600 text-sm md:text-base text-center">
-                    Top picks for {displayCategory.toLowerCase()}
-                </p>
-
-                {/* Compact category pills */}
-                {/* <div className="flex gap-2 justify-center">
-          {['women', 'men', 'kids'].map((cat) => (
-            <button
-              key={cat}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${cat === category.toLowerCase()
-                ? 'bg-gradient-to-r from-blue-400 to-blue-600 text-white shadow-md'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {cat.charAt(0).toUpperCase() + cat.slice(1)}
-            </button>
-          ))}
-        </div> */}
+                <div className="flex justify-center">
+                    <div className="h-1 w-16 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full"></div>
+                </div>
             </div>
         </div>
     );
 };
 
-export default TrendingHeader;
+export default TrendingBrandsHeader;

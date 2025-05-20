@@ -25,6 +25,10 @@ import CategorySlider from "../categoryslider";
 import ProductGrid from "../mobileviewproduct";
 import BrandSlider from "../brands";
 import TrendingHeader from "../brandheadingcomponents";
+import TrendingProducts from "../trendingproductsheader";
+import TrendingProductsHeader from "../trendingproductsheader";
+import TrendingProductsHeading from "../trendingproductsheader";
+import TrendingBrandsHeader from "../brandheadingcomponents";
 
 
 const testimonials = [
@@ -451,6 +455,9 @@ export default function Home() {
                 </p>
 
               </div>
+
+              <TrendingProductsHeading displayCategory="Women" />
+
               <div>
 
                 <section className=" hidden md:block">
@@ -468,7 +475,7 @@ export default function Home() {
 
 
 
-              <TrendingHeader category="All" />
+              <TrendingBrandsHeader category="Women" />
               <BrandSlider />
 
 
@@ -537,6 +544,10 @@ export default function Home() {
 
 
               </div>
+
+              <TrendingProductsHeading displayCategory="Men" />
+
+
               <div>
 
 
@@ -550,6 +561,9 @@ export default function Home() {
 
 
               </div>
+
+              <TrendingBrandsHeader category="Men" />
+              <BrandSlider />
 
               <hr className="my-2" />
               {/* <Link to="/kids-collection">
@@ -604,21 +618,21 @@ export default function Home() {
                   <div class="w-4 h-4 rounded-full bg-blue-400 animate-float delay-300"></div>
                 </div>
               </div>
+
+
+              <TrendingProductsHeading displayCategory="Kids" />
+
               <div>
-
-
-
                 <section className="  md:block">
 
                   <ProductCarouselmd kidsProducts={kidsProducts} />
                 </section>
                 <ProductGrid kidsProducts={kidsProducts} />
-
               </div>
+              <TrendingBrandsHeader category="Kids" />
 
             </section>
             <hr className="my-2" />
-            <BrandSlider />
             <CategorySlider />
             {/* <section className="md:px-10 px-3 py-2 md:py-6 text-center ">
               <p className="font-[Quicksand] font-medium text-[#011F4B] text-center text-lg  md:text-4xl mb-2 border-3">

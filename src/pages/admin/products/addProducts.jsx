@@ -107,7 +107,7 @@ function ProductAddPage() {
     },
   });
 
-  const [returnableDays, setReturnableDays] = useState()
+  const [returnableDays, setReturnableDays] = useState(0)
 
   const [bannerImage, setBannerImage] = useState("");
   const [productDetails, setProductDetails] = useState([""]);
@@ -147,6 +147,7 @@ function ProductAddPage() {
 
 
   const onSubmit = async (data) => {
+    //debugger
     let platformCharge = 0;
     const shippingFee = 100; // Constant shipping fee
     console.log("Form Data:", data);
@@ -183,7 +184,8 @@ function ProductAddPage() {
           productDetails,
           platformCharge,
           shippingFee,
-          returnableDays,
+          returnableDays: data.isReturnable === "true" ? returnableDays : 0
+
         };
 
         // Send API request
@@ -327,6 +329,11 @@ function ProductAddPage() {
     newColorWithImages[i].colorCode = selectedColorCode; // Update colorCode based on selection
     setColorWithImages(newColorWithImages);
     console.log(`Color changed for index ${i}: ${selectedColorCode}`); // Log the selected color code
+  };
+
+
+  const handleDaysChange = (event) => {
+   setReturnableDays(event.target.value)
   };
 
 
@@ -918,6 +925,9 @@ function ProductAddPage() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Returnability
               </label>
+
+
+
               <div className="flex gap-4">
                 <div className="flex items-center gap-2">
                   <input
@@ -949,7 +959,26 @@ function ProductAddPage() {
               htmlFor="returnable"
               className="text-sm bg-gray-50 p-3 gap-2 rounded-lg shadow-sm font-medium text-gray-700"
             >
-              Returnable within 7 days after delivery
+              Returnable within 
+              <select
+                id="days-dropdown"
+                value={returnableDays}
+                onChange={handleDaysChange}
+                className="border border-gray-300 rounded-lg p-2"
+              >
+                <option value="" disabled>
+                  Choose days
+                </option>
+                {Array.from({ length: 9 }, (_, index) => {
+                  const day = index + 7; // Start at 8 and go up to 15
+                  return (
+                    <option key={day} value={day}>
+                      {`${day} days`}
+                    </option>
+                  );
+                })}
+              </select>
+              days after delivery
             </label>
 
           </div>
@@ -988,152 +1017,152 @@ function ProductAddPage() {
       </div>
 
 
-    <Modal
-  isOpen={isModalOpen}
-  onRequestClose={closeModal}
-  contentLabel="Product Details Modal"
-  className="bg-white max-w-3xl w-full mx-auto p-6 rounded-2xl shadow-lg flex flex-col outline-none"
-  overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50"
->
-  <div className="flex flex-col h-full">
-    <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Product Added Successfully!</h2>
-    
-    <div className="flex flex-col md:flex-row gap-6 overflow-auto flex-grow">
-      {/* Left Column - Product Image */}
-      <div className="md:w-1/3 flex flex-col items-center">
-        <img 
-          src={responseData?.bannerImage} 
-          className="w-full h-auto max-h-64 object-contain rounded-lg border border-gray-200" 
-          alt="Product" 
-        />
-        <div className="mt-4 w-full">
-          <h3 className="font-semibold text-lg">{responseData?.name || "N/A"}</h3>
-          <p className="text-gray-600 text-sm">{responseData?.description || "No description"}</p>
-        </div>
-      </div>
-
-      {/* Right Column - Details */}
-      <div className="md:w-2/3 space-y-4">
-        {/* Pricing Section */}
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <h4 className="font-medium text-gray-700 mb-3">Pricing Details</h4>
-          <div className="grid grid-cols-2 gap-3 text-sm">
-            <div>
-              <span className="text-gray-500">Initial Price:</span>
-              <span className="font-medium ml-2">₹{responseData?.labelPrice}</span>
-            </div>
-            <div>
-              <span className="text-gray-500">Discount:</span>
-              <span className="text-green-600 font-medium ml-2">
-                ₹{responseData?.discount || "0.00"}
-              </span>
-            </div>
-            <div>
-              <span className="text-gray-500">GST:</span>
-              <span className="font-medium ml-2">
-                ₹{(responseData?.cgst || 0) + (responseData?.sgst || 0)}
-              </span>
-            </div>
-            <div>
-              <span className="text-gray-500">Platform Fee:</span>
-              <span className="font-medium ml-2">₹{responseData?.platformCharge || "0.00"}</span>
-            </div>
-            <div className="col-span-2 pt-2 border-t border-gray-200">
-              <span className="text-gray-500">Final Price:</span>
-              <span className="font-bold text-lg ml-2">₹{responseData?.price || "0.00"}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Product Info Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <h4 className="font-medium text-gray-700 mb-2">Product ID</h4>
-            <div className="bg-gray-100 px-3 py-2 rounded text-sm">
-              {responseData?.productId || "N/A"}
-            </div>
-          </div>
-          
-          <div>
-            <h4 className="font-medium text-gray-700 mb-2">Return Policy</h4>
-            <div className={`px-3 py-2 rounded text-sm ${responseData?.isReturnable ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-              {responseData?.isReturnable ? "Returnable" : "Non-returnable"}
-            </div>
-          </div>
-        </div>
-
-        {/* Colors Section */}
-        <div>
-          <h4 className="font-medium text-gray-700 mb-2">Colors</h4>
-          {responseData?.colors?.length ? (
-            <div className="flex flex-wrap gap-3">
-              {responseData.colors.map((color, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <div
-                    className="w-5 h-5 rounded-full border border-gray-300"
-                    style={{ backgroundColor: color?.colorCode || "#000" }}
-                  />
-                  {color?.images?.[0] && (
-                    <a
-                      href={color.images[0]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 text-sm underline"
-                    >
-                      View Image
-                    </a>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-gray-500 text-sm">No colors specified</div>
-          )}
-        </div>
-
-        {/* Sizes Section */}
-        <div>
-          <h4 className="font-medium text-gray-700 mb-2">Sizes & Stock</h4>
-          {responseData?.sizes?.length ? (
-            <div className="flex flex-wrap gap-2">
-              {responseData.sizes.map((size, index) => (
-                <div 
-                  key={index} 
-                  className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center"
-                >
-                  <span className="font-medium">{size.size}</span>
-                  <span className="text-gray-500 ml-1">({size.stock || "0"})</span>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-gray-500 text-sm">No sizes specified</div>
-          )}
-        </div>
-
-        {/* Material Section */}
-        {responseData?.materialAndCare && (
-          <div>
-            <h4 className="font-medium text-gray-700 mb-2">Material & Care</h4>
-            <p className="text-sm bg-gray-50 p-3 rounded">{responseData.materialAndCare}</p>
-          </div>
-        )}
-      </div>
-    </div>
-
-    {/* Footer with Button */}
-    <div className="mt-6 pt-4 border-t border-gray-200 flex justify-end">
-
-      
-      <button
-        onClick={closeModal}
-        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Product Details Modal"
+        className="bg-white max-w-3xl w-full mx-auto p-6 rounded-2xl shadow-lg flex flex-col outline-none"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50"
       >
-        Close or Add Another Product
-      </button>
-    </div>
-  </div>
-</Modal>
+        <div className="flex flex-col h-full">
+          <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Product Added Successfully!</h2>
+
+          <div className="flex flex-col md:flex-row gap-6 overflow-auto flex-grow">
+            {/* Left Column - Product Image */}
+            <div className="md:w-1/3 flex flex-col items-center">
+              <img
+                src={responseData?.bannerImage}
+                className="w-full h-auto max-h-64 object-contain rounded-lg border border-gray-200"
+                alt="Product"
+              />
+              <div className="mt-4 w-full">
+                <h3 className="font-semibold text-lg">{responseData?.name || "N/A"}</h3>
+                <p className="text-gray-600 text-sm">{responseData?.description || "No description"}</p>
+              </div>
+            </div>
+
+            {/* Right Column - Details */}
+            <div className="md:w-2/3 space-y-4">
+              {/* Pricing Section */}
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h4 className="font-medium text-gray-700 mb-3">Pricing Details</h4>
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <span className="text-gray-500">Initial Price:</span>
+                    <span className="font-medium ml-2">₹{responseData?.labelPrice}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Discount:</span>
+                    <span className="text-green-600 font-medium ml-2">
+                      ₹{responseData?.discount || "0.00"}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">GST:</span>
+                    <span className="font-medium ml-2">
+                      ₹{(responseData?.cgst || 0) + (responseData?.sgst || 0)}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Platform Fee:</span>
+                    <span className="font-medium ml-2">₹{responseData?.platformCharge || "0.00"}</span>
+                  </div>
+                  <div className="col-span-2 pt-2 border-t border-gray-200">
+                    <span className="text-gray-500">Final Price:</span>
+                    <span className="font-bold text-lg ml-2">₹{responseData?.price || "0.00"}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Product Info Section */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 className="font-medium text-gray-700 mb-2">Product ID</h4>
+                  <div className="bg-gray-100 px-3 py-2 rounded text-sm">
+                    {responseData?.productId || "N/A"}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium text-gray-700 mb-2">Return Policy</h4>
+                  <div className={`px-3 py-2 rounded text-sm ${responseData?.isReturnable ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                    {responseData?.isReturnable ? `Returnable within ${responseData?.returnableDays} Days` : "Non-returnable"}
+                  </div>
+                </div>
+              </div>
+
+              {/* Colors Section */}
+              <div>
+                <h4 className="font-medium text-gray-700 mb-2">Colors</h4>
+                {responseData?.colors?.length ? (
+                  <div className="flex flex-wrap gap-3">
+                    {responseData.colors.map((color, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <div
+                          className="w-5 h-5 rounded-full border border-gray-300"
+                          style={{ backgroundColor: color?.colorCode || "#000" }}
+                        />
+                        {color?.images?.[0] && (
+                          <a
+                            href={color.images[0]}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 text-sm underline"
+                          >
+                            View Image
+                          </a>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-gray-500 text-sm">No colors specified</div>
+                )}
+              </div>
+
+              {/* Sizes Section */}
+              <div>
+                <h4 className="font-medium text-gray-700 mb-2">Sizes & Stock</h4>
+                {responseData?.sizes?.length ? (
+                  <div className="flex flex-wrap gap-2">
+                    {responseData.sizes.map((size, index) => (
+                      <div
+                        key={index}
+                        className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center"
+                      >
+                        <span className="font-medium">{size.size}</span>
+                        <span className="text-gray-500 ml-1">({size.stock || "0"})</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-gray-500 text-sm">No sizes specified</div>
+                )}
+              </div>
+
+              {/* Material Section */}
+              {responseData?.materialAndCare && (
+                <div>
+                  <h4 className="font-medium text-gray-700 mb-2">Material & Care</h4>
+                  <p className="text-sm bg-gray-50 p-3 rounded">{responseData.materialAndCare}</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Footer with Button */}
+          <div className="mt-6 pt-4 border-t border-gray-200 flex justify-end">
+
+
+            <button
+              onClick={closeModal}
+              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            >
+              Close or Add Another Product
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

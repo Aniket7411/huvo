@@ -8,11 +8,15 @@ const OrderDetails = () => {
   const [isLoading, setIsLoading] = useState(false)
   const { id } = useParams();
 
+  const [trackingHistory, setTrackingHistory] = useState([])
+
 
   const getOrderDetails = async () => {
     setIsLoading(true)
     try {
       const response = await HttpClient.get(`/order/${id}`);
+
+      console.log("vresponse", response?.data)
 
       const formattedData = response?.data.map((order) => ({
         orderId: order.orderId,
@@ -43,9 +47,14 @@ const OrderDetails = () => {
         totalProduct: order.totalProduct,
         updatedAt: order.updatedAt,
         user: order.user,
+        trackingHistory: order?.trackingOrder?.tracking_history
+
       }));
 
+
       setOrders(formattedData);
+      console.log("formattedDataformattedDataformattedData", orders)
+
       setIsLoading(false)
 
     } catch (error) {
@@ -67,71 +76,94 @@ const OrderDetails = () => {
         isLoading ? <div className="flex justify-center h-screen items-center">
           <Loader />
 
-        </div> : <>  {orders.length > 0 ? (
-          orders.map((order, orderIndex) => (
-            <div key={orderIndex} className="border rounded-lg shadow-lg p-4 mb-6 bg-white">
+        </div> : <>
 
-              <div className="flex flex-wrap justify-between">
-                <div className="mb-4">
-                  <h2 className="text-lg font-bold">Order ID: {order.orderId}</h2>
-                  <p className="text-sm text-gray-600">
-                    Order Status: {order.orderStatus.map((status, i) => (
-                      <span key={i} className="block">
-                        {status.status} ({new Date(status.date).toLocaleDateString()})
-                      </span>
-                    ))}
-                  </p>
-                  <p className="text-sm text-gray-600">Payment Type: {order.paymentType}</p>
-                  <p className="text-sm text-gray-600">Seller ID: {order.seller}</p>
+
+          {orders.length > 0 ? (
+            orders.map((order, orderIndex) => (
+              <div key={orderIndex} className="border rounded-lg shadow-lg p-4 mb-6 bg-white">
+
+                <div className="flex flex-wrap justify-between">
+
+
+                  <div className="mb-1">
+                    <h3 className="text-md font-bold mb-2">Shipping Details:</h3>
+                    <p>{order.shippingDetails.name}</p>
+                    <p>{order.shippingDetails.address}</p>
+                    <p>{order.shippingDetails.city}, {order.shippingDetails.state}</p>
+                    <p>{order.shippingDetails.postalCode}</p>
+                    <p>{order.shippingDetails.mobileNumber}</p>
+                  </div>
+
+                  <div className="mb-1">
+                    <h2 className="text-lg font-bold">Order ID: {order.orderId}</h2>
+                    <p className="text-sm text-gray-600">
+
+                    </p>
+                    <p className="text-sm text-gray-600">Payment Type: {order.paymentType}</p>
+                    <p className="text-sm text-gray-600">Seller ID: {order.seller}</p>
+                  </div>
+
                 </div>
 
-                <div className="mb-4">
-                  <h3 className="text-md font-bold mb-2">Shipping Details:</h3>
-                  <p>{order.shippingDetails.name}</p>
-                  <p>{order.shippingDetails.address}</p>
-                  <p>{order.shippingDetails.city}, {order.shippingDetails.state}</p>
-                  <p>{order.shippingDetails.postalCode}</p>
-                  <p>{order.shippingDetails.mobileNumber}</p>
-                </div>
-
-              </div>
-
-              <div className="mb-4">
-                <h3 className="text-md font-bold mb-2">Products:</h3>
-                {order.products.map((product, productIndex) => (
-                  <div key={productIndex} className="flex items-start gap-4 mb-4 border-b pb-4">
-                    <img
-                      src={product.bannerImage}
-                      alt={product.name}
-                      className="w-24 h-24 object-cover rounded-md"
-                    />
-                    <div>
-                      <h4 className="text-sm font-bold">{product.name}</h4>
-                      <p className="text-sm text-gray-600">Color: {product.color}</p>
-                      <p className="text-sm text-gray-600">Size: {product.size}</p>
-                      <p className="text-sm text-gray-600">Quantity: {product.quantity}</p>
-                      <p className="text-sm text-gray-600">Price: ₹{product.price}</p>
-                      <p className="text-sm text-green-600">
-                        Discounted Price: ₹{product.discountedPrice}
-                      </p>
+                <div className="mb-2">
+                  <h3 className="text-md font-bold mb-2">Products Detail:</h3>
+                  {order.products.map((product, productIndex) => (
+                    <div key={productIndex} className="flex items-start gap-4 mb-4 border-b pb-4">
+                      <img
+                        src={product.bannerImage}
+                        alt={product.name}
+                        className="w-24 h-24 object-cover rounded-md"
+                      />
+                      <div>
+                        <h4 className="text-sm font-bold">{product.name}</h4>
+                        <p className="text-sm text-gray-600">Color: {product.color}</p>
+                        <p className="text-sm text-gray-600">Size: {product.size}</p>
+                        <p className="text-sm text-gray-600">Quantity: {product.quantity}</p>
+                        <p className="text-sm text-gray-600">Price: ₹{product.price}</p>
+                        <p className="text-sm text-green-600">
+                          Discounted Price: ₹{product.discountedPrice}
+                        </p>
+                      </div>
                     </div>
+                  ))}
+                </div>
+
+
+                {order?.trackingHistory?.map((history, index) => (
+                  <div key={history._id} className="p-4 border-b border-gray-200">
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      Status: {history.status || "N/A"}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      Status Code: {history.status_code || "N/A"}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      LSP Status: {history.lsp_status || "N/A"}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Remarks: {history.remarks || "No remarks available"}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Location: {history.location || "Not provided"}
+                    </p>
                   </div>
                 ))}
-              </div>
 
-              <div>
-                <p className="text-sm text-gray-600">
-                  Total Products: {order.totalProduct}
-                </p>
-                <p className="text-sm text-gray-600">
-                  Updated At: {new Date(order.updatedAt).toLocaleString()}
-                </p>
+
+                <div>
+                  <p className="text-sm text-gray-600">
+                    Total Products: {order.totalProduct}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Updated At: {new Date(order.updatedAt).toLocaleString()}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <p className="text-center text-gray-600">No orders found.</p>
-        )}
+            ))
+          ) : (
+            <p className="text-center text-gray-600">No orders found.</p>
+          )}
 
         </>
       }
