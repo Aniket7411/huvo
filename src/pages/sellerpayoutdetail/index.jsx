@@ -56,12 +56,15 @@ const SellerPayoutDetail = () => {
             });
 
             setCalculatedData({
-                amount: response.amount, // Adjust based on your API response structure
+                amount: response?.amount, // Adjust based on your API response structure
                 sellerId: sellerId,
                 sellerName: sellerName,
                 startDate: startDate,
-                endDate: endDate
+                endDate: endDate,
+                adminData: response?.adminData
             });
+
+            console.log("responseresponse", calculatedData)
             setSelectedSeller(sellerId);
             setIsModalOpen(true);
             toast.success("Payout calculated successfully");
@@ -181,14 +184,43 @@ const SellerPayoutDetail = () => {
 
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 space-x-2">
-                                    <button
-                                        onClick={() => getPayout(item?.vendorId, `${item?.firstName} ${item?.lastName}`)}
-                                        className="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-                                        disabled={isLoading}
-                                    >
-                                        {isLoading && selectedSeller === item?.vendorId ? 'Calculating...' : 'Calculate'}
-                                    </button>
+                                    {isLoading && selectedSeller === item?.vendorId ? (
+                                        // Show loader when loading
+                                        <div className="flex items-center space-x-2">
+                                            <svg
+                                                className="w-5 h-5 text-blue-600 animate-spin"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <circle
+                                                    className="opacity-25"
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="10"
+                                                    stroke="currentColor"
+                                                    strokeWidth="4"
+                                                ></circle>
+                                                <path
+                                                    className="opacity-75"
+                                                    fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8v8H4zm2 5.291l6.707-6.707 1.414 1.414L7.414 18H12a8 8 0 01-8-8v5.291z"
+                                                ></path>
+                                            </svg>
+                                            <span>Calculating...</span>
+                                        </div>
+                                    ) : (
+                                        // Show button when not loading
+                                        <button
+                                            onClick={() => getPayout(item?.vendorId, `${item?.firstName} ${item?.lastName}`)}
+                                            className="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                                            disabled={isLoading}
+                                        >
+                                            Calculate
+                                        </button>
+                                    )}
                                 </td>
+
                             </tr>
                         ))}
                     </tbody>
@@ -228,11 +260,46 @@ const SellerPayoutDetail = () => {
                             <span className="text-gray-600">To Date:</span>
                             <span className="font-medium">{calculatedData?.endDate}</span>
                         </div>
+
+                        {calculatedData.adminData.length > 0 && (
+                            <table className="min-w-full divide-y divide-gray-200 border">
+                                <thead className="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            User Paid
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Seller Received
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Platform Received
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Shipping Fee
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                    {calculatedData.adminData.map((data, index) => (
+                                        <tr key={index}>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{data.userPaid}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{data.sellerRecieved}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{data.platformRecieved}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{data.shippingFee}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        )}
                         <div className="flex justify-between border-t pt-2">
                             <span className="text-gray-600 font-semibold">Amount:</span>
                             <span className="font-bold text-lg">₹{calculatedData?.amount || '0.00'}</span>
                         </div>
                     </div>
+
+
+
+
 
                     <div className="flex justify-end space-x-3">
                         <button
@@ -244,7 +311,6 @@ const SellerPayoutDetail = () => {
                         <button
                             onClick={handleMakePayment}
                             className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:bg-green-300"
-                            disabled={isLoading}
                         >
                             {isLoading ? 'Processing...' : 'Make Payment'}
                         </button>

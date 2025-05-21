@@ -3,7 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { GrUserAdmin } from "react-icons/gr";
 
 
-import { MdSignalCellularAlt } from "react-icons/md";
+import { MdApproval, MdSignalCellularAlt } from "react-icons/md";
 import { FiTruck } from "react-icons/fi";
 import { BsWallet2 } from "react-icons/bs";
 import { BsReceipt } from "react-icons/bs";
@@ -183,7 +183,7 @@ function SuperAdminNav() {
               <Link to="/admin/approval" className="flex items-center gap-2 ">
                 <button className="flex justify-center items-center gap-4    p-2">
                   <div className="p-2 iconDiv">
-                    <BsPerson size={21} className="icon" />
+                    <MdApproval  size={21} className="icon" />
                   </div>
                   Approvals
                 </button>
