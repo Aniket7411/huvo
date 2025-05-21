@@ -45,8 +45,8 @@ export default function Login() {
       }
       LogIn(response);
       toast.success("Login Successful");
-      localStorage.setItem("role", response?.userData?.role)
-      localStorage.setItem("role", response?.userData?.role)
+      localStorage.setItem("role", response?.userData?.role);
+      localStorage.setItem("role", response?.userData?.role);
 
 
       if (response?.userData?.role === "SELLER") {
