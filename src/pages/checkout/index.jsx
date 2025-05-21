@@ -26,6 +26,7 @@ import IndiaTime from "../../components/getIndiaTime";
 import Loader from "../../components/loader";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 import { FormItemPrefixContext } from "antd/es/form/context";
+import { FormItemPrefixContext } from "antd/es/form/context";
 
 export default function CheckOut() {
   const navigate = useNavigate();
@@ -40,6 +41,9 @@ export default function CheckOut() {
   const [isOpenAddress, setIsOpenAddress] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   // const { products, addProduct } = useContext(ProductContext);
+  const [cgst, setCgst] = useState()
+  const [sgst, setSgst] = useState()
+  const [totalAmount, setTotalAmount] = useState()
   const [cgst, setCgst] = useState()
   const [sgst, setSgst] = useState()
   const [totalAmount, setTotalAmount] = useState()
@@ -102,6 +106,7 @@ export default function CheckOut() {
       setCartProducts(data);
       setSgst(response?.cgst)
       setCgst(response?.sgst)
+      setTotalAmount(response?.totalAmount)
 
 
       setIsLoading(false)
@@ -144,10 +149,29 @@ export default function CheckOut() {
     }
   };
 
+  const openDialogForProduct = async (productIdName) => {
+
+    try {
+      const { product } = await HttpClient.get(
+        `/product/${cartProducts[productIdName]?.productId}`
+      );
+      setProductSize(product?.sizes);
+      setStock(
+        product?.sizes.filter(
+          (item) => item.size === cartProducts[productIdName]?.size
+        )[0]?.stock
+      );
+      setSelectedProduct(productIdName);
+      setSelectedQuantity(cartProducts[productIdName]?.quantity.toString());
+      setSelectedSize(cartProducts[productIdName]?.size);
+      setIsOpen(true);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message);
+    }
+  };
 
 
-
-  console.log("totalCartData", totalCartData)
 
   const addAddress = async (data) => {
     try {
@@ -415,7 +439,7 @@ export default function CheckOut() {
                       <div className="md:w-8/12">
 
 
-                    
+
 
                         {Object.keys(totalCartData).map((key, i) => (
                           <div

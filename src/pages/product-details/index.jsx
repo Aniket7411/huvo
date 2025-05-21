@@ -25,6 +25,7 @@ export default function ProductDetails() {
 
 
 
+
   const openPaymentModal = () => {
     setIsPaymentModalOpen(true);
     // Prevent scrolling on the background
