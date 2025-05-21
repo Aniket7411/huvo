@@ -51,6 +51,9 @@ export default function Login() {
 
       if (response?.userData?.role === "SELLER") {
         navigate("/seller");
+        if(response?.userData?.verificationStatus === false){
+          toast.info("Kindly go to profile and update it for furthur process.")
+        }
       } else if (response?.userData?.role === "ADMIN") {
         navigate("/admin");
 
