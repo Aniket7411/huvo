@@ -261,7 +261,7 @@ const SellerPayoutDetail = () => {
                             <span className="font-medium">{calculatedData?.endDate}</span>
                         </div>
 
-                        {calculatedData.adminData.length > 0 && (
+                        {calculatedData?.adminData?.length > 0 && (
                             <table className="min-w-full divide-y divide-gray-200 border">
                                 <thead className="bg-gray-50">
                                     <tr>
@@ -280,7 +280,7 @@ const SellerPayoutDetail = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                    {calculatedData.adminData.map((data, index) => (
+                                    {calculatedData?.adminData?.map((data, index) => (
                                         <tr key={index}>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{data.userPaid}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{data.sellerRecieved}</td>

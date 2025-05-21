@@ -26,7 +26,6 @@ import IndiaTime from "../../components/getIndiaTime";
 import Loader from "../../components/loader";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 import { FormItemPrefixContext } from "antd/es/form/context";
-import { FormItemPrefixContext } from "antd/es/form/context";
 
 export default function CheckOut() {
   const navigate = useNavigate();
@@ -44,9 +43,7 @@ export default function CheckOut() {
   const [cgst, setCgst] = useState()
   const [sgst, setSgst] = useState()
   const [totalAmount, setTotalAmount] = useState()
-  const [cgst, setCgst] = useState()
-  const [sgst, setSgst] = useState()
-  const [totalAmount, setTotalAmount] = useState()
+
 
   const [isOpenCoupon, setIsOpenCoupon] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
