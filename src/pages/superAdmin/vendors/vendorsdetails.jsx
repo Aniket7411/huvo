@@ -238,7 +238,7 @@ export default function Vendorsdetail() {
         Add Coupons
     </button>
     </Link>
-</div>
+</div>  
     </div>
 </Card>
 

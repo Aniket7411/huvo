@@ -334,10 +334,10 @@ export default function Header(props) {
 
           <button
             onClick={() => {
-              if (loginStatus === 0) {
-                navigate("/checkout/cart/not_login");
-              } else {
+              if (isLoggedIn()) {
                 navigate("/checkout/cart");
+              } else {
+                navigate("/checkout/cart/not_login");
               }
             }}
 
@@ -370,7 +370,7 @@ export default function Header(props) {
           </button>
 
           {
-             !isLoggedIn() ? 
+            !isLoggedIn() ?
 
               <Link to="/login">
                 <p className="p-2   text-[#fff] text-lg cursor-pointer" >Login</p>
@@ -515,7 +515,7 @@ export default function Header(props) {
             <HiOutlineShoppingBag
               size={25}
               onClick={() => {
-                if ( isLoggedIn() ) {
+                if (!isLoggedIn()) {
                   navigate("/checkout/cart/not_login");
                 } else {
                   navigate("/checkout/cart");
@@ -560,7 +560,7 @@ export default function Header(props) {
                 {Object.keys(cart).length}
               </span>
             )}
-          
+
 
 
           </button>
