@@ -792,7 +792,7 @@ function ProductAddPage() {
             <label className="block text-md font-medium text-gray-700">
               Colors
             </label>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-2">
               {colorWithImages?.map((item, i) => {
                 return (
                   <div key={i}>
@@ -872,7 +872,7 @@ function ProductAddPage() {
               })}
             </div>
 
-            <button
+            {/* <button
               type="button"
               className="bg-blue-500 text-white px-2 py-1 rounded-md"
               onClick={() =>
@@ -886,9 +886,9 @@ function ProductAddPage() {
               }
             >
               Add More Color
-            </button>
+            </button> */}
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Banner Image
             </label>
