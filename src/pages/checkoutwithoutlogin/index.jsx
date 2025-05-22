@@ -375,7 +375,7 @@ export default function CheckOutWithoutLogin() {
 
                         {Object.keys(cartProducts).map((key, i) => (
                           <div
-                            className="border border-gray-200 p-3 sm:p-4 rounded-lg my-3 sm:my-4 font-[Poppins] relative bg-white shadow-sm hover:shadow-md transition-all duration-200"
+                            className="border border-gray-200 p-3 sm:p-4 rounded-lg mb-2 font-[Poppins] relative bg-white shadow-sm hover:shadow-md transition-all duration-200"
                             key={i}
                           >
                             {/* Remove Button (Top-right) */}

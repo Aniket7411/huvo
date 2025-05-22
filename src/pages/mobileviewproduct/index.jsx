@@ -43,7 +43,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                   </div>
 
                   {/* Pricing */}
-                  <div className="flex gap-3 items-center text-sm mb-1">
+                  <div className="flex justify-between items-center text-sm mb-1">
                     <p className="line-through font-medium text-red-600">{product?.actualPrice || "N/A"}</p>
                     <div className="flex items-center gap-1 text-green-600">
                       <PiCurrencyInr />
@@ -54,7 +54,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                   </div>
                   <Link to={`/product-details/${product?.productId}`}>
                     <button className="bg-blue-600 text-white px-2 py-1 rounded-md flex items-center gap-2 hover:bg-blue-700 transition-all">
-                      View <FaArrowRight className="w-4 h-4" />
+                      Views <FaArrowRight className="w-4 h-4" />
                     </button>
                   </Link>
                 </div>

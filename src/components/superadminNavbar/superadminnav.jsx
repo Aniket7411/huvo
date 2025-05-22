@@ -43,6 +43,7 @@ function SuperAdminNav() {
           <Link to="/">
 
             <img src="/assets/newlogo.jpeg" alt="Logo" className="w-[100px] h-[20px] mb-5" />
+            </Link>
         </div>
 
         <hr className=' bg-gray-500 mx-10'></hr>

@@ -115,7 +115,7 @@ export default function WishList() {
                         <span className="text-xs text-gray-500">(New)</span>
                       </div>
                       {/* Pricing */}
-                      <div className="flex gap-3 items-center text-sm mb-1">
+                      <div className="flex justify-between items-center text-sm mb-1">
                         <p className=" font-medium ">{eachProduct?.size || "N/A"}</p>
                         <div className="flex items-center gap-1 text-green-600">
                           <PiCurrencyInr />

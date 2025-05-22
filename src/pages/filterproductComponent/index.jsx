@@ -197,7 +197,7 @@ const ProductsShowingComponent = (props) => {
               Search Results for '{searchQuery}'
             </h1>
           ) : (
-            <h1 className="font-bold font-inter text-md md:text-3xl px-2 text-gray-500">
+            <h1 className="font-bold mb-2 font-inter text-md md:text-3xl px-2 text-gray-500">
               Exploring Products You'll Love!
             </h1>
           )}
@@ -213,7 +213,7 @@ const ProductsShowingComponent = (props) => {
             <>
               {/* small screen */}
 
-              <div className="flex md:hidden flex-wrap   p-2 justify-center items-center gap-1">
+              <div className="flex md:hidden flex-wrap justify-center items-center gap-1">
 
                 {
                   filteredProducts && filteredProducts.length > 0 ? (
@@ -227,12 +227,35 @@ const ProductsShowingComponent = (props) => {
                         />
                         <div className="px-3">
                           <h1 className="text-[blue] font-semibold text-sm mt-1 mb-1">
-                            {eachProduct?.productName ? eachProduct.productName.slice(0, 7) : "Product Name"}
+                          {eachProduct?.name?.length > 20 ? `${eachProduct.name.slice(0, 25)}` : eachProduct?.name || "Product Name"}
                           </h1>
                           {/* Stars */}
+
+
+                              <div className="flex gap-2 justify-between mb-1 items-center">
+
+                          <p className="text-gray-600 text-sm ">
+                            {eachProduct?.brandName || "Unknown Brand"}
+                          </p>
+                          <div
+                            className={`px-1 py-1 text-[8px] flex items-center rounded-md gap-1 text-white ${4.5 >= 3.5
+                              ? "bg-green-500"
+                              : 4.5 >= 3
+                                ? "bg-yellow-500"
+                                : "bg-red-400"
+                              }`}
+                          >
+                            {
+                              eachProduct?.totalRating >= 50 ?
+                                eachProduct?.avgRating : "New"
+                            }
+                            <TbJewishStarFilled className="text-sm" />
+                          </div>
+
+                        </div>
                       
                           {/* Pricing */}
-                          <div className="flex gap-3 items-center text-sm mb-1">
+                          <div className="flex justify-between items-center text-sm mb-1">
                             <p className="line-through font-medium text-red-600">{eachProduct?.actualPrice || "N/A"}</p>
                             <div className="flex items-center gap-1 text-green-600">
                               <PiCurrencyInr />
@@ -248,9 +271,9 @@ const ProductsShowingComponent = (props) => {
 
 
                         <div className="flex justify-between items-center">
-                          <h1 className="text-black font-semibold text-lg line-clamp-2">
+                          {/* <h1 className="text-black font-semibold text-lg line-clamp-2">
                             {eachProduct?.name?.length > 20 ? `${eachProduct.name.slice(0, 25)}` : eachProduct?.name || "Product Name"}
-                          </h1>
+                          </h1> */}
 
 
 
@@ -261,27 +284,7 @@ const ProductsShowingComponent = (props) => {
 
 
 
-                        <div className="flex gap-2 justify-between mb-1 items-center">
-
-                          <p className="text-gray-600 text-md ">
-                            {eachProduct?.brandName || "Unknown Brand"}
-                          </p>
-                          <div
-                            className={`px-2 py-1 flex items-center rounded-md gap-1 text-white ${4.5 >= 3.5
-                              ? "bg-green-500"
-                              : 4.5 >= 3
-                                ? "bg-yellow-500"
-                                : "bg-red-400"
-                              }`}
-                          >
-                            {
-                              eachProduct?.totalRating >= 50 ?
-                                eachProduct?.avgRating : "New"
-                            }
-                            <TbJewishStarFilled className="text-sm" />
-                          </div>
-
-                        </div>
+                    
                       </div>
                     ))
                   ) : (

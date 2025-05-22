@@ -26,7 +26,6 @@ import IndiaTime from "../../components/getIndiaTime";
 import Loader from "../../components/loader";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 import { FormItemPrefixContext } from "antd/es/form/context";
-import { FormItemPrefixContext } from "antd/es/form/context";
 
 export default function CheckOut() {
   const navigate = useNavigate();
@@ -44,9 +43,7 @@ export default function CheckOut() {
   const [cgst, setCgst] = useState()
   const [sgst, setSgst] = useState()
   const [totalAmount, setTotalAmount] = useState()
-  const [cgst, setCgst] = useState()
-  const [sgst, setSgst] = useState()
-  const [totalAmount, setTotalAmount] = useState()
+
 
   const [isOpenCoupon, setIsOpenCoupon] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -125,7 +122,7 @@ export default function CheckOut() {
         productIdName,
       });
       toast.success(message);
-      fetchCartProducts();
+      await  fetchCartProducts();
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -443,7 +440,7 @@ export default function CheckOut() {
 
                         {Object.keys(totalCartData).map((key, i) => (
                           <div
-                            className="border border-gray-200 p-3 sm:p-4 rounded-lg my-3 sm:my-4 font-[Poppins] relative bg-white shadow-sm hover:shadow-md transition-all duration-200"
+                            className="border border-gray-200 p-3 sm:p-4 rounded-lg mb-2 font-[Poppins] relative bg-white shadow-sm hover:shadow-md transition-all duration-200"
                             key={i}
                           >
                             {/* Remove Button (Top-right) */}
@@ -642,7 +639,7 @@ export default function CheckOut() {
                               </p>
                             </div>
 
-                            <div className="flex justify-between text-gray-700 mb-2">
+                            <div className="flex justify-between text-gray-700 ">
                               {/* <p>SGST</p>
                               <p className="flex items-center text-green-600 font-medium">
                                 + <PiCurrencyInr className="mr-1" />
@@ -671,7 +668,7 @@ export default function CheckOut() {
                           </div>
 
                           <button
-                            className={`font-[Quicksand] bg-blue-900 text-white rounded-md py-3 px-8 w-full mt-4
+                            className={`font-[Quicksand] bg-blue-900 text-white rounded-md py-3 px-8 w-full
       ${Object.keys(cartProducts).length === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-[#011F4B] transition-colors"}`}
                             onClick={() => setSelectedIndex(1)}
                             disabled={Object.keys(cartProducts).length === 0}
@@ -918,7 +915,7 @@ export default function CheckOut() {
                         {/* Offers and Payment Mode */}
                         <div className="md:w-8/12">
                           {/* Bank Offers */}
-                          <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-2">
+                          {/* <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-2">
                             <details>
                               <summary className="text-[#011F4B] font-medium text-lg cursor-pointer flex items-center gap-2">
                                 <BiSolidOffer className="fill-[#011F4B]" />
@@ -928,7 +925,7 @@ export default function CheckOut() {
                                 7% Discount with Shopping Cart
                               </p>
                             </details>
-                          </div>
+                          </div> */}
 
                           {/* Payment Modes */}
                           <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-3">
@@ -1204,7 +1201,7 @@ export default function CheckOut() {
                           </div>
 
                           <button
-                            className={`font-[Quicksand] bg-blue-900 text-white rounded-md py-3 px-8 w-full mt-4
+                            className={`font-[Quicksand] bg-blue-900 text-white rounded-md py-3 px-8 w-full
       ${Object.keys(cartProducts).length === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-[#011F4B] transition-colors"}`}
                             onClick={() => setSelectedIndex(1)}
                             disabled={Object.keys(cartProducts).length === 0}
