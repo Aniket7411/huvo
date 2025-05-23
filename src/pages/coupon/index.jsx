@@ -1,262 +1,232 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { HttpClient } from "../../server/client/http";
-import { FiPlus } from "react-icons/fi";
-import Loader from "../../components/loader";
-import SellerCoupons from "../sellercoupons";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Modal from 'react-modal';
+import { HttpClient } from '../../server/client/http';
+import { toast } from 'react-toastify';
 
-function CouponList() {
-    const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [showCouponForm, setShowCouponForm] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [selectedGroup, setSelectedGroup] = useState("");
-    const [couponData, setCouponData] = useState({
-        name: "",
-        discountPercentage: "",
-        validFrom: "",
-        validUntil: ""
+Modal.setAppElement('#root'); // For accessibility
+
+const CouponManagement = () => {
+    const [coupons, setCoupons] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [formData, setFormData] = useState({
+        couponCode: '',
+        couponName: '',
+        couponUsageLimit: '',
+        discount: ''
     });
-    const navigate = useNavigate();
-
-    const fetchCategories = async () => {
-        try {
-            setLoading(true);
-            const { categories } = await HttpClient.get("/category");
-            setCategories(categories || []);
-        } catch (error) {
-            console.error(error);
-            toast.error(error?.response?.data?.message || "Failed to fetch categories");
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setCouponData(prev => ({
-            ...prev,
+        setFormData({
+            ...formData,
             [name]: value
-        }));
+        });
     };
 
-    const handleCategoryChange = (e) => {
-        setSelectedCategory(e.target.value);
-        setSelectedGroup(""); // Reset group when category changes
-    };
+    const getCouponList = async () => {
+        try {
+            const response = await HttpClient.get("/coupon/list")
+            console.log("responsecoupon", response)
+           
+            const formattedData = response?.coupons.map((each) => ({
+                couponCode: each?.couponCode,
+                couponName:each?.couponName,
+                couponUsageLimit:each?.couponUsageLimit,
+                discount:each?.discount,
+                couponId:each?._id
+,
+
+            }))
+
+            console.log("formattedData",formattedData)
+            setCoupons(formattedData)
+        } catch (error) {
+
+        }
+    }
+
+    useEffect(() => {
+        getCouponList()
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!selectedCategory || !selectedGroup) {
-            toast.error("Please select both category and group");
-            return;
-        }
-
-        if (!couponData.name || !couponData.discountPercentage) {
-            toast.error("Please fill all coupon details");
-            return;
-        }
-
-
+        console.log(formData)
         try {
-            setLoading(true);
-            const payload = {
-                ...couponData,
-                categoryId: selectedCategory,
-                group: selectedGroup,
-                discountPercentage: Number(couponData.discountPercentage)
-            };
 
-            console.log(payload)
-
-            await HttpClient.post("/coupons", payload);
-            toast.success("Coupon created successfully!");
-            setShowCouponForm(false);
-            setCouponData({
-                name: "",
-                discountPercentage: "",
-                validFrom: "",
-                validUntil: ""
+            // Refresh the list
+            const response = await HttpClient.post("/coupon", formData);
+            setCoupons(response.data);
+            setIsModalOpen(false);
+            setFormData({
+                couponCode: '',
+                couponName: '',
+                couponUsageLimit: '',
+                discount: ''
             });
+            toast.success(response?.message)
         } catch (error) {
-            console.error(error);
-            toast.error(error?.response?.data?.message || "Failed to create coupon");
-        } finally {
-            setLoading(false);
+            console.error('Error adding coupon:', error);
         }
     };
 
-    useEffect(() => {
-        fetchCategories();
-    }, []);
-
-
-    const capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    };
+    const handleDelete = async (id) => {
+        console.log(id)
+        try {
+            const response = await HttpClient.delete(`/coupon/${id}`)
+            console.log(response)
+            toast.success(response?.message)
+            getCouponList()
+        } catch (error) {
+            toast.error(error?.message)
+        }
+    }
 
     return (
-        <div className="p-4  mx-auto">
-            <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl font-bold">Seller Details</h2>
-                <button
-                    onClick={() => setShowCouponForm(!showCouponForm)}
-                    className="bg-[#011f4b] text-white text-sm px-2 py-1 rounded-md transition"
-                >
-                    {showCouponForm ? "View Coupons" : "Add New Coupon"}
-                </button>
+        <div className="container mx-auto px-4 py-8">
+            <h1 className="text-3xl font-bold mb-6">Coupon Management</h1>
+
+            {/* Add Coupon Button */}
+            <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mb-6"
+            >
+                Add New Coupon
+            </button>
+
+            {/* Coupons Table */}
+            <div className="overflow-x-auto">
+                <table className="min-w-full bg-white border border-gray-200">
+                    <thead>
+                        <tr className="bg-gray-100">
+                            <th className="py-2 px-4 border">Coupon Code</th>
+                            <th className="py-2 px-4 border">Coupon Name</th>
+                            <th className="py-2 px-4 border">Discount (₹)</th>
+                            <th className="py-2 px-4 border">Max Users</th>
+                            <th className="py-2 px-4 border">Used</th>
+                            <th className="py-2 px-4 border">Remaining</th>
+                            <th className="py-2 px-4 border">Remove</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {coupons?.map((coupon) => (
+                            <tr key={coupon?.id} className="hover:bg-gray-50">
+                                <td className="py-2 px-4 border text-center">{coupon?.couponCode}</td>
+                                <td className="py-2 px-4 border text-center">{coupon?.couponName}</td>
+                                <td className="py-2 px-4 border text-center">₹{coupon?.discount}</td>
+                                <td className="py-2 px-4 border text-center">{coupon?.couponUsageLimit}</td>
+                                <td className="py-2 px-4 border text-center">{coupon?.usedCount || 0}</td>
+                                <td className="py-2 px-4 border text-center">{coupon?.couponUsageLimit}</td>
+                                <td className="py-2 px-4 border text-center">
+                                    <button
+                                        onClick={() => handleDelete(coupon?.couponId)}
+                                        className="bg-blue-600 rounded-md text-sm  hover:bg-blue-800 text-[#fff] px-2 py-1"
+                                    >
+                                        <i className="fas fa-trash-alt"></i> Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
 
-            {showCouponForm && (
-                <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-                    <h3 className="text-xl font-semibold mb-4">Create New Coupon</h3>
+            {/* Add Coupon Modal */}
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                className="modal"
+                overlayClassName="overlay"
+            >
+                <div className="bg-white p-6 rounded-lg max-w-md mx-auto mt-10">
+                    <h2 className="text-xl font-bold mb-4">Add New Coupon</h2>
                     <form onSubmit={handleSubmit}>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Category</label>
-                                <select
-                                    value={selectedCategory}
-                                    onChange={handleCategoryChange}
-                                    className="w-full border p-2 rounded-md"
-                                    required
-                                >
-                                    <option value="">Select Category</option>
-                                    {categories.map(category => (
-                                        <option key={category._id} value={category._id}>
-                                            {category.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Group</label>
-                                <select
-                                    value={selectedGroup}
-                                    onChange={(e) => setSelectedGroup(e.target.value)}
-                                    className="w-full border p-2 rounded-md"
-                                    required
-                                    disabled={!selectedCategory}
-                                >
-                                    <option value="">Select Group</option>
-
-                                    <option value="men" >Men</option>
-                                    <option value="women">Women</option>
-                                    <option value="kids">Kids</option>
-
-                                </select>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Coupon Name</label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={couponData.name}
-                                    onChange={handleInputChange}
-                                    placeholder="e.g. SUMMER20"
-                                    className="w-full border p-2 rounded-md"
-                                    required
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Discount Percentage</label>
-                                <input
-                                    type="number"
-                                    name="discountPercentage"
-                                    value={couponData.discountPercentage}
-                                    onChange={handleInputChange}
-                                    placeholder="e.g. 20"
-                                    min="1"
-                                    max="100"
-                                    className="w-full border p-2 rounded-md"
-                                    required
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Valid From</label>
-                                <input
-                                    type="date"
-                                    name="validFrom"
-                                    value={couponData.validFrom}
-                                    onChange={handleInputChange}
-                                    min={new Date().toISOString().split('T')[0]} // Sets minimum to today's date
-                                    className="w-full border p-2 rounded-md"
-                                    required
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Valid Until</label>
-                                <input
-                                    type="date"
-                                    name="validUntil"
-                                    value={couponData.validUntil}
-                                    onChange={handleInputChange}
-                                    min={couponData.validFrom || new Date().toISOString().split('T')[0]} // Minimum is either today or validFrom date
-                                    className="w-full border p-2 rounded-md"
-                                    required
-                                />
-                            </div>
-
-
+                        <div className="mb-4">
+                            <label className="block text-gray-700 mb-2">Coupon Code</label>
+                            <input
+                                type="text"
+                                name="couponCode"
+                                value={formData.couponCode}
+                                onChange={handleInputChange}
+                                className="w-full px-3 py-2 border rounded"
+                                required
+                            />
                         </div>
-
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition disabled:opacity-50"
-                        >
-                            {loading ? "Processing..." : "Create Coupon"}
-                        </button>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 mb-2">Coupon Name</label>
+                            <input
+                                type="text"
+                                name="couponName"
+                                value={formData.couponName}
+                                onChange={handleInputChange}
+                                className="w-full px-3 py-2 border rounded"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 mb-2">Max Users</label>
+                            <input
+                                type="number"
+                                name="couponUsageLimit"
+                                value={formData.couponUsageLimit}
+                                onChange={handleInputChange}
+                                className="w-full px-3 py-2 border rounded"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 mb-2">Discount (₹)</label>
+                            <input
+                                type="number"
+                                name="discount"
+                                value={formData.discount}
+                                onChange={handleInputChange}
+                                className="w-full px-3 py-2 border rounded"
+                                required
+                            />
+                        </div>
+                        <div className="flex justify-end space-x-3">
+                            <button
+                                type="button"
+                                onClick={() => setIsModalOpen(false)}
+                                className="px-4 py-2 bg-gray-300 rounded"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                className="px-4 py-2 bg-blue-600 text-white rounded"
+                            >
+                                Add Coupon
+                            </button>
+                        </div>
                     </form>
                 </div>
-            )}
+            </Modal>
 
-            {loading ? (
-                <div className="flex justify-center items-center h-64">
-                    <Loader />
-                </div>
-            ) : (
-                <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                    {/* <table className="w-full">
-                        <thead className="bg-gray-100">
-                            <tr>
-                                <th className="p-4 text-left">Name</th>
-                                <th className="p-4 text-left">Description</th>
-                                <th className="p-4 text-left">Groups</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {categories.map((category) => (
-                                <tr key={category._id} className="border-b hover:bg-gray-50">
-                                    <td className="p-4">{capitalizeFirstLetter(category.name)}</td>
-                                    <td className="p-4">{capitalizeFirstLetter(category.description)}</td>
-                                    <td className="p-4">
-                                        {category.group.map((group, i) => (
-                                            <span
-                                                key={group._id}
-                                                className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-                                            >
-                                                {capitalizeFirstLetter(group.name)}
-                                            </span>
-                                        ))}
-                                    </td>
-                                </tr>
-
-                            ))}
-                        </tbody>
-                    </table> */}
-
-                    <SellerCoupons />
-                </div>
-            )}
+            {/* Tailwind Modal Styling (Add to your CSS) */}
+            <style jsx global>{`
+        .modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          padding-top: 2rem;
+        }
+        .overlay {
+          z-index: 1000;
+        }
+      `}</style>
         </div>
     );
-}
+};
 
-export default CouponList;
+export default CouponManagement;

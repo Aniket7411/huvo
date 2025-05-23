@@ -332,9 +332,9 @@ export default function Home() {
 
   console.log("fffffk", allProducts)
 
-  const kidsProducts = allProducts.filter((item) => item.group === "kids").slice(0, 8);
-  const womenProducts = allProducts.filter((item) => item.group === "women").slice(0, 8);
-  const menProducts = allProducts.filter((item) => item.group === "men").slice(0, 8);
+  const kidsProducts = allProducts?.filter((item) => item?.group === "kids").slice(0, 8);
+  const womenProducts = allProducts?.filter((item) => item?.group === "women").slice(0, 8);
+  const menProducts = allProducts?.filter((item) => item?.group === "men").slice(0, 8);
 
   console.log("kidsProducts", kidsProducts)
   console.log("womenProducts", womenProducts)

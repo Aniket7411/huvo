@@ -51,6 +51,7 @@ export default function Header(props) {
   const hideTimeoutRef = useRef(null);
   const [wishListItems, setWishListItems] = useState()
   const [category, setCategory] = useState("product_search")
+  const [cartCount, setCartCount] = useState(0)
 
 
 
@@ -151,6 +152,25 @@ export default function Header(props) {
   };
 
 
+
+  const getCartNumber = async () => {
+    try {
+      const response = await HttpClient.get("/cart");
+
+      const count = Object.keys(response.data).length;
+      console.log("count", count);
+      setCartCount(count)
+
+    } catch (error) {
+
+    }
+  }
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      getCartNumber()
+    }
+  })
 
 
   const localCartItem = localStorage?.getItem("cart");
@@ -531,7 +551,7 @@ export default function Header(props) {
               </span> : <>
                 {Object?.keys(cart)?.length > 0 && (
                   <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-[#007bff] text-white text-xs font-bold rounded-full shadow">
-                    {localStoredCartCount}
+                    {cartCount}
                   </span>
                 )}
 

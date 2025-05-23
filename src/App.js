@@ -78,6 +78,7 @@ import OrderTracking from "./pages/trackorderstatus/index.jsx";
 import ScrollToTop from "./components/scrolltop/index.jsx";
 import SellerPayoutDetail from "./pages/sellerpayoutdetail/index.jsx";
 import SellerPayoutsList from "./pages/sellerproductlist/index.jsx";
+import CouponManagement from "./pages/coupon/index.jsx";
 
 function App() {
   return (
@@ -338,7 +339,7 @@ function App() {
             path="add_coupons"
             element={
               <Layout changeHeaderColor="true">
-                <CouponList />
+                <CouponManagement />
               </Layout>
             }
           />

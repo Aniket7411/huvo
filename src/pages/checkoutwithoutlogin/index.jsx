@@ -114,12 +114,11 @@ export default function CheckOutWithoutLogin() {
         delete updatedCart[productIdName]; // Remove the product by key
         toast.info("Product removed from cart");
 
-        // If the cart is empty after removing the product, set it as an empty object in local storage
-        if (Object.keys(updatedCart).length === 0) {
-          localStorage.setItem("cart", JSON.stringify({})); // Save empty object
-        } else {
-          localStorage.setItem("cart", (updatedCart)); // Save updated cart
-        }
+        // Save the updated cart in local storage
+        localStorage.setItem(
+          "cart",
+          JSON.stringify(Object.keys(updatedCart).length === 0 ? {} : updatedCart)
+        );
       } else {
         toast.error("Product not found in cart");
       }
@@ -318,6 +317,8 @@ export default function CheckOutWithoutLogin() {
   };
 
 
+  console.log(cartProducts)
+
   return (
 
 
@@ -432,7 +433,7 @@ export default function CheckOutWithoutLogin() {
                                 <div className="mb-3">
                                   <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
                                     <span className="text-lg font-bold text-gray-900">
-                                      ₹{(cartProducts[key]?.actualPrice - cartProducts[key]?.discount) * cartProducts[key]?.quantity || 0}
+                                      ₹{(cartProducts[key]?.price * cartProducts[key]?.quantity) || 0}
                                     </span>
                                     <span className="text-sm text-gray-500 line-through">
                                       ₹{cartProducts[key]?.actualPrice * cartProducts[key]?.quantity || 0}

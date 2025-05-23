@@ -43,6 +43,9 @@ export default function CheckOut() {
   const [cgst, setCgst] = useState()
   const [sgst, setSgst] = useState()
   const [totalAmount, setTotalAmount] = useState()
+  const [coupons, setCoupons] = useState([]);
+  const [appliedCoupon, setAppliedCoupon] = useState(null)
+
 
 
   const [isOpenCoupon, setIsOpenCoupon] = useState(false);
@@ -254,10 +257,10 @@ export default function CheckOut() {
     });
   };
 
+  console.log("appliedCouponappliedCoupon", appliedCoupon)
 
 
 
-  //console.log("card product", products)
   const orderPlace = async () => {
 
     console.log("kkk", totalCost * 18 / 100 + totalCost)
@@ -268,12 +271,12 @@ export default function CheckOut() {
 
     try {
       const response = await HttpClient.post("/order", {
-        totalAmount: Math.round(totalCost + (totalCost * 18) / 100),
+        totalAmount: Math.round(totalCost + (totalCost * 18) / 100) - (couponDiscount || 0),
         totalProduct: Object.keys(totalCartData)?.length,
         products: totalCartData,
+        couponId: appliedCoupon,
         paymentType,
         shippingDetails: shippingAddress,
-        couponCode,
         totalSgst: (totalCost * 18) / 100,
         totalCgst: (totalCost * 18) / 100,
       });
@@ -303,45 +306,9 @@ export default function CheckOut() {
     }
   };
 
-  const getAllCoupons = async () => {
-    if (localStorage.getItem('accessToken')) {
-      try {
-        const { coupons } = await HttpClient.get("/coupon/list");
-        setAllCoupon(coupons);
-      } catch (error) {
 
-        console.error(error);
-        toast.error(error?.response?.data?.message);
-      }
-    }
-    return;
-  };
 
-  const getCouponDetails = async (data) => {
-    if (localStorage.getItem('accessToken')) {
-      try {
-        setCouponCode(data?.couponCode);
-        const response = await HttpClient.get("/coupon", {
-          couponCode: data.couponCode,
-          totalAmount: totalMRP - totalDiscount,
-        });
-        couponReset();
-        if (response?.discountPrice) {
-          setCouponDiscount(response?.discountPrice);
-          setIsOpenCoupon(false);
-        }
-        response?.message
-          ? toast.error(response?.message)
-          : toast.success("Coupon Applied!");
-      } catch (error) {
-        console.log(error);
-        toast.error(error?.response?.data?.message);
-      }
-    }
 
-    return
-
-  };
 
   const onlinePayment = async () => {
     toast.error("This Payment method is not available!");
@@ -351,7 +318,6 @@ export default function CheckOut() {
   useEffect(() => {
     if (localStorage?.getItem("accessToken")) {
       fetchCartProducts();
-      getAllCoupons();
     }
   }, []);
 
@@ -400,11 +366,53 @@ export default function CheckOut() {
   const totalSum = calculateTotalSum(cartProducts);
   const totalprice = calculateTotalDiscount(cartProducts);
 
-  console.log("totalprice", totalprice)
 
   const totalDiscountOfProducts = totalSum - totalprice
 
-  console.log("totalDiscountOfProducts", totalDiscountOfProducts)
+
+
+
+  const getCouponList = async () => {
+    try {
+      const response = await HttpClient.get("/coupon/list")
+      console.log("responsecoupon", response)
+
+      const formattedData = response?.coupons.map((each) => ({
+        couponCode: each?.couponCode,
+        couponName: each?.couponName,
+        couponUsageLimit: each?.couponUsageLimit,
+        discount: each?.discount,
+        couponId: each?._id
+        ,
+
+      }))
+
+      console.log("formattedData", formattedData)
+      setCoupons(formattedData)
+    } catch (error) {
+
+    }
+  }
+
+  useEffect(() => {
+    getCouponList()
+  }, [])
+
+
+  const applyCoupon = async (couponCode) => {
+    console.log(couponCode)
+    try {
+      const response = await HttpClient.post("/coupon/apply", { couponCode })
+
+      console.log(response)
+      setAppliedCoupon(response?.couponId)
+      setCouponDiscount(parseInt(response?.discount))
+    } catch (error) {
+
+    }
+  }
+
+
 
   return (
 
@@ -494,20 +502,20 @@ export default function CheckOut() {
                                 </div>
 
                                 {/* Price Section (Stacked on mobile) */}
-                              
+
 
 
 
                                 <div className="mb-2">
                                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                                     <span className="text-xl font-bold text-gray-900">
-                                      ₹{(cartProducts[key]?.price * cartProducts[key]?.quantity  || 0).toLocaleString()}
+                                      ₹{(cartProducts[key]?.price * cartProducts[key]?.quantity || 0).toLocaleString()}
 
                                     </span>
 
                                     <div className="flex items-center gap-2">
                                       <span className="text-sm text-gray-500 line-through">
-                                                                              ₹{Math.abs((cartProducts[key]?.actualPrice) * cartProducts[key]?.quantity || 0).toLocaleString()}
+                                        ₹{Math.abs((cartProducts[key]?.actualPrice) * cartProducts[key]?.quantity || 0).toLocaleString()}
 
                                       </span>
 
@@ -637,57 +645,77 @@ export default function CheckOut() {
 
                       </div>
                       <div className="md:w-4/12">
-                        <div className="border-2 border-gray-300 p-5 rounded-lg font-[Poppins] bg-white shadow-md">
-                          <div>
-                            <p className="text-gray-800 font-semibold text-xl mt-2 mb-2">Price Details</p>
+                        <div className="border-2 border-gray-300 p-3 rounded-lg font-[Poppins] bg-white shadow-md">
+                          {coupons?.map((coupon) => (
+                            <ul key={coupon?.id} className="hover:bg-gray-50 border mb-1  rounded-lg  py-1 justify-between items-center flex flex-wrap">
+                              <li className=" text-center text-gray-700 font-medium">{coupon?.couponCode}</li>
+                              <li className=" text-center text-gray-700 ">{coupon?.couponName}</li>
+                              <li className=" text-center text-gray-700 ">₹{coupon?.discount}</li>
+                              <li className="">
+                                <button
+                                  onClick={() => applyCoupon(coupon?.couponCode)}
+                                  className="bg-green-600 hover:bg-green-800 text-white text-sm px-4 py-2 rounded-md transition-colors"
+                                // onClick={() => handleApplyCoupon(coupon)}
+                                >
+                                  Apply
+                                </button>
+                              </li>
+                            </ul>
+                          ))}
 
-                            <div className="flex justify-between text-gray-700 mb-3">
-                              <p>Total MRP</p>
-                              <p className="flex items-center font-medium">
-                                <PiCurrencyInr className="mr-1" />
-                                {totalSum}
-                              </p>
-                            </div>
+                          <p className="text-gray-800 font-semibold text-xl mt-2 mb-2">Price Details</p>
 
-                            <div className="flex justify-between text-gray-700 ">
-                              {/* <p>SGST</p>
-                              <p className="flex items-center text-green-600 font-medium">
-                                + <PiCurrencyInr className="mr-1" />
-                                {(totalCost * 9) / 100}
-                              </p> */}
+                          <div className="flex justify-between text-gray-700 mb-3">
+                            <p>Total MRP</p>
+                            <p className="flex items-center font-medium">
+                              <PiCurrencyInr className="mr-1" />
+                              {totalSum}
+                            </p>
+                          </div>
 
-                              <p>DISCOUNT</p>
-                              <p className="flex items-center text-green-600 font-medium">
-                                - <PiCurrencyInr className="mr-1" />
-                                {totalDiscountOfProducts}
-                              </p>
-                            </div>
+                          <div className="flex justify-between text-gray-700">
+                            <p>DISCOUNT</p>
+                            <p className="flex items-center text-green-600 font-medium">
+                              - <PiCurrencyInr className="mr-1" />
+                              {totalDiscountOfProducts}
+                            </p>
+                          </div>
 
+                          <div className="flex justify-between text-gray-700">
+                            <p>COUPON DISCOUNT</p>
+                            <p className="flex items-center text-green-600 font-medium">
+                              - <PiCurrencyInr className="mr-1" />
+                              {couponDiscount}
+                            </p>
+                          </div>
 
-                            <div className="border-t border-dashed border-gray-400 my-6"></div>
+                          <div className="border-t border-dashed border-gray-400 my-6"></div>
 
-                            <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-                              <p>Total Amount </p>
+                          <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
+                            <p>Total Amount </p>
+                            <p className="flex items-center">
+                              <PiCurrencyInr className="mr-1" />
                               <p className="flex items-center">
                                 <PiCurrencyInr className="mr-1" />
-
-
-                                {Math.round(totalCost + (totalCost * 18) / 100)}
+                                {Math.round(totalCost + (totalCost * 18) / 100) - parseInt(couponDiscount || 0)}
                               </p>
-                            </div>
+
+                            </p>
                           </div>
 
                           <button
-                            className={`font-[Quicksand] bg-blue-900 text-white rounded-md py-3 px-8 w-full
-      ${Object.keys(cartProducts).length === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-[#011F4B] transition-colors"}`}
+                            className={`font-[Quicksand] bg-blue-900 text-white rounded-md py-3 px-8 w-full ${Object.keys(cartProducts).length === 0
+                              ? "opacity-50 cursor-not-allowed"
+                              : "hover:bg-[#011F4B] transition-colors"
+                              }`}
                             onClick={() => setSelectedIndex(1)}
                             disabled={Object.keys(cartProducts).length === 0}
                           >
                             CONTINUE
                           </button>
                         </div>
-
                       </div>
+
                     </div>
                   </TabPanel>
                   <TabPanel>
@@ -891,17 +919,27 @@ export default function CheckOut() {
                           </div>
 
 
+                          <div className="flex justify-between text-gray-700">
+                            <p>COUPON DISCOUNT</p>
+                            <p className="flex items-center text-green-600 font-medium">
+                              - <PiCurrencyInr className="mr-1" />
+                              {couponDiscount}
+                            </p>
+                          </div>
+
 
                           <div className="border-dashed border-t border-gray-400 my-6"></div>
 
                           <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
                             <p>Total Amount </p>
+
+
                             <p className="flex items-center">
                               <PiCurrencyInr className="mr-1" />
-
-                              {Math.round(totalCost + (totalCost * 18) / 100)}
-
+                              {Math.round(totalCost + (totalCost * 18) / 100) - parseInt(couponDiscount || 0)}
                             </p>
+
+
                           </div>
 
                           <button
@@ -998,14 +1036,23 @@ export default function CheckOut() {
                           </div>
 
 
+                          <div className="flex justify-between text-gray-700">
+                            <p>COUPON DISCOUNT</p>
+                            <p className="flex items-center text-green-600 font-medium">
+                              - <PiCurrencyInr className="mr-1" />
+                              {couponDiscount}
+                            </p>
+                          </div>
+
                           <div className="border-t border-dashed border-gray-400 my-6"></div>
 
                           <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
                             <p>Total Amount </p>
                             <p className="flex items-center">
                               <PiCurrencyInr className="mr-1" />
-                              {Math.round(totalCost + (totalCost * 18) / 100)}
+                              {Math.round(totalCost + (totalCost * 18) / 100) - parseInt(couponDiscount || 0)}
                             </p>
+
                           </div>
 
                           <button
@@ -1597,119 +1644,7 @@ export default function CheckOut() {
               </div>
             </Dialog>
           </Transition>
-          <Transition appear show={isOpenCoupon}>
-            <Dialog
-              as="div"
-              className="relative z-10 focus:outline-none cart"
-              onClose={() => {
-                setIsOpenCoupon(false);
-                setFormData({});
-              }}
-            >
-              <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                <div className="flex min-h-full items-center justify-center p-4 bg-[rgba(0,0,0,.6)]">
-                  <TransitionChild
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 transform-[scale(95%)]"
-                    enterTo="opacity-100 transform-[scale(100%)]"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 transform-[scale(100%)]"
-                    leaveTo="opacity-0 transform-[scale(95%)]"
-                  >
-                    <DialogPanel className="w-full max-w-md rounded-xl bg-white text-black p-6 h-[80vh] overflow-scroll m-auto">
-                      <div className="mt-2 text-sm/6">
-                        <div className="pb-3 font-[Poppins] relative border-b">
-                          <button
-                            className="flex items-center justify-center absolute top-1 right-3 h-6 w-6 rounded-full bg-white font-bold text-xl"
-                            onClick={() => {
-                              setIsOpenCoupon(false);
-                              setFormData({});
-                            }}
-                            type="button"
-                          >
-                            <RxCross2 className="text-md" />
-                          </button>
-                          <p className="text-[#535353] font-medium text-lg text-center">
-                            APPLY COUPON
-                          </p>
-                        </div>
-                        <form onSubmit={couponHandleSubmit(getCouponDetails)}>
-                          <div className="my-3 relative">
-                            <input
-                              type="text"
-                              placeholder="Enter coupon code"
-                              className="w-full my-2 p-3 outline-none border-[1px] border-solid border-[#CBCBCB] rounded"
-                              {...couponRegister("couponCode")}
-                            />
-                            <button
-                              type="submit"
-                              className="absolute right-[5%] top-5 z-10 text-[#011F4B] font-semibold"
-                            >
-                              Apply
-                            </button>
-                          </div>
-                        </form>
-                        <div className="my-3">
-                          <h4 className="text-white font-medium text-base bg-[#535766] p-3 mb-3">
-                            UNLOCK COUPONS
-                          </h4>
-                          {allCoupon.length
-                            ? allCoupon.map((item, i) => {
-                              return (
-                                <div key={i}>
-                                  <div className="flex items-start gap-5 my-5 border-b border-solid pb-3">
-                                    <div className="w-full">
-                                      <div className="flex gap-5 justify-between">
-                                        <div className="text-base px-3 py-2 border-2 border-dashed">
-                                          {item.couponCode}
-                                        </div>
-                                        <button
-                                          // className="text-base px-3 py-2 bg-[#14CDA8]"
-                                          className={`text-base px-3 py-2 ${item.couponCode === couponCode
-                                            ? "bg-[#14CDA8]"
-                                            : "bg-[#011F4B] text-white"
-                                            }`}
-                                          onClick={() =>
-                                            getCouponDetails({
-                                              couponCode: item.couponCode,
-                                            })
-                                          }
-                                          disabled={
-                                            item.couponCode === couponCode
-                                          }
-                                        >
-                                          {item.couponCode === couponCode
-                                            ? "Applied"
-                                            : "Apply"}
-                                        </button>
-                                      </div>
-                                      <h5 className="my-3 text-base">
-                                        save ₹
-                                        {item.discountType === "percentage"
-                                          ? Math.round(
-                                            (totalMRP - totalDiscount) *
-                                            (item.discount / 100)
-                                          )
-                                          : item.discount}
-                                      </h5>
-                                      <h5 className="my-3 text-base">
-                                        Expire on :
-                                        <IndiaTime data={item.expirationTime} />
-                                      </h5>
-                                    </div>
-                                  </div>
-                                </div>
-                              );
-                            })
-                            : ""}
-                        </div>
-                      </div>
-                    </DialogPanel>
-                  </TransitionChild>
-                </div>
-              </div>
-            </Dialog>
-          </Transition>
+
         </div>
       }
     </>
