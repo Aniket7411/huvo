@@ -410,7 +410,7 @@ export default function CheckOut() {
         setCouponDiscount(parseInt(response?.discount))
         toast.success("Coupon Applied Successfully")
       }else {
-        toast.error("Coupon is not valid")
+        toast.error("Coupon either invalid or used before")
       }
 
     } catch (error) {
