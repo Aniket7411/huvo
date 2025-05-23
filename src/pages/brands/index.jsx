@@ -74,30 +74,30 @@ const BrandSlider = () => {
 
       <Slider {...settings}>
         {brands.map((brand) => (
-          <Link to={`/products_by_brand&seller/${brand.uniqueId}`} key={brand.uniqueId}>
-            <div className="px-1 sm:px-2">
-              <div className="flex flex-col items-center p-1 sm:p-2 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300">
-                <div className="relative">
-                  <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-tr from-blue-300 to-blue-500 p-1">
-                    <img
-                      src={brand.logo || brand.image}
-                      alt={brand.name}
-                      className="h-full w-full object-cover rounded-full border-2 border-white shadow-sm"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-                <p className="text-xs sm:text-sm font-semibold text-gray-700 mt-1 text-center">
-                  {brand.name}
-                </p>
-               
-                <div className="flex items-center justify-center space-x-1 mt-1">
-                  <TbJewishStarFilled className="text-yellow-400 w-3 h-3" />
-                  <span className="text-[10px] text-gray-600">4.5</span>
+          // <Link to={`/products_by_brand&seller/${brand.uniqueId}`} key={brand.uniqueId}>
+          <div className="px-1 sm:px-2">
+            <div className="flex flex-col items-center p-1 sm:p-2 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300">
+              <div className="relative">
+                <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-tr from-blue-300 to-blue-500 p-1">
+                  <img
+                    src={brand.logo || brand.image}
+                    alt={brand.name}
+                    className="h-full w-full object-cover rounded-full border-2 border-white shadow-sm"
+                    loading="lazy"
+                  />
                 </div>
               </div>
+              <p className="text-xs sm:text-sm font-semibold text-gray-700 mt-1 text-center">
+                {brand.name}
+              </p>
+
+              <div className="flex items-center justify-center space-x-1 mt-1">
+                <TbJewishStarFilled className="text-yellow-400 w-3 h-3" />
+                <span className="text-[10px] text-gray-600">4.5</span>
+              </div>
             </div>
-          </Link>
+          </div>
+          // </Link>
         ))}
       </Slider>
     </div>

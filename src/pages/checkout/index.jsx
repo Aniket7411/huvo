@@ -122,7 +122,7 @@ export default function CheckOut() {
         productIdName,
       });
       toast.success(message);
-      await  fetchCartProducts();
+      await fetchCartProducts();
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -494,17 +494,27 @@ export default function CheckOut() {
                                 </div>
 
                                 {/* Price Section (Stacked on mobile) */}
-                                <div className="mb-1">
-                                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
-                                    <span className="text-lg font-bold text-gray-900">
-                                      ₹{(cartProducts[key]?.actualPrice - cartProducts[key]?.discount) * cartProducts[key]?.quantity || 0}
+                              
+
+
+
+                                <div className="mb-2">
+                                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                    <span className="text-xl font-bold text-gray-900">
+                                      ₹{(cartProducts[key]?.price * cartProducts[key]?.quantity  || 0).toLocaleString()}
+
                                     </span>
-                                    <span className="text-sm text-gray-500 line-through">
-                                      ₹{cartProducts[key]?.actualPrice * cartProducts[key]?.quantity || 0}
-                                    </span>
-                                    <span className="text-xs font-medium text-green-600 bg-green-50 px-1.5 py-0.5 rounded">
-                                      Save ₹{((cartProducts[key]?.actualPrice - cartProducts[key]?.price) * cartProducts[key]?.quantity).toLocaleString() || 0}
-                                    </span>
+
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-sm text-gray-500 line-through">
+                                                                              ₹{Math.abs((cartProducts[key]?.actualPrice) * cartProducts[key]?.quantity || 0).toLocaleString()}
+
+                                      </span>
+
+                                      <span className="text-xs font-semibold text-green-700 bg-green-100 px-2 py-1 rounded-full">
+                                        Save ₹{((cartProducts[key]?.actualPrice - cartProducts[key]?.price) * cartProducts[key]?.quantity || 0).toLocaleString()}
+                                      </span>
+                                    </div>
                                   </div>
                                 </div>
 

@@ -11,6 +11,9 @@ import { TbJewishStarFilled } from "react-icons/tb";
 const ProductsShowingComponent = (props) => {
   const { allProducts } = props;
 
+
+
+
   console.log("allProductsallProductsallProducts",allProducts)
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isLoading, setLoading] = useState(false);
