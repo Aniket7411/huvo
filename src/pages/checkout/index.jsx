@@ -405,10 +405,16 @@ export default function CheckOut() {
       const response = await HttpClient.post("/coupon/apply", { couponCode })
 
       console.log(response)
-      setAppliedCoupon(response?.couponId)
-      setCouponDiscount(parseInt(response?.discount))
-    } catch (error) {
+      if (response?.success === true) {
+        setAppliedCoupon(response?.couponId)
+        setCouponDiscount(parseInt(response?.discount))
+        toast.success("Coupon Applied Successfully")
+      }else {
+        toast.error("Coupon is not valid")
+      }
 
+    } catch (error) {
+      toast.error(error?.message)
     }
   }
 
@@ -665,7 +671,7 @@ export default function CheckOut() {
 
                           <p className="text-gray-800 font-semibold text-xl mt-2 mb-2">Price Details</p>
 
-                          <div className="flex justify-between text-gray-700 mb-3">
+                          <div className="flex justify-between text-gray-700 mb-2">
                             <p>Total MRP</p>
                             <p className="flex items-center font-medium">
                               <PiCurrencyInr className="mr-1" />
@@ -673,7 +679,7 @@ export default function CheckOut() {
                             </p>
                           </div>
 
-                          <div className="flex justify-between text-gray-700">
+                          <div className="flex justify-between text-gray-700 mb-2">
                             <p>DISCOUNT</p>
                             <p className="flex items-center text-green-600 font-medium">
                               - <PiCurrencyInr className="mr-1" />
