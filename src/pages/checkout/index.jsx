@@ -360,7 +360,7 @@ export default function CheckOut() {
 
   function calculateTotalSum(items) {
     return Object.values(items).reduce(
-      (total, item) => total + (item.price * item.quantity),
+      (total, item) => total + (item.actualPrice * item.quantity),
       0
     );
   }
@@ -956,7 +956,7 @@ export default function CheckOut() {
 
                             <p className="flex items-center">
                               <PiCurrencyInr className="mr-1" />
-                               {Math.round(totalSum) - parseInt(totalDiscountOfProducts || 0) - parseInt(couponDiscount || 0)}
+                              {Math.round(totalSum) - parseInt(totalDiscountOfProducts || 0) - parseInt(couponDiscount || 0)}
                             </p>
 
 
