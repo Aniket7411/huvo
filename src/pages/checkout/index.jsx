@@ -342,34 +342,48 @@ export default function CheckOut() {
   console.log("calculateTotal", totalCartData)
 
   const totalCost = Object.keys(totalCartData)
-    .map(key => totalCartData[key].price * totalCartData[key].quantity - totalCartData[key].cgst - totalCartData[key].sgst)
-    .reduce((sum, cost) => sum + cost, 0);
+    .map(key => parseInt(totalCartData[key].price) * parseInt(totalCartData[key].quantity));
+
+  let totalPrice = 0;
+  let totalQuantity = 0;
+
+  // Iterate over each item in the object
+  Object.values(totalCartData).forEach(item => {
+    totalPrice += parseInt(item.price); // Convert price to integer and add
+    totalQuantity += parseInt(item.quantity); // Convert quantity to integer and add
+  });
+
+  console.log("totalPrice", totalCartData)
+  console.log("totalPrice", totalPrice)
 
 
-
-  console.log("cartProducts", cartProducts)
 
   function calculateTotalSum(items) {
-    return Object.values(items).reduce(
-      (total, item) => total + (item.actualPrice * item.quantity),
-      0
-    );
-  }
-
-  function calculateTotalDiscount(items) {
     return Object.values(items).reduce(
       (total, item) => total + (item.price * item.quantity),
       0
     );
   }
 
+
+
+
+
+
   const totalSum = calculateTotalSum(cartProducts);
   const totalprice = calculateTotalDiscount(cartProducts);
 
 
-  const totalDiscountOfProducts = totalSum - totalprice
 
+  function calculateTotalDiscount(items) {
+    return Object.values(items).reduce((totalDiscount, item) => {
+      return totalDiscount + (parseInt(item.actualPrice) - parseInt(item.price)) * parseInt(item.quantity);
+    }, 0);
+  }
 
+  const totalDiscountOfProducts = calculateTotalDiscount(cartProducts);
+
+  console.log("totalDiscountOfProducts", totalDiscountOfProducts)
 
 
   const getCouponList = async () => {
@@ -409,7 +423,7 @@ export default function CheckOut() {
         setAppliedCoupon(response?.couponId)
         setCouponDiscount(parseInt(response?.discount))
         toast.success("Coupon Applied Successfully")
-      }else {
+      } else {
         toast.error("Coupon either invalid or used before")
       }
 
@@ -699,14 +713,14 @@ export default function CheckOut() {
 
                           <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
                             <p>Total Amount </p>
+
                             <p className="flex items-center">
                               <PiCurrencyInr className="mr-1" />
-                              <p className="flex items-center">
-                                <PiCurrencyInr className="mr-1" />
-                                {Math.round(totalCost + (totalCost * 18) / 100) - parseInt(couponDiscount || 0)}
-                              </p>
+                              {Math.round(totalSum) - parseInt(totalDiscountOfProducts || 0) - parseInt(couponDiscount || 0)}
 
                             </p>
+
+
                           </div>
 
                           <button
@@ -942,7 +956,7 @@ export default function CheckOut() {
 
                             <p className="flex items-center">
                               <PiCurrencyInr className="mr-1" />
-                              {Math.round(totalCost + (totalCost * 18) / 100) - parseInt(couponDiscount || 0)}
+                               {Math.round(totalSum) - parseInt(totalDiscountOfProducts || 0) - parseInt(couponDiscount || 0)}
                             </p>
 
 
@@ -1056,7 +1070,7 @@ export default function CheckOut() {
                             <p>Total Amount </p>
                             <p className="flex items-center">
                               <PiCurrencyInr className="mr-1" />
-                              {Math.round(totalCost + (totalCost * 18) / 100) - parseInt(couponDiscount || 0)}
+                              {Math.round(totalSum) - parseInt(totalDiscountOfProducts || 0) - parseInt(couponDiscount || 0)}
                             </p>
 
                           </div>
@@ -1242,7 +1256,7 @@ export default function CheckOut() {
                               <p>Total MRP</p>
                               <p className="flex items-center font-medium">
                                 <PiCurrencyInr className="mr-1" />
-                                {totalCost}
+                                {totalSum}
                               </p>
                             </div>
 
