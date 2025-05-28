@@ -14,6 +14,8 @@ export default function ApprovalSlip() {
   const [sellerDetails, setSellerDetails] = useState(null);
   const [pageLoading, setPageLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [result, setResult] = useState(null);
+
   const [response, setResponse] = useState(null);
 
 
@@ -51,34 +53,41 @@ export default function ApprovalSlip() {
     </a>
   );
 
-  const startPanVerification = async (pan) => {
+  const startPanVerification = async () => {
+
+    const pan = "IZUPS3443A"
 
     console.log(pan)
 
-    // try {
-    //   const result = await axios.post(
-    //     `${process.env.VERIFICATION_BASE_URL}/kyc/external/panDataFetch`,
-    //     { pan },
-    //       headers: {
-    //         clientId,
-    //         clientSecret,
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //     {
-    //   );
+    console.log(process.env.REACT_APP_VERIFICATION_CLIENT_ID)
+    console.log(process.env.REACT_APP_VERIFICATION_CLIENT_SECRET)
 
-    //   setResponse(result.data);
-    // } catch (err) {
-    //   const { response } = err;
-    //   if (response && response.data) {
-    //     setError(response.data.responseMessage);
-    //   } else {
-    //     setError("An unexpected error occurred. Please try again later.");
-    //   }
-    // } finally {
-    //   setLoading(false);
-    // }
+
+    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+    if (!panRegex.test(pan)) {
+      setError("Invalid PAN format. Example: ABCDE1234F");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "https://sm-kyc-sync-prod.scoreme.in/kyc/external/panDetailInfo",
+        { pan: pan },
+        {
+          headers: {
+            "clientId": process.env.REACT_APP_VERIFICATION_CLIENT_ID,
+            "clientSecret": process.env.REACT_APP_VERIFICATION_CLIENT_SECRET,
+            "Content-Type": "application/json"
+          },
+        },
+
+
+      );
+
+      setResult(response.data);
+    } catch (err) {
+      setError("Failed to verify PAN. Please try again.");
+    }
 
   };
 
@@ -256,7 +265,7 @@ export default function ApprovalSlip() {
                     <strong className="text-gray-600">PAN Document : </strong>
                     {renderDocumentPreview(sellerDetails?.panDoc, "PAN Document")}
                   </div>
-                  <button onClick={() => startPanVerification(sellerDetails?.PAN)}
+                  <button onClick={() => startPanVerification()}
                     className="bg-[#011F4B] text-sm rounded-lg px-4 py-2 text-white self-start md:self-center">
                     Verify PAN
                   </button>

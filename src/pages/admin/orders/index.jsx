@@ -106,6 +106,8 @@ function OrderList() {
     getNotifications();
   }, []);
 
+  console.log(filteredOrders)
+
   return (
     <div className="px-6 mx-auto">
       <h1 className="text-4xl font-bold text-center capitalize">
@@ -201,57 +203,15 @@ function OrderList() {
                   </td>
                   <td className="border-y border-[#eee] p-4 pl-8 dark:border-strokedark">
                     <h5 className="font-medium text-black">
-                      {"₹ " + item?.product?.price}
+                      {"₹ " + item?.product[0]?.price}
                     </h5>
                   </td>
                   <td className="border-y border-[#eee] p-4 pl-8 dark:border-strokedark">
-                    <div className="flex gap-3 items-center">
-                      <h5 className="font-medium text-black">
-                        {item?.orderStatus[item?.orderStatus.length - 1].status}
-                      </h5>
-                      <form>
-                        <select
-                          className="py-2 px-3 border border-gray-300 rounded-md outline-none "
-                          defaultValue="Change Role"
-                          onChange={(e) => {
-                            changeStatus(
-                              e.target.value,
-                              item?.orderId,
-                              item?.product[0].productId
-                            );
-                          }}
-                        >
-                          <option value={"Change Status"} disabled>
-                            Change Status
-                          </option>
-                          {[
-                            "Delivered",
-                            "Pending",
-                            "On the Way",
-                            "Dispatched",
-                          ].map((status, i) => (
-                            <option
-                              disabled={status === item?.status}
-                              value={status}
-                              key={i}
-                            >
-                              {status}
-                            </option>
-                          ))}
-                        </select>
-                      </form>
-                    </div>
+                    <p>Placed</p>
                   </td>
                   <td className="border-y border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
-                      <button
-                        className="hover:text-primary"
-                        onClick={() =>
-                          navigate(`/seller/orders/edit/${item?.orderId}`)
-                        }
-                      >
-                        <FiEdit />
-                      </button>
+                        
                       <button
                         className="hover:text-primary"
                         onClick={() => deleteOrder(item?.orderId)}

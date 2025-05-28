@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
+  "proxy": "https://sm-kyc-sync-sandbox.scoreme.in",
+
   "dependencies": {
     "@headlessui/react": "^2.0.3",
     "@hookform/resolvers": "^3.3.4",
