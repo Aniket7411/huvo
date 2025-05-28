@@ -206,6 +206,9 @@ export default function ProductDetails() {
         try {
           const response = await HttpClient.post("/wishlist/", wishlistData)
           getProductDetails()
+          if (response?.success) {
+            toast.success(response?.message)
+          }
         } catch (error) {
           toast.error(error.message)
 

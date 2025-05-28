@@ -1036,8 +1036,14 @@ export default function CheckOut() {
                                 <strong>remaining amount can be paid upon delivery</strong> of your order.
                               </p>
 
+                              <div className="mt-4 p-3 bg-green-100 border border-green-400 rounded">
+                                <p className="text-green-700">
+                                  You have selected the Cash on Delivery option. A ₹30 advance payment will be required, and the remaining amount can be paid upon delivery.
+                                </p>
+                              </div>
+
                               {/* Advance Payment Agreement */}
-                              <div className="flex items-center space-x-2">
+                              {/* <div className="flex items-center space-x-2">
                                 <input
                                   type="checkbox"
                                   id="codCheckbox"
@@ -1048,16 +1054,16 @@ export default function CheckOut() {
                                 <label htmlFor="codCheckbox" className="text-gray-800">
                                   I agree to pay ₹30 in advance
                                 </label>
-                              </div>
+                              </div> */}
 
                               {/* Confirmation Message */}
-                              {isChecked && (
+                              {/* {isChecked && (
                                 <div className="mt-4 p-3 bg-green-100 border border-green-400 rounded">
                                   <p className="text-green-700">
                                     You have selected the Cash on Delivery option. A ₹30 advance payment will be required, and the remaining amount can be paid upon delivery.
                                   </p>
                                 </div>
-                              )}
+                              )} */}
                             </div>
                           )}
                         </div>
