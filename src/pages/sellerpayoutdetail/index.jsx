@@ -152,6 +152,9 @@ const SellerPayoutDetail = () => {
                             <th className="p-4 pl-4 font-poppins font-normal text-[14px] leading-[18px]  text-[#6C757D]">
                                 Actions
                             </th>
+                            <th className="p-4 pl-4 font-poppins font-normal text-[14px] leading-[18px]  text-[#6C757D]">
+                                View
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -174,7 +177,6 @@ const SellerPayoutDetail = () => {
                                         {item?.email}
                                     </h5>
                                 </td>
-                                {/* {`/sellers_products/${item?.vendorId}`} */}
                                 <td className="p-4 pl-4">
                                     <Link to={`/sellers_products`} className="effect-link">
                                         <h5 className="font-poppins font-normal  text-[14px] leading-[21px] text-center text-blue-500 hover:underline">
@@ -185,7 +187,6 @@ const SellerPayoutDetail = () => {
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 space-x-2">
                                     {isLoading && selectedSeller === item?.vendorId ? (
-                                        // Show loader when loading
                                         <div className="flex items-center space-x-2">
                                             <svg
                                                 className="w-5 h-5 text-blue-600 animate-spin"
@@ -219,6 +220,21 @@ const SellerPayoutDetail = () => {
                                             Calculate
                                         </button>
                                     )}
+                                </td>
+
+
+                                <td className="p-4 pl-4">
+                                    <Link to={`/sellers_products/${item?.vendorId}`} className="effect-link">
+                                        <button
+                                            className="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                                            disabled={isLoading}
+                                        >
+                                            View Details
+                                        </button>
+                                    </Link>
+
+
+
                                 </td>
 
                             </tr>

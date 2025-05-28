@@ -42,7 +42,7 @@ function SuperAdminNav() {
           {/* <img src="/assets/cart.png" alt="Cart" width="60px" height="60px" /> */}
           <Link to="/">
 
-            <img src="/assets/newlogo.jpeg" alt="Logo" className="w-[100px] h-[20px] mb-5" />
+            <img src="/assets/Huvonew.png" alt="Logo" className="w-[50px] h-[50px] mb-5" />
             </Link>
         </div>
 

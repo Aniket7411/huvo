@@ -219,7 +219,7 @@ export default function Superadminheader() {
               <div className="flex justify-between items-center px-8 py-3">
                 <Link to="/">
                   {/* <img src="/assets/cart.png" alt="Cart" width="60px" height="60px" /> */}
-                  <img src="/assets/newlogo.jpeg" className="w-[30px]" alt="logo" />
+                  <img src="/assets/Huvonew.png" className="w-[50px] h-[50px]" alt="logo" />
                 </Link>
                 <div onClick={() => setSidenav(false)}>
                   <RxCross2 h-14 w-14 />

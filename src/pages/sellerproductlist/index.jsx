@@ -1,6 +1,12 @@
+import { useParams } from "react-router-dom";
 import Superadminheader from "../../components/superadminheader";
 
 const SellerPayoutsList = () => {
+
+      const { id } = useParams(); // Get the dynamic parameter from the URL
+
+      console.log(id)
+
     // Sample data - replace with your actual data source
     const products = [
         {

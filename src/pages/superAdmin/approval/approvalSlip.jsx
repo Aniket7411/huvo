@@ -6,12 +6,17 @@ import SuperAdminNav from "../../../components/superadminNavbar/superadminnav";
 import Superadminheader from "../../../components/superadminheader";
 import { HttpClient } from "../../../server/client/http";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function ApprovalSlip() {
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [sellerDetails, setSellerDetails] = useState(null);
   const [pageLoading, setPageLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [response, setResponse] = useState(null);
+
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -46,27 +51,70 @@ export default function ApprovalSlip() {
     </a>
   );
 
-  const startPanVerification = (pan) => {
-    setPageLoading(true);
+  const startPanVerification = async (pan) => {
 
-    const intervalId = setInterval(() => {
-      const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    console.log(pan)
 
-      if (panRegex.test(pan.toUpperCase())) {
-        toast.success("Valid PAN number ✅");
-      } else {
-        toast.error("Invalid PAN number ❌");
-      }
+    // try {
+    //   const result = await axios.post(
+    //     `${process.env.VERIFICATION_BASE_URL}/kyc/external/panDataFetch`,
+    //     { pan },
+    //       headers: {
+    //         clientId,
+    //         clientSecret,
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //     {
+    //   );
 
-      clearInterval(intervalId); // Stop repeating
-      setPageLoading(false); // End loading after result
-    }, 2000); // Run after 2 seconds
+    //   setResponse(result.data);
+    // } catch (err) {
+    //   const { response } = err;
+    //   if (response && response.data) {
+    //     setError(response.data.responseMessage);
+    //   } else {
+    //     setError("An unexpected error occurred. Please try again later.");
+    //   }
+    // } finally {
+    //   setLoading(false);
+    // }
+
   };
+
+
+
+  const verifyGst = async () => {
+    console.log("gstIn")
+    // try {
+    //   const response = await axios.post(`${process.env.VERIFICATION_BASE_URL}/kyc/external/panDataFetch`, {
+    //     gstIn
+    //   },
+    //     {
+    //       headers: {
+    //         clientId,
+    //         clientSecret,
+    //         "Content-Type": "application/json",
+    //       },
+
+    //     }
+    //   )
+
+    // } catch (error) {
+
+    // }
+  }
+
+
+
+
+
+
 
   const approveSeller = async () => {
 
     try {
-      const response = await HttpClient.put("/users/block",{sellerId : id, blockType : "approve"} )
+      const response = await HttpClient.put("/users/block", { sellerId: id, blockType: "approve" })
       console.log(response)
       toast.success(response?.message)
       window.location.reload();
@@ -82,7 +130,7 @@ export default function ApprovalSlip() {
 
   const Suspend = async () => {
     try {
-      const response = await HttpClient.put("/users/block",{sellerId : id, blockType : "suspend"} )
+      const response = await HttpClient.put("/users/block", { sellerId: id, blockType: "suspend" })
       console.log(response)
       toast.success(response?.message)
       window.location.reload();
@@ -150,12 +198,11 @@ export default function ApprovalSlip() {
                 <div className="flex items-center flex-wrap gap-4">
                   <strong className="text-gray-600 w-40">Seller Status</strong>
                   <p
-  className={`font-semibold ${
-    sellerDetails?.status === "approved" ? "text-green-500" : "text-red-500"
-  }`}
->
-  {sellerDetails?.status === "approved" ? "Approved" : "Suspended / Hold"}
-</p>
+                    className={`font-semibold ${sellerDetails?.status === "approved" ? "text-green-500" : "text-red-500"
+                      }`}
+                  >
+                    {sellerDetails?.status === "approved" ? "Approved" : "Suspended / Hold"}
+                  </p>
                 </div>
               </div>
 
@@ -192,7 +239,7 @@ export default function ApprovalSlip() {
                     <strong className="text-gray-600">GST Document : </strong>
                     {renderDocumentPreview(sellerDetails?.gstDoc, "GST Document")}
                   </div>
-                  <button className="bg-[#011F4B] rounded-lg text-sm px-4 py-2 text-white self-start md:self-center">
+                  <button onClick={verifyGst} className="bg-[#011F4B] rounded-lg text-sm px-4 py-2 text-white self-start md:self-center">
                     Verify GST
                   </button>
 

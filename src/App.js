@@ -776,7 +776,7 @@ function App() {
 
         <Routes>
           <Route
-            path="/sellers_products"
+            path="/sellers_products/:id"
             element={
               <SuperAdminAuth>
                 <SellerPayoutsList />

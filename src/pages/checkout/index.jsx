@@ -71,6 +71,12 @@ export default function CheckOut() {
       }
       : null
   );
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(
     getUserData()?.address?.findIndex((item) => item?.isDefault === true)
   );
@@ -94,7 +100,6 @@ export default function CheckOut() {
   });
 
   const fetchCartProducts = async () => {
-    setIsLoading(true)
     try {
       const response = await HttpClient.get("/cart");
 
@@ -265,13 +270,15 @@ export default function CheckOut() {
 
     console.log("kkk", totalCost * 18 / 100 + totalCost)
     console.log("kkk", Math.round(totalCost + (totalCost * 18) / 100))
+    setIsLoading(true)
+
 
 
 
 
     try {
       const response = await HttpClient.post("/order", {
-        totalAmount: Math.round(totalCost + (totalCost * 18) / 100) - (couponDiscount || 0),
+        totalAmount: Math.round(totalSum) - parseInt(totalDiscountOfProducts || 0) - parseInt(couponDiscount || 0),
         totalProduct: Object.keys(totalCartData)?.length,
         products: totalCartData,
         couponId: appliedCoupon,
@@ -284,7 +291,9 @@ export default function CheckOut() {
       console.log(response)
 
       if (response?.success)
-        toast.success("Redirecting to Payment");
+        setIsLoading(false)
+
+      toast.success("Redirecting to Payment");
       console.log(response)
       window.location.href = response?.payment_url;
       fetchProfileData();
@@ -980,23 +989,10 @@ export default function CheckOut() {
                   <TabPanel>
                     <section className="font-[Poppins] p-4">
                       <div className="flex flex-col md:flex-row gap-6">
-                        {/* Offers and Payment Mode */}
                         <div className="md:w-8/12">
-                          {/* Bank Offers */}
-                          {/* <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-2">
-                            <details>
-                              <summary className="text-[#011F4B] font-medium text-lg cursor-pointer flex items-center gap-2">
-                                <BiSolidOffer className="fill-[#011F4B]" />
-                                BANK OFFERS
-                              </summary>
-                              <p className="text-[#535353] font-normal mt-2">
-                                7% Discount with Shopping Cart
-                              </p>
-                            </details>
-                          </div> */}
-
-                          {/* Payment Modes */}
+                          {/* Payment Mode Selection */}
                           <div className="border-2 border-[#D6CBCB] p-3 rounded-md my-3">
+                            {/* Cash on Delivery Option */}
                             <div className="flex gap-2 items-start">
                               <input
                                 type="radio"
@@ -1013,6 +1009,8 @@ export default function CheckOut() {
                                 Cash On Delivery (Cash / UPI)
                               </label>
                             </div>
+
+                            {/* Online Payment Option */}
                             <div className="flex gap-2 items-start mt-3">
                               <input
                                 type="radio"
@@ -1022,14 +1020,46 @@ export default function CheckOut() {
                                 className="h-5 w-5 cursor-pointer"
                                 onClick={(e) => setPaymentType(e.target.value)}
                               />
-                              <label
-                                htmlFor="onlinePayment"
-                                className="font-semibold cursor-pointer"
-                              >
+                              <label htmlFor="onlinePayment" className="font-semibold cursor-pointer">
                                 Online Payment
                               </label>
                             </div>
                           </div>
+
+                          {/* Cash on Delivery Details */}
+                          {paymentType === "cashOnDelivery" && (
+                            <div className="bg-white rounded-lg ">
+                              <h2 className="text-xl font-bold mb-4">Cash on Delivery</h2>
+                              <p className="text-gray-700 mb-4">
+                                If you'd like to choose the <strong>Cash on Delivery</strong> option, a{" "}
+                                <strong>₹30 advance payment</strong> is required. The{" "}
+                                <strong>remaining amount can be paid upon delivery</strong> of your order.
+                              </p>
+
+                              {/* Advance Payment Agreement */}
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="checkbox"
+                                  id="codCheckbox"
+                                  className="w-5 h-5 text-blue-600 rounded focus:ring focus:ring-blue-300"
+                                  checked={isChecked}
+                                  onChange={handleCheckboxChange}
+                                />
+                                <label htmlFor="codCheckbox" className="text-gray-800">
+                                  I agree to pay ₹30 in advance
+                                </label>
+                              </div>
+
+                              {/* Confirmation Message */}
+                              {isChecked && (
+                                <div className="mt-4 p-3 bg-green-100 border border-green-400 rounded">
+                                  <p className="text-green-700">
+                                    You have selected the Cash on Delivery option. A ₹30 advance payment will be required, and the remaining amount can be paid upon delivery.
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          )}
                         </div>
 
                         {/* Price Details */}
@@ -1090,6 +1120,9 @@ export default function CheckOut() {
                     </section>
 
                   </TabPanel>
+
+
+
                   <TabPanel>
                     <div className="md:flex gap-6">
                       <div className="md:w-8/12">
@@ -1294,14 +1327,14 @@ export default function CheckOut() {
               </TabGroup>
             ) : (
               <div className="flex justify-center items-center flex-col">
-                <h2 className="text-xl font-semibold mb-2">
+                <h2 className="text-xl font-semibold mt-5 mb-2">
                   Hey, it feels so light!
                 </h2>
                 <p className="mb-3">
                   There is nothing in your bag. Let's add some items.
                 </p>
                 <img
-                  className="h-[200px] my-3"
+                  className="h-[180px] my-3"
                   src="/assets/emptycart.png"
                   alt="wishlistEmpty"
                 />
@@ -1313,7 +1346,7 @@ export default function CheckOut() {
                     onClick={() => window.location.href = '/wishlist'}
                     className="py-2 px-6 text-lg font-semibold text-blue-600 border border-blue-600 rounded-lg shadow-md hover:bg-blue-600 hover:text-white transition-all duration-300 ease-in-out"
                   >
-                    ADD ITEMS FROM WISHLIST
+                    ADD FROM WISHLIST
                   </button>
 
                 </Link>

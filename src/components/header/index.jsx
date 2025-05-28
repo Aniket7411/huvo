@@ -249,7 +249,7 @@ export default function Header(props) {
     <>
       <div style={{ fontFamily: "Caveat, cursive" }} className="hidden md:flex font-semibold items-center bg-gradient-to-l from-blue-500 to-white  px-8 py-3 justify-between">
         <Link to="/" >
-          <img src="/assets/newlogo.jpeg" alt="Logo" className="h-[30px] w-[130px]  hidden md:block rounded-xl" />
+          <img src="/assets/Huvonew.png" alt="Logo" className="w-[50px] h-[50px]  hidden md:block rounded-xl" />
         </Link>
 
         <ul className="flex gap-5 text-xl text-blue-700 " style={{ fontFamily: "Caveat, cursive" }}>
@@ -507,7 +507,7 @@ export default function Header(props) {
         </div>
 
         {/* Center Section */}
-        <p className="font-bold text-white text-2xl tracking-wide drop-shadow-md" style={{ fontFamily: "'Caveat', cursive" }}>
+        <p className="font-bold text-white text-3xl tracking-wide drop-shadow-md" style={{ fontFamily: "'Caveat', cursive" }}>
           Huvo
         </p>
 
