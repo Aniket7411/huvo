@@ -7,6 +7,8 @@ import Loader from '../../components/loader';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
+import SuperAdminNav from '../../components/superadminNavbar/superadminnav';
+import Superadminheader from '../../components/superadminheader';
 
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement('#root');
@@ -94,11 +96,15 @@ const SellerPayoutDetail = () => {
     };
 
     return (
-        <div className="container mx-auto px-4 py-4">
+
+        <div className='flex '>
+            <SuperAdminNav/>
+        <div className="container mx-auto px-4 ">
+            <Superadminheader/>
             <h1 className="text-3xl font-bold text-gray-800 mb-4">Seller Payouts</h1>
 
             {/* Filter Section */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-4">
+            <div className="bg-white rounded-lg shadow-md p-2 mb-2">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <h2 className="text-xl font-semibold text-gray-700">Filter Payouts</h2>
 
@@ -333,6 +339,9 @@ const SellerPayoutDetail = () => {
                     </div>
                 </div>
             </Modal>
+
+        </div>
+
 
         </div>
     );
