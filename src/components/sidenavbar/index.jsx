@@ -38,13 +38,13 @@ function Sidenavbar() {
       <div className="flex items-center flex-col text-center py-5">
 
         <Link to="/">
-          <img src="/assets/favicon.svg" alt="logo" className="w-[25px] mb-4 h-[25px]" />
+          <img src="/assets/Huvonew.png" alt="logo" className="w-[50px] mb-4 h-[50px]" />
         </Link>
 
-        <p className="text-[#011F4B] font-[Poppins] font-bold">
+        {/* <p className="text-[#011F4B] font-[Poppins] font-bold">
           {getUserData()?.storeDetails?.storeName?.toUpperCase()}{" "}
 
-        </p>
+        </p> */}
       </div>
 
       <div className="px-1">
