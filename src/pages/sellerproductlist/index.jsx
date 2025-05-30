@@ -63,7 +63,7 @@ const SellerPayoutsList = () => {
                 <div className="container mx-auto px-4 py-2">
                     <Superadminheader />
 
-                    <h1 className="text-2xl font-bold mb-6 text-gray-800">Product Sales</h1>
+                    <h1 className="text-2xl font-semibold mb-6 text-gray-800">Product Sold (Payment completed)</h1>
 
                     {/* Filter Section */}
                     <div className="flex flex-col sm:flex-row gap-4 mb-2     items-end bg-white p-3 rounded-lg shadow">

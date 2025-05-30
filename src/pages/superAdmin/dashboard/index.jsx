@@ -71,14 +71,15 @@ export default function Dashboard() {
                 Generate Token for Shipdelight
               </button>
 
-              <Link to="/seller_payouts_details">
+              {/* <Link to="/seller_payouts_details">
                 <button className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg shadow-md hover:bg-gray-300 focus:ring-2 focus:ring-gray-400 transition-all">
                   Sellers Payout
                 </button>
-              </Link>
+              </Link> */}
 
-              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <li className="bg-white rounded-lg shadow p-4">
+
                   <p className="font-poppins font-medium">Total Sales</p>
                 </li>
                 <li className="bg-white rounded-lg shadow p-4">
@@ -99,9 +100,9 @@ export default function Dashboard() {
                     {dashboardData?.currentMonth?.avgOrdersPerDay}
                   </div>
                 </li>
-              </ul>
+              </ul> */}
 
-              <div className="flex flex-wrap gap-4">
+              {/* <div className="flex flex-wrap gap-4">
                 <div className="w-52 h-48 bg-white rounded shadow-lg p-4">
                   <div className="flex justify-between items-center">
                     <FaWallet className="text-[#03C3EC] w-8 h-8" />
@@ -147,7 +148,7 @@ export default function Dashboard() {
                     Order Per Day: {dashboardData?.previousMonth?.avgOrdersPerDay}
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </>
         )}

@@ -104,7 +104,7 @@ const SellerPayoutDetail = () => {
             <h1 className="text-3xl font-bold text-gray-800 mb-4">Seller Payouts</h1>
 
             {/* Filter Section */}
-            <div className="bg-white rounded-lg shadow-md p-2 mb-2">
+            {/* <div className="bg-white rounded-lg shadow-md p-2 mb-2">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <h2 className="text-xl font-semibold text-gray-700">Filter Payouts</h2>
 
@@ -136,7 +136,7 @@ const SellerPayoutDetail = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* Payouts Table */}
             {vendorList.length ? (

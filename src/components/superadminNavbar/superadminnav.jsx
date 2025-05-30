@@ -151,7 +151,7 @@ function SuperAdminNav() {
 
           <li>
             <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
-              <Link to="/seller_payouts" className="flex items-center gap-2 ">
+              <Link to="/seller_payouts_details" className="flex items-center gap-2 ">
                 <button className="flex justify-center items-center gap-4 p-2">
                   <div className="p-2 iconDiv">
                     <BsWallet2 size={21} className="icon" />

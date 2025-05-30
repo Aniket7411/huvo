@@ -1,182 +1,142 @@
-import { React, useState, useEffect } from "react";
-import SuperAdminNav from '../../../components/superadminNavbar/superadminnav'
-import Superadminheader from '../../../components/superadminheader'
+import React, { useState, useEffect } from "react";
+import SuperAdminNav from "../../../components/superadminNavbar/superadminnav";
+import Superadminheader from "../../../components/superadminheader";
 import { CiSearch } from "react-icons/ci";
 import { HttpClient } from "../../../server/client/http";
 import Loader from "../../../components/loader";
-// import SuperAdminNav from '../../../components/superadminNavbar/superadminnav';
 
 export default function ProductsAdmin() {
-  const [productList, setProductList] = useState({});
-  const [loading, setloading] = useState(false);
-  const [filterList, setFilterList] = useState([])
-  const [productToSearch, setProductToSearch] = useState("")
+  const [productList, setProductList] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [productToSearch, setProductToSearch] = useState("");
+  const [sortOption, setSortOption] = useState("");
 
   const getProductList = async () => {
-    setloading(true);
-
+    setLoading(true);
     try {
       const response = await HttpClient.get("/product");
-      console.log("Full Response:", response);
       setProductList(response.products);
-      console.log(productList)
-      console.log();
-      if (response) {
-        setloading(false);
-      }
+      setFilteredProducts(response.products);
+      setLoading(false);
     } catch (error) {
-      console.error(error.response);
-    };
-
-
+      console.error("Error fetching products:", error);
+      setLoading(false);
+    }
   };
-  const searchFunction = (event) => {
-    setProductToSearch(event.target.value)
-    const filteredList = productList.filter(item => item.name.toLowerCase().includes(event.target.value.toLowerCase()));
-    setProductList(filteredList)
-  }
+
+  const handleSearch = (event) => {
+    const searchQuery = event.target.value.toLowerCase();
+    setProductToSearch(searchQuery);
+    const filtered = productList.filter((item) =>
+      item.name.toLowerCase().includes(searchQuery)
+    );
+    setFilteredProducts(filtered);
+  };
+
+  const handleSort = (event) => {
+    const value = event.target.value;
+    setSortOption(value);
+
+    const sortedList = [...filteredProducts];
+    if (value === "priceLowToHigh") {
+      sortedList.sort((a, b) => a.price - b.price);
+    } else if (value === "priceHighToLow") {
+      sortedList.sort((a, b) => b.price - a.price);
+    } else if (value === "alphabetical") {
+      sortedList.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    setFilteredProducts(sortedList);
+  };
+
   useEffect(() => {
     getProductList();
-
   }, []);
 
   return (
-    <div className='flex'>
-      <div className='bg-[#E7EFFA] h-screen' >
+    <div className="flex">
+      <div className="bg-[#E7EFFA] h-screen">
         <SuperAdminNav />
       </div>
       <div className="w-full">
-
         <Superadminheader />
-        <div className='mx-2'>
-          <div className='flex items-center justify-between'>
-            <ul>
-              <li className='mr-2'>
-                Products
-              </li>
-            </ul>
-            <ul className='flex items-center gap-10'>
-              <li>
-                <select className="p-1 border  rounded-lg" >
-                  <option value="" disabled selected hidden>Sort By</option>
-                  <option value="">price low to high</option>
-                  <option value="">price high to low</option>
-                  <option value=""> Alphabets</option>
-                </select>
-              </li>
-              <li>
-                <div className="border  flex items-center justify-between p-1 bg-[#FFFFFF] rounded-lg top-[-12px]">
-                  <button className="mr-5"
-                  //  onClick={handleClick}
-                  >
-                    <CiSearch className=" text-[#000000]" />
-                  </button>
-                  <input
-                    placeholder="search"
-                    className="border-0 w-full gap-10 outline-none"
-                    onChange={searchFunction}
-                    value={productToSearch}
-
-                  ></input>
-                </div></li>
-            </ul>
+        <div className="mx-2">
+          <div className="flex items-center justify-between">
+            <h1 className="mr-2">Products</h1>
+            <div className="flex items-center gap-10">
+              <select
+                className="p-1 border rounded-lg"
+                value={sortOption}
+                onChange={handleSort}
+              >
+                <option value="" disabled hidden>
+                  Sort By
+                </option>
+                <option value="priceLowToHigh">Price: Low to High</option>
+                <option value="priceHighToLow">Price: High to Low</option>
+                <option value="alphabetical">Alphabetical</option>
+              </select>
+              <div className="border flex items-center p-1 bg-[#FFFFFF] rounded-lg">
+                <CiSearch className="mr-2 text-[#000000]" />
+                <input
+                  placeholder="Search"
+                  className="border-0 w-full outline-none"
+                  onChange={handleSearch}
+                  value={productToSearch}
+                />
+              </div>
+            </div>
           </div>
         </div>
-        <hr className='mx-2 mt-2'></hr>
+        <hr className="mx-2 mt-2" />
 
-        <div className="py-5" style={{
-          height: '76vh',
-          overflowY: 'auto'
-        }}>
-          {productList.length ? (
+        <div
+          className="p-8"
+          style={{
+            height: "76vh",
+            overflowY: "auto",
+          }}
+        >
+          {loading ? (
+            <Loader />
+          ) : filteredProducts.length ? (
             <table className="w-full table-auto">
               <thead>
-                <tr className="">
-                  <th className="min-w-[150px] p-4 pl-8 font-poppins font-normal text-[14px] leading-[18px] text-[#6C757D]">
-                    Product Id
-                  </th>
-                  <th className="min-w-[150px] p-4 pl-8 font-poppins font-normal text-[14px] leading-[18px]  text-[#6C757D]">
-                    Name
-                  </th>
-                  <th className="min-w-[150px] p-4 pl-8 font-poppins font-normal text-[14px] leading-[18px]  text-[#6C757D]">
-                  Seller Id
-                  </th>
-                  <th className="min-w-[120px] p-4 pl-8 font-poppins font-normal text-[14px] leading-[18px]  text-[#6C757D]">
-                    Price
-                  </th>
-                  <th className="p-4 pl-8 font-poppins font-normal text-[14px] leading-[18px]  text-[#6C757D]">
-                    Status
-                  </th>
-                  <th className="p-4 pl-8 font-poppins font-normal text-[14px] leading-[18px]  text-[#6C757D] ">
-                    View Details
-                  </th>
+                <tr>
+                  <th>Product ID</th>
+                  <th>Name</th>
+                  <th>Seller ID</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Image</th>
                 </tr>
               </thead>
               <tbody>
-                {productList.map((item, key) => (
-                  <tr key={key}>
-                    <td className="p-4 pl-8">
-                      <h5 className="font-poppins font-normal text-[14px] leading-[21px] text-center">
-
-                        {item?.productId}
-                      </h5>
+                {filteredProducts.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.productId}</td>
+                    <td>{item.name}</td>
+                    <td>{item.seller}</td>
+                    <td>{item.price}</td>
+                    <td>{item.isReturnable ? "Returnable" : "Not Returnable"}</td>
+                    <td>
+                      <img
+                        src={item.bannerImage}
+                        alt="banner"
+                        className="h-20 w-20 object-contain rounded-md"
+                      />
                     </td>
-                    <td className="p-4 pl-8">
-                      <h5 className="font-poppins font-normal text-[14px] leading-[21px] text-center">
-                        {item?.name}
-                      </h5>
-                    </td>
-                    <td className="p-4 pl-8">
-                      <h5 className="font-poppins font-normal text-[14px] leading-[21px] text-center">
-                        {item?.seller}
-                      </h5>
-                    </td>
-
-                    <td className="p-4 pl-8">
-                      <h5 className="font-poppins font-normal text-[14px] leading-[21px] text-center">
-                        {item?.price}
-                      </h5>
-                    </td>
-                    <td className="p-4 pl-8">
-                      <h5
-                        className={`font-poppins font-normal text-[14px] leading-[21px] text-center ${item.isReturnable ? "text-[#18B348]" : "text-[#FF0000]"
-                          }`}
-                      >
-                        {item.isReturnable ? "Returnable" : "Not Returnable"}
-                      </h5>
-                    </td>
-                    <td className="p-4 pl-8">
-                      <h5
-                       
-                      >
-                         <img
-                                    src={item.bannerImage}
-                                    alt="bannerImage"
-                                    className="h-20 w-20 rounded-md object-contain"
-                                  />
-                        
-                      </h5>
-                    </td>
-
                   </tr>
                 ))}
               </tbody>
             </table>
           ) : (
-            <div
-              className="h-[62vh]"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {loading === true ? <Loader /> : "No Products Available"}
+            <div className="flex items-center justify-center h-[62vh]">
+              No Products Available
             </div>
           )}
         </div>
       </div>
     </div>
-  )
+  );
 }
-
