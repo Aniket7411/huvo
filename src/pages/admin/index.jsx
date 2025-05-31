@@ -72,12 +72,7 @@ console.log("response",sellerDetails)
             <p><span className="font-medium">Active Status:</span> {sellerDetails?.isActive ? 'Active' : 'Inactive'}</p>
           </div>
   
-          {/* Store Details */}
-          {/* <div className="flex-1 bg-white p-4 rounded-lg shadow-sm">
-            <h2 className="text-lg font-semibold text-gray-700 mb-4">Store Details</h2>
-            <p><span className="font-medium">Registered:</span> {sellerDetails?.registered ? 'Yes' : 'No'}</p>
-            <p><span className="font-medium">Products:</span> {sellerDetails?.storeDetails?.products?.length || 0}</p>
-          </div> */}
+        
         </div>
   
         {/* Address Section */}
@@ -89,16 +84,7 @@ console.log("response",sellerDetails)
          
         </div>
   
-        {/* Coupons Section */}
-        {/* <div className="mt-2 bg-white p-4 rounded-lg shadow-sm flex gap-4">
-          <div className="flex-1">
-            <h2 className="text-lg font-semibold text-gray-700 mb-2">Coupons</h2>
-            <p><span className="font-medium">Used:</span> {sellerDetails?.couponUsed?.length}</p>
-          </div>
-          <div className="flex-1">
-            <p><span className="font-medium">Expired:</span> {sellerDetails?.couponExpired?.length}</p>
-          </div>
-        </div> */}
+    
   
         {/* Account Info Section */}
         <div className="mt-2 bg-white p-4 rounded-lg shadow-sm">

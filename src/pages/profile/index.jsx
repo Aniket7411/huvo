@@ -28,6 +28,7 @@ import Loader from "../../components/loader";
 import Orders from "./orders";
 import SellerBankForm from "../sellerbankdetails";
 import Subscription from "../Subscription/subscription";
+import SellerProfileComponent from "../sellerprofile";
 
 Modal.setAppElement('#root'); // Assuming your root element's ID is 'root'
 
@@ -466,13 +467,7 @@ export default function Profile() {
                       Orders
                     </div>
                   </Tab>
-
-                  <Tab className="flex-1 sm:flex-none outline-none">
-                    <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
-                      <span className="hidden sm:inline-block mr-2">🎟️</span>
-                      Coupons
-                    </div>
-                  </Tab>
+                  
 
                   <Tab className="flex-1 sm:flex-none outline-none">
                     <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
@@ -674,54 +669,7 @@ export default function Profile() {
               </TabPanel>
 
 
-              <TabPanel className="bg-[#F2F2F2] h-full">
-                <h4 className="text-white font-medium text-base bg-[#011F4B] p-5 mb-3">
-                  All COUPONS
-                </h4>
-                <div className="p-5 grid md:grid-cols-2 gap-5">
-                  {allCoupon.length
-                    ? allCoupon.map((item, i) => (
-                      <div key={i}>
-                        <div className="flex items-start gap-5 p-3 border border-solid rounded pb-3 bg-white">
-                          <div className="w-full">
-                            <div className="flex gap-5 justify-between">
-                              <div className="text-base px-3 py-2 border-2 border-dashed">
-                                {item.couponCode}
-                              </div>
-                              <button
-                                className="text-base px-3 py-2 bg-[#14CDA8]"
-                                // className={`text-base px-3 py-2 ${
-                                //   item.couponCode === couponCode
-                                //     ? "bg-[#14CDA8]"
-                                //     : "bg-[#011F4B] text-white"
-                                // }`}
-                                onClick={() =>
-                                  copyToClipboard(item.couponCode)
-                                }
-                              >
-                                COPY CODE
-                              </button>
-                            </div>
-                            {/* <h5 className="my-3 text-base">
-                                      save ₹
-                                      {item.discountType === "percentage"
-                                        ? Math.round(
-                                            (totalMRP - totalDiscount) *
-                                              (item.discount / 100)
-                                          )
-                                        : item.discount}
-                                    </h5> */}
-                            <h5 className="my-3 text-base">
-                              Expire on :
-                              <IndiaTime data={item.expirationTime} />
-                            </h5>
-                          </div>
-                        </div>
-                      </div>
-                    ))
-                    : ""}
-                </div>
-              </TabPanel>
+          
               <TabPanel className="bg-[#F2F2F2] h-full">
                 <div className="p-5">
                   <div className="flex justify-between items-center mb-5 flex-wrap sm:flex-nowrap">
@@ -855,200 +803,7 @@ export default function Profile() {
                 </div>
               </TabPanel>
               <TabPanel className="bg-[#F2F2F2] h-full">
-                <div className=" p-2 md:p-5">
-                  <div className="px-5 border-b border-solid border-[#D6D6D6]">
-                    <p className="text-[#2F2F2F] font-semibold text-lg mb-2">
-                      Business Verification Form
-                    </p>
-                  </div>
-                  <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="px-5 md:px-5 my-4"
-                  >
-                    <div className="mb-5" >Business Information
-                      <hr></hr>
-                    </div>
-                    <div className=" grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
-
-                      <div>
-
-                        <p
-                          className="text-black text-sm md:text-base font-medium bg-gray-100 p-2 mb-2 rounded-md border border-gray-300 shadow-sm"
-                        >
-                          <span className="font-semibold">User Name:</span> Aniket7422 { }
-                          <span className="text-gray-600 block md:inline">
-                            (Your buyer can search you using this)
-                          </span>
-                        </p>
-
-                        <label className="text-[#626262] font-medium mb-2 ml-2">
-                          Store Name
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Store Name"
-                          className="w-full p-3 outline-none border border-solid border-[#CBCBCB] rounded-[12px] "
-                          {...register("businessName", {
-                            // required: "*First Name is required.",
-                          })}
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[#626262] font-medium mb-2 ml-2">
-                          Business Description
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Business description"
-                          className="w-full p-3 outline-none border border-solid border-[#CBCBCB] rounded-[12px]"
-                          {...register("businessDescription", {
-                            // required: "*Last Name is required.",
-                          })}
-                        />
-                      </div>
-                      <div className="mb-5 mt-5">Contact Information
-                        <hr></hr>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                          <label className="block text-[#626262] font-medium mb-2 ml-2">
-                            Business Address
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="Business address"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            {...register("businessAddress", {
-                              // required: "*Last Name is required.",
-                            })}
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[#626262] font-medium mb-2 ml-2">
-                            Email Address
-                          </label>
-                          <input
-                            type="email"
-                            placeholder="Enter your email"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            {...register("emailAddress", {
-                              // required: "*Last Name is required.",
-                            })}
-                          />
-                        </div>
-                      </div>
-                      <label className="block text-[#626262] font-medium mb-2 ml-2">
-                        Mobile Number
-                      </label>
-                      <div className="grid grid-cols-3 gap-4 mb-4">
-
-                        <select className="border border-gray-300 rounded-lg p-3 w-full">
-                          <option>+91</option>
-
-                        </select>
-                        <input
-                          type="text"
-                          placeholder="Enter your mobile number"
-                          className="border border-gray-300 rounded-lg p-3 w-full col-span-2"
-                          {...register("mobileNumber", {
-                            // required: "*Last Name is required.",
-                          })}
-                        />
-                      </div>
-                      <label className="block text-[#626262] font-medium mb-2 ml-2">
-                        Mobile Number of Incharge
-                      </label>
-                      <div className="grid grid-cols-3 gap-4 mb-4">
-
-                        <select className="border border-gray-300 rounded-lg p-3 w-full">
-                          <option>+91</option>
-
-                        </select>
-                        <input
-                          type="text"
-                          placeholder="Enter alternative/Incharge number"
-                          className="border border-gray-300 rounded-lg p-3 w-full col-span-2"
-                          maxLength="10"
-                          {...register("contactNumberIncharge", {
-                            required: "*Contact number is required.",
-                            pattern: {
-                              value: /^\d{10}$/,
-                              message: "*Please enter a valid 10-digit number.",
-                            },
-                          })}
-                        />
-
-                      </div>
-
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                          <label className="block text-[#626262] font-medium mb-2 ml-2">
-                            Street
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="Type here"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            {...register("streetNumber", {
-                              // required: "*Last Name is required.",
-                            })}
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[#626262] font-medium mb-2 ml-2">
-                            State
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="State"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            {...register("state", {
-                              // required: "*Last Name is required.",
-                            })}
-                          />
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                          <label className="block text-[#626262] font-medium mb-2 ml-2">
-                            City
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="City/Town"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            {...register("city", {
-                              // required: "*Last Name is required.",
-                            })}
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[#626262] font-medium mb-2 ml-2">
-                            Zip Code
-                          </label>
-                          <input
-                            type="number"
-                            placeholder="Enter your zipCode/PinCode"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            {...register("zipCode", {
-                              // required: "*Last Name is required.",
-                            })}
-                          />
-                        </div>
-                      </div>
-
-
-
-                    </div>
-                    <button
-                      className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-8 py-3 mx-auto block my-4"
-                      type="submit"
-                    >
-                      SAVE
-                    </button>
-                  </form>
-                </div>
+                  <SellerProfileComponent />
               </TabPanel>
 
 

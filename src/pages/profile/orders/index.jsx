@@ -171,7 +171,7 @@ const Orders = () => {
                       <p className="text-sm text-gray-600 flex items-center">
                         <span className="font-medium text-blue-800">Final Price:</span>
                         <PiCurrencyInr className="mx-1" />
-                        {item?.price - item?.discount}
+                        {item?.price}
                       </p>
                       <p className="text-sm text-gray-600">
                         <span className="font-medium text-blue-800">Qty:</span> {item?.quantity}

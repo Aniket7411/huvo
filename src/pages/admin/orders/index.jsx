@@ -141,12 +141,12 @@ function OrderList() {
             placeholder="Search by Order ID or Name"
             className="border-0 text-gray-800 text-sm px-2 outline-none placeholder-gray-400 flex-grow"
             value={searchTerm}
-            
+
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <select
+        {/* <select
           className="py-2 px-3 border border-gray-300 rounded-md outline-none bg-white shadow-md"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
@@ -157,7 +157,7 @@ function OrderList() {
               {status}
             </option>
           ))}
-        </select>
+        </select> */}
       </div>
 
       {filteredOrders.length ? (
@@ -178,10 +178,9 @@ function OrderList() {
                   Price
                 </th>
                 <th className="min-w-[120px] p-4 pl-8 font-medium text-black border-y border-[#eee]">
-                  Status
-                </th>
+                  Placed Date                </th>
                 <th className="p-4 pl-8 font-medium text-black border-y border-[#eee]">
-                  Actions
+                  Current Status
                 </th>
               </tr>
             </thead>
@@ -207,9 +206,12 @@ function OrderList() {
                     </h5>
                   </td>
                   <td className="border-y border-[#eee] p-4 pl-8 dark:border-strokedark">
-                    <p>Placed</p>
+                    <p>{item?.orderStatus[0]?.date.slice(0,10)}</p>
                   </td>
-                  <td className="border-y border-[#eee] py-5 px-4 dark:border-strokedark">
+                   <td className="border-y border-[#eee] p-4 pl-8 dark:border-strokedark">
+                    <p>{item?.trackingOrder?.latest_status}</p>
+                  </td>
+                  {/* <td className="border-y border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
                         
                       <button
@@ -243,7 +245,7 @@ function OrderList() {
                         </svg>
                       </button>
                     </div>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
