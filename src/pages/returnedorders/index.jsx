@@ -14,6 +14,8 @@ const ReturnOrders = () => {
         try {
             setLoading(true);
             const response = await HttpClient.get("/return");
+
+            console.log("return", response)
             const formattedData = response.returnedOrders.map(each => ({
                 orderId: each?.orderId,
                 reason: each?.reason,
@@ -28,6 +30,8 @@ const ReturnOrders = () => {
             }));
             setOrders(formattedData);
             setFilteredOrders(formattedData);
+
+            console.log("formattedData", formattedData)
             setError(null);
         } catch (error) {
             console.error('Failed to fetch returns:', error);
@@ -65,56 +69,56 @@ const ReturnOrders = () => {
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
             {
-                loading ? <Loader/> :   <table border="1" cellPadding="10" cellSpacing="0">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Refund Status</th>
-                        <th>Refund Amount</th>
-                        <th>Return Date</th>
-                        <th>Reason</th>
-                    </tr>
-                </thead>
+                loading ? <Loader /> : <table border="1" cellPadding="10" cellSpacing="0">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Refund Status</th>
+                            <th>Refund Amount</th>
+                            <th>Return Date</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
 
-                
-                <tbody>
-    {filteredOrders.length > 0 ? (
-        filteredOrders.map((order, index) => (
-            <tr key={index} className="hover:bg-gray-100 transition duration-200">
-                <td className="px-4 py-3 font-medium text-gray-700">{order.orderId}</td>
-                <td className="px-4 py-3 text-gray-600">{order.firstName} {order.lastName}</td>
-                <td className="px-4 py-3 text-blue-600">{order.email}</td>
-                <td className="px-4 py-3">
-                    <span className={`px-2 py-1 rounded-full text-sm font-semibold 
-                        ${order.refundStatus === 'Completed' ? 'bg-green-100 text-green-700' 
-                        : order.refundStatus === 'Pending' ? 'bg-yellow-100 text-yellow-700' 
-                        : 'bg-gray-100 text-gray-700'}`}>
-                        {order.refundStatus}
-                    </span>
-                </td>
-                <td className="px-4 py-3 flex items-center gap-1 text-gray-800">
-                    <span className="text-green-600"><FaRupeeSign /></span>
-                    {order.refundAmount.toFixed(2)}
-                </td>
-                <td className="px-4 py-3 text-gray-500">{order.returnDate.toLocaleDateString()}</td>
-                <td className="px-4 py-3 text-gray-600">{order.reason}</td>
-            </tr>
-        ))
-    ) : (
-        <tr>
-            <td colSpan="7" className="px-4 py-6 text-center text-gray-500">
-                No matching results
-            </td>
-        </tr>
-    )}
-</tbody>
 
-            </table>
+                    <tbody>
+                        {filteredOrders.length > 0 ? (
+                            filteredOrders.map((order, index) => (
+                                <tr key={index} className="hover:bg-gray-100 transition duration-200">
+                                    <td className="px-4 py-3 font-medium text-gray-700">{order.orderId}</td>
+                                    <td className="px-4 py-3 text-gray-600">{order.firstName} {order.lastName}</td>
+                                    <td className="px-4 py-3 text-blue-600">{order.email}</td>
+                                    <td className="px-4 py-3">
+                                        <span className={`px-2 py-1 rounded-full text-sm font-semibold 
+                        ${order.refundStatus === 'Completed' ? 'bg-green-100 text-green-700'
+                                                : order.refundStatus === 'Pending' ? 'bg-yellow-100 text-yellow-700'
+                                                    : 'bg-gray-100 text-gray-700'}`}>
+                                            {order.refundStatus}
+                                        </span>
+                                    </td>
+                                    <td className="px-4 py-3 flex items-center gap-1 text-gray-800">
+                                        <span className="text-green-600"><FaRupeeSign /></span>
+                                        {order.refundAmount.toFixed(2)}
+                                    </td>
+                                    <td className="px-4 py-3 text-gray-500">{order.returnDate.toLocaleDateString()}</td>
+                                    <td className="px-4 py-3 text-gray-600">{order.reason}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="7" className="px-4 py-6 text-center text-gray-500">
+                                    No matching results
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+
+                </table>
             }
 
-          
+
         </div>
     );
 };

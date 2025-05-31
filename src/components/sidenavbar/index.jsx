@@ -89,7 +89,7 @@ function Sidenavbar() {
               </Link>
             </div>
           </li>
-          <li>
+          {/* <li>
             <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
               <Link to="/seller/users" className="flex items-center gap-2 ">
                 <button className="flex justify-center items-center gap-4 p-2">
@@ -101,7 +101,7 @@ function Sidenavbar() {
                 <IoIosArrowRoundForward className="opacity-60" />
               </Link>
             </div>
-          </li>
+          </li> */}
           <li>
             <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
               <Link to="/seller/category" className="flex items-center gap-2">

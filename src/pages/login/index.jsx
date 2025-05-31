@@ -50,7 +50,7 @@ export default function Login() {
 
 
       if (response?.userData?.role === "SELLER") {
-        navigate("/seller");
+        navigate("/seller/profile");
         if(response?.userData?.verificationStatus === false){
           toast.info("Kindly go to profile and update it for furthur process.")
         }

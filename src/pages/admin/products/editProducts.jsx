@@ -248,7 +248,7 @@ function ProductEditPage() {
           ))}
           <button
             type="button"
-            className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md"
+            className="mt-2 bg-[#011f4b] text-white px-4 py-2 rounded-md"
             onClick={handleAddProductDetails}
           >
             Add Product Details
@@ -456,14 +456,14 @@ function ProductEditPage() {
                     </label>
                     <button
                       type="button"
-                      className="bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer"
+                      className="bg-[#011f4b] text-white px-4 py-2 rounded-md cursor-pointer"
                       onClick={() => handleAddImage(i)}
                     >
                       Add Image
                     </button>
                     <button
                       type="button"
-                      className="bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer"
+                      className="bg-[#011f4b] text-white px-4 py-2 rounded-md cursor-pointer"
                       onClick={() => handleRemoveColorWithImages(i)}
                     >
                       Remove
@@ -509,7 +509,7 @@ function ProductEditPage() {
           </div>
           <button
             type="button"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            className="bg-[#011f4b] text-white px-4 py-2 rounded-md"
             onClick={() =>
               setColorWithImages([
                 ...colorWithImages,
@@ -556,7 +556,7 @@ function ProductEditPage() {
         <div>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            className="bg-[#011f4b] text-white px-4 py-2 rounded-md"
           >
             Update Product
           </button>

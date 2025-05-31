@@ -38,7 +38,6 @@ const AdminHeader = () => {
       "/seller": "Dashboard",
       "/seller/products": "Products",
       "/seller/orders": "Orders",
-      "/seller/users": "Users",
       "/seller/invoice": "Invoice",
       "/seller/profile": "Profile",
       "/seller/category": "Category",

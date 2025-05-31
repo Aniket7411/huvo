@@ -467,7 +467,7 @@ export default function Profile() {
                       Orders
                     </div>
                   </Tab>
-                  
+
 
                   <Tab className="flex-1 sm:flex-none outline-none">
                     <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
@@ -499,13 +499,13 @@ export default function Profile() {
                           Bank Details
                         </div>
                       </Tab>
-
+{/* 
                       <Tab className="flex-1 sm:flex-none outline-none">
                         <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
                           <span className="hidden sm:inline-block mr-2">📅</span>
                           Subscription
                         </div>
-                      </Tab>
+                      </Tab> */}
 
                       {/* <Tab className="flex-1 sm:flex-none outline-none">
                         <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
@@ -1097,13 +1097,13 @@ export default function Profile() {
                   </div>
                 </div> */}
               </TabPanel>
-              <TabPanel className="h-full p-4 bg-gray-50">
+              {/* <TabPanel className="h-full p-4 bg-gray-50">
 
                 <Subscription />
 
-              </TabPanel>
+              </TabPanel> */}
 
-              <TabPanel className=" bg-[#F2F2F2]  h-full">
+              {/* <TabPanel className=" bg-[#F2F2F2]  h-full">
                 <h1 className="text-xl text-center font-semibold sm:pt-10 lg:pt-2">Past Order details and Invoices</h1>
                 <div className="overflow-x-auto">
                   <table className="min-w-full bg-white border border-gray-300">
@@ -1135,7 +1135,7 @@ export default function Profile() {
                   </table>
                 </div>
 
-              </TabPanel>
+              </TabPanel> */}
             </TabPanels>
 
           </div>

@@ -44,11 +44,11 @@ function BrandList() {
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    
+
     if (term === "") {
       setFilteredBrands(brands);
     } else {
-      const filtered = brands.filter(brand => 
+      const filtered = brands.filter(brand =>
         brand.name.toLowerCase().includes(term)
       );
       setFilteredBrands(filtered);
@@ -69,7 +69,7 @@ function BrandList() {
           <Link
             to="/"
             target="_blank"
-            className="text-sm ml-3 text-blue-600 hover:underline"
+            className="text-sm ml-3 text-[#011f4b] hover:underline"
           >
             (Visit Website)
           </Link>
@@ -77,22 +77,22 @@ function BrandList() {
 
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <h2 className="text-2xl font-bold text-gray-800">Brands</h2>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
             <div className="relative flex items-center w-full sm:w-64">
               <CiSearch className="absolute left-3 text-gray-400" size={20} />
               <input
                 type="text"
                 placeholder="Search brands..."
-                className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#011f4b] focus:border-transparent"
                 value={searchTerm}
                 onChange={handleSearch}
               />
             </div>
-            
+
             <Link
               to="/seller/brands/add"
-              className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+              className="flex items-center justify-center gap-2 px-4 py-2 bg-[#011f4b] text-white rounded-lg  transition-colors shadow-sm"
             >
               <FiPlus size={18} />
               <span>Add Brand</span>
@@ -181,7 +181,7 @@ function BrandList() {
           </p>
           <Link
             to="/seller/brands/add"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#011f4b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Add Brand
           </Link>

@@ -89,7 +89,7 @@ const TrendingProducts = () => {
             <button
               disabled={currentPage === 1}
               onClick={() => handlePageChange(currentPage - 1)}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md disabled:bg-gray-300 transition-all duration-200 hover:bg-blue-600"
+              className="bg-[#011f4b] text-white px-4 py-2 rounded-md disabled:bg-gray-300 transition-all duration-200"
             >
               Previous
             </button>
@@ -97,7 +97,7 @@ const TrendingProducts = () => {
             <button
               disabled={currentPage === totalPages}
               onClick={() => handlePageChange(currentPage + 1)}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md disabled:bg-gray-300 transition-all duration-200 hover:bg-blue-600"
+              className="bg-[#011f4b] text-white px-4 py-2 rounded-md disabled:bg-gray-300 transition-all duration-200 hover:bg-blue-600"
             >
               Next
             </button>
