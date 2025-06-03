@@ -181,6 +181,9 @@ export default function WomenCollection() {
 
   const menProducts = allProducts.filter((item) => item.group === "men").splice(0, 8);
 
+
+  console.log("menProducts",menProducts)
+
   return (
     <div className="h-auto px-2 md:px-4">
       <div class="text-center mt-3 ">

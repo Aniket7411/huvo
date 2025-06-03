@@ -50,12 +50,14 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                   className="bg-white flex flex-col rounded-xl p-3 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300"
                 >
                   <div className="w-full  mb-3 overflow-hidden rounded-md">
-                    <img
+                    <Link to={`/product-details/${product?.productId}`} >                    <img
                       src={product?.bannerImage || "https://via.placeholder.com/300"}
                       alt={product?.name || "Product Image"}
                       className="h-52 w-full object-cover"
                       loading="lazy"
                     />
+                    </Link>
+
                   </div>
 
                   <div className="flex justify-between items-center">

@@ -79,6 +79,7 @@ import ScrollToTop from "./components/scrolltop/index.jsx";
 import SellerPayoutDetail from "./pages/sellerpayoutdetail/index.jsx";
 import SellerPayoutsList from "./pages/sellerproductlist/index.jsx";
 import CouponManagement from "./pages/coupon/index.jsx";
+import ResetPasswordPage from "./pages/confimresetpassword/index.jsx";
 
 function App() {
   return (
@@ -135,7 +136,7 @@ function App() {
             path="/resetPassword"
             element={
               <Layout>
-                <ResetPassword />
+                <ResetPasswordPage />
               </Layout>
             }
           />

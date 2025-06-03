@@ -14,7 +14,7 @@ const ProductsShowingComponent = (props) => {
 
 
 
-  console.log("allProductsallProductsallProducts",allProducts)
+  console.log("allProductsallProductsallProducts", allProducts)
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
@@ -222,41 +222,44 @@ const ProductsShowingComponent = (props) => {
                   filteredProducts && filteredProducts.length > 0 ? (
                     filteredProducts.map((eachProduct, i) => (
                       <div key={i} className="w-[49%] bg-[#fff] py-2 rounded-lg flex flex-col shadow-md ">
-                        <img
-                          src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
-                          alt={eachProduct?.name || "Product Image"}
-                          className="h-[150px] object-cover"
-                          loading="lazy"
-                        />
+                        <Link to={`/product-details/${eachProduct?.productId}`}>
+
+                          <img
+                            src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
+                            alt={eachProduct?.name || "Product Image"}
+                            className="h-[150px] object-cover"
+                            loading="lazy"
+                          />
+                        </Link>
                         <div className="px-3">
-                          <h1 className="text-[blue] font-semibold text-sm mt-1 mb-1">
-                          {eachProduct?.name?.length > 20 ? `${eachProduct.name.slice(0, 25)}` : eachProduct?.name || "Product Name"}
+                          <h1 className="text-blue-600 font-semibold text-sm mt-1 mb-1">
+                            {eachProduct?.name?.length > 20 ? `${eachProduct.name.slice(0, 25)}` : eachProduct?.name || "Product Name"}
                           </h1>
                           {/* Stars */}
 
 
-                              <div className="flex gap-2 justify-between mb-1 items-center">
+                          <div className="flex gap-2 justify-between mb-1 items-center">
 
-                          <p className="text-gray-600 text-sm ">
-                            {eachProduct?.brandName || "Unknown Brand"}
-                          </p>
-                          <div
-                            className={`px-1 py-1 text-[8px] flex items-center rounded-md gap-1 text-white ${4.5 >= 3.5
-                              ? "bg-green-500"
-                              : 4.5 >= 3
-                                ? "bg-yellow-500"
-                                : "bg-red-400"
-                              }`}
-                          >
-                            {
-                              eachProduct?.totalRating >= 50 ?
-                                eachProduct?.avgRating : "New"
-                            }
-                            <TbJewishStarFilled className="text-sm" />
+                            <p className="text-gray-600 text-sm ">
+                              {eachProduct?.brandName || "Unknown Brand"}
+                            </p>
+                            <div
+                              className={`px-1 py-1 text-[8px] flex items-center rounded-md gap-1 text-white ${4.5 >= 3.5
+                                ? "bg-green-500"
+                                : 4.5 >= 3
+                                  ? "bg-yellow-500"
+                                  : "bg-red-400"
+                                }`}
+                            >
+                              {
+                                eachProduct?.totalRating >= 50 ?
+                                  eachProduct?.avgRating : "New"
+                              }
+                              <TbJewishStarFilled className="text-sm" />
+                            </div>
+
                           </div>
 
-                        </div>
-                      
                           {/* Pricing */}
                           <div className="flex justify-between items-center text-sm mb-1">
                             <p className="line-through font-medium text-red-600">{eachProduct?.actualPrice || "N/A"}</p>
@@ -287,7 +290,7 @@ const ProductsShowingComponent = (props) => {
 
 
 
-                    
+
                       </div>
                     ))
                   ) : (
@@ -313,23 +316,26 @@ const ProductsShowingComponent = (props) => {
                     >
                       {/* Product Image */}
                       <div className="w-full overflow-hidden rounded-md flex items-center justify-center">
-                        <img
-                          src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
-                          alt={eachProduct?.name || "Product Image"}
-                          className="h-[220px] w-full object-cover"
-                          loading="lazy"
-                        />
+                        <Link to={`/product-details/${eachProduct?.productId}`}>
+
+                          <img
+                            src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
+                            alt={eachProduct?.name || "Product Image"}
+                            className="h-[220px] w-full object-cover"
+                            loading="lazy"
+                          />
+                        </Link>
                       </div>
 
                       {/* Product Name */}
-                      <h1 className="text-black font-semibold text-lg mb-1">
-                        {eachProduct?.productName || "Product Name"}
+                      <h1 className="text-blue-600 font-semibold text-lg ">
+                        {eachProduct?.name?.length > 20 ? `${eachProduct.name.slice(0, 25)}` : eachProduct?.name || "Product Name"}
                       </h1>
 
-                    
 
 
-                      <div className="flex gap-2 justify-between mb-1 items-center">
+
+                      <div className="flex gap-1 justify-between mb-1 items-center">
 
                         <p className="text-gray-600 text-md ">
                           {eachProduct?.brandName || "Unknown Brand"}
@@ -349,7 +355,7 @@ const ProductsShowingComponent = (props) => {
                           <TbJewishStarFilled className="text-sm" />
                         </div>
 
-                      </div>  
+                      </div>
 
                       {/* Pricing */}
                       <div className="flex justify-between items-center text-sm mb-1">

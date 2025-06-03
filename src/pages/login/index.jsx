@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { HttpClient } from "../../server/client/http";
 import { LogIn } from "../../server/user";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaUserLock } from "react-icons/fa";
 import Loader from "../../components/loader";
 
 
@@ -25,10 +25,13 @@ export default function Login() {
     formState: { errors: resetError },
   } = useForm({ submitFocusError: true });
   const onResetSubmit = async (data) => {
+
+
+    console.log("data")
     try {
       const { message } = await HttpClient.post("/users/forgetPassword", data);
       toast.success(message);
-      
+
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -51,7 +54,7 @@ export default function Login() {
 
       if (response?.userData?.role === "SELLER") {
         navigate("/seller/profile");
-        if(response?.userData?.verificationStatus === false){
+        if (response?.userData?.verificationStatus === false) {
           toast.info("Kindly go to profile and update it for furthur process.")
         }
       } else if (response?.userData?.role === "ADMIN") {
@@ -68,6 +71,59 @@ export default function Login() {
       console.log(error);
       toast.error(error?.response?.data?.message);
       setLoader(false)
+    }
+  };
+
+
+
+
+
+  const [userEmail, setUserEmail] = useState("");
+  const [formError, setFormError] = useState("");
+  const [formSuccess, setFormSuccess] = useState("");
+  const [isFormSubmitting, setIsFormSubmitting] = useState(false);
+
+  const handlePasswordResetSubmit = async (event) => {
+
+    console.log("userEmail",userEmail)
+    event.preventDefault();
+    setFormError("");
+    setFormSuccess("");
+
+    // Email validation
+    const emailValidationRegex = /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/;
+    if (!userEmail) {
+      setFormError("Email address is required.");
+      return;
+    } else if (!emailValidationRegex.test(userEmail)) {
+      setFormError("Please enter a valid email address.");
+      return;
+    }
+
+    try {
+      setIsFormSubmitting(true);
+
+      // Simulated POST API call
+      const response = await fetch("https://api.example.com/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: userEmail }),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        setFormSuccess(responseData.message || "Password reset link sent successfully.");
+        setUserEmail(""); // Clear the input field
+      } else {
+        const errorResponse = await response.json();
+        setFormError(errorResponse.message || "Failed to send password reset email.");
+      }
+    } catch (apiError) {
+      setFormError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsFormSubmitting(false);
     }
   };
   return (
@@ -122,34 +178,44 @@ export default function Login() {
                       <h3 className="mb-5 text-2xl font-semibold text-black font-[QuickSand]">
                         Forgot Password{" "}
                       </h3>
-                      <form onSubmit={handleResetSubmit(onResetSubmit)}>
-                        <label className="block my-3 text-[#011F4B]">
-                          Enter Your Email-address to reset password
+
+
+                      <form
+                        onSubmit={handlePasswordResetSubmit}
+                        className="password-reset-form-container max-w-md mx-auto p-6 bg-white shadow-lg rounded-md"
+                      >
+                        <h2 className="password-reset-heading text-xl font-bold text-gray-800 mb-2">
+                          Reset Your Password
+                        </h2>
+
+                        <label htmlFor="user-email" className="password-reset-label block text-gray-700 font-medium mb-2">
+                          Enter your email address to reset your password:
                         </label>
                         <input
                           type="email"
-                          className={`bg-transparent rounded-lg text-[#011F4B] block border-[#6b7280] border-[1px] border-solid p-2 w-full outline-none my-3 ${resetError.email ? "border-red-500" : ""
-                            } `}
-                          {...resetPassword("email", {
-                            required: "*email is required.",
-                            pattern: {
-                              value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
-                              message: "*email is not valid.",
-                            },
-                          })}
+                          id="user-email"
+                          className={`password-reset-input w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${formError ? "border-red-500" : "border-gray-300"
+                            }`}
+                          value={userEmail}
+                          onChange={(e) => setUserEmail(e.target.value)}
+                          placeholder="Enter your email"
                         />
-                        {resetError.email && (
-                          <p className="text-end errorMsg text-[#E40606]">
-                            {resetError.email.message}
-                          </p>
-                        )}
+
+                        {formError && <p className="password-reset-error text-red-500 text-sm mt-2">{formError}</p>}
+                        {formSuccess && <p className="password-reset-success text-green-500 text-sm mt-2">{formSuccess}</p>}
+
                         <button
                           type="submit"
-                          className="my-3 bg-[#011F4B]  text-white xl:text-xl lg:text-lg font-medium p-3  focus:outline-none rounded-lg   text-center w-full font-[QuickSand]"
+                          className={`password-reset-submit-btn w-full mt-2 p-3 text-white rounded-lg bg-blue-600 hover:bg-blue-700 focus:outline-none ${isFormSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
+                          disabled={isFormSubmitting}
                         >
-                          Reset Password
+                          {isFormSubmitting ? "Submitting..." : "Send Reset Link"}
                         </button>
                       </form>
+
+
+
                     </div>
                   </div>
                 </div>
@@ -157,23 +223,23 @@ export default function Login() {
             )}
             {!forgetPassword && (
               <>
-               <div className="flex items-center justify-center">
-  <Link to="/">
-    <img
-      src="/assets/vardacartslogo.svg"
-      alt="Logo"
-      className="w-[180px] mb-3"
-    />
-  </Link>
-</div>
+                <div className="flex items-center justify-center">
+                  <Link to="/">
+                    <img
+                      src="/assets/vardacartslogo.svg"
+                      alt="Logo"
+                      className="w-[180px] mb-3"
+                    />
+                  </Link>
+                </div>
 
-<p className="text-lg text-gray-600 text-center mb-2">
-  Your one-stop shop for everything you love!
-</p>
+                <p className="text-lg text-gray-600 text-center mb-2">
+                  Your one-stop shop for everything you love!
+                </p>
 
-<p className="font-semibold text-3xl md:text-3xl xl:text-5xl text-black mb-2">
-  LOG IN
-</p>
+                <p className="font-semibold text-3xl md:text-3xl xl:text-5xl text-black mb-2">
+                  LOG IN
+                </p>
 
 
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -237,7 +303,7 @@ export default function Login() {
                     onClick={() => setForgetPassword(true)}
                     className="text-[#011F4B] font-medium mt-2 mb-4 ml-[30%]"
                   >
-                    <span className="cursor-pointer">FORGET PASSWORD?</span>
+                    <span className="cursor-pointer">FORGOT PASSWORD?</span>
                   </p>
                   <button className="font-medium text-[#011F4B] rounded-lg border-2 border-solid border-[#011F4B] py-2 px-6">
                     LOG IN

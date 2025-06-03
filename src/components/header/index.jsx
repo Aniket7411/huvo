@@ -662,7 +662,7 @@ export default function Header(props) {
             <div className="flex justify-between items-center mb-4">
               <div>
                 <Link to="/">
-                  <p className="font-bold text-white text-3xl tracking-wide drop-shadow-md" style={{ fontFamily: "'Caveat', cursive" }}>
+                  <p className="font-bold text-white text-5xl tracking-wide drop-shadow-md" style={{ fontFamily: "'Caveat', cursive" }}>
                     Huvo
                   </p>
                 </Link>
