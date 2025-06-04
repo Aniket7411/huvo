@@ -182,7 +182,7 @@ export default function Login() {
                         </h2>
 
                         <label htmlFor="user-email" className="password-reset-label block text-gray-700 font-medium mb-2">
-                          Enter your email address to reset your password:
+                          Enter your email address to reset your password
                         </label>
                         <input
                           type="email"
