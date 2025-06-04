@@ -252,7 +252,7 @@ export default function Header(props) {
           <img src="/assets/Huvonew.png" alt="Logo" className="w-[50px] h-[50px]  hidden md:block rounded-xl" />
         </Link>
 
-        <ul className="flex gap-5 text-xl text-blue-700 " style={{ fontFamily: "Caveat, cursive" }}>
+        <ul className="flex gap-5 text-2xl text-blue-700 " style={{ fontFamily: "Caveat, cursive" }}>
           <Link to="/">
             <li className="cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
               Home
