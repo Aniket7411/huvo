@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { HttpClient } from "../../server/client/http";
 
@@ -11,6 +11,7 @@ const ResetPasswordPage = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const { id } = useParams(); // Extracting user ID from URL
 
     const navigate = useNavigate();
 
@@ -41,10 +42,12 @@ const ResetPasswordPage = () => {
             setIsSubmitting(true);
 
             // Simulated API call
-            const response = HttpClient.post()
-             
+            const response = await HttpClient.post(`/user/ChangePassword`, {
+                token: id, newPassword: newPassword
+            });
 
-            if (response.ok) {
+
+            if (response.success===true) {
                 setFormSuccess("Password reset successfully! Redirecting to login...");
                 setTimeout(() => {
                     navigate("/login"); // Redirect to login page
