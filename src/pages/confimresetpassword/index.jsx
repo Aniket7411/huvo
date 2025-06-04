@@ -21,8 +21,7 @@ const ResetPasswordPage = () => {
         console.log(confirmPassword)
 
         event.preventDefault();
-        setFormError("");
-        setFormSuccess("");
+      
 
         // Validate passwords
         if (!newPassword || !confirmPassword) {
@@ -42,10 +41,11 @@ const ResetPasswordPage = () => {
             setIsSubmitting(true);
 
             // Simulated API call
-            const response = await HttpClient.post(`/user/ChangePassword`, {
+            const response = await HttpClient.post(`users/changePassword`, {
                 token: id, newPassword: newPassword
             });
 
+            console.log(response)
 
             if (response.success===true) {
                 setFormSuccess("Password reset successfully! Redirecting to login...");

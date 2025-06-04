@@ -104,17 +104,10 @@ export default function Login() {
       setIsFormSubmitting(true);
 
       // Simulated POST API call
-      const response = await fetch("https://api.example.com/reset-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: userEmail }),
-      });
+    const response = await HttpClient.post("/users/sendOtp", {email : userEmail})
 
-      if (response.ok) {
-        const responseData = await response.json();
-        setFormSuccess(responseData.message || "Password reset link sent successfully.");
+      if (response.success) {
+        toast.success(response.message)
         setUserEmail(""); // Clear the input field
       } else {
         const errorResponse = await response.json();
