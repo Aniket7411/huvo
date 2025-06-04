@@ -133,7 +133,7 @@ function App() {
 
         <Routes>
           <Route
-            path="/resetPassword"
+            path="/resetPassword:id"
             element={
               <Layout>
                 <ResetPasswordPage />
