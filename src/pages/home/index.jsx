@@ -450,7 +450,7 @@ export default function Home() {
 
                 <div class="relative z-10 w-32 h-1 bg-white/80 mt-2 animate-expand"></div>
 
-                <p class="relative z-10 text-lg md:text-2xl text-pink-100 text-center mt-2 max-w-2xl animate-typewriter whitespace-nowrap overflow-hidden">
+                <p class="relative z-10 text-lg md:text-2xl text-pink-100 text-center mt-2 max-w-2xl  whitespace-nowrap overflow-hidden">
                   Where elegance meets confidence
                 </p>
 
@@ -479,68 +479,22 @@ export default function Home() {
               <BrandSlider />
 
 
-              {/* <Link to="/men-collection">
-
-
-
-                <div className="md:h-[250px] h-[200px]"
-
-                  style={{
-                    backgroundImage: "url('/assets/menbanner.jpg')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    height: "250px",
-                    display: "flex",
-
-                    justifyContent: "start",
-                    alignItems: "center",
-                    color: "#ffffff",
-                  }}
-                >
-
-                  <h1 className="px-4 font-bold text-xl md:hidden">No drama,<br /> <span className="ml-4"> just vibes</span>
-
-                  </h1>
-                  <div className="md:flex items-center hidden flex-wrap gap-0  md:gap-3 bg-[#fff] px-3 rounded-lg">
-
-                    <h1>
-                      Explore the best products tailored for men.
-                    </h1>
-                    <h2
-                      className="font-[Quicksand] font-medium hidden md:block text-center text-2xl sm:text-lg md:text-4xl bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: "linear-gradient(90deg, #007bff, #f8d00f, #007bff)", // Blue to Yellow Gradient
-                        backgroundSize: "200% auto",
-                        backgroundPosition: "0% 50%",
-                        animation: "flow-gradient 3s linear infinite",
-                      }}
-                    >
-                      Trending Products for Men
-                    </h2>
-                    <FaArrowTrendUp size={30} className="text-[#4bd63b] mr-2 hidden md:block " />
-                    <p className="text-gray-600 font-semibold hidden md:block">Explore the best products tailored for men.</p>
-
-                  </div>
-
-                </div>
-
-              </Link> */}
+      
 
               <div class="flex flex-col items-center justify-center py-2 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white overflow-hidden">
-                <h1 class="text-xl md:text-3xl lg:text-5xl  text-center mb-2 animate-fade-in [text-shadow:_0_0_10px_rgba(34,211,238,0.7)]">
+                <h1 class="text-xl md:text-3xl lg:text-5xl  text-center mb-2 animate-fade-in ">
                   MEN'S EDGE
                 </h1>
 
-                <p class="text-lg md:text-2xl text-cyan-100 text-center max-w-2xl font-mono overflow-hidden whitespace-nowrap border-r-4 border-cyan-300 animate-typewriter">
+                <p class="text-lg md:text-2xl text-cyan-100 text-center max-w-2xl font-mono overflow-hidden whitespace-nowrap /assets/headerlogosmall.svg ">
                   Where innovation meets style
                 </p>
 
-                <div class="flex mt-2 space-x-4">
+                {/* <div class="flex mt-2 space-x-4">
                   <div class="w-3 h-3 bg-white rounded-full animate-pulse-slow delay-100"></div>
                   <div class="w-3 h-3 bg-cyan-300 rounded-full animate-pulse-slow delay-300"></div>
                   <div class="w-3 h-3 bg-white rounded-full animate-pulse-slow delay-500"></div>
-                </div>
+                </div> */}
 
 
               </div>

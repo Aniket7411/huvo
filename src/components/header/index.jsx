@@ -249,10 +249,10 @@ export default function Header(props) {
     <>
       <div style={{ fontFamily: "Caveat, cursive" }} className="hidden md:flex font-semibold items-center bg-gradient-to-l from-blue-500 to-white  px-8 py-3 justify-between">
         <Link to="/" >
-          <img src="/assets/Huvonew.png" alt="Logo" className="w-[50px] h-[50px]  hidden md:block rounded-xl" />
+          <img src="/assets/largelogonbg.png" alt="Logo" className="w-auto h-[40px]  hidden md:block rounded-xl" />
         </Link>
 
-        <ul className="flex gap-5 text-2xl text-blue-700 " style={{ fontFamily: "Caveat, cursive" }}>
+        <ul className="flex gap-5 text-3xl text-blue-700 " style={{ fontFamily: "Caveat, cursive" }}>
           <Link to="/">
             <li className="cursor-pointer hover:text-[#f0c040] hover:underline transition-all duration-300">
               Home
@@ -393,7 +393,7 @@ export default function Header(props) {
             !isLoggedIn() ?
 
               <Link to="/login">
-                <p className="p-2   text-[#fff] text-lg cursor-pointer" >Login</p>
+                <p className="p-2   text-[#fff] text-2xl cursor-pointer" >Login</p>
               </Link> : <div
                 className="relative"
                 onMouseEnter={handleMouseEnter}
@@ -500,9 +500,9 @@ export default function Header(props) {
             onClick={() => openSubmenu()}
           />
           <img
-            src="/assets/favicon.svg"
-            alt="logo"
-            className="w-[30px] bg-[#fff] rounded-full shadow-md"
+            src="/assets/headerlogosmall.svg"
+            alt="huvo-logo"
+            className="w-[30px]  rounded-full shadow-md"
           />
         </div>
 

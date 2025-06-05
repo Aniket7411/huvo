@@ -219,7 +219,7 @@ export default function Login() {
                 <div className="flex items-center justify-center">
                   <Link to="/">
                     <img
-                      src="/assets/vardacartslogo.svg"
+                      src="/assets/logoheaderlarge.png"
                       alt="Logo"
                       className="w-[180px] mb-3"
                     />
