@@ -486,7 +486,7 @@ export default function Home() {
                   MEN'S EDGE
                 </h1>
 
-                <p class="text-lg md:text-2xl text-cyan-100 text-center max-w-2xl font-mono overflow-hidden whitespace-nowrap /assets/headerlogosmall.svg ">
+                <p class="text-lg md:text-2xl text-cyan-100 text-center max-w-2xl font-mono overflow-hidden whitespace-nowrap  ">
                   Where innovation meets style
                 </p>
 

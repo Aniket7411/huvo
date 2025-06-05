@@ -500,7 +500,7 @@ export default function Header(props) {
             onClick={() => openSubmenu()}
           />
           <img
-            src="/assets/headerlogosmall.svg"
+            src="/assets/headerlogosmall.png"
             alt="huvo-logo"
             className="w-[30px]  rounded-full shadow-md"
           />
