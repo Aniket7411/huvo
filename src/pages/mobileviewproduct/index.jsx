@@ -20,6 +20,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
         {
           products.map((product) => {
             return (
+              <Link to={`/product-details/${product?.productId}`}>
               <div className="w-[49%] bg-[#fff] py-2 rounded-lg flex flex-col shadow-md ">
                 <img
                   src={product?.bannerImage || "https://via.placeholder.com/300"}
@@ -52,16 +53,17 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                       </p>
                     </div>
                   </div>
-                  <Link to={`/product-details/${product?.productId}`}>
+                  
                     <button className="bg-blue-600 text-white px-2 py-1 rounded-md flex items-center gap-2 hover:bg-blue-700 transition-all">
-                      Views <FaArrowRight className="w-4 h-4" />
+                      View <FaArrowRight className="w-4 h-4" />
                     </button>
-                  </Link>
+                  
                 </div>
 
 
 
               </div>
+              </Link>
             )
           })
         }
