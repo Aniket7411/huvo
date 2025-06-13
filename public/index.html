@@ -30,6 +30,30 @@
   <title>Huvo</title>
   <!-- Razorpay script is included here -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <script type="text/javascript">
+    (function (location) {
+      // Check if the second character of the search string is a "/"
+      if (location.search[1] === "/") {
+        // Decode the search string
+        var decoded = location.search
+          .slice(1) // Remove the "?" at the start
+          .split("&") // Split by "&"
+          .map(function (s) {
+            return s.replace(/and/g, "&"); // Replace "and" with "&"
+          })
+          .join("?"); // Join the array back into a string with "?"
+
+        // Update the URL without reloading the page
+        window.history.replaceState(
+          null,
+          null,
+          location.pathname.slice(0, -1) + decoded + location.hash
+        );
+      }
+    })(window.location);
+  </script>
+
 </head>
 
 <body>

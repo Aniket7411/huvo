@@ -85,775 +85,94 @@ function App() {
   return (
     <CartProvider>
       <BrowserRouter>
-        <ScrollToTop /> {/* Ensure this is included */}
-
+        <ScrollToTop />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Layout>
-                <Home />
-              </Layout>
-            }
-          />
-        </Routes>
-
-
-        <Routes>
-          <Route
-            path="/test"
-            element={
-              <Layout>
-                <ProductReview />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="/carousel"
-            element={
-              <Layout>
-                <ProductsCarousel />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="/store_product/:id"
-            element={
-              <Layout>
-                <StoreAndProducts />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="/resetPassword/:id"
-            element={
-              <Layout>
-                <ResetPasswordPage />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="/privacy_policy"
-            element={
-              <Layout>
-                <Privacypolicy />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="/returnpolicy"
-            element={
-              <Layout>
-                <Returnpolicy />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="/shopping_policies"
-            element={
-              <Layout>
-                <ShippingInfo />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="/cancellation_refund"
-            element={
-              <Layout>
-                <CancellationAndRefundPolicies />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="/contact_us"
-            element={
-              <Layout>
-                <ContactUs />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="/termsandconditions"
-            element={
-              <Layout>
-                <TermsAndConditions />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="/product-details/:id"
-            element={
-              <Layout >
-                <ProductDetails />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="men-collection"
-            element={
-              <Layout>
-                <NewMenCollection />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="men-collection/:id"
-            element={
-              <Layout>
-                <NewMenCollection />
-                <NewMenCollection />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="women-collection"
-            element={
-              <Layout>
-                <WomenCollection />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="kids-collection"
-            element={
-              <Layout>
-                <KidsCollection />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="/category_search/:id"
-            element={
-              <Layout>
-                <CategoryPage />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="/category_search/:id/:category"
-            element={
-              <Layout>
-                <CategoryPage />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="collections"
-            element={
-              <Layout changeHeaderColor="true">
-                <Collections />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="appliances"
-            element={
-              <Layout changeHeaderColor="true">
-                <GroceriesHomeApplianceCollection />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="search/result"
-            element={
-              <Layout changeHeaderColor="true">
-                <Search />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="products_by_brand&seller"
-            element={
-              <Layout >
-                <StoreAndProducts />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="trending_products"
-            element={
-              <Layout changeHeaderColor="true">
-                <TrendingProducts />
-              </Layout>
-            }
-          />
-        </Routes>
-
-
-        <Routes>
-          <Route
-            path="add_coupons"
-            element={
-              <Layout changeHeaderColor="true">
-                <CouponManagement />
-              </Layout>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="seller/coupon"
-            element={
-              <Layout changeHeaderColor="true">
-                <SellerCoupons />
-              </Layout>
-            }
-          />
-        </Routes>
-
-
-
-        <Routes>
-          <Route
-            path="/products_category/:id"
-            element={
-              <Layout>
-                <ProductsByCategory />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="wishlist"
-            element={
-              <UserAuth>
-                <Layout changeHeaderColor="true">
-                  <WishList />
-                </Layout>
-              </UserAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="checkout/cart"
-            element={
-              <Layout changeHeaderColor="true">
-                <CheckOut />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="checkout/cart/not_login"
-            element={
-              <Layout changeHeaderColor="true">
-                <CheckOutWithoutLogin />
-              </Layout>
-            }
-          />
-        </Routes>
-        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Layout><Home /></Layout>} />
+          <Route path="/test" element={<Layout><ProductReview /></Layout>} />
+          <Route path="/carousel" element={<Layout><ProductsCarousel /></Layout>} />
+          <Route path="/store_product/:id" element={<Layout><StoreAndProducts /></Layout>} />
+          <Route path="/resetPassword/:id" element={<Layout><ResetPasswordPage /></Layout>} />
+          <Route path="/privacy_policy" element={<Layout><Privacypolicy /></Layout>} />
+          <Route path="/returnpolicy" element={<Layout><Returnpolicy /></Layout>} />
+          <Route path="/shopping_policies" element={<Layout><ShippingInfo /></Layout>} />
+          <Route path="/cancellation_refund" element={<Layout><CancellationAndRefundPolicies /></Layout>} />
+          <Route path="/contact_us" element={<Layout><ContactUs /></Layout>} />
+          <Route path="/termsandconditions" element={<Layout><TermsAndConditions /></Layout>} />
+          <Route path="/product-details/:id" element={<Layout><ProductDetails /></Layout>} />
+          <Route path="men-collection" element={<Layout><NewMenCollection /></Layout>} />
+          <Route path="men-collection/:id" element={<Layout><NewMenCollection /></Layout>} />
+          <Route path="women-collection" element={<Layout><WomenCollection /></Layout>} />
+          <Route path="kids-collection" element={<Layout><KidsCollection /></Layout>} />
+          <Route path="/category_search/:id" element={<Layout><CategoryPage /></Layout>} />
+          <Route path="/category_search/:id/:category" element={<Layout><CategoryPage /></Layout>} />
+          <Route path="collections" element={<Layout changeHeaderColor="true"><Collections /></Layout>} />
+          <Route path="appliances" element={<Layout changeHeaderColor="true"><GroceriesHomeApplianceCollection /></Layout>} />
+          <Route path="search/result" element={<Layout changeHeaderColor="true"><Search /></Layout>} />
+          <Route path="products_by_brand&seller" element={<Layout><StoreAndProducts /></Layout>} />
+          <Route path="trending_products" element={<Layout changeHeaderColor="true"><TrendingProducts /></Layout>} />
+          <Route path="add_coupons" element={<Layout changeHeaderColor="true"><CouponManagement /></Layout>} />
+          <Route path="seller/coupon" element={<Layout changeHeaderColor="true"><SellerCoupons /></Layout>} />
+          <Route path="/products_category/:id" element={<Layout><ProductsByCategory /></Layout>} />
           <Route path="login" element={<Login />} />
-        </Routes>
-        <Routes>
           <Route path="register/:id" element={<SignIn />} />
-        </Routes>
-        {/* <Routes>
-        <Route path="verify-seller" element={<VerifySeller />} />
-      </Routes> */}
 
-        <Routes>
-          <Route
-            path="/order_details/:id"
-            element={
-              <UserAuth>
-                <Layout changeHeaderColor="true">
-                  <OrderDetails />
-                </Layout>
-              </UserAuth>
-            }
-          />
-        </Routes>
+          {/* Authenticated User Routes */}
+          <Route element={<UserAuth />}>
+            <Route path="wishlist" element={<Layout changeHeaderColor="true"><WishList /></Layout>} />
+            <Route path="/order_details/:id" element={<Layout changeHeaderColor="true"><OrderDetails /></Layout>} />
+            <Route path="profile" element={<Layout changeHeaderColor="true"><Profile /></Layout>} />
+            <Route path="profile/invoice/:orderId" element={<Layout changeHeaderColor="true"><UserInvoicePage /></Layout>} />
+            <Route path="cancel" element={<Layout changeHeaderColor="true"><CancelSection /></Layout>} />
+            <Route path="admincancel" element={<Layout changeHeaderColor="true"><AdminCancelSection /></Layout>} />
+          </Route>
 
+          {/* Admin/Seller Routes */}
+          <Route element={<AdminAuth />}>
+            <Route path="/seller" element={<Layoutadmin><Admin /></Layoutadmin>} />
+            <Route path="seller/products" element={<Layoutadmin><ProductList /></Layoutadmin>} />
+            <Route path="seller/products/add" element={<Layoutadmin><ProductAddPage /></Layoutadmin>} />
+            <Route path="seller/products/edit/:id" element={<Layoutadmin><ProductEditPage /></Layoutadmin>} />
+            <Route path="seller/brands" element={<Layoutadmin><BrandList /></Layoutadmin>} />
+            <Route path="cancelled_orders" element={<Layoutadmin><CancellationManagementPage /></Layoutadmin>} />
+            <Route path="seller/brands/add" element={<Layoutadmin><BrandAddPage /></Layoutadmin>} />
+            <Route path="seller/brands/edit/:id" element={<Layoutadmin><BrandEditPage /></Layoutadmin>} />
+            <Route path="seller/category" element={<Layoutadmin><CategoryList /></Layoutadmin>} />
+            <Route path="seller/category/add" element={<Layoutadmin><CategoryAddPage /></Layoutadmin>} />
+            <Route path="seller/category/edit/:id" element={<Layoutadmin><CategoryEditPage /></Layoutadmin>} />
+            <Route path="seller/users" element={<Layoutadmin><UserList /></Layoutadmin>} />
+            <Route path="seller/invoice/:invoiceId" element={<Layoutadmin><InvoicePage /></Layoutadmin>} />
+            <Route path="seller/orders" element={<Layoutadmin><OrderList /></Layoutadmin>} />
+            <Route path="seller/profile" element={<Layoutadmin><Profile /></Layoutadmin>} />
+          </Route>
 
-        <Routes>
-          <Route
-            path="/tracking_order/:id/:id"
-            element={
-              <Layout changeHeaderColor="true">
-                <OrderTracking />
-              </Layout>
-            }
-          />
-        </Routes>
+          {/* Super Admin Routes */}
+          <Route element={<SuperAdminAuth />}>
+            <Route path="admin" element={<Dashboard />} />
+            <Route path="/advertisement" element={<Advertisement />} />
+            <Route path="admin/vendors" element={<Vendors />} />
+            <Route path="manage_admin" element={<AdminManagement />} />
+            <Route path="admin/products" element={<ProductsAdmin />} />
+            <Route path="admin/buyers" element={<Buyers />} />
+            <Route path="admin/invoice" element={<InvoiceAdmin />} />
+            <Route path="seller_payouts" element={<SellerPayout />} />
+            <Route path="seller_payouts_details" element={<SellerPayoutDetail />} />
+            <Route path="/sellers_products/:id" element={<SellerPayoutsList />} />
+            <Route path="admin/invoice/details/:id" element={<InvoiceDetails />} />
+            <Route path="admin/profile" element={<ProfileAdmin />} />
+            <Route path="admin/approval" element={<Approval />} />
+            <Route path="admin/approval/:id" element={<ApprovalSlip />} />
+            <Route path="admin/vendors/details/:id" element={<Vendorsdetail />} />
+            <Route path="admin/vendors/product_details/:id" element={<SellerProducts />} />
+          </Route>
 
-        <Routes>
-          <Route
-            path="profile"
-            element={
-              <UserAuth>
-                <Layout changeHeaderColor="true">
-                  <Profile />
-                </Layout>
-              </UserAuth>
-            }
-          />
+          {/* Checkout Routes */}
+          <Route path="checkout/cart" element={<Layout changeHeaderColor="true"><CheckOut /></Layout>} />
+          <Route path="checkout/cart/not_login" element={<Layout changeHeaderColor="true"><CheckOutWithoutLogin /></Layout>} />
+          <Route path="/tracking_order/:id/:id" element={<Layout changeHeaderColor="true"><OrderTracking /></Layout>} />
         </Routes>
-        <Routes>
-          <Route
-            path="profile/invoice/:orderId"
-            element={
-              <UserAuth>
-                <Layout changeHeaderColor="true">
-                  <UserInvoicePage />
-                </Layout>
-              </UserAuth>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="cancel"
-            element={
-              <UserAuth>
-                <Layout changeHeaderColor="true">
-                  <CancelSection />
-                </Layout>
-              </UserAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="admincancel"
-            element={
-              <UserAuth>
-                <Layout changeHeaderColor="true">
-                  <AdminCancelSection />
-                </Layout>
-              </UserAuth>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="/seller"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <Admin />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller/products"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <ProductList />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller/products/add"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <ProductAddPage />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller/products/edit/:id"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <ProductEditPage />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller/brands"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <BrandList />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="cancelled_orders"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <CancellationManagementPage />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller/brands/add"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <BrandAddPage />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller/brands/edit/:id"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <BrandEditPage />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller/category"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <CategoryList />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller/category/add"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <CategoryAddPage />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller/category/edit/:id"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <CategoryEditPage />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller/users"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <UserList />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller/invoice/:invoiceId"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <InvoicePage />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller/orders"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <OrderList />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="seller/profile"
-            element={
-              <AdminAuth>
-                <Layoutadmin>
-                  <Profile />
-                </Layoutadmin>
-              </AdminAuth>
-            }
-          />
-        </Routes>
-
-        <Routes>
-
-          <Route
-            path="admin"
-            element={
-              <SuperAdminAuth>
-                <Dashboard />
-              </SuperAdminAuth>
-            }
-          />
-
-        </Routes>
-
-        <Routes>
-
-          <Route
-            path="/advertisement"
-            element={
-              <SuperAdminAuth>
-                <Advertisement />
-              </SuperAdminAuth>
-
-            }
-          />
-
-        </Routes>
-
-
-
-        <Routes>
-          <Route
-            path="admin/vendors"
-            element={
-              <SuperAdminAuth>
-                <Vendors />
-              </SuperAdminAuth>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="manage_admin"
-            element={
-              <SuperAdminAuth>
-                <AdminManagement />
-              </SuperAdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="admin/products"
-            element={<SuperAdminAuth>
-              <ProductsAdmin />
-            </SuperAdminAuth>
-
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="admin/buyers"
-            element={
-              <SuperAdminAuth>
-                <Buyers />
-              </SuperAdminAuth>
-            }
-          />
-        </Routes>
-
-
-        <Routes>
-          <Route
-            path="admin/invoice"
-            element={
-              <SuperAdminAuth>
-                <InvoiceAdmin />
-              </SuperAdminAuth>
-            }
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="seller_payouts"
-            element={
-              <SuperAdminAuth>
-                <SellerPayout />
-              </SuperAdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="seller_payouts_details"
-            element={
-              <SuperAdminAuth>
-                <SellerPayoutDetail />
-              </SuperAdminAuth>
-            }
-          />
-        </Routes>
-
-
-
-        <Routes>
-          <Route
-            path="/sellers_products/:id"
-            element={
-              <SuperAdminAuth>
-                <SellerPayoutsList />
-              </SuperAdminAuth>
-
-            }
-          />
-        </Routes>
-
-
-
-
-        <Routes>
-          <Route
-            path="admin/invoice/details/:id"
-            element={
-              <SuperAdminAuth>
-                <InvoiceDetails />
-              </SuperAdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="admin/profile"
-            element={
-              <SuperAdminAuth>
-                <ProfileAdmin />
-              </SuperAdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="admin/approval"
-            element={
-              <SuperAdminAuth>
-                <Approval />
-              </SuperAdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="admin/approval/:id"
-            element={
-              <SuperAdminAuth>
-                <ApprovalSlip />
-              </SuperAdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="admin/vendors/details/:id"
-            element={
-              <SuperAdminAuth>
-                <Vendorsdetail />
-              </SuperAdminAuth>
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route
-            path="admin/vendors/product_details/:id"
-            element={
-              <SuperAdminAuth>
-                <SellerProducts />
-              </SuperAdminAuth>
-            }
-          />
-        </Routes>
-
       </BrowserRouter>
     </CartProvider>
-
 
   );
 }

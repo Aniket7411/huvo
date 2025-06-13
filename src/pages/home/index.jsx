@@ -265,11 +265,6 @@ export default function Home() {
 
       console.log("dataForCart", dataForCart)
 
-
-
-
-
-
       try {
         const response = await HttpClient.post("/cart/login", dataForCart);
         console.log("dataForCart", response);
@@ -341,12 +336,8 @@ export default function Home() {
 
   console.log("menProducts", menProducts)
 
-
-
-
   return (
     <>
-
       {
         isLoading ? <div className=" h-screen flex justify-center items-center"> <Loader /> </div> :
 
@@ -479,7 +470,7 @@ export default function Home() {
               <BrandSlider />
 
 
-      
+
 
               <div class="flex flex-col items-center justify-center py-2 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white overflow-hidden">
                 <h1 class="text-xl md:text-3xl lg:text-5xl  text-center mb-2 animate-fade-in ">
