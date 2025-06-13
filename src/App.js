@@ -84,7 +84,7 @@ import ResetPasswordPage from "./pages/confimresetpassword/index.jsx";
 function App() {
   return (
     <CartProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <ScrollToTop />
         <Routes>
           {/* Public Routes */}

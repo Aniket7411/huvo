@@ -27,32 +27,58 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
 
+
+  <script type="text/javascript">
+    // Single Page Apps for GitHub Pages
+    // MIT License
+    // https://github.com/rafgraph/spa-github-pages
+    // This script checks to see if a redirect is present in the query string,
+    // converts it back into the correct url and adds it to the
+    // browser's history using window.history.replaceState(...),
+    // which won't cause the browser to attempt to load the new url.
+    // When the single page app is loaded further down in this file,
+    // the correct url will be waiting in the browser's history for
+    // the single page app to route accordingly.
+    (function (l) {
+      if (l.search[1] === '/') {
+        var decoded = l.search.slice(1).split('&').map(function (s) {
+          return s.replace(/~and~/g, '&')
+        }).join('?');
+        window.history.replaceState(null, null,
+          l.pathname.slice(0, -1) + decoded + l.hash
+        );
+      }
+    }(window.location))
+  </script>
+
   <title>Huvo</title>
   <!-- Razorpay script is included here -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <script type="text/javascript">
-    (function (location) {
-      // Check if the second character of the search string is a "/"
-      if (location.search[1] === "/") {
-        // Decode the search string
-        var decoded = location.search
-          .slice(1) // Remove the "?" at the start
-          .split("&") // Split by "&"
-          .map(function (s) {
-            return s.replace(/and/g, "&"); // Replace "and" with "&"
-          })
-          .join("?"); // Join the array back into a string with "?"
+      (function (location) {
+        // Check if the second character of the search string is a "/"
+        if (location.search[1] === "/") {
+          // Decode the search string
+          var decoded = location.search
+            .slice(1) // Remove the "?" at the start
+            .split("&") // Split by "&"
+            .map(function (s) {
+              return s.replace(/and/g, "&"); // Replace "and" with "&"
+            })
+            .join("?"); // Join the array back into a string with "?"
 
-        // Update the URL without reloading the page
-        window.history.replaceState(
-          null,
-          null,
-          location.pathname.slice(0, -1) + decoded + location.hash
-        );
-      }
-    })(window.location);
+          // Update the URL without reloading the page
+          window.history.replaceState(
+            null,
+            null,
+            location.pathname.slice(0, -1) + decoded + location.hash
+          );
+        }
+      })(window.location);
   </script>
+
+
 
 </head>
 
