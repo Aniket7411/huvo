@@ -2,7 +2,7 @@
   "name": "e-commerce",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
+  "homepage": "/",
   "proxy": "https://sm-kyc-sync-sandbox.scoreme.in",
 
   "dependencies": {
