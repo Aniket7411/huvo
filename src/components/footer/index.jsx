@@ -68,7 +68,7 @@ export default function Footer() {
           {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-1">
         {/* Online Shopping */}
         <Link to="/" className="flex flex-col">
           <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
@@ -92,7 +92,7 @@ export default function Footer() {
         </Link>
 
         {/* Mail Us */}
-  
+        <div className="flex flex-col">
           <div className="flex items-center md:text-xl text-sm font-[Quicksand] font-medium text-[#0F0F0F] mb-1">
             <p className="mr-2">Mail us</p>
             <MdArrowOutward className="text-2xl text-[#0F0F0F]" />
@@ -100,6 +100,9 @@ export default function Footer() {
           <p className="text-[#949494] text-sm md:text-lg font-[Poppins] font-light">
             contact@huvo.in
           </p>
+
+        </div>
+          
    
 
         {/* Contact Us (Modal Trigger) */}
