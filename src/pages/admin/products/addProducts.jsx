@@ -97,6 +97,7 @@ function ProductAddPage() {
   const navigate = useNavigate();
   const {
     register,
+    reset ,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -194,6 +195,7 @@ function ProductAddPage() {
         setResponseData(response)
 
         console.log("API", response)
+        reset();
 
         setIsModalOpen(true)
 
