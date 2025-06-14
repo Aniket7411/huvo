@@ -304,7 +304,7 @@ const ProductsShowingComponent = (props) => {
               {/* large screen */}
 
 
-              <div className=" hidden md:flex flex-wrap items-center p-2 justify-start gap-4">
+              <div className=" hidden md:flex flex-wrap items-center p-2 justify-center gap-4">
                 {filteredProducts && filteredProducts.length > 0 ? (
                   filteredProducts.map((eachProduct, i) => (
                     <div

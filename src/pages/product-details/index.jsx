@@ -21,7 +21,7 @@ const isLoggedIn = localStorage.getItem("accessToken")
 export default function ProductDetails() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isSizeModal, setIsSizeModal] = useState(false)
-  const { addToCartContext, updateCartItem } = useContext(CartContext)
+  const { addToCartContext, updateCartItem, fetchServerData } = useContext(CartContext)
 
 
 
@@ -128,6 +128,7 @@ export default function ProductDetails() {
         if (response?.success === true) {
           setLoading(false)
           toast.success("Product added to cart successfully.");
+          fetchServerData()
 
         }
       } catch (error) {

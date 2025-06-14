@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ProductContext } from "../../usecontext1/cartcontext";
+import { CartContext, ProductContext } from "../../usecontext1/cartcontext";
 import {
   Tab,
   TabGroup,
@@ -47,6 +47,7 @@ export default function CheckOut() {
   const [appliedCoupon, setAppliedCoupon] = useState(null)
 
 
+  const { fetchServerData } = useContext(CartContext)
 
   const [isOpenCoupon, setIsOpenCoupon] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -262,7 +263,7 @@ export default function CheckOut() {
     });
   };
 
-  console.log("appliedCouponappliedCoupon", appliedCoupon)
+  console.log("fetchServerDatafetchServerDatafetchServerData", totalCartData)
 
 
 
@@ -478,7 +479,7 @@ export default function CheckOut() {
                             className="border border-gray-200 p-3 sm:p-4 rounded-lg mb-2 font-[Poppins] relative bg-white shadow-sm hover:shadow-md transition-all duration-200"
                             key={i}
                           >
-                         
+
 
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                               <div className="flex-shrink-0 w-full sm:w-24 h-24 md:w-32 md:h-32">
@@ -506,7 +507,7 @@ export default function CheckOut() {
                                   </p>
                                 )}
 
-                      
+
                                 <div className="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
                                   <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
                                     Size: {cartProducts[key]?.size || "N/A"}

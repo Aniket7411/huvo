@@ -7,7 +7,6 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const tokenIfLoggedIn = localStorage.getItem("accessToken");
 
-  // Cart and Wishlist states
   const [cart, setCart] = useState(() => {
     const storedCart = localStorage.getItem("cart");
     return storedCart ? JSON.parse(storedCart) : {};
@@ -15,37 +14,11 @@ export const CartProvider = ({ children }) => {
 
   const [wishList, setWishList] = useState([]);
 
-
   if (localStorage.getItem("accessToken") === null || localStorage.getItem("accessToken") === undefined) {
     localStorage.setItem("cart", JSON.stringify(cart))
   }
 
-
-
   console.log("tokenIfLoggedIntokenIfLoggedIn", tokenIfLoggedIn)
-
-
-  // useEffect(() => {
-  //   const dataShift = async () => {
-  //     const localData = JSON.parse(localStorage.getItem("cart"));
-
-  //     console.log("localData:", localData);
-
-  //     try {
-  //       const response = await HttpClient.post("/cart/", localData);
-  //       console.log("localData", response);
-  //     } catch (error) {
-  //       console.error("Error during dataShift:", error);
-  //     }
-  //   };
-
-  //   if (tokenIfLoggedIn !== undefined && localStorage.getItem("cart")?.length > 0) {
-  //     dataShift();
-  //   }
-  // }, [tokenIfLoggedIn]); // Dependency array ensures this runs when tokenIfLoggedIn changes
-
-
-
 
   const fetchServerData = async () => {
     if (!tokenIfLoggedIn) return;
@@ -53,22 +26,19 @@ export const CartProvider = ({ children }) => {
     try {
       const cartResponse = await HttpClient.get("/cart");
       setCart(cartResponse.data);
-
+      return cartResponse.data; // Return the cart data
     } catch (error) {
+      console.error("Error fetching cart data:", error);
+      return null;
     }
   };
-
-
 
   useEffect(() => {
     if (localStorage?.getItem("accessToken")) {
       fetchServerData();
-
     }
   }, [tokenIfLoggedIn]);
 
-
-  // Add item to cart
   const addToCartContext = (product, selectedSize, selectedQuantity) => {
     const productKey = `${product.productId}${selectedSize}${product.colors?.[0]?.colorCode || ""}`;
 
@@ -94,7 +64,6 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // Update item quantity in cart
   const updateCartItem = (productKey, action) => {
     setCart((prevCart) => {
       const updatedCart = { ...prevCart };
@@ -111,7 +80,6 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // Remove item from cart
   const removeFromCartContext = (productKey) => {
     setCart((prevCart) => {
       const updatedCart = { ...prevCart };
@@ -127,6 +95,7 @@ export const CartProvider = ({ children }) => {
     addToCartContext,
     updateCartItem,
     removeFromCartContext,
+    fetchServerData, // Expose fetchServerData in the context
   };
 
   return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;
