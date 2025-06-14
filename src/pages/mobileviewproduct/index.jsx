@@ -11,6 +11,8 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
         kidsProducts ? { products: kidsProducts, title: "Kids' Collection" } :
           { products: [], title: "Featured Products" };
 
+  console.log("productsproductsproducts", products)
+
   return (
     <div className=" bg-gray-50 md:hidden ">
 
@@ -20,27 +22,40 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
         {
           products.map((product) => {
             return (
-              <Link to={`/product-details/${product?.productId}`}>
               <div className="w-[49%] bg-[#fff] py-2 rounded-lg flex flex-col shadow-md ">
+
+
                 <img
                   src={product?.bannerImage || "https://via.placeholder.com/300"}
                   alt={product?.name || "Product Image"}
                   className="h-[150px]  object-cover"
                   loading="lazy"
                 />
-                <div className="px-3">
 
-                  <h1 className="text-black font-semibold text-sm mt-2 line-clamp-2 mb-1">
-                    {product?.name || "Product Name"}
-                  </h1>
+                <div className="px-3">
+                  <Link to={`/product-details/${product?.productId}`}>
+
+                    <h1 className="text-black font-semibold text-sm mt-2 line-clamp-2 mb-1">
+                      {product?.name || "Product Name"}
+                    </h1>
+
+                  </Link>
+
                   {/* Stars */}
+
+
                   <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
                     <div className="flex text-yellow-500">
                       {[...Array(5)].map((_, index) => (
                         <FaStar key={index} className="w-4 h-4" />
                       ))}
                     </div>
-                    <span className="text-xs text-gray-500">(New)</span>
+                    <p className="text-sm font-bold">
+                      {
+                        product?.totalRating >= 50 ?
+                          product?.avgRating : "New"
+                      }
+                    </p>
                   </div>
 
                   {/* Pricing */}
@@ -53,17 +68,22 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                       </p>
                     </div>
                   </div>
-                  
+                  <Link to={`/product-details/${product?.productId}`}>
+
+
                     <button className="bg-blue-600 text-white px-2 py-1 rounded-md flex items-center gap-2 hover:bg-blue-700 transition-all">
                       View <FaArrowRight className="w-4 h-4" />
                     </button>
-                  
+                  </Link>
                 </div>
 
 
 
               </div>
-              </Link>
+
+
+
+
             )
           })
         }

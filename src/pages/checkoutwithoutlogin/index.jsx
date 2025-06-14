@@ -392,7 +392,7 @@ export default function CheckOutWithoutLogin() {
                               {/* Product Image (Responsive sizing) */}
                               <div className="flex-shrink-0 w-full sm:w-24 h-24 md:w-32 md:h-32">
                                 <img
-                                  className="w-full h-full rounded-lg object-cover border border-gray-100"
+                                  className="w-full h-full rounded-lg object-cover border border-gray-100 object-cover border border-gray-100"
                                   src={cartProducts[key]?.bannerImage || "https://via.placeholder.com/150"}
                                   alt={cartProducts[key]?.name || "Product Image"}
                                   loading="lazy"

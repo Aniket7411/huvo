@@ -222,7 +222,6 @@ const ProductsShowingComponent = (props) => {
                   filteredProducts && filteredProducts.length > 0 ? (
                     filteredProducts.map((eachProduct, i) => (
                       <div key={i} className="w-[49%] bg-[#fff] py-2 rounded-lg flex flex-col shadow-md ">
-                        <Link to={`/product-details/${eachProduct?.productId}`}>
 
                           <img
                             src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
@@ -230,7 +229,6 @@ const ProductsShowingComponent = (props) => {
                             className="h-[150px] object-cover"
                             loading="lazy"
                           />
-                        </Link>
                         <div className="px-3">
                           <h1 className="text-blue-600 font-semibold text-sm mt-1 mb-1">
                             {eachProduct?.name?.length > 20 ? `${eachProduct.name.slice(0, 25)}` : eachProduct?.name || "Product Name"}

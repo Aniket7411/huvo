@@ -473,24 +473,14 @@ export default function CheckOut() {
                       <div className="md:w-8/12">
 
 
-
-
                         {Object.keys(totalCartData).map((key, i) => (
                           <div
                             className="border border-gray-200 p-3 sm:p-4 rounded-lg mb-2 font-[Poppins] relative bg-white shadow-sm hover:shadow-md transition-all duration-200"
                             key={i}
                           >
-                            {/* Remove Button (Top-right) */}
-                            {/* <button
-                              className="absolute top-2 right-2 sm:top-3 sm:right-3 p-1 sm:p-1.5 rounded-full bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-500 transition-colors duration-200"
-                              onClick={() => removeProductFromCart(key)}
-                              aria-label="Remove item"
-                            >
-                              <RxCross2 className="w-3 h-3" />
-                            </button> */}
+                         
 
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                              {/* Product Image (Responsive sizing) */}
                               <div className="flex-shrink-0 w-full sm:w-24 h-24 md:w-32 md:h-32">
                                 <img
                                   className="w-full h-full rounded-lg object-cover border border-gray-100"
@@ -500,7 +490,6 @@ export default function CheckOut() {
                                 />
                               </div>
 
-                              {/* Product Details (Flexible width) */}
                               <div className="flex-grow">
                                 <Link
                                   to={`/product-details/${cartProducts[key]?.productId}`}
@@ -517,7 +506,7 @@ export default function CheckOut() {
                                   </p>
                                 )}
 
-                                {/* Size & Color Chips (Wrap on small screens) */}
+                      
                                 <div className="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
                                   <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
                                     Size: {cartProducts[key]?.size || "N/A"}
@@ -530,7 +519,6 @@ export default function CheckOut() {
                                   </span>
                                 </div>
 
-                                {/* Price Section (Stacked on mobile) */}
 
 
 
