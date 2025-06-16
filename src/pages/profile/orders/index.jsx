@@ -34,29 +34,28 @@ const Orders = () => {
       const { data } = await HttpClient.get("/order");
 
       console.log("dataa", data)
-      const formattedData = data.map((order) => ({
-        createdAt: order?.createdAt,
-        orderId: order?.orderId,
-        productId: order?.product[0].productId,
-        paymentType: order?.paymentType,
-        totalProduct: order?.totalProduct,
-        user: order?.user,
-        updatedAt: order?.updatedAt,
-        bannerImage: order?.product[0]?.bannerImage,
-        color: order?.product[0]?.color,
-        discountedPrice: order?.product[0]?.discountedPrice,
-        name: order?.product[0]?.name,
-        size: order?.product[0]?.size,
-        city: order?.shippingDetails[0]?.city,
+      const formattedData = data.filter(order => Object.keys(order?.orderStatus || {}).length > 1).map(order => ({
+          createdAt: order?.createdAt,
+          orderId: order?.orderId,
+          productId: order?.product[0]?.productId,
+          paymentType: order?.paymentType,
+          totalProduct: order?.totalProduct,
+          user: order?.user,
+          updatedAt: order?.updatedAt,
+          bannerImage: order?.product[0]?.bannerImage,
+          color: order?.product[0]?.color,
+          discountedPrice: order?.product[0]?.discountedPrice,
+          name: order?.product[0]?.name,
+          size: order?.product[0]?.size,
+          city: order?.shippingDetails[0]?.city,
+          orderStatuses: order?.orderStatus,
+          price: order?.product[0]?.price,
+          discount: order?.product[0]?.discount,
+          quantity: order?.product[0]?.quantity,
+          orderStatus: order?.orderStatus[0]?.status,
+          orderStatusUpdatedDate: order?.orderStatus[0]?.date,
+        }));
 
-
-        orderStatuses: order?.orderStatus,
-        price: order?.product[0]?.price,
-        discount: order?.product[0]?.discount,
-        quantity: order?.product[0]?.quantity,
-        orderStatus: order?.orderStatus[0].status,
-        orderStatusUpdatedDate: order?.orderStatus[0].date,
-      }));
 
       setAllOrders(formattedData);
       setIsLoading(false)
@@ -139,6 +138,103 @@ const Orders = () => {
         </div> : <>  <div className="mx-auto">
           <div className="border-b border-blue-200 pb-4 mb-2">
             <h1 className="text-2xl md:text-3xl font-bold text-blue-800">Orders & Returns</h1>
+          </div>
+
+          <div className="space-y-6">
+            {allOrders?.length > 0 ? (
+              allOrders.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-blue-100"
+                >
+                  {/* Product Image */}
+                  <div className="md:w-1/4 p-4 flex justify-center items-center bg-blue-50">
+                    <img
+                      src={item?.bannerImage || "/placeholder.png"}
+                      alt={item?.name || "Product Image"}
+                      className="w-full h-48 md:h-40 object-contain rounded-lg hover:scale-105 transition-transform duration-200"
+                      onError={(e) => {
+                        e.target.src = "/placeholder.png";
+                      }}
+                    />
+                  </div>
+
+                  {/* Product Details */}
+                  <div className="flex-1 p-4 md:p-6 border-b md:border-b-0 md:border-r border-dashed border-blue-200">
+                    <h2 className="text-xl font-bold text-blue-900 mb-3 truncate">{item?.name}</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                      <div className="flex items-center">
+                        <span className="font-medium text-blue-800 min-w-[70px]">Color:</span>
+                        <span className="ml-2 text-gray-700">{item?.color}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <span className="font-medium text-blue-800 min-w-[70px]">Size:</span>
+                        <span className="ml-2 text-gray-700">{item?.size}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <span className="font-medium text-blue-800 min-w-[70px]">Price:</span>
+                        <span className="ml-2 text-gray-700 flex items-center">
+                          <PiCurrencyInr className="mr-1" />
+                          {item?.price}
+                        </span>
+                      </div>
+                      <div className="flex items-center">
+                        <span className="font-medium text-blue-800 min-w-[70px]">Qty:</span>
+                        <span className="ml-2 text-gray-700">{item?.quantity}</span>
+                      </div>
+                    </div>
+                    <OrderStatusTracker orderStatuses={item?.orderStatuses} />
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="p-4 flex flex-col justify-center space-y-3 md:w-52 bg-blue-50">
+                    <Link
+                      to={`/tracking_order/${item?.orderId}/${item?.productId}`}
+                      className="w-full"
+                    >
+                      <button
+                        className="w-auto px-2 py-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center"
+                      >
+
+                        Track Order
+                      </button>
+                    </Link>
+
+                    <button
+                      onClick={() => showReturnModal(item?.orderId)}
+                      className="w-auto px-2 py-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center"
+                    >
+
+                      Return
+                    </button>
+
+                    <button
+                      onClick={() => showCancelModal(item?.orderId, item?.productId)}
+                      className="w-auto px-2 py-1 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center"
+                    >
+
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center py-12 px-4 bg-white rounded-xl shadow-sm border border-blue-50">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-blue-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">No Orders Placed Yet</h3>
+                <p className="text-gray-500 text-center max-w-md">
+                  You haven't placed any orders yet. Start shopping to see your orders here!
+                </p>
+                <Link
+                  to="/"
+                  className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
+                >
+                  Browse Products
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="space-y-6">

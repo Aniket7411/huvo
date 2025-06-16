@@ -185,7 +185,7 @@ export default function Footer() {
           <strong>Telephone No:</strong> 7899542105
         </p>
         <p className="text-gray-600 mb-2">
-          <strong>E-Mail ID:</strong> huvoofficial@gmail.com
+          <strong>E-Mail ID:</strong> contact@huvo.in
         </p>
         <button
           onClick={closeModal}

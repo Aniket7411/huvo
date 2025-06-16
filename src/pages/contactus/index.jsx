@@ -31,7 +31,7 @@ const ContactUs = () => {
 
       <div className="mb-4">
         <h2 className="text-xl font-semibold text-gray-700">E-Mail ID:</h2>
-        <p className="text-gray-600">huvoofficial@gmail.com</p>
+        <p className="text-gray-600">contact@huvo.in</p>
       </div>
     </div>
   );

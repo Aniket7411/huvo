@@ -293,7 +293,7 @@ export default function Header(props) {
             <input
               type="search"
               placeholder="Search By Products,Categories or Brands"
-              className="flex-1 text-sm placeholder-gray-500 text-gray-800 bg-transparent focus:outline-none"
+              className="flex-1 text-md placeholder-gray-500 text-gray-800 bg-transparent focus:outline-none"
               value={searchQuery}
               onChange={handleInputChange}
             // onKeyUp={handleKeyInput}
@@ -318,7 +318,7 @@ export default function Header(props) {
                 {searchResult?.map((suggestion) => (
                   <li
                     key={suggestion?._id}
-                    className="p-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                    className="p-2 text-md text-gray-700 hover:bg-gray-100 cursor-pointer"
                     onClick={() => handleSuggestionClick(suggestion, suggestion?._id)}
                   >
                     {category === "userName" ? suggestion.username : suggestion.name}
@@ -622,7 +622,7 @@ export default function Header(props) {
         <input
           type="search"
           placeholder="Search By Products,Categories or Brands"
-          className="flex-1 text-sm placeholder-gray-500 text-gray-800 bg-transparent focus:outline-none"
+          className="flex-1 text-md placeholder-gray-500 text-gray-800 bg-transparent focus:outline-none"
           value={searchQuery}
           onChange={handleInputChange}
         // onKeyUp={handleKeyInput}
@@ -645,7 +645,7 @@ export default function Header(props) {
             {searchResult?.map((suggestion) => (
               <li
                 key={suggestion?._id}
-                className="p-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                className="p-2 text-md text-gray-700 hover:bg-gray-100 cursor-pointer"
                 onClick={() => handleSuggestionClick(suggestion, suggestion?._id)}
               >
                 {category === "userName" ? suggestion.username : suggestion.name}
