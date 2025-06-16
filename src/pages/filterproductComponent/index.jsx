@@ -241,6 +241,8 @@ const ProductsShowingComponent = (props) => {
                             <p className="text-gray-600 text-sm ">
                               {eachProduct?.brandName || "Unknown Brand"}
                             </p>
+
+                            
                             <div
                               className={`px-1 py-1 text-[8px] flex items-center rounded-md gap-1 text-white ${4.5 >= 3.5
                                 ? "bg-green-500"

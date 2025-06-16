@@ -232,7 +232,6 @@ function App() {
             element={
               <Layout>
                 <NewMenCollection />
-                <NewMenCollection />
               </Layout>
             }
           />

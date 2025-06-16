@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { PiCurrencyInr } from "react-icons/pi";
 import { CiDiscount1, CiDeliveryTruck } from "react-icons/ci";
 import { FaArrowRight, FaStar } from "react-icons/fa";
+import { TbJewishStarFilled } from "react-icons/tb";
 
 const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
   const { products, title } =
@@ -44,18 +45,31 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                   {/* Stars */}
 
 
-                  <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
-                    <div className="flex text-yellow-500">
-                      {[...Array(5)].map((_, index) => (
-                        <FaStar key={index} className="w-4 h-4" />
-                      ))}
-                    </div>
-                    <p className="text-sm font-bold">
+              
+
+
+                  <div className="flex gap-2 justify-between mb-1 items-center">
+
+                    <p className="text-gray-600 text-sm ">
+                      {product?.brandName || "Unknown Brand"}
+                    </p>
+
+
+                    <div
+                      className={`px-1 py-1 text-[8px] flex items-center rounded-md gap-1 text-white ${4.5 >= 3.5
+                        ? "bg-green-500"
+                        : 4.5 >= 3
+                          ? "bg-yellow-500"
+                          : "bg-red-400"
+                        }`}
+                    >
                       {
                         product?.totalRating >= 50 ?
                           product?.avgRating : "New"
                       }
-                    </p>
+                      <TbJewishStarFilled className="text-sm" />
+                    </div>
+
                   </div>
 
                   {/* Pricing */}
