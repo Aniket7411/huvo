@@ -8,7 +8,7 @@ const HomepageTopCarousel = ({ shuffledProducts }) => {
   const [activeSlide, setActiveSlide] = useState(0);
 
   const settings = {
-    dots: true,
+    dots: false, // Changed from true to false to remove dots
     infinite: true,
     speed: 500,
     slidesToShow: 5,
@@ -23,40 +23,33 @@ const HomepageTopCarousel = ({ shuffledProducts }) => {
         breakpoint: 1280,
         settings: {
           slidesToShow: 4,
-          dots: true
+          dots: false // Changed to false
         }
       },
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
-          dots: true
+          dots: false // Changed to false
         }
       },
       {
-        breakpoint: 640,  // Changed from 768 to 640 for better mobile display
+        breakpoint: 640,
         settings: {
-          slidesToShow: 2,  // Show 2 products on small screens
-          dots: true        // Keep dots visible
+          slidesToShow: 2,
+          dots: false // Changed to false
         }
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 2,  // Still show 2 products on very small screens
-          dots: true,       // Keep dots visible
-          slidesToScroll: 2  // Scroll by 2 at a time
+          slidesToShow: 2,
+          dots: false, // Changed to false
+          slidesToScroll: 2
         }
       },
-    ],
-    appendDots: dots => (
-      <div className="mt-4">
-        <ul className="flex justify-center space-x-2">{dots}</ul>
-      </div>
-    ),
-    customPaging: (i) => (
-      <div className={`w-3 h-3 rounded-full transition-all duration-300 ${i === activeSlide ? 'bg-primary-500 w-6' : 'bg-gray-300'}`} />
-    ),
+    ]
+    // Removed appendDots and customPaging since we're not showing dots
   };
 
   return (
@@ -82,13 +75,11 @@ const HomepageTopCarousel = ({ shuffledProducts }) => {
                   </Link>
                 </div>
 
-                  <Link to={`/product-details/${product?.productId}`}>
-
-                    <h3 className="font-semibold text-center text-sm sm:text-base text-gray-800 line-clamp-2" title={product.productName}>
-                      {product.productName}
-                    </h3>
-                  </Link>
-
+                <Link to={`/product-details/${product?.productId}`}>
+                  <h3 className="font-semibold text-center text-sm sm:text-base text-gray-800 line-clamp-2" title={product.productName}>
+                    {product.productName}
+                  </h3>
+                </Link>
               </div>
             </div>
           ))}

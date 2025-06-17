@@ -83,7 +83,7 @@ export default function ProductDetails() {
 
   useEffect(() => {
     getProductDetails();
-  }, []);
+  }, [id]);
 
 
   const tokenIfLoggedIn = localStorage.getItem("accessToken")
