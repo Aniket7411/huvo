@@ -29,6 +29,7 @@ import TrendingProducts from "../trendingproductsheader";
 import TrendingProductsHeader from "../trendingproductsheader";
 import TrendingProductsHeading from "../trendingproductsheader";
 import TrendingBrandsHeader from "../brandheadingcomponents";
+import Homepagetopcarausel from "../admin/homepagetopcarausel";
 
 
 const testimonials = [
@@ -327,14 +328,30 @@ export default function Home() {
 
   console.log("fffffk", allProducts)
 
+
+
+  // Filter products by group
   const kidsProducts = allProducts?.filter((item) => item?.group === "kids").slice(0, 8);
   const womenProducts = allProducts?.filter((item) => item?.group === "women").slice(0, 8);
   const menProducts = allProducts?.filter((item) => item?.group === "men").slice(0, 8);
 
-  console.log("kidsProducts", kidsProducts)
-  console.log("womenProducts", womenProducts)
 
-  console.log("menProducts", menProducts)
+  console.log("kidsProducts1", kidsProducts)
+  console.log("kidsProducts11", womenProducts)
+  console.log("kidsProducts111", menProducts)
+
+  // Combine all the products
+  const combinedProducts = [...kidsProducts, ...womenProducts, ...menProducts];
+
+  // Shuffle the combined array
+  const shuffledProducts = combinedProducts
+    .map((product) => ({ product, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ product }) => product);
+
+  // Debugging output
+  console.log("Combined Products:", combinedProducts);
+  console.log("Shuffled Products:", shuffledProducts);
 
   return (
     <>
@@ -381,7 +398,7 @@ export default function Home() {
 
             <hr className="my-2" />
 
-
+            <Homepagetopcarausel  shuffledProducts={shuffledProducts}/>
 
             <section className="">
 
