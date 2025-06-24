@@ -25,13 +25,15 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
             return (
               <div className="w-[49%] bg-[#fff] py-2 rounded-lg flex flex-col shadow-md ">
 
+                <Link to={`/product-details/${product?.productId}`}>
 
-                <img
-                  src={product?.bannerImage || "https://via.placeholder.com/300"}
-                  alt={product?.name || "Product Image"}
-                  className="h-[150px]  object-cover"
-                  loading="lazy"
-                />
+                  <img
+                    src={product?.bannerImage || "https://via.placeholder.com/300"}
+                    alt={product?.name || "Product Image"}
+                    className="h-[150px]  object-cover"
+                    loading="lazy"
+                  />
+                </Link>
 
                 <div className="px-3">
                   <Link to={`/product-details/${product?.productId}`}>
@@ -45,7 +47,7 @@ const ProductCarousel = ({ womenProducts, menProducts, kidsProducts }) => {
                   {/* Stars */}
 
 
-              
+
 
 
                   <div className="flex gap-2 justify-between mb-1 items-center">

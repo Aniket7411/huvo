@@ -81,6 +81,11 @@ function ProductAddPage() {
 
   const [responseData, setResponseData] = useState([])
 
+  const [returnableRadio, setReturnableRadio] = useState(true)
+
+
+  console.log("returnableRadioreturnableRadioreturnableRadio",returnableRadio)
+
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -97,7 +102,7 @@ function ProductAddPage() {
   const navigate = useNavigate();
   const {
     register,
-    reset ,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -335,7 +340,7 @@ function ProductAddPage() {
 
 
   const handleDaysChange = (event) => {
-   setReturnableDays(event.target.value)
+    setReturnableDays(event.target.value)
   };
 
 
@@ -929,6 +934,9 @@ function ProductAddPage() {
               </label>
 
 
+              
+
+
 
               <div className="flex gap-4">
                 <div className="flex items-center gap-2">
@@ -936,6 +944,7 @@ function ProductAddPage() {
                     id="returnable-true"
                     type="radio"
                     name="isReturnable"
+                    onClick={() => setReturnableRadio(true)}
                     value={true}
                     {...register("isReturnable", { valueAsBoolean: true })}
                   />
@@ -944,8 +953,10 @@ function ProductAddPage() {
                 <div className="flex items-center gap-2">
                   <input
                     id="returnable-false"
+
                     type="radio"
                     name="isReturnable"
+                    onClick={() => setReturnableRadio(false)}
                     value={false}
                     {...register("isReturnable", { valueAsBoolean: true })}
                   />
@@ -957,31 +968,38 @@ function ProductAddPage() {
               )}
             </div>
 
-            <label
-              htmlFor="returnable"
-              className="text-sm bg-gray-50 p-3 gap-2 rounded-lg shadow-sm font-medium text-gray-700"
-            >
-              Returnable within 
-              <select
-                id="days-dropdown"
-                value={returnableDays}
-                onChange={handleDaysChange}
-                className="border border-gray-300 rounded-lg p-2"
-              >
-                <option value="" disabled>
-                  Choose days
-                </option>
-                {Array.from({ length: 9 }, (_, index) => {
-                  const day = index + 7; // Start at 8 and go up to 15
-                  return (
-                    <option key={day} value={day}>
-                      {`${day} days`}
+            {
+              returnableRadio && (
+                <label
+                  htmlFor="returnable"
+                  className="text-sm p-3 gap-2 rounded-lg font-medium text-gray-700 flex flex-col"
+                >
+                  Returnable within
+                  <select
+                    id="days-dropdown"
+                    value={returnableDays}
+                    onChange={handleDaysChange}
+                    className="border border-gray-300 rounded-lg p-2 mt-1"
+                    aria-label="Select returnable days"
+                  >
+                    <option value="" disabled>
+                      Choose days
                     </option>
-                  );
-                })}
-              </select>
-              days after delivery
-            </label>
+                    {Array.from({ length: 9 }, (_, index) => {
+                      const day = index + 8; // Start at 8 and go up to 15
+                      return (
+                        <option key={day} value={day}>
+                          {`${day} days`}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  days after delivery
+                </label>
+              )
+            }
+
+
 
           </div>
 

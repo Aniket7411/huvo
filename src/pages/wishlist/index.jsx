@@ -95,12 +95,17 @@ export default function WishList() {
               products && products.length > 0 ? (
                 products.map((eachProduct, i) => (
                   <div key={i} className="w-[49%] bg-[#fff] py-2 rounded-lg flex flex-col shadow-md ">
-                    <img
-                      src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
-                      alt={eachProduct?.name || "Product Image"}
-                      className="h-[150px] object-cover"
-                      loading="lazy"
-                    />
+                    <Link to={`/product-details/${eachProduct?.productId}`}>
+
+                      <img
+                        src={eachProduct?.bannerImage || "https://via.placeholder.com/300"}
+                        alt={eachProduct?.name || "Product Image"}
+                        className="h-[150px] object-cover"
+                        loading="lazy"
+                      />
+
+                    </Link>
+
                     <div className="px-3">
                       <h1 className="text-[blue] font-semibold text-sm mt-2 line-clamp-2 mb-1">
                         {eachProduct?.name ? eachProduct.name.slice(0, 15) : "Product Name"}
@@ -203,7 +208,7 @@ export default function WishList() {
                   {/* Pricing */}
                   <div className="flex justify-between items-center text-sm mb-1">
                     <div className="flex items-center gap-1 text-red-600">
-                     
+
                       <p className=" font-medium">{eachProduct?.size || "N/A"}</p>
                     </div>
                     <div className="flex items-center gap-1 text-green-600">
@@ -247,7 +252,7 @@ export default function WishList() {
                       className="w-auto flex items-center justify-center bg-blue-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-700 transition-all duration-300"
                       aria-label="Remove product from wishlist"
                     >
-                      Remove 
+                      Remove
                     </button>
 
 

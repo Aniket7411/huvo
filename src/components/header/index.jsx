@@ -499,11 +499,14 @@ export default function Header(props) {
             className="text-3xl cursor-pointer text-[#fff] "
             onClick={() => openSubmenu()}
           />
-          <img
-            src="/assets/headerlogosmall.png"
-            alt="huvo-logo"
-            className="w-[30px]  rounded-full shadow-md"
-          />
+          <Link to="/" >
+
+            <img
+              src="/assets/headerlogosmall.png"
+              alt="huvo-logo"
+              className="w-[30px]  rounded-full shadow-md"
+            />
+          </Link>
         </div>
 
         {/* Center Section */}
