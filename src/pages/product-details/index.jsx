@@ -238,7 +238,7 @@ export default function ProductDetails() {
   }
 
 
-  console.log("responseresponseresponse", productDetails?.productId)
+  console.log("responseresponseresponse", productDetails)
   return (
 
     <>
@@ -253,7 +253,7 @@ export default function ProductDetails() {
             <div className="flex flex-wrap gap-2 ">
               <div className="flex-1 min-w-[300px] max-w-[350px]">
                 <div className="p-1 rounded-md border border-gray-300 ">
-                  <ProductImages images={productDetails?.colors} />
+                  <ProductImages images={productDetails?.colors} bannerImage={productDetails?.bannerImage} />
 
                 </div>
               </div>
