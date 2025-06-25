@@ -316,13 +316,13 @@ export default function CheckOutWithoutLogin() {
                             {couponDiscount.toLocaleString()}
                           </span>
                         </div>
-                        <div className="flex justify-between">
+                        {/* <div className="flex justify-between">
                           <span>Shipping Fee</span>
                           <span className="flex items-center">
                             + <PiCurrencyInr className="mx-1" />
                             {shippingFee}
                           </span>
-                        </div>
+                        </div> */}
                       </div>
 
                       <div className="border-t border-dashed border-gray-400 my-4"></div>
