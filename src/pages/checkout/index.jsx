@@ -296,7 +296,7 @@ export default function CheckOut() {
 
       toast.success("Redirecting to Payment");
       console.log(response)
-      window.location.href = response?.payment_url;
+      // window.location.href = response?.payment_url;
       fetchProfileData();
       console.log("Cart>>>>>>>: ", cartProducts)
     } catch (error) {

@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { FiTrash2 } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import { getUserData } from "../../server/user";
+import { HttpClient } from "../../server/client/http";
 
 const cartInLocal = localStorage.getItem("cart");
 const parsedCartData = cartInLocal ? JSON.parse(cartInLocal) : {};
@@ -23,11 +24,32 @@ export default function CheckOutWithoutLogin() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [userDetails] = useState(getUserData());
   const [cartProducts, setCartProducts] = useState(parsedCartData);
-  const [isOpenCoupon, setIsOpenCoupon] = useState(false);
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [countdown, setCountdown] = useState(3);
-  const [shippingFee] = useState(100); // Fixed shipping fee for now
+  const [shippingFee] = useState(100);
+  const [coupons, setCoupons] = useState([]);
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+
+  const getCouponList = async () => {
+    try {
+      const response = await HttpClient.get("/coupon/list/not_login");
+      const formattedData = response?.coupons.map((each) => ({
+        couponCode: each?.couponCode,
+        couponName: each?.couponName,
+        couponUsageLimit: each?.couponUsageLimit,
+        discount: each?.discount,
+        couponId: each?._id,
+      }));
+      setCoupons(formattedData);
+    } catch (error) {
+      console.error("Error fetching coupons:", error);
+    }
+  };
+
+  useEffect(() => {
+    getCouponList();
+  }, []);
 
   const { reset } = useForm();
   const { register: addressRegister, reset: addressReset } = useForm();
@@ -98,17 +120,31 @@ export default function CheckOutWithoutLogin() {
     }, 1000);
   };
 
+  const handleApplyCoupon = (coupon) => {
+    // Check if coupon is already applied
+    if (appliedCoupon && appliedCoupon.couponId === coupon.couponId) {
+      toast.info("This coupon is already applied");
+      return;
+    }
+
+    // Apply the coupon discount
+    setCouponDiscount(coupon.discount);
+    setAppliedCoupon(coupon);
+    toast.success(`Coupon "${coupon.couponCode}" applied successfully!`);
+  };
+
+  const handleRemoveCoupon = () => {
+    setCouponDiscount(0);
+    setAppliedCoupon(null);
+    toast.info("Coupon removed");
+  };
+
   useEffect(() => {
     fetchCartProducts();
   }, []);
 
-
-
-
-  console.log("cartProductscartProductscartProducts", cartProducts)
-
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen ">
       {Object.keys(cartProducts).length === 0 ? (
         <div className="flex justify-center p-4 items-center h-screen flex-col">
           <h2 className="text-xl font-semibold mb-2">Hey, it feels so light!</h2>
@@ -242,9 +278,7 @@ export default function CheckOutWithoutLogin() {
                                 </button>
                               </div>
 
-
                               <div className="mt-3 pt-3 border-t border-gray-100">
-                                {/* Show returnable information if the product is returnable */}
                                 {product?.isReturnable ? (
                                   <div>
                                     <p className="text-sm text-gray-700">This product is returnable.</p>
@@ -257,8 +291,6 @@ export default function CheckOutWithoutLogin() {
                                 ) : (
                                   <p className="text-sm text-gray-500">This product is non-returnable.</p>
                                 )}
-
-                                {/* Common information */}
                                 <p className="text-xs text-gray-500 flex items-center gap-1">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -275,10 +307,6 @@ export default function CheckOutWithoutLogin() {
                                   Returns policy applies.
                                 </p>
                               </div>
-
-
-                              {/* Return Policy */}
-
                             </div>
                           </div>
                         </div>
@@ -311,18 +339,47 @@ export default function CheckOutWithoutLogin() {
                         </div>
                         <div className="flex justify-between">
                           <span>Coupon Discount</span>
-                          <span className="flex items-center">
+                          <span className="flex items-center text-green-600">
                             - <PiCurrencyInr className="mx-1" />
                             {couponDiscount.toLocaleString()}
+                            {appliedCoupon && (
+                              <button 
+                                onClick={handleRemoveCoupon}
+                                className="ml-2 text-red-500 hover:text-red-700"
+                              >
+                                <RxCross2 size={14} />
+                              </button>
+                            )}
                           </span>
                         </div>
-                        {/* <div className="flex justify-between">
-                          <span>Shipping Fee</span>
-                          <span className="flex items-center">
-                            + <PiCurrencyInr className="mx-1" />
-                            {shippingFee}
-                          </span>
-                        </div> */}
+                        <div className="border-t border-gray-200 pt-3 mt-3">
+                          <h4 className="font-medium mb-2">Available Coupons</h4>
+                          {coupons?.map((coupon) => (
+                            <div 
+                              key={coupon?.couponId} 
+                              className={`hover:bg-gray-50 border mb-2 rounded-lg p-2 flex justify-between items-center ${appliedCoupon?.couponId === coupon.couponId ? 'bg-green-50 border-green-200' : ''}`}
+                            >
+                              <div>
+                                <div className="font-medium text-gray-800">{coupon?.couponCode}</div>
+                                <div className="text-sm text-gray-600">{coupon?.couponName}</div>
+                              </div>
+                              <div className="flex items-center">
+                                <span className="text-green-600 mr-2">₹{coupon?.discount}</span>
+                                <button
+                                  className={`text-sm px-3 py-1 rounded-md transition-colors ${
+                                    appliedCoupon?.couponId === coupon.couponId
+                                      ? 'bg-gray-200 text-gray-600 cursor-default'
+                                      : 'bg-green-600 hover:bg-green-700 text-white'
+                                  }`}
+                                  onClick={() => handleApplyCoupon(coupon)}
+                                  disabled={appliedCoupon?.couponId === coupon.couponId}
+                                >
+                                  {appliedCoupon?.couponId === coupon.couponId ? 'Applied' : 'Apply'}
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
 
                       <div className="border-t border-dashed border-gray-400 my-4"></div>
