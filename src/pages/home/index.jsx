@@ -30,6 +30,8 @@ import TrendingProductsHeader from "../trendingproductsheader";
 import TrendingProductsHeading from "../trendingproductsheader";
 import TrendingBrandsHeader from "../brandheadingcomponents";
 import Homepagetopcarausel from "../admin/homepagetopcarausel";
+import TopCarousel from "./Topcarousal";
+import TopCarousel2 from "./topcaroual2";
 
 
 const testimonials = [
@@ -360,7 +362,7 @@ export default function Home() {
 
           <section>
 
-            <div
+            {/* <div
               className="bg-gradient-to-r -mt-4  from-blue-500 via-blue-600 to-blue-700 text-white text-center py-2 md:py-6 shadow-lg"
 
             >
@@ -385,7 +387,11 @@ export default function Home() {
                 </p>
               </div>
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-yellow-400 rounded-full"></div>
-            </div>
+            </div> */}
+
+            {/* <TopCarousel /> */}
+
+            <TopCarousel2/>
 
             <section className="px-2 md:px-10 py-2 ">
               <h2 className="font-[Quicksand] font-bold text-center text-sm md:text-4xl text-[#011F4B]">
@@ -398,7 +404,7 @@ export default function Home() {
 
             <hr className="my-2" />
 
-            <Homepagetopcarausel  shuffledProducts={shuffledProducts}/>
+            <Homepagetopcarausel shuffledProducts={shuffledProducts} />
 
             <section className="">
 

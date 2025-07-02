@@ -143,7 +143,7 @@ const ProductsShowingComponent = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="flex-1 min-w-[200px]">
+                {/* <div className="flex-1 min-w-[200px]">
                   <label className="block font-medium text-gray-700 text-sm mb-2">
                     Gender Category
                   </label>
@@ -157,7 +157,7 @@ const ProductsShowingComponent = (props) => {
                     <option value="women">Women</option>
                     <option value="kids">Kids</option>
                   </select>
-                </div>
+                </div> */}
 
                 <div className="flex-1 min-w-[200px]">
                   <label className="block font-medium text-gray-700 text-sm mb-2">

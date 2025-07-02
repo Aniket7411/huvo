@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import Loader from '../../components/loader';
 import Modal from 'react-modal';
 
-
 const SellerBankForm = ({ existingData = null, onSubmit }) => {
     const [formData, setFormData] = useState({
         name: '',
@@ -15,36 +14,31 @@ const SellerBankForm = ({ existingData = null, onSubmit }) => {
         upiId: '',
     });
 
-    const [isLoading, setIsLoading] = useState(false)
-    const [confirmModal, setConfirmModal] = useState(false)
-
+    const [isLoading, setIsLoading] = useState(false);
+    const [confirmModal, setConfirmModal] = useState(false); // Changed to false initially
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-
     const getBankDetails = async () => {
-        setIsLoading(true)
+        setIsLoading(true);
         try {
-            const response = await HttpClient.get("/sellerbank")
+            const response = await HttpClient.get("/sellerbank");
             setFormData({
                 name: response?.data?.bankDetails?.accountHolderName,
                 email: response?.data?.contactDetails?.email,
                 contact: response?.data?.contactDetails?.contact,
                 account_number: response?.data?.bankDetails?.accountNumber,
                 ifsc: response?.data?.bankDetails?.ifscCode,
-            })
-            setIsLoading(false)
-
+            });
+            setIsLoading(false);
         } catch (error) {
-            setIsLoading(false)
-
+            setIsLoading(false);
         }
-    }
-
+    };
 
     useEffect(() => {
-        getBankDetails()
-    }, [])
+        getBankDetails();
+    }, []);
 
     const validate = () => {
         const newErrors = {};
@@ -79,8 +73,6 @@ const SellerBankForm = ({ existingData = null, onSubmit }) => {
         return newErrors;
     };
 
-
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -102,9 +94,8 @@ const SellerBankForm = ({ existingData = null, onSubmit }) => {
         setIsSubmitting(true);
 
         try {
-
-            const response = await HttpClient.post("/sellerbank", formData)
-            toast.success(response?.message)
+            const response = await HttpClient.post("/sellerbank", formData);
+            toast.success(response?.message);
 
             if (!existingData) {
                 setFormData({
@@ -128,38 +119,47 @@ const SellerBankForm = ({ existingData = null, onSubmit }) => {
 
     const accountDeleteConfirm = async () => {
         try {
-
-            const response = await HttpClient.delete("/sellerbank")
-            setConfirmModal(false)
-
-            
+            const response = await HttpClient.delete("/sellerbank");
+            toast.success(response?.message || "Account deleted successfully");
+            setConfirmModal(false);
+            // Reset form after deletion
+            setFormData({
+                name: '',
+                email: '',
+                contact: '',
+                account_number: '',
+                ifsc: '',
+                upiId: '',
+            });
         } catch (error) {
-            toast.error(error?.data?.message)
-            setConfirmModal(false)
+            toast.error(error?.response?.data?.message || error?.message || "Failed to delete account");
+            setConfirmModal(false);
         }
-    }
-
+    };
 
     return (
-
         <>
-
-            {
-                isLoading ? <div className='h-screen flex items-center justify-center'> <Loader /> </div> : <>
-                    <form onSubmit={handleSubmit} className=" mx-auto px-6 pt-2 bg-white rounded-lg shadow-sm border border-gray-100">
-
+            {isLoading ? (
+                <div className='h-screen flex items-center justify-center'>
+                    <Loader />
+                </div>
+            ) : (
+                <>
+                    <form onSubmit={handleSubmit} className="mx-auto px-6 pt-2 bg-white rounded-lg shadow-sm border border-gray-100">
                         <div className='flex items-center justify-between mb-2'>
-                            <h2 className="text-xl font-semibold text-md md:text-xl  text-gray-800">Bank Account Details</h2>
+                            <h2 className="text-xl font-semibold text-md md:text-xl text-gray-800">Bank Account Details</h2>
                             <button
-                                onClick={() => setConfirmModal(confirmModal)}
+                                onClick={() => setConfirmModal(true)} // Changed to open modal
                                 type="button"
                                 className="bg-red-600 text-sm md:text-md hover:bg-red-700 text-white font-semibold px-2 py-1 rounded-lg shadow-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                             >
                                 Delete Account
                             </button>
                         </div>
+
                         <Modal
                             isOpen={confirmModal}
+                            onRequestClose={() => setConfirmModal(false)}
                             contentLabel="Delete Account Confirmation"
                             className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
                             overlayClassName="fixed inset-0 bg-black bg-opacity-50"
@@ -185,7 +185,6 @@ const SellerBankForm = ({ existingData = null, onSubmit }) => {
                                 </div>
                             </div>
                         </Modal>
-
 
                         <div className="space-y-2">
                             <div>
@@ -283,17 +282,14 @@ const SellerBankForm = ({ existingData = null, onSubmit }) => {
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className={`mt-4 mb-5 py-1 px-2 rounded-md text-white bg-[#011F4B] font-medium  transition-colors`}
+                            className={`mt-4 mb-5 py-1 px-2 rounded-md text-white bg-[#011F4B] font-medium transition-colors`}
                         >
-                            Update Bank Details
+                            {isSubmitting ? 'Updating...' : 'Update Bank Details'}
                         </button>
                     </form>
                 </>
-            }
+            )}
         </>
-
-
-
     );
 };
 

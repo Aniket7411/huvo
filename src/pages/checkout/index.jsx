@@ -664,8 +664,10 @@ export default function CheckOut() {
                       </div>
                       <div className="md:w-4/12">
                         <div className="border-2 border-gray-300 p-3 rounded-lg font-[Poppins] bg-white shadow-md">
+                          <h4 className="font-medium mb-2">Available Coupons</h4>
+
                           {coupons?.map((coupon) => (
-                            <ul key={coupon?.id} className="hover:bg-gray-50 border mb-1  rounded-lg  py-1 justify-between items-center flex flex-wrap">
+                            <ul key={coupon?.id} className="hover:bg-gray-50 border mb-1 px-2  rounded-lg  py-1 justify-between items-center flex flex-wrap">
                               <li className=" text-center text-gray-700 font-medium">{coupon?.couponCode}</li>
                               <li className=" text-center text-gray-700 ">{coupon?.couponName}</li>
                               <li className=" text-center text-gray-700 ">₹{coupon?.discount}</li>
