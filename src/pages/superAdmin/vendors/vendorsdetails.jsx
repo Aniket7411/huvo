@@ -43,6 +43,8 @@ export default function Vendorsdetail() {
 
     try {
       const response = await HttpClient.get(`/dashboard/vendors/${_id}`);
+
+      console.log("hasjhajshjahsja", response)
       setSellerEmail(response?.vendorDetail?.email);
       setVendorDetails(response?.vendorDetail);
       setVendorProductDetails(response);
@@ -135,7 +137,6 @@ export default function Vendorsdetail() {
                     <h2 className="text-xl font-semibold">
                       {basicSellerDetails?.name}
                     </h2>
-                    {getStatusTag(vendorDetails?.vendorDetail?.status)}
                   </div>
                 </div>
 
@@ -229,7 +230,7 @@ export default function Vendorsdetail() {
             </div>
         </div>
 
-        <div >
+        {/* <div >
           <Link to="/add_coupons">
     <button
         type="button"
@@ -238,7 +239,7 @@ export default function Vendorsdetail() {
         Add Coupons
     </button>
     </Link>
-</div>  
+</div>   */}
     </div>
 </Card>
 

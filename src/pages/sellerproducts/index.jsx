@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { HttpClient } from "../../server/client/http";
 import Loader from "../../components/loader";
+import { PiCurrencyInr } from "react-icons/pi";
 
 const SellerProducts = () => {
   const location = useLocation();
@@ -19,13 +20,16 @@ const SellerProducts = () => {
 
     try {
       const response = await HttpClient.get(`/dashboard/vendors/${_id}`);
+
+      console.log("response", response);
+
       const products = response?.products?.map((product) => ({
         id: product?._id,
-        name: product?.productDetails?.name || "Unnamed Product",
-        price: product?.actualPrice,
+        name: product?.name || "Unnamed Product",
+        price: product?.actualPrice || product?.price || 0,
         rating: product?.avgRating || 0,
         image: product?.bannerImage,
-        sizes: product?.sizes,
+        sizes: product?.sizes || [],
       }));
 
       setFormattedProducts(products || []);
@@ -48,7 +52,7 @@ const SellerProducts = () => {
     <div className="p-4">
       {loading ? (
         <div className="flex items-center justify-center min-h-[200px]">
-          <Loader/>
+          <Loader />
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -64,8 +68,9 @@ const SellerProducts = () => {
                   className="w-full h-48 object-cover rounded-md mb-2"
                 />
                 <h2 className="text-lg font-semibold mb-1">{product.name}</h2>
-                <p className="text-sm text-gray-600 mb-2">
-                  Price: ₹{product.price || "N/A"}
+                <p className="text-sm text-gray-600 mb-2 flex items-center">
+                  <PiCurrencyInr className="mr-1" />
+                  {product.price?.toLocaleString()}
                 </p>
                 <p className="text-sm text-yellow-600 mb-2">
                   Rating: {product.rating} ★
@@ -77,7 +82,7 @@ const SellerProducts = () => {
                         key={index}
                         className="px-3 py-1 border rounded-full text-sm font-medium bg-blue-100 text-blue-600"
                       >
-                        {size.size}
+                        {size.size} ({size.stock})
                       </span>
                     ))
                   ) : (
