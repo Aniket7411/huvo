@@ -44,18 +44,18 @@ export default function Vendorsdetail() {
     try {
       const response = await HttpClient.get(`/dashboard/vendors/${_id}`);
       setSellerEmail(response?.vendorDetail?.email);
-      setVendorDetails(response.vendorDetail);
+      setVendorDetails(response?.vendorDetail);
       setVendorProductDetails(response);
 
       const formattedSellerDetails = response.vendorDetail.address.map((each) => ({
-        address: each.address,
-        city: each.city,
-        isDefault: each.isDefault,
-        mobileNumber: each.mobileNumber,
-        postalCode: each.postalCode,
-        state: each.state,
-        town: each.town,
-        name: each.name
+        address: each?.address,
+        city: each?.city,
+        isDefault: each?.isDefault,
+        mobileNumber: each?.mobileNumber,
+        postalCode: each?.postalCode,
+        state: each?.state,
+        town: each?.town,
+        name: each?.name
       }));
 
       setBasicSellerDetails(formattedSellerDetails[0]);
@@ -184,7 +184,7 @@ export default function Vendorsdetail() {
                     <p className="text-gray-800">
                       {basicSellerDetails?.address}
                       <br />
-                      {basicSellerDetails?.postalCode && `${basicSellerDetails.postalCode}, `}
+                      {basicSellerDetails?.postalCode && `${basicSellerDetails?.postalCode}, `}
                       {basicSellerDetails?.state}
                     </p>
                   </div>
@@ -195,7 +195,7 @@ export default function Vendorsdetail() {
                     <h3 className="flex items-center gap-2 text-gray-600">
                       <PhoneOutlined /> Contact
                     </h3>
-                    <p className="text-gray-800">{basicSellerDetails.mobileNumber}</p>
+                    <p className="text-gray-800">{basicSellerDetails?.mobileNumber}</p>
                   </div>
                 </div>
               </div>
