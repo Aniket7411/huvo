@@ -44,7 +44,8 @@ export default function CheckOut() {
   const [sgst, setSgst] = useState()
   const [totalAmount, setTotalAmount] = useState()
   const [coupons, setCoupons] = useState([]);
-  const [appliedCoupon, setAppliedCoupon] = useState(null)
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponInput, setCouponInput] = useState();
 
 
   const { fetchServerData } = useContext(CartContext)
@@ -423,7 +424,7 @@ export default function CheckOut() {
   }, [])
 
 
-  const applyCoupon = async (couponCode) => {
+  const applyCoupon = async (couponCode, appliedFrom) => {
     console.log(couponCode)
     try {
       const response = await HttpClient.post("/coupon/apply", { couponCode })
@@ -664,24 +665,7 @@ export default function CheckOut() {
                       </div>
                       <div className="md:w-4/12">
                         <div className="border-2 border-gray-300 p-3 rounded-lg font-[Poppins] bg-white shadow-md">
-                          <h4 className="font-medium mb-2">Available Coupons</h4>
 
-                          {coupons?.map((coupon) => (
-                            <ul key={coupon?.id} className="hover:bg-gray-50 border mb-1 px-2  rounded-lg  py-1 justify-between items-center flex flex-wrap">
-                              <li className=" text-center text-gray-700 font-medium">{coupon?.couponCode}</li>
-                              <li className=" text-center text-gray-700 ">{coupon?.couponName}</li>
-                              <li className=" text-center text-gray-700 ">₹{coupon?.discount}</li>
-                              <li className="">
-                                <button
-                                  onClick={() => applyCoupon(coupon?.couponCode)}
-                                  className="bg-green-600 hover:bg-green-800 text-white text-sm px-4 py-2 rounded-md transition-colors"
-                                // onClick={() => handleApplyCoupon(coupon)}
-                                >
-                                  Apply
-                                </button>
-                              </li>
-                            </ul>
-                          ))}
 
                           <p className="text-gray-800 font-semibold text-xl mt-2 mb-2">Price Details</p>
 
@@ -708,6 +692,43 @@ export default function CheckOut() {
                               {couponDiscount}
                             </p>
                           </div>
+
+                          <h4 className="font-medium mb-2">Available Coupons</h4>
+
+                          <div className="border-t border-gray-200 pt-4 mt-6 mb-2">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                              <input
+                                onChange={(e) => setCouponInput(e.target.value)}
+                                value={couponInput}
+                                type="text"
+                                placeholder="Enter coupon code"
+                                className="w-full sm:flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                              />
+                              <button
+                                onClick={() => applyCoupon(couponInput, "input")}
+                                className="text-sm px-4 py-2 rounded-md bg-green-600 hover:bg-green-700 text-white w-full sm:w-auto"
+                              >
+                                Apply
+                              </button>
+                            </div>
+                          </div>
+
+                          {coupons?.map((coupon) => (
+                            <ul key={coupon?.id} className="hover:bg-gray-50 border mb-1 px-2  rounded-lg  py-1 justify-between items-center flex flex-wrap">
+                              <li className=" text-center text-gray-700 font-medium">{coupon?.couponCode}</li>
+                              <li className=" text-center text-gray-700 ">{coupon?.couponName}</li>
+                              <li className=" text-center text-gray-700 ">₹{coupon?.discount}</li>
+                              <li className="">
+                                <button
+                                  onClick={() => applyCoupon(coupon?.couponCode, "list")}
+                                  className="bg-green-600 hover:bg-green-800 text-white text-sm px-4 py-2 rounded-md transition-colors"
+                                // onClick={() => handleApplyCoupon(coupon)}
+                                >
+                                  Apply
+                                </button>
+                              </li>
+                            </ul>
+                          ))}
 
                           <div className="border-t border-dashed border-gray-400 my-6"></div>
 
@@ -1061,51 +1082,53 @@ export default function CheckOut() {
 
                         {/* Price Details */}
                         <div className="w-full md:w-4/12 border-t md:border-t-0 md:border-l-2 border-gray-300 px-6 py-4 bg-white rounded-lg shadow-lg">
-                          <p className="text-gray-800 font-semibold text-xl mb-2">Price Details</p>
+                          <p className="text-gray-800 font-semibold text-xl mb-2 flex items-center">
+                            <BiSolidCoupon className="text-[#011F4B] mr-2" />
+                            Price Details
+                          </p>
 
                           <div className="flex justify-between mb-3 text-gray-700">
                             <p>Total MRP</p>
                             <p className="flex items-center font-medium">
                               <PiCurrencyInr className="mr-1" />
-                              {totalSum}
+                              {totalSum?.toLocaleString()}
                             </p>
                           </div>
 
                           <div className="flex justify-between mb-3 text-gray-700">
-
-
-
                             <p>DISCOUNT</p>
                             <p className="flex items-center text-green-600 font-medium">
                               - <PiCurrencyInr className="mr-1" />
-                              {totalDiscountOfProducts}
+                              {totalDiscountOfProducts?.toLocaleString()}
                             </p>
                           </div>
-
 
                           <div className="flex justify-between text-gray-700">
                             <p>COUPON DISCOUNT</p>
                             <p className="flex items-center text-green-600 font-medium">
                               - <PiCurrencyInr className="mr-1" />
-                              {couponDiscount}
+                              {couponDiscount?.toLocaleString()}
                             </p>
                           </div>
 
                           <div className="border-t border-dashed border-gray-400 my-6"></div>
 
                           <div className="flex justify-between text-gray-800 font-semibold text-lg mb-4">
-                            <p>Total Amount </p>
+                            <p>Total Amount</p>
                             <p className="flex items-center">
                               <PiCurrencyInr className="mr-1" />
-                              {Math.round(totalSum) - parseInt(totalDiscountOfProducts || 0) - parseInt(couponDiscount || 0)}
+                              {(
+                                Math.round(totalSum) -
+                                parseInt(totalDiscountOfProducts || 0) -
+                                parseInt(couponDiscount || 0)
+                              ).toLocaleString()}
                             </p>
-
                           </div>
 
                           <button
                             className={`font-[Quicksand] text-white bg-blue-900 font-medium text-lg rounded-md py-3 px-6 w-full ${!paymentType
-                              ? "opacity-70 cursor-not-allowed"
-                              : "hover:bg-[#011F4B] transition-colors"
+                                ? "opacity-70 cursor-not-allowed"
+                                : "hover:bg-[#011F4B] transition-colors"
                               }`}
                             onClick={orderPlace}
                             disabled={!paymentType}
@@ -1113,6 +1136,7 @@ export default function CheckOut() {
                             PLACE ORDER
                           </button>
                         </div>
+
                       </div>
                     </section>
 

@@ -33,7 +33,7 @@ const TopCarousel2 = () => {
       src: "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D3D&auto=format&fit=crop&w=1600&q=80",
       title: "🛍️ ONLINE EXCLUSIVES 🛍️",
       subtitle: "Extra <strong>20% OFF</strong> when you spend $100+",
-      cta: "VIEW DEALS",
+      cta: "VIEW DEALS BELOW",
       bgColor: "from-indigo-600 to-blue-500",
       highlight: "Web Only!",
       buttonColor: "bg-white text-indigo-700 hover:bg-gray-50",
@@ -147,14 +147,14 @@ const TopCarousel2 = () => {
                   className={`max-w-2xl mx-auto flex flex-col ${slides[currentIndex].textPosition} space-y-4 sm:space-y-6 text-white`}
                 >
                   {/* Highlight badge */}
-                  <motion.span
+                  {/* <motion.span
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.2 }}
                     className="inline-block text-xs sm:text-sm px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 font-bold rounded-full shadow-lg"
                   >
                     {slides[currentIndex].highlight}
-                  </motion.span>
+                  </motion.span> */}
 
                   {/* Title */}
                   <motion.h1 
@@ -167,7 +167,7 @@ const TopCarousel2 = () => {
                   </motion.h1>
 
                   {/* Subtitle */}
-                  <motion.p
+                  {/* <motion.p
                     className="text-lg sm:text-xl md:text-2xl font-medium max-w-lg drop-shadow-sm"
                     dangerouslySetInnerHTML={{
                       __html: slides[currentIndex].subtitle,
@@ -175,7 +175,7 @@ const TopCarousel2 = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                  />
+                  /> */}
 
                   {/* CTA Button */}
                   <motion.div

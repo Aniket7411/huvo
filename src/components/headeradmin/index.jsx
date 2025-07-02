@@ -90,6 +90,7 @@ const AdminHeader = () => {
       navigate("/login");
     } catch (error) {
       console.error("Logout error:", error);
+      navigate('/login')
     }
   };
 

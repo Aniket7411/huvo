@@ -47,6 +47,7 @@ export default function   ProfileAdmin() {
           LogOut();
         } catch (error) {
           console.error(error);
+          navigate('/login')
         }
       };
 

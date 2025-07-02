@@ -31,6 +31,7 @@ function SuperAdminNav() {
       LogOut();
     } catch (error) {
       console.error(error);
+      navigate('/login')
     }
   };
 
