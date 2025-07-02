@@ -197,7 +197,12 @@ export default function Home() {
 
 
 
+
+
+
   useEffect(() => {
+
+    debugger
     const dataShift = async () => {
       const localData = JSON.parse(localStorage?.getItem("cart"));
       console.log("localDatalocalData:", localData);
@@ -280,7 +285,7 @@ export default function Home() {
       }
     };
 
-    if (tokenIfLoggedIn !== undefined && localStorage.getItem("cart")?.length > 0) {
+    if (tokenIfLoggedIn !== undefined && tokenIfLoggedIn !== null && localStorage.getItem("cart")?.length > 0) {
       dataShift();
     }
   }, [tokenIfLoggedIn]);

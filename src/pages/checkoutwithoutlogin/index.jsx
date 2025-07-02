@@ -90,7 +90,7 @@ export default function CheckOutWithoutLogin() {
     0
   );
 
-  const grandTotal = totalPrice - couponDiscount + shippingFee;
+  const grandTotal = totalPrice - couponDiscount;
 
   const fetchCartProducts = () => {
     const localCartItems = JSON.parse(localStorage?.getItem("cart") || "{}");
