@@ -30,6 +30,7 @@ export default function CheckOutWithoutLogin() {
   const [shippingFee] = useState(100);
   const [coupons, setCoupons] = useState([]);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponInput,setCouponInput]=useState();
 
   const getCouponList = async () => {
     try {
@@ -50,6 +51,25 @@ export default function CheckOutWithoutLogin() {
   useEffect(() => {
     getCouponList();
   }, []);
+
+  const applyCoupon = async (couponCode) => {
+      console.log(couponCode)
+      try {
+        const response = await HttpClient.post("/coupon/apply", { couponCode })
+  
+        console.log(response)
+        if (response?.success === true) {
+          setAppliedCoupon(response?.couponId)
+          setCouponDiscount(parseInt(response?.discount))
+          toast.success("Coupon Applied Successfully")
+        } else {
+          toast.error("Coupon either invalid or used before")
+        }
+  
+      } catch (error) {
+        toast.error(error?.message)
+      }
+    }
 
   const { reset } = useForm();
   const { register: addressRegister, reset: addressReset } = useForm();
@@ -120,17 +140,36 @@ export default function CheckOutWithoutLogin() {
     }, 1000);
   };
 
-  const handleApplyCoupon = (coupon) => {
-    // Check if coupon is already applied
-    if (appliedCoupon && appliedCoupon.couponId === coupon.couponId) {
+  const handleApplyCoupon = async (coupon,appliedFrom) => {
+     if (appliedCoupon && appliedCoupon.couponId === coupon.couponId) {
       toast.info("This coupon is already applied");
       return;
     }
+    // Check if coupon is already applied
+   if(appliedFrom==='list'){
+    
 
     // Apply the coupon discount
     setCouponDiscount(coupon.discount);
     setAppliedCoupon(coupon);
     toast.success(`Coupon "${coupon.couponCode}" applied successfully!`);
+   }
+   else {
+
+    try{
+      const checkCode=await HttpClient.post('/coupon/apply',{couponCode:coupon});
+    console.log(checkCode,"............140")
+    if(checkCode.success){
+      toast.success(checkCode.message);
+      setCouponDiscount(checkCode.discount);
+    setAppliedCoupon(coupons.find(item=>item.couponId===checkCode.couponId));
+    }
+
+    }catch(err){
+      toast.error(err.response.data.message||err.response.message||err.message);
+    }
+    
+   }
   };
 
   const handleRemoveCoupon = () => {
@@ -352,6 +391,24 @@ export default function CheckOutWithoutLogin() {
                             )}
                           </span>
                         </div>
+                          <div className="border-t border-gray-200 pt-4 mt-6">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                              <input
+                                onChange={(e)=>setCouponInput(e.target.value)}
+                                value={couponInput}
+                                type="text"
+                                placeholder="Enter coupon code"
+                                className="w-full sm:flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                              />
+                              <button
+                                 onClick={() => handleApplyCoupon(couponInput,"input")}
+                                className="text-sm px-4 py-2 rounded-md bg-green-600 hover:bg-green-700 text-white w-full sm:w-auto"
+                              >
+                                Apply
+                              </button>
+                            </div>
+                          </div>
+
                         <div className="border-t border-gray-200 pt-3 mt-3">
                           <h4 className="font-medium mb-2">Available Coupons</h4>
                           {coupons?.map((coupon) => (
@@ -371,7 +428,7 @@ export default function CheckOutWithoutLogin() {
                                       ? 'bg-gray-200 text-gray-600 cursor-default'
                                       : 'bg-green-600 hover:bg-green-700 text-white'
                                   }`}
-                                  onClick={() => handleApplyCoupon(coupon)}
+                                  onClick={() => handleApplyCoupon(coupon,"list")}
                                   disabled={appliedCoupon?.couponId === coupon.couponId}
                                 >
                                   {appliedCoupon?.couponId === coupon.couponId ? 'Applied' : 'Apply'}

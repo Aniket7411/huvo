@@ -28,7 +28,8 @@ Axios.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response && error.response.status === 401 && error.response.data.message === 'Token expired') {
+    if (error.response && error.response.status === 401 ) {
+      //debugger
       await RefreshAccessToken();
       const token = getAccessToken();
       originalRequest.headers.authorization = `Bearer ${token}`;

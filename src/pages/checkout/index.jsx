@@ -44,7 +44,8 @@ export default function CheckOut() {
   const [sgst, setSgst] = useState()
   const [totalAmount, setTotalAmount] = useState()
   const [coupons, setCoupons] = useState([]);
-  const [appliedCoupon, setAppliedCoupon] = useState(null)
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponInput,setCouponInput]=useState();
 
 
   const { fetchServerData } = useContext(CartContext)
@@ -423,7 +424,7 @@ export default function CheckOut() {
   }, [])
 
 
-  const applyCoupon = async (couponCode) => {
+  const applyCoupon = async (couponCode,appliedFrom) => {
     console.log(couponCode)
     try {
       const response = await HttpClient.post("/coupon/apply", { couponCode })
@@ -664,6 +665,23 @@ export default function CheckOut() {
                       </div>
                       <div className="md:w-4/12">
                         <div className="border-2 border-gray-300 p-3 rounded-lg font-[Poppins] bg-white shadow-md">
+                           <div className="border-t border-gray-200 pt-4 mt-6">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                              <input
+                                onChange={(e)=>setCouponInput(e.target.value)}
+                                value={couponInput}
+                                type="text"
+                                placeholder="Enter coupon code"
+                                className="w-full sm:flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                              />
+                              <button
+                                 onClick={() => applyCoupon(couponInput,"input")}
+                                className="text-sm px-4 py-2 rounded-md bg-green-600 hover:bg-green-700 text-white w-full sm:w-auto"
+                              >
+                                Apply
+                              </button>
+                            </div>
+                          </div>
                           {coupons?.map((coupon) => (
                             <ul key={coupon?.id} className="hover:bg-gray-50 border mb-1  rounded-lg  py-1 justify-between items-center flex flex-wrap">
                               <li className=" text-center text-gray-700 font-medium">{coupon?.couponCode}</li>
@@ -671,7 +689,7 @@ export default function CheckOut() {
                               <li className=" text-center text-gray-700 ">₹{coupon?.discount}</li>
                               <li className="">
                                 <button
-                                  onClick={() => applyCoupon(coupon?.couponCode)}
+                                  onClick={() => applyCoupon(coupon?.couponCode,"list")}
                                   className="bg-green-600 hover:bg-green-800 text-white text-sm px-4 py-2 rounded-md transition-colors"
                                 // onClick={() => handleApplyCoupon(coupon)}
                                 >
