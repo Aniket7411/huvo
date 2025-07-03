@@ -91,11 +91,11 @@ const SellerProfileComponent = () => {
             />
           </div>
         </div>
-        <div className="mb-5 mt-5">
+        {/* <div className="mb-5 mt-5">
           Contact Information
           <hr />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        </div> */}
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-[#626262] font-medium mb-2 ml-2">
               Business Address
@@ -185,7 +185,7 @@ const SellerProfileComponent = () => {
             onChange={handleChange}
             required
           />
-        </div>
+        </div> */}
         {/* Add other form fields here */}
         <button
           className="bg-[#011F4B] text-[#FFFFFF] font-bold rounded-md px-8 py-3 mx-auto block my-4"

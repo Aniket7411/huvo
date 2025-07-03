@@ -116,7 +116,7 @@ function Sidenavbar() {
             </div>
           </li>
 
-          <li>
+          {/* <li>
             <div className="hover:bg-[#011F4B] border-[#011F4B] text-sm rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">
               <Link
                 to="/cancelled_orders"
@@ -131,7 +131,7 @@ function Sidenavbar() {
                 <IoIosArrowRoundForward className="opacity-60" />
               </Link>
             </div>
-          </li>
+          </li> */}
 
           <li>
             <div className="hover:bg-[#011F4B]  border-[#011F4B] rounded-md  hover:rounded-full transition-all duration-300 hover:text-[#FFFFFF] hoverOnDiv">

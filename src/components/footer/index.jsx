@@ -36,12 +36,12 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#FAFAFA] px-3 md:px-10  py-[20px]">
-      <div className="mb-12 flex flex-col lg:flex-row gap-4">
+      <div className=" flex flex-col lg:flex-row gap-4">
         <div className="lg:w-3/4">
           <p className="font-[Quicksand] text-[#011F4B] font-semibold mb-4 text-xl">
-            Like to hear from us!
+            "We’d love to stay connected!"
           </p>
-          <div className="flex flex-wrap items-center gap-2">
+          {/* <div className="flex flex-wrap items-center gap-2">
             <input
               type="email"
               placeholder="ENTER YOUR EMAIL ADDRESS"
@@ -61,7 +61,7 @@ export default function Footer() {
             >
               SUBSCRIBE
             </button>
-          </div>
+          </div> */}
           {successMessage && (
             <p className="text-green-500 mt-2">{successMessage}</p>
           )}

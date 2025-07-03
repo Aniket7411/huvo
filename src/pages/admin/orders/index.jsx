@@ -35,6 +35,8 @@ function OrderList() {
       if (data) {
         setLoader(false);
       }
+
+      console.log("datadatadata", data)
       setAllOrders(data);
       setFilteredOrders(data);
       setProductId(data?.product?.productId);
@@ -124,12 +126,12 @@ function OrderList() {
       </h1>
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold mb-4">Orders List</h2>
-        <Link
+        {/* <Link
           to="/seller/orders"
           className="text-2xl font-bold mb-4 hover:underline"
         >
           Add Orders
-        </Link>
+        </Link> */}
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 mb-4">
@@ -206,9 +208,14 @@ function OrderList() {
                     </h5>
                   </td>
                   <td className="border-y border-[#eee] p-4 pl-8 dark:border-strokedark">
-                    <p>{item?.orderStatus[0]?.date.slice(0,10)}</p>
+                    <p>{item?.orderStatus[0]?.date.slice(0, 10)}</p>
                   </td>
-                   <td className="border-y border-[#eee] p-4 pl-8 dark:border-strokedark">
+
+                  <td className="border-y border-[#eee] p-4 pl-8 dark:border-strokedark">
+                    <p>{item?.orderStatus[0]?.status.toUpperCase()}</p>
+                  </td>
+
+                  <td className="border-y border-[#eee] p-4 pl-8 dark:border-strokedark">
                     <p>{item?.trackingOrder?.latest_status}</p>
                   </td>
                   {/* <td className="border-y border-[#eee] py-5 px-4 dark:border-strokedark">
