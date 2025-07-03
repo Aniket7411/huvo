@@ -499,7 +499,7 @@ export default function Profile() {
                           Bank Details
                         </div>
                       </Tab>
-{/* 
+                      {/* 
                       <Tab className="flex-1 sm:flex-none outline-none">
                         <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center sm:justify-start">
                           <span className="hidden sm:inline-block mr-2">📅</span>
@@ -669,141 +669,119 @@ export default function Profile() {
               </TabPanel>
 
 
-          
               <TabPanel className="bg-[#F2F2F2] h-full">
                 <div className="p-5">
-                  <div className="flex justify-between items-center mb-5 flex-wrap sm:flex-nowrap">
-                    <p className="text-[#282727] font-medium text-lg">
+                  {/* Header with add button - improved responsiveness */}
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5">
+                    <p className="text-[#282727] font-medium text-lg w-full sm:w-auto">
                       Saved Addresses
                     </p>
                     <button
-                      className="text-[#011F4B] font-medium text-lg border-2 border-dotted border-[#011F4B] rounded-md px-3 py-1"
+                      className="text-[#011F4B] font-medium text-lg border-2 border-dotted border-[#011F4B] rounded-md px-3 py-1 hover:bg-[#011F4B] hover:text-white transition-colors w-full sm:w-auto text-center"
                       onClick={() => {
                         setIsOpenAddress(true);
                         setFormData({});
                       }}
                     >
-                      +ADD NEW ADDRESS
+                      + ADD NEW ADDRESS
                     </button>
                   </div>
-                  {userDetails?.address.filter(
-                    (item) => item.isDefault === true
-                  ).length
-                    ? userDetails?.address
-                      .filter((item) => item.isDefault === true)
-                      .map((item, i) => {
-                        return (
-                          <div key={i}>
-                            <p className="font-normal text-[#282727] mb-2">
-                              DEFAULT ADDRESS
-                            </p>
-                            <div className="cursor-pointer py-5 px-12 mb-4 bg-white">
-                              <div className="flex items-center gap-2 mb-2">
-                                <p>{item.name}</p>
-                              </div>
-                              <p className="text-[#353535] font-normal">
-                                {item.address},
-                              </p>
-                              <p className="text-[#353535] font-normal">
-                                {item.town},
-                              </p>
+
+                  {/* Default Address Section */}
+                  {userDetails?.address?.filter(item => item.isDefault).length > 0 && (
+                    <div className="mb-6">
+                      <p className="font-normal text-[#282727] mb-2">DEFAULT ADDRESS</p>
+                      {userDetails.address
+                        .filter(item => item.isDefault)
+                        .map((item, i) => (
+                          <div key={`default-${i}`} className="cursor-pointer p-5 sm:px-8 mb-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <div className="flex items-center gap-2 mb-2">
+                              <p className="font-medium">{item.name}</p>
+                            </div>
+                            <address className="not-italic">
+                              <p className="text-[#353535] font-normal">{item.address},</p>
+                              <p className="text-[#353535] font-normal">{item.town},</p>
                               <p className="text-[#353535] font-normal">
                                 {item.city}-{item.postalCode}
                               </p>
-                              <p className="text-[#353535] font-normal mb-3">
-                                {item.state},
-                              </p>
+                              <p className="text-[#353535] font-normal">{item.state},</p>
                               <p className="text-[#353535] font-normal mb-3">
                                 Mobile No.- {item.mobileNumber}
                               </p>
-                              <div className="flex gap-2">
-                                <button
-                                  className="text-[#4D4D4D] font-medium text-xs border-2 border-[#4D4D4D] rounded-md px-3 py-1"
-                                  type="button"
-                                  onClick={() => removeAddress(i)}
-                                >
-                                  REMOVE
-                                </button>
-                                <button
-                                  className="text-[#011F4B] font-medium text-xs border-2 border-[#011F4B] rounded-md px-6 py-1"
-                                  onClick={() => {
-                                    setFormData(item);
-                                    setSelectedAddressIndex(i);
-                                    setIsOpenAddress(true);
-                                  }}
-                                >
-                                  EDIT
-                                </button>
-                              </div>
+                            </address>
+                            <div className="flex flex-wrap gap-2">
+                              <button
+                                className="text-[#4D4D4D] font-medium text-xs border-2 border-[#4D4D4D] rounded-md px-3 py-1 hover:bg-[#4D4D4D] hover:text-white transition-colors"
+                                type="button"
+                                onClick={() => removeAddress(i)}
+                              >
+                                REMOVE
+                              </button>
+                              <button
+                                className="text-[#011F4B] font-medium text-xs border-2 border-[#011F4B] rounded-md px-6 py-1 hover:bg-[#011F4B] hover:text-white transition-colors"
+                                onClick={() => {
+                                  setFormData(item);
+                                  setSelectedAddressIndex(i);
+                                  setIsOpenAddress(true);
+                                }}
+                              >
+                                EDIT
+                              </button>
                             </div>
                           </div>
-                        );
-                      })
-                    : ""}
+                        ))}
+                    </div>
+                  )}
 
-                  {userDetails?.address.filter(
-                    (item) => item.isDefault === false
-                  ).length ? (
+                  {/* Other Addresses Section */}
+                  {userDetails?.address?.filter(item => !item.isDefault).length > 0 && (
                     <div>
-                      <p className="font-normal text-[#282727] mb-2">
-                        OTHER ADDRESS
-                      </p>
-                      {userDetails?.address
-                        .filter((item) => item.isDefault === false)
-                        .map((item, i) => {
-                          return (
-                            <div
-                              key={i}
-                              className="cursor-pointer py-5 px-12 mb-4 bg-white"
-                            >
-                              <div className="flex items-center gap-2 mb-2">
-                                <p>{item.name}</p>
-                              </div>
-                              <p className="text-[#353535] font-normal">
-                                {item.address},
-                              </p>
-                              <p className="text-[#353535] font-normal">
-                                {item.town},
-                              </p>
+                      <p className="font-normal text-[#282727] mb-2">OTHER ADDRESSES</p>
+                      {userDetails.address
+                        .filter(item => !item.isDefault)
+                        .map((item, i) => (
+                          <div key={`other-${i}`} className="cursor-pointer p-5 sm:px-8 mb-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <div className="flex items-center gap-2 mb-2">
+                              <p className="font-medium">{item.name}</p>
+                            </div>
+                            <address className="not-italic">
+                              <p className="text-[#353535] font-normal">{item.address},</p>
+                              <p className="text-[#353535] font-normal">{item.town},</p>
                               <p className="text-[#353535] font-normal">
                                 {item.city}-{item.postalCode}
                               </p>
-                              <p className="text-[#353535] font-normal mb-3">
-                                {item.state},
-                              </p>
+                              <p className="text-[#353535] font-normal">{item.state},</p>
                               <p className="text-[#353535] font-normal mb-3">
                                 Mobile No.- {item.mobileNumber}
                               </p>
-                              <div className="flex gap-2">
-                                <button
-                                  className="text-[#4D4D4D] font-medium text-xs border-2 border-[#4D4D4D] rounded-md px-3 py-1"
-                                  type="button"
-                                  onClick={() => removeAddress(i)}
-                                >
-                                  REMOVE
-                                </button>
-                                <button
-                                  className="text-[#011F4B] font-medium text-xs border-2 border-[#011F4B] rounded-md px-6 py-1"
-                                  onClick={() => {
-                                    setFormData(item);
-                                    setSelectedAddressIndex(i);
-                                    setIsOpenAddress(true);
-                                  }}
-                                >
-                                  EDIT
-                                </button>
-                              </div>
+                            </address>
+                            <div className="flex flex-wrap gap-2">
+                              <button
+                                className="text-[#4D4D4D] font-medium text-xs border-2 border-[#4D4D4D] rounded-md px-3 py-1 hover:bg-[#4D4D4D] hover:text-white transition-colors"
+                                type="button"
+                                onClick={() => removeAddress(i)}
+                              >
+                                REMOVE
+                              </button>
+                              <button
+                                className="text-[#011F4B] font-medium text-xs border-2 border-[#011F4B] rounded-md px-6 py-1 hover:bg-[#011F4B] hover:text-white transition-colors"
+                                onClick={() => {
+                                  setFormData(item);
+                                  setSelectedAddressIndex(i);
+                                  setIsOpenAddress(true);
+                                }}
+                              >
+                                EDIT
+                              </button>
                             </div>
-                          );
-                        })}
+                          </div>
+                        ))}
                     </div>
-                  ) : (
-                    ""
                   )}
                 </div>
               </TabPanel>
               <TabPanel className="bg-[#F2F2F2] h-full">
-                  <SellerProfileComponent />
+                <SellerProfileComponent />
               </TabPanel>
 
 

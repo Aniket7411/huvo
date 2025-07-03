@@ -202,7 +202,6 @@ export default function Home() {
 
   useEffect(() => {
 
-    debugger
     const dataShift = async () => {
       const localData = JSON.parse(localStorage?.getItem("cart"));
       console.log("localDatalocalData:", localData);
