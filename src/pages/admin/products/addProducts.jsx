@@ -74,7 +74,48 @@ const options = [
   { id: 57, name: "Sea Green", value: "sea-green", colorCode: "#2E8B57" },
   { id: 58, name: "Slate", value: "slate", colorCode: "#708090" },
   { id: 59, name: "Snow", value: "snow", colorCode: "#FFFAFA" },
-  { id: 60, name: "Steel Blue", value: "steel-blue", colorCode: "#4682B4" }
+  { id: 60, name: "Steel Blue", value: "steel-blue", colorCode: "#4682B4" },
+  // Additional clothing-specific colors
+  { id: 61, name: "Off-White", value: "off-white", colorCode: "#FAF9F6" },
+  { id: 62, name: "Cream", value: "cream", colorCode: "#FFFDD0" },
+  { id: 63, name: "Rose Gold", value: "rose-gold", colorCode: "#E0BFB8" },
+  { id: 64, name: "Burgundy", value: "burgundy", colorCode: "#800020" },
+  { id: 65, name: "Mauve", value: "mauve", colorCode: "#E0B0FF" },
+  { id: 66, name: "Oatmeal", value: "oatmeal", colorCode: "#D9D9C7" },
+  { id: 67, name: "Ash Gray", value: "ash-gray", colorCode: "#B2BEB5" },
+  { id: 68, name: "Pastel Blue", value: "pastel-blue", colorCode: "#AEC6CF" },
+  { id: 69, name: "Pastel Pink", value: "pastel-pink", colorCode: "#FFD1DC" },
+  { id: 70, name: "Pastel Green", value: "pastel-green", colorCode: "#C1E1C1" },
+  { id: 71, name: "Pastel Yellow", value: "pastel-yellow", colorCode: "#FDFD96" },
+  { id: 72, name: "Neon Pink", value: "neon-pink", colorCode: "#FF6EC7" },
+  { id: 73, name: "Neon Green", value: "neon-green", colorCode: "#39FF14" },
+  { id: 74, name: "Neon Blue", value: "neon-blue", colorCode: "#1F51FF" },
+  { id: 75, name: "Neon Orange", value: "neon-orange", colorCode: "#FF5F1F" },
+  { id: 76, name: "Neon Yellow", value: "neon-yellow", colorCode: "#FFFF00" },
+  { id: 77, name: "Army Green", value: "army-green", colorCode: "#4B5320" },
+  { id: 78, name: "Camel", value: "camel", colorCode: "#C19A6B" },
+  { id: 79, name: "Dusty Rose", value: "dusty-rose", colorCode: "#DCAE96" },
+  { id: 80, name: "Hunter Green", value: "hunter-green", colorCode: "#355E3B" },
+  { id: 81, name: "Royal Blue", value: "royal-blue", colorCode: "#002366" },
+  { id: 82, name: "Blush", value: "blush", colorCode: "#DE5D83" },
+  { id: 83, name: "Taupe", value: "taupe", colorCode: "#483C32" },
+  { id: 84, name: "Periwinkle", value: "periwinkle", colorCode: "#CCCCFF" },
+  { id: 85, name: "Moss Green", value: "moss-green", colorCode: "#8A9A5B" },
+  { id: 86, name: "Brick Red", value: "brick-red", colorCode: "#CB4154" },
+  { id: 87, name: "Pewter", value: "pewter", colorCode: "#899499" },
+  { id: 88, name: "Cobalt Blue", value: "cobalt-blue", colorCode: "#0047AB" },
+  { id: 89, name: "Pistachio", value: "pistachio", colorCode: "#93C572" },
+  { id: 90, name: "Rose Quartz", value: "rose-quartz", colorCode: "#F7CAC9" },
+  { id: 91, name: "Graphite", value: "graphite", colorCode: "#383838" },
+  { id: 92, name: "Pearl White", value: "pearl-white", colorCode: "#F8F8FF" },
+  { id: 93, name: "Mint Green", value: "mint-green", colorCode: "#98FB98" },
+  { id: 94, name: "Dark Teal", value: "dark-teal", colorCode: "#014D4E" },
+  { id: 95, name: "Light Gray", value: "light-gray", colorCode: "#D3D3D3" },
+  { id: 96, name: "Deep Purple", value: "deep-purple", colorCode: "#36013F" },
+  { id: 97, name: "Terracotta", value: "terracotta", colorCode: "#E2725B" },
+  { id: 98, name: "Pale Blue", value: "pale-blue", colorCode: "#AFEEEE" },
+  { id: 99, name: "Pale Pink", value: "pale-pink", colorCode: "#FADADD" },
+  { id: 100, name: "Dark Charcoal", value: "dark-charcoal", colorCode: "#333333" }
 ];
 
 function ProductAddPage() {
@@ -365,7 +406,7 @@ function ProductAddPage() {
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
             >
-              Name
+              Product Name
             </label>
             <input
               id="name"
@@ -385,7 +426,7 @@ function ProductAddPage() {
               htmlFor="description"
               className="block text-sm font-medium text-gray-700"
             >
-              Description
+              Product Description
             </label>
             <textarea
               id="description"
@@ -628,7 +669,7 @@ function ProductAddPage() {
               htmlFor="brand"
               className="block text-sm font-medium text-gray-700"
             >
-              Brand
+             Product Brand (If Not available then add)
             </label>
             <select
               id="brand"
@@ -654,7 +695,7 @@ function ProductAddPage() {
               htmlFor="materialAndCare"
               className="block text-sm font-medium text-gray-700"
             >
-              Material And Care
+              Material And Care Instruction
             </label>
             <input
               id="materialAndCare"
@@ -797,7 +838,7 @@ function ProductAddPage() {
 
           <div className="mb-2">
             <label className="block text-md font-medium text-gray-700">
-              Colors
+              Product Color
             </label>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-2">
               {colorWithImages?.map((item, i) => {
@@ -807,7 +848,8 @@ function ProductAddPage() {
                       htmlFor="color"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      {`Color-${i + 1}`}
+                      {/* {`Select Color-${i + 1}`} */}
+                      Select color below
                     </label>
                     <div className="flex  p-3 gap-3 my-2">
 
@@ -826,10 +868,10 @@ function ProductAddPage() {
 
                       <button
                         type="button"
-                        className="bg-blue-500 text-white px-2 py-1 rounded-md cursor-pointer"
+                        className="bg-blue-500 w-auto text-white px-2 py-1 rounded-md cursor-pointer"
                         onClick={() => handleAddImage(i)}
                       >
-                        Add Image
+                        Click to add multiple images
                       </button>
                       <button
                         type="button"
@@ -897,7 +939,7 @@ function ProductAddPage() {
           </div>
           <div className="mb-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Banner Image
+              Product's Banner Image (Image that will be firstly visible)
             </label>
             <div className="flex gap-6 items-center">
               {bannerImage && (
