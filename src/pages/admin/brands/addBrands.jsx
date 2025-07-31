@@ -80,7 +80,7 @@ function BrandAddPage() {
           </label>
           <input
             id="onGoingOffer"
-            placeholder="Enter 0 if discount has been given already"
+            placeholder="Enter 0 if the discount has already been given."
             type="number"
             name="onGoingOffer"
             className="mt-1 p-2 w-full border border-gray-300 rounded-md"
