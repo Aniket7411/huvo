@@ -55,12 +55,13 @@ function BrandAddPage() {
             htmlFor="name"
             className="block text-sm font-medium text-gray-700"
           >
-            Brand Name
+            Brand Name <span className="text-[red]">*</span>
           </label>
           <input
             id="name"
             type="text"
             name="name"
+            placeholder="Enter brand name"
             className="mt-1 p-2 w-full border border-gray-300 rounded-md"
             {...register("name", {
               required: "*Name is required.",
@@ -75,10 +76,11 @@ function BrandAddPage() {
             htmlFor="onGoingOffer"
             className="block text-sm font-medium text-gray-700"
           >
-            On Going Offer (In %)
+            On Going Offer (In %) <span className="text-[red]">*</span>
           </label>
           <input
             id="onGoingOffer"
+            placeholder="Enter 0 if discount has been given already"
             type="number"
             name="onGoingOffer"
             className="mt-1 p-2 w-full border border-gray-300 rounded-md"
@@ -87,7 +89,7 @@ function BrandAddPage() {
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Logo
+           Brand Logo <span className="text-[red]">*</span>
           </label>
           <div className="flex gap-6 items-center">
             {logo && (
@@ -117,7 +119,7 @@ function BrandAddPage() {
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Banner Image
+            Banner Image <span className="text-[red]">*</span>
           </label>
           <div className="flex gap-6 items-center">
             {image && (
