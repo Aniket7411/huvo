@@ -406,7 +406,7 @@ function ProductAddPage() {
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
             >
-              Product Name
+              Product Name <span className="text-[red]">*</span>
             </label>
             <input
               id="name"
@@ -426,7 +426,7 @@ function ProductAddPage() {
               htmlFor="description"
               className="block text-sm font-medium text-gray-700"
             >
-              Product Description
+              Product Description <span className="text-[red]">*</span>
             </label>
             <textarea
               id="description"
@@ -445,7 +445,7 @@ function ProductAddPage() {
               htmlFor="prodcuctDetails"
               className="block text-sm font-medium text-gray-700"
             >
-              Product Details
+              Product Details <span className="text-[red]">*</span>
             </label>
             {productDetails?.map((text, index) => (
               <div key={index} className="flex items-center mb-2">
@@ -471,7 +471,7 @@ function ProductAddPage() {
               className="mt-2 bg-blue-500 text-white px-3 py-1 rounded-md"
               onClick={handleAddProductDetails}
             >
-              Add Product Details
+              Add Product Details 
             </button>
             {errors.productDetails && (
               <span className="text-red-500">
@@ -481,7 +481,7 @@ function ProductAddPage() {
           </div>
           <div className="mb-3">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Group
+              Group   <span className="text-[red]">*</span>
             </label>
             <div className="flex gap-4">
               <div className="flex items-center gap-2">
@@ -525,7 +525,7 @@ function ProductAddPage() {
               htmlFor="category"
               className="block text-sm font-medium text-gray-700"
             >
-              Category
+              Category  <span className="text-[red]">*</span>
             </label>
             <select
               id="category"
@@ -535,7 +535,7 @@ function ProductAddPage() {
               className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md outline-none"
             >
               <option defaultValue disabled>
-                Select Category
+                Select Category  <span className="text-[red]">*</span>
               </option>
               {allCategories?.map((category, i) => (
                 <option value={category?._id} key={i}>
@@ -632,10 +632,10 @@ function ProductAddPage() {
 
           {isShoeSelectionEnabled ? "" : <div className="mb-3">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Sizes
+              Sizes  <span className="text-[red]">*</span>
             </label>
             <div className="flex flex-wrap gap-2">
-              {["S", "M", "L", "XL", "XXL"].map((item, i) => {
+              {["S", "M", "L", "XL", "XXL","Generic"].map((item, i) => {
                 const isChecked = sizeWithStock.some((s) => s.size === item);
                 return (
                   <div className="flex items-center mr-4" key={i}>
@@ -669,7 +669,7 @@ function ProductAddPage() {
               htmlFor="brand"
               className="block text-sm font-medium text-gray-700"
             >
-             Product Brand (If Not available then add)
+             Product Brand (If Not available then add)  <span className="text-[red]">*</span>
             </label>
             <select
               id="brand"
@@ -695,7 +695,7 @@ function ProductAddPage() {
               htmlFor="materialAndCare"
               className="block text-sm font-medium text-gray-700"
             >
-              Material And Care Instruction
+              Material And Care Instruction  <span className="text-[red]">*</span>
             </label>
             <input
               id="materialAndCare"
@@ -717,7 +717,7 @@ function ProductAddPage() {
               htmlFor="price"
               className="block text-sm font-medium text-gray-700"
             >
-              Price (In Rupees)
+              Price (In Rupees)  <span className="text-[red]">*</span>
             </label>
             <input
               id="price"
@@ -759,7 +759,7 @@ function ProductAddPage() {
               htmlFor="discount"
               className="block text-sm font-medium text-gray-700"
             >
-              Discount  (In Rupees)
+              Discount  (In Rupees)  <span className="text-[red]">*</span>
             </label>
             <input
               id="discount"
@@ -783,7 +783,7 @@ function ProductAddPage() {
               htmlFor="weight"
               className="block text-sm font-medium text-gray-700"
             >
-              Weight  (In Grams )
+              Weight  (In Grams )  <span className="text-[red]">*</span>
             </label>
             <input
               id="weight"
@@ -838,7 +838,7 @@ function ProductAddPage() {
 
           <div className="mb-2">
             <label className="block text-md font-medium text-gray-700">
-              Product Color
+              Product Color  <span className="text-[red]">*</span>
             </label>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-2">
               {colorWithImages?.map((item, i) => {
@@ -851,7 +851,7 @@ function ProductAddPage() {
                       {/* {`Select Color-${i + 1}`} */}
                       Select color below
                     </label>
-                    <div className="flex  p-3 gap-3 my-2">
+                    <div className="flex  gap-3 my-2">
 
                       <select
                         value={item.colorCode} // Bind the current colorCode value
@@ -939,7 +939,7 @@ function ProductAddPage() {
           </div>
           <div className="mb-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Product's Banner Image (Image that will be firstly visible)
+              Product's Banner Image (Image that will be firstly visible)  <span className="text-[red]">*</span>
             </label>
             <div className="flex gap-6 items-center">
               {bannerImage && (
@@ -972,7 +972,7 @@ function ProductAddPage() {
           <div className="flex flex-wrap items-center gap-3">
             <div className="mb-3">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Returnability
+                Returnability  <span className="text-[red]">*</span>
               </label>
 
 
