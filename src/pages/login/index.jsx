@@ -114,7 +114,7 @@ export default function Login() {
         setFormError(errorResponse.message || "Failed to send password reset email.");
       }
     } catch (apiError) {
-      setFormError("An unexpected error occurred. Please try again.");
+      setFormError("Email is not registered.");
     } finally {
       setIsFormSubmitting(false);
     }
