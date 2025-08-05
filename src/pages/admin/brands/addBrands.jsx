@@ -119,7 +119,7 @@ function BrandAddPage() {
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Banner Image <span className="text-[red]">*</span>
+            Banner Image
           </label>
           <div className="flex gap-6 items-center">
             {image && (

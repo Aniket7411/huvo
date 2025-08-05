@@ -176,8 +176,8 @@ export default function SignIn() {
                   {userNameError && (
                     <p
                       className={`errorMsg ${userNameError === "Username is available"
-                          ? "text-[#28A745]" // Green for available
-                          : "text-[#E40606]" // Red for already exists
+                        ? "text-[#28A745]" // Green for available
+                        : "text-[#E40606]" // Red for already exists
                         }`}
                     >
                       {userNameError}
@@ -231,8 +231,8 @@ export default function SignIn() {
                               message: "*Password should be at-least 8 characters.",
                             },
                             pattern: {
-                              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,14}$/,
-                              message: "*Password must contain one uppercase letter,one lowercase letter,one number,one special character",
+                              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/,
+                              message: "*Password must contain one uppercase letter, one lowercase letter, one number, and one special character",
                             },
                           })}
                         />

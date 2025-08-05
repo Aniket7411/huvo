@@ -802,12 +802,15 @@ export default function Profile() {
                         </label>
                         <input
                           type="text"
-                          placeholder="Enter your Pan "
+                          placeholder="Enter your PAN"
                           className="border border-gray-300 rounded-lg p-3 w-full"
                           value={pan}
-                          onChange={(e) => setPan(e.target.value.toUpperCase())}
-
-
+                          maxLength={10}
+                          onChange={(e) => {
+                            const input = e.target.value.toUpperCase();
+                            const formatted = input.replace(/[^A-Z0-9]/g, ''); // Remove non-alphanumeric
+                            setPan(formatted);
+                          }}
                         />
 
                         <label className="block text-[#626262] font-medium mb-2 ">
