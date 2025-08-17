@@ -122,10 +122,10 @@ function ProductAddPage() {
 
   const [responseData, setResponseData] = useState([])
 
-  const [returnableRadio, setReturnableRadio] = useState(true)
+  const [returnableRadio, setReturnableRadio] = useState(7)
 
 
-  console.log("returnableRadioreturnableRadioreturnableRadio",returnableRadio)
+  console.log("returnableRadioreturnableRadioreturnableRadio", returnableRadio)
 
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -194,96 +194,75 @@ function ProductAddPage() {
 
 
   const onSubmit = async (data) => {
-    //debugger
     let platformCharge = 0;
     const shippingFee = 100; // Constant shipping fee
     console.log("Form Data:", data);
 
     // Calculate platform fee based on price
     if (data.price <= 500) {
-      platformCharge = 10; // Rs. 10 for amount up to 500
+      platformCharge = 10;
     } else if (data.price > 500 && data.price <= 1000) {
-      platformCharge = 15; // Rs. 15 for amount between 501 and 1000
+      platformCharge = 15;
     } else if (data.price > 1000) {
-      platformCharge = 20; // Rs. 20 for amount above 1000
+      platformCharge = 20;
     }
 
-    // Validation checks for price
+    // Validation checks
     if (parseInt(data?.price) < 0) {
       toast.info("Price can't be less than zero.");
-      return; // Exit if validation fails
+      return;
     }
 
-    else if (parseInt(data?.price) < parseInt(data?.discount)) {
+    if (parseInt(data?.price) < parseInt(data?.discount)) {
       toast.info("Price can't be less than the discount.");
-      return; // Exit if validation fails
-    } else {
-      try {
-        setIsloading(true); // Indicate loading state
-
-        // Construct product info object
-        const productInfo = {
-          ...data,
-          bannerImage,
-          isReturnable: data?.isReturnable === "true",
-          sizes: sizeWithStock,
-          colors: colorWithImages,
-          productDetails,
-          platformCharge,
-          shippingFee,
-          returnableDays: data.isReturnable === "true" ? returnableDays : 0
-
-        };
-
-        // Send API request
-        const response = await HttpClient.post("/product", productInfo);
-        console.log("API:", response);
-        setResponseData(response)
-
-        console.log("API", response)
-        reset();
-
-        setIsModalOpen(true)
-
-
-
-
-
-
-        // Handle success
-        setIsloading(false); // Reset loading state
-
-        setReturnableDays("");
-        setBannerImage("");
-        setProductDetails([""]);
-        setActiveCategoryId("");
-        setSizeWithStock([]);
-        setColorWithImages([
-          {
-            colorCode: "#000000",
-            images: [],
-          },
-        ]);
-
-
-        toggleShoeSelection(false);
-
-        toast.success("Product added successfully");
-
-
-
-      } catch (error) {
-        // Handle error
-        setIsloading(false); // Reset loading state
-        toast.error(error?.response?.data?.message || "Something went wrong");
-      }
+      return;
     }
 
+    if (returnableRadio === "") {
+      toast.info("Returnable days?");
+      return;
+    }
 
+    try {
+      setIsloading(true);
 
+      // Construct product info object
+      const productInfo = {
+        ...data,
+        bannerImage,
+        isReturnable: data?.isReturnable === "true",
+        sizes: sizeWithStock,
+        colors: colorWithImages,
+        productDetails,
+        platformCharge,
+        shippingFee,
+        returnableDays: data.isReturnable === "true" ? returnableDays : 0,
+      };
 
+      // Send API request
+      const response = await HttpClient.post("/product", productInfo);
+      console.log("API:", response);
+      setResponseData(response);
+
+      reset();
+      setIsModalOpen(true);
+
+      // Reset states
+      setIsloading(false);
+      setReturnableDays("");
+      setBannerImage("");
+      setProductDetails([""]);
+      setActiveCategoryId("");
+      setSizeWithStock([]);
+      setColorWithImages([{ colorCode: "#000000", images: [] }]);
+      toggleShoeSelection(false);
+
+      toast.success("Product added successfully");
+    } catch (error) {
+      setIsloading(false);
+      toast.error(error?.response?.data?.message || "Something went wrong");
+    }
   };
-
 
 
   const handleRemoveColorWithImages = (colorIndex) => {
@@ -471,7 +450,7 @@ function ProductAddPage() {
               className="mt-2 bg-blue-500 text-white px-3 py-1 rounded-md"
               onClick={handleAddProductDetails}
             >
-              Add Product Details 
+              Add Product Details
             </button>
             {errors.productDetails && (
               <span className="text-red-500">
@@ -635,7 +614,7 @@ function ProductAddPage() {
               Sizes  <span className="text-[red]">*</span>
             </label>
             <div className="flex flex-wrap gap-2">
-              {["S", "M", "L", "XL", "XXL","Generic"].map((item, i) => {
+              {["S", "M", "L", "XL", "XXL", "Generic"].map((item, i) => {
                 const isChecked = sizeWithStock.some((s) => s.size === item);
                 return (
                   <div className="flex items-center mr-4" key={i}>
@@ -669,7 +648,7 @@ function ProductAddPage() {
               htmlFor="brand"
               className="block text-sm font-medium text-gray-700"
             >
-             Product Brand (If Not available then add)  <span className="text-[red]">*</span>
+              Product Brand (If Not available then add)  <span className="text-[red]">*</span>
             </label>
             <select
               id="brand"
@@ -681,7 +660,7 @@ function ProductAddPage() {
                 Select Brand
               </option>
               {allBrands?.map((brand, i) => (
-                <option value={brand?._id} key={i}>
+                <option value={brand?.name} key={i}>
                   {brand?.name}
                 </option>
               ))}
@@ -834,82 +813,108 @@ function ProductAddPage() {
 
 
 
-
-
-          <div className="mb-2">
-            <label className="block text-md font-medium text-gray-700">
-              Product Color  <span className="text-[red]">*</span>
+          {/* Main Image Section */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Product's Main Image (Image that will be firstly visible) <span className="text-red-500">*</span>
             </label>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-2">
-              {colorWithImages?.map((item, i) => {
-                return (
-                  <div key={i}>
-                    <label
-                      htmlFor="color"
-                      className="block text-sm font-medium text-gray-700"
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+              {bannerImage && (
+                <img
+                  src={bannerImage}
+                  alt="bannerImage"
+                  className="h-40 w-40 rounded-md object-contain border border-gray-200"
+                />
+              )}
+              <label
+                htmlFor="bannerImage"
+                className={`px-4 py-2 rounded-md cursor-pointer ${bannerImage ? 'bg-blue-500' : 'bg-red-500'} text-white`}
+              >
+                <input
+                  type="file"
+                  id="bannerImage"
+                  name="bannerImage"
+                  className="hidden"
+                  {...register("bannerImage")}
+                  onChange={async (e) => {
+                    setBannerImage(await uploadImageOnCloudinary(e));
+                  }}
+                />
+                {bannerImage ? "Update Main Image" : "Upload Main Image"}
+              </label>
+            </div>
+          </div>
+
+          {/* Color Variants Section */}
+          <div className="mb-6">
+            <label className="block text-md font-medium text-gray-700 mb-2">
+              Product Color and other images <span className="text-red-500">*</span>
+            </label>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {colorWithImages?.map((item, i) => (
+                <div key={i} className="border border-gray-200 rounded-md p-3">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Color {i + 1}
+                  </label>
+
+                  <div className="flex flex-col sm:flex-row gap-2 mb-3">
+                    <select
+                      value={item.colorCode}
+                      onChange={(e) => handleColorChange(e.target.value, i)}
+                      className="flex-1 p-2 border border-gray-300 rounded-md"
                     >
-                      {/* {`Select Color-${i + 1}`} */}
-                      Select color below
-                    </label>
-                    <div className="flex  gap-3 my-2">
+                      {options?.map((option) => (
+                        <option key={option?.id} value={option?.colorCode}>
+                          {option?.name}
+                        </option>
+                      ))}
+                    </select>
 
-                      <select
-                        value={item.colorCode} // Bind the current colorCode value
-                        onChange={(e) => handleColorChange(e.target.value, i)} // Pass the selected value and index
-                      >
-                        {options?.map((option) => (
-                          <option key={option?.id} value={option?.colorCode}>
-                            {option?.name}
-                          </option>
-                        ))}
-                      </select>
-
-
-
+                    <div className="flex gap-2">
                       <button
                         type="button"
-                        className="bg-blue-500 w-auto text-white px-2 py-1 rounded-md cursor-pointer"
+                        className="bg-blue-500 text-white px-3 py-1 rounded-md cursor-pointer"
                         onClick={() => handleAddImage(i)}
                       >
-                        Click to add multiple images
+                        Add Images
                       </button>
                       <button
                         type="button"
-                        className="bg-blue-500 text-white px-2 py-1 rounded-md cursor-pointer"
+                        className="bg-gray-500 text-white px-3 py-1 rounded-md cursor-pointer"
                         onClick={() => handleRemoveColorWithImages(i)}
                       >
                         Remove
                       </button>
-
                     </div>
+                  </div>
+
+                  <div className="space-y-2">
                     {item?.images?.map((url, index) => (
-                      <div key={index} className="flex items-center mb-2">
+                      <div key={index} className="flex items-center gap-2">
                         {url && (
                           <img
                             src={url}
                             alt="productImage"
-                            className="w-16 h-16 mr-2 rounded-md"
+                            className="w-12 h-12 rounded-md object-cover"
                           />
                         )}
-                        <label htmlFor={`images[${index}]`}>
+                        <label className="flex-1">
                           <input
                             type="file"
                             id={`images[${index}]`}
                             name={`images[${index}]`}
-                            className={`mt-1 p-2 border border-gray-300 rounded-md outline-none ${url && "hidden"
-                              }`}
+                            className="hidden"
                             {...register(`images[${index}]`)}
                             onChange={(e) => getImageUrl(e, i, index)}
                           />
-                          {url && (
-                            <span className="mx-2 bg-red-500 text-white px-3 py-1 rounded-md">
-                              Update Image
-                            </span>
-                          )}
+                          <span className={`inline-block px-3 py-1 rounded-md cursor-pointer ${url ? 'bg-blue-500' : 'bg-gray-500'} text-white`}>
+                            {url ? "Update" : "Upload"}
+                          </span>
                         </label>
                         <button
                           type="button"
-                          className="ml-2 bg-red-500 text-white px-3 py-1 rounded-md cursor-pointer"
+                          className="bg-red-500 text-white px-3 py-1 rounded-md cursor-pointer"
                           onClick={() => handleRemoveImage(i, index)}
                         >
                           Remove
@@ -917,11 +922,13 @@ function ProductAddPage() {
                       </div>
                     ))}
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
+          </div>
 
-            {/* <button
+
+          {/* <button
               type="button"
               className="bg-blue-500 text-white px-2 py-1 rounded-md"
               onClick={() =>
@@ -936,39 +943,7 @@ function ProductAddPage() {
             >
               Add More Color
             </button> */}
-          </div>
-          <div className="mb-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Product's Banner Image (Image that will be firstly visible)  <span className="text-[red]">*</span>
-            </label>
-            <div className="flex gap-6 items-center">
-              {bannerImage && (
-                <img
-                  src={bannerImage}
-                  alt="bannerImage"
-                  className="h-40 rounded-md object-contain"
-                />
-              )}
-              <label
-                htmlFor="bannerImage"
-                className="m-2 bg-red-500 text-white px-3 py-1 rounded-md cursor-pointer"
-              >
-                <input
-                  type="file"
-                  id="bannerImage"
-                  name="bannerImage"
-                  className="mt-1 p-2 border border-gray-300 rounded-md outline-none hidden"
-                  {...register("bannerImage", {
-                    required: "*Banner Image are required.",
-                  })}
-                  onChange={async (e) => {
-                    setBannerImage(await uploadImageOnCloudinary(e));
-                  }}
-                />
-                {bannerImage ? "Update" : "Upload"} Banner Image
-              </label>
-            </div>
-          </div>
+
           <div className="flex flex-wrap items-center gap-3">
             <div className="mb-3">
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -976,7 +951,7 @@ function ProductAddPage() {
               </label>
 
 
-              
+
 
 
 

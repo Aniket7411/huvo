@@ -85,6 +85,7 @@ const ProductsShowingComponent = (props) => {
     applyFilters();
   }, [searchQuery, genderCategory, sortOrder, allProducts]);
 
+console.log("filteredProducts", filteredProducts)
 
 
   return (
