@@ -309,7 +309,9 @@ function ProductAddPage() {
   const getAllBrands = async () => {
     try {
       const { brands } = await HttpClient.get("/brand");
+
       setAllBrands(brands);
+
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
@@ -362,6 +364,9 @@ function ProductAddPage() {
   const handleDaysChange = (event) => {
     setReturnableDays(event.target.value)
   };
+
+
+  console.log("allBrandsallBrandsallBrandsallBrands",allBrands)
 
 
   return (
@@ -660,7 +665,7 @@ function ProductAddPage() {
                 Select Brand
               </option>
               {allBrands?.map((brand, i) => (
-                <option value={brand?.name} key={i}>
+                <option value={brand?._id} key={i}>
                   {brand?.name}
                 </option>
               ))}
