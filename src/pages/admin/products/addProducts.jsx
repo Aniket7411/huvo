@@ -125,7 +125,7 @@ function ProductAddPage() {
   const [returnableRadio, setReturnableRadio] = useState(7)
 
 
-  console.log("returnableRadioreturnableRadioreturnableRadio", returnableRadio)
+  console.log("returnableRadioreturnableRadioreturnableR", returnableRadio)
 
 
   const [isModalOpen, setIsModalOpen] = useState(false);
