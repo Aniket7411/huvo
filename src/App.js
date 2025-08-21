@@ -511,7 +511,7 @@ function App() {
         </Routes>
         <Routes>
           <Route
-            path="seller/products/add"
+            path="/seller/products/add"
             element={
               <AdminAuth>
                 <Layoutadmin>
@@ -523,7 +523,7 @@ function App() {
         </Routes>
         <Routes>
           <Route
-            path="seller/products/edit/:id"
+            path="/seller/products/edit/:id"
             element={
               <AdminAuth>
                 <Layoutadmin>

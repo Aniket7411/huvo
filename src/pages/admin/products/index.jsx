@@ -442,7 +442,7 @@ function ProductList() {
 
                             <td className="border-y border-[#eee] py-5 px-4 dark:border-strokedark">
                               <div className="flex items-center space-x-3.5">
-                                {/* <button
+                                <button
                                   className="hover:text-primary"
                                   onClick={() =>
                                     navigate(
@@ -451,7 +451,7 @@ function ProductList() {
                                   }
                                 >
                                   <FiEdit />
-                                </button> */}
+                                </button>
 
                                 <button
                                   className="hover:text-primary hover:text-[red]"
