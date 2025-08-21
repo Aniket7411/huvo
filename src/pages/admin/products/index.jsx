@@ -436,7 +436,7 @@ function ProductList() {
                             </td>
                             <td className="border-y border-[#eee] p-4  dark:border-strokedark">
                               <h5 className="font-medium text-black">
-                                {"₹ " + item?.price}
+                                {"₹ " + item?.actualPrice}
                               </h5>
                             </td>
 

@@ -400,15 +400,15 @@ function ProductEditPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="mb-4">
-              <label htmlFor="price" className="block text-gray-700 text-sm font-bold mb-2">
+              <label htmlFor="actualPrice" className="block text-gray-700 text-sm font-bold mb-2">
                 Price *
               </label>
               <input
-                id="price"
+                id="actualPrice"
                 type="number"
                 step="0.01"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                {...register("price", {
+                {...register("actualPrice", {
                   required: "Price is required",
                   min: { value: 0, message: "Price must be positive" }
                 })}
