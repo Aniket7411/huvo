@@ -170,11 +170,11 @@ export default function Vendorsdetail() {
                   <div className="flex items-center gap-2">
                     <CalendarOutlined className="text-gray-500" />
                     <div>
-                      <p className="text-sm text-gray-500">Registration</p>
+                      <p className="text-sm text-gray-500">Registered</p>
                       <p className="font-medium">15-09-2024</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  {/* <div className="flex items-center gap-2">
                     <CalendarOutlined className="text-gray-500" />
                     <div>
                       <p className="text-sm text-gray-500">Valid Until</p>
@@ -189,7 +189,7 @@ export default function Vendorsdetail() {
                         {sellerStoreDetails?.storeName || "N/A"}
                       </p>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
