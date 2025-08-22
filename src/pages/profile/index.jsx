@@ -373,7 +373,8 @@ export default function Profile() {
   }
   const userData = getUserData();
   const isSeller = userData?.role === "SELLER";
-  const verificationStatus = isSeller ? userData?.verificationStatus : null;
+
+  console.log("isSeller",userData?.verificationStatus)
 
   //fetching invoices
   const handleNavigate = (invoice) => {
@@ -404,19 +405,19 @@ export default function Profile() {
   }, [userInvoice])
 
 
-
+console.log("userData?.verificationStatus",userData?.verificationStatus)
 
   return (
     <>
       {isSeller && (
         <div
 
-          className={`flex  flex-col items-center  md:mt-[30px] mx-2 ${verificationStatus
+          className={`flex  flex-col items-center  md:mt-[30px] mx-2 ${userData?.verificationStatus
             ? "bg-green-100 border border-green-500 text-green-800"
             : "bg-red-100 border border-red-500 text-red-800"
             } p-3 rounded-lg`}
         >
-          {verificationStatus ? (
+          {userData?.verificationStatus ? (
             <p className="text-green-600 font-bold text-lg">
               Your business is verified.
             </p>

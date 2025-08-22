@@ -1,73 +1,64 @@
 import { React, useState, useEffect } from "react";
 import SuperAdminNav from "../../../components/superadminNavbar/superadminnav";
 import Superadminheader from "../../../components/superadminheader";
-import { PiArrowArcLeft, PiArrowLeft } from "react-icons/pi";
+import { PiArrowLeft } from "react-icons/pi";
 import "../superadmin.css";
 import { Link } from "react-router-dom";
 import { HttpClient } from "../../../server/client/http";
 import "react-circular-progressbar/dist/styles.css";
-import { Button, Modal } from "antd";
+import { Button, Modal, Card, Tag, Divider } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import "./vendorsDetails.css";
 import Loader from "../../../components/loader";
 import { toast } from "react-toastify";
-import { Card, Tag, Divider } from "antd";
 import {
   MailOutlined,
   PhoneOutlined,
   ShopOutlined,
   EnvironmentOutlined,
-  CalendarOutlined
-} from '@ant-design/icons';
+  CalendarOutlined,
+} from "@ant-design/icons";
 
 export default function Vendorsdetail() {
   const { id } = useParams();
   const [vendorDetails, setVendorDetails] = useState([]);
   const [loading, setloading] = useState(false);
-  const [detailsId, setdetailsId] = useState();
   const [basicSellerDetails, setBasicSellerDetails] = useState({});
   const [sellerStoreDetails, setSellerStoreDetails] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [actionModal, setActionModal] = useState(true);
+  const [actionModal, setActionModal] = useState(""); // block | approve
   const [vendorProductDetails, setVendorProductDetails] = useState();
   const [sellerEmail, setSellerEmail] = useState("");
 
   const navigate = useNavigate();
 
   const getVendorsDetails = async (_id) => {
-    if (!_id) {
-      console.error("id", _id);
-      return;
-    }
+    if (!_id) return;
     setloading(true);
-
     try {
       const response = await HttpClient.get(`/dashboard/vendors/${_id}`);
-
-      console.log("hasjhajshjahsja", response)
       setSellerEmail(response?.vendorDetail?.email);
       setVendorDetails(response?.vendorDetail);
       setVendorProductDetails(response);
 
-      const formattedSellerDetails = response.vendorDetail.address.map((each) => ({
-        address: each?.address,
-        city: each?.city,
-        isDefault: each?.isDefault,
-        mobileNumber: each?.mobileNumber,
-        postalCode: each?.postalCode,
-        state: each?.state,
-        town: each?.town,
-        name: each?.name
-      }));
+      const formattedSellerDetails = response.vendorDetail.address.map(
+        (each) => ({
+          address: each?.address,
+          city: each?.city,
+          isDefault: each?.isDefault,
+          mobileNumber: each?.mobileNumber,
+          postalCode: each?.postalCode,
+          state: each?.state,
+          town: each?.town,
+          name: each?.name,
+        })
+      );
 
       setBasicSellerDetails(formattedSellerDetails[0]);
       setSellerStoreDetails(response?.vendorDetail?.storeDetails);
-
-      if (response) {
-        setloading(false);
-      }
     } catch (error) {
       console.error(error.response);
+    } finally {
       setloading(false);
     }
   };
@@ -81,19 +72,54 @@ export default function Vendorsdetail() {
   };
 
   const handleModalClose = () => {
-    setActionModal(false);
+    setIsModalOpen(false);
   };
 
-  const handleConfirmAction = () => {
-    console.log("handleConfirmAction");
+  const handleConfirmAction = async () => {
+    if (actionModal === "block") {
+      await blockSeller();
+    } else if (actionModal === "approve") {
+      await approveSeller();
+    }
+    setIsModalOpen(false);
   };
 
   const getStatusTag = (status) => {
     return status ? (
-      <Tag color="green" className="ml-2">Verified</Tag>
+      <Tag color="green" className="ml-2">
+        Verified
+      </Tag>
     ) : (
-      <Tag color="orange" className="ml-2">Pending Verification</Tag>
+      <Tag color="red" className="ml-2">
+        Blocked
+      </Tag>
     );
+  };
+
+  const approveSeller = async () => {
+    try {
+      const response = await HttpClient.put("/users/block", {
+        sellerId: id,
+        blockType: "approve", // any non-block will set verificationStatus: true
+      });
+      toast.success(response?.message || "Seller approved successfully");
+      getVendorsDetails(id); // refresh without reload
+    } catch (error) {
+      toast.error("Couldn't verify");
+    }
+  };
+
+  const blockSeller = async () => {
+    try {
+      const response = await HttpClient.put("/users/block", {
+        sellerId: id,
+        blockType: "block", // sets verificationStatus: false
+      });
+      toast.success(response?.message || "Seller blocked successfully");
+      getVendorsDetails(id); // refresh without reload
+    } catch (error) {
+      toast.error("Couldn't block");
+    }
   };
 
   return (
@@ -111,15 +137,15 @@ export default function Vendorsdetail() {
             >
               <PiArrowLeft className="text-[#000000]" />
             </div>
-
             <div className="w-full ml-4">
               <Superadminheader />
             </div>
           </div>
-          <div className="mt-1">
+          <div className="mt-1 flex items-center">
             <p className="font-poppins font-medium text-[#46484D] text-lg">
               Seller Info
             </p>
+            {getStatusTag(vendorDetails?.verificationStatus)}
           </div>
         </div>
 
@@ -185,18 +211,44 @@ export default function Vendorsdetail() {
                     <p className="text-gray-800">
                       {basicSellerDetails?.address}
                       <br />
-                      {basicSellerDetails?.postalCode && `${basicSellerDetails?.postalCode}, `}
+                      {basicSellerDetails?.postalCode &&
+                        `${basicSellerDetails?.postalCode}, `}
                       {basicSellerDetails?.state}
                     </p>
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4 p-4 rounded-2xl shadow-md bg-white w-full max-w-sm">
+                  {/* Contact Section */}
                   <div className="flex flex-col">
-                    <h3 className="flex items-center gap-2 text-gray-600">
+                    <h3 className="flex items-center gap-2 text-gray-600 font-medium">
                       <PhoneOutlined /> Contact
                     </h3>
-                    <p className="text-gray-800">{basicSellerDetails?.mobileNumber}</p>
+                    <p className="text-gray-800 font-semibold">
+                      {basicSellerDetails?.mobileNumber || "Not Available"}
+                    </p>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <button
+                      className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl shadow"
+                      onClick={() => {
+                        setIsModalOpen(true);
+                        setActionModal("block");
+                      }}
+                    >
+                      Block Seller
+                    </button>
+                    <button
+                      className="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl shadow"
+                      onClick={() => {
+                        setIsModalOpen(true);
+                        setActionModal("approve");
+                      }}
+                    >
+                      Approve Seller
+                    </button>
                   </div>
                 </div>
               </div>
@@ -204,47 +256,32 @@ export default function Vendorsdetail() {
 
             {/* Store Details Card */}
             <Card title="Store Information" className="mb-1 shadow-sm">
-    <div className="flex flex-wrap gap-4">
-        <div className="flex-1 space-y-2">
-            <div className="flex flex-col">
-                <h3 className="text-gray-600">Store Name</h3>
-                <p className="text-gray-800">{sellerStoreDetails?.storeName}</p>
-            </div>
-            <div className="flex flex-col">
-                <h3 className="text-gray-600">Store Description</h3>
-                <p className="text-gray-800">{sellerStoreDetails?.storeDescription}</p>
-            </div>
-        </div>
+              <div className="flex flex-wrap gap-4">
+                <div className="flex-1 space-y-2">
+                  <div className="flex flex-col">
+                    <h3 className="text-gray-600">Store Name</h3>
+                    <p className="text-gray-800">
+                      {sellerStoreDetails?.storeName}
+                    </p>
+                  </div>
+                  <div className="flex flex-col">
+                    <h3 className="text-gray-600">Store Description</h3>
+                    <p className="text-gray-800">
+                      {sellerStoreDetails?.storeDescription}
+                    </p>
+                  </div>
+                </div>
 
-        <div className="flex-1 space-y-2">
-            <div className="flex flex-col">
-                <h3 className="text-gray-600">Store Name</h3>
-                <p className="text-gray-800">{sellerStoreDetails?.storeName}</p>
-            </div>
-        </div>
-
-        <div className="flex-1 space-y-2">
-            <div className="flex flex-col">
-                <h3 className="text-gray-600">Store Address</h3>
-                <p className="text-gray-800">{sellerStoreDetails?.storeAddress}</p>
-            </div>
-        </div>
-
-        {/* <div >
-          <Link to="/add_coupons">
-    <button
-        type="button"
-        className="bg-[#011f4b]  text-white py-2 px-4 rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-200"
-    >
-        Add Coupons
-    </button>
-    </Link>
-</div>   */}
-    </div>
-</Card>
-
-
-
+                <div className="flex-1 space-y-2">
+                  <div className="flex flex-col">
+                    <h3 className="text-gray-600">Store Address</h3>
+                    <p className="text-gray-800">
+                      {sellerStoreDetails?.storeAddress}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Card>
 
             {/* Products Link */}
             <Link
@@ -253,27 +290,12 @@ export default function Vendorsdetail() {
               className="block p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors duration-200"
             >
               <div className="flex justify-between items-center">
-                <span className="font-medium text-blue-700">View Seller Products</span>
+                <span className="font-medium text-blue-700">
+                  View Seller Products
+                </span>
                 <span className="text-blue-500">→</span>
               </div>
             </Link>
-
-            {/* Action Buttons */}
-            {/* <div className="mt-6 flex gap-4">
-              <Button 
-                type="primary" 
-                className="bg-blue-600 hover:bg-blue-700"
-                onClick={() => setIsModalOpen(true)}
-              >
-                Verify Vendor
-              </Button>
-              <Button 
-                danger 
-                onClick={() => setIsModalOpen(true)}
-              >
-                Suspend Vendor
-              </Button>
-            </div> */}
           </div>
         ) : (
           <div className="h-[62vh] flex items-center justify-center">
@@ -292,12 +314,28 @@ export default function Vendorsdetail() {
           <Button key="back" onClick={handleModalClose}>
             Cancel
           </Button>,
-          <Button key="submit" type="primary" onClick={handleConfirmAction}>
-            Confirm
+          <Button
+          className="text-[#000]"
+            key="submit"
+            type="primary"
+            danger={actionModal === "block"}
+            onClick={handleConfirmAction}
+          >
+            {actionModal === "block" ? "Block" : "Approve"}
           </Button>,
         ]}
       >
-        <p>Are you sure you want to perform this action?</p>
+        <p>
+          Are you sure you want to{" "}
+          <span
+            className={
+              actionModal === "block" ? "text-red-500" : "text-green-500"
+            }
+          >
+            {actionModal === "block" ? "block" : "approve"}
+          </span>{" "}
+          this seller?
+        </p>
       </Modal>
     </div>
   );
